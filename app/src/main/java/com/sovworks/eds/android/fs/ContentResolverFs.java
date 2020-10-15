@@ -11,7 +11,7 @@ import android.os.Parcelable;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.sovworks.eds.fs.FileSystem;
 import com.sovworks.eds.fs.RandomAccessIO;

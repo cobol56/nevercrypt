@@ -1,6 +1,6 @@
 package com.sovworks.eds.fs.util;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.sovworks.eds.fs.FileSystem;
 import com.sovworks.eds.fs.Path;

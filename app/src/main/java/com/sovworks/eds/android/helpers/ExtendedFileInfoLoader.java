@@ -2,7 +2,7 @@ package com.sovworks.eds.android.helpers;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.LruCache;
 
 import com.sovworks.eds.android.Logger;

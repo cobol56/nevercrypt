@@ -3,7 +3,7 @@ package com.sovworks.eds.fs.util;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;

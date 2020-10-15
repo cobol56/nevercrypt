@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.widget.EditText;
 
 import com.sovworks.eds.android.R;

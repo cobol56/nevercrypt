@@ -2,7 +2,7 @@ package com.sovworks.eds.android.service;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.locations.LocationsManager;
