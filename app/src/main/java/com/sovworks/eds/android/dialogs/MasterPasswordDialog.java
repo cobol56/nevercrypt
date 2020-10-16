@@ -14,7 +14,7 @@ import com.sovworks.eds.android.settings.UserSettings;
 import com.sovworks.eds.crypto.SecureBuffer;
 import com.sovworks.eds.settings.GlobalConfig;
 import com.sovworks.eds.settings.Settings;
-import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle3.components.RxActivity;
 
 import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;

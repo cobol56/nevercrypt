@@ -30,7 +30,7 @@ import com.sovworks.eds.fs.Path;
 import com.sovworks.eds.fs.util.StringPathUtil;
 import com.sovworks.eds.locations.Location;
 import com.sovworks.eds.settings.GlobalConfig;
-import com.trello.rxlifecycle2.components.RxFragment;
+import com.trello.rxlifecycle3.components.RxFragment;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -46,8 +46,8 @@ import com.sovworks.eds.locations.Location;
 import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.locations.Openable;
 import com.sovworks.eds.settings.GlobalConfig;
-import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.trello.rxlifecycle3.components.RxActivity;
 
 import java.util.NavigableSet;
 import java.util.TreeSet;

@@ -62,8 +62,8 @@ import com.sovworks.eds.fs.util.SrcDstSingle;
 import com.sovworks.eds.locations.Location;
 import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.settings.GlobalConfig;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.components.RxFragment;
+import com.trello.rxlifecycle3.android.FragmentEvent;
+import com.trello.rxlifecycle3.components.RxFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;

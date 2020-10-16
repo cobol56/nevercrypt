@@ -19,8 +19,8 @@ import com.sovworks.eds.fs.util.SrcDstCollection;
 import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
 import com.sovworks.eds.fs.util.SrcDstPlain;
 import com.sovworks.eds.locations.Location;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.components.RxDialogFragment;
+import com.trello.rxlifecycle3.android.FragmentEvent;
+import com.trello.rxlifecycle3.components.RxDialogFragment;
 
 import java.io.IOException;
 import java.util.Iterator;

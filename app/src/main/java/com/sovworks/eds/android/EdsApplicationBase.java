@@ -1,5 +1,6 @@
 package com.sovworks.eds.android;
 
+import android.app.Application;
 import android.app.NotificationManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -7,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
-import androidx.multidex.MultiDexApplication;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.widget.Toast;
 
@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 import static com.sovworks.eds.android.settings.UserSettings.getSettings;
 
-public class EdsApplicationBase extends MultiDexApplication
+public class EdsApplicationBase extends Application
 {
 	public static final String BROADCAST_EXIT = "com.sovworks.eds.android.BROADCAST_EXIT";
 

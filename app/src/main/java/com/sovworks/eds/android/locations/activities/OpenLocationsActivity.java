@@ -11,7 +11,7 @@ import com.sovworks.eds.android.helpers.Util;
 import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
 import com.sovworks.eds.locations.Location;
 import com.sovworks.eds.locations.LocationsManager;
-import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle3.components.RxActivity;
 
 import java.util.ArrayList;
 import java.util.concurrent.CancellationException;

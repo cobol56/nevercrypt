@@ -7,7 +7,7 @@ import com.sovworks.eds.android.settings.UserSettings;
 import com.sovworks.eds.locations.Location;
 import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.settings.Settings;
-import com.trello.rxlifecycle2.components.RxActivity;
+import com.trello.rxlifecycle3.components.RxActivity;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;

@@ -22,7 +22,7 @@ import com.sovworks.eds.android.views.EditSB;
 import com.sovworks.eds.crypto.SecureBuffer;
 import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.locations.Openable;
-import com.trello.rxlifecycle2.components.RxDialogFragment;
+import com.trello.rxlifecycle3.components.RxDialogFragment;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
