@@ -56,8 +56,8 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
-    <style name="FileList" parent="android:Widget.Holo.Light.ListView" />
-    <style name="FileList.Dark" parent="android:Widget.Holo.ListView" />
+    <style name="FileList" parent="android:Widget.Material.Light.ListView" />
+    <style name="FileList.Dark" parent="android:Widget.Material.ListView" />
     <style name="FileListRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/file_list_row_height</item>

@@ -7,7 +7,7 @@
         <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
         <item name="android:padding">4dp</item>
     </style>
-    <style name="PropertyTitle" parent="android:TextAppearance.Holo.Medium">
+    <style name="PropertyTitle" parent="android:TextAppearance.Material.Medium">
         <item name="android:text">Title</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -17,7 +17,7 @@
         <item name="android:textColor">?attr/mainTextColor</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="PropertyDesc"  parent="android:TextAppearance.Holo.Small">
+    <style name="PropertyDesc"  parent="android:TextAppearance.Material.Small">
         <item name="android:text">Description</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -25,7 +25,7 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">?attr/secTextColor</item>
     </style>
-    <style name="PropertyEditText" parent="android:TextAppearance.Holo.Medium">
+    <style name="PropertyEditText" parent="android:TextAppearance.Material.Medium">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">4dp</item>
@@ -34,7 +34,7 @@
         <item name="android:inputType">text</item>
         <item name="android:maxLines">1</item>
     </style>
-    <style name="PropertyCategory" parent="android:TextAppearance.Holo.Medium">
+    <style name="PropertyCategory" parent="android:TextAppearance.Material.Medium">
         <item name="android:text">Title</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
