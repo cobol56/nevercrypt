@@ -78,7 +78,7 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
 
 	public static boolean IS_ANIMATING = false;
 	private ImageView _indicatorIcon;
-	private boolean _isExpanded;
+	private boolean _isExpanded = true;
 
 
     private void rotateIconAndChangeState()
