@@ -2,8 +2,7 @@
 <resources>
   <string name="add_container">Ajouter un container</string>
   <string name="ok">OK</string>
-  <string name="enter_password">Entrez le mot de passe du container:</string>
-  <string name="select">Sélectionner</string>
+    <string name="select">Sélectionner</string>
   <string name="new_file">Nouveau fichier</string>
   <string name="new_dir">Nouveau dossier</string>
   <string formatted="false" name="processing_file">%1$s (%2$d de %3$d).</string>
@@ -34,8 +33,7 @@
   <string name="properties">Propriétés</string>
   <string name="total_space">Espace total</string>
   <string name="free_space">Espace libre</string>
-  <string name="use_password">Utiliser mot de passe</string>
-  <string name="saving_changes">Sauvegarde des changements</string>
+    <string name="saving_changes">Sauvegarde des changements</string>
   <string name="preparing_file">Préparation des fichiers</string>
   <string name="eds_service_is_running">Le service Eds est en cours</string>
   <string name="stop_service_and_exit">Arrêter le service et quitter</string>
@@ -57,10 +55,7 @@
   <string name="container_file_name_is_not_specified">Le nom de fichier du container n\'est pas spécifié</string>
   <string name="do_you_want_to_overwrite_existing_file">Voulez-vous écraser le fichier existant?</string>
   <string name="enter_file_name">Entrez un nom de fichier</string>
-  <string name="save_changes">Sauvegarder les changements</string>
-  <string name="do_you_want_to_save_changes">Voulez vous sauvegarder les changements ?</string>
-  <string name="select_image">Sélectionnez une image</string>
-  <string name="do_you_really_want_to_delete_selected_files">Voulez-vous réellement effacer les fichiers sélectionnés  (%s)?</string>
+    <string name="do_you_really_want_to_delete_selected_files">Voulez-vous réellement effacer les fichiers sélectionnés  (%s)?</string>
   <string name="wiping_files">Effacement des fichiers</string>
   <string name="creating_container">Création du container en cours</string>
   <string name="err_failed_saving_changes">Échec de la sauvegarde des changements. Essayez de sauvegarder de nouveau ou bien copiez manuellement le fichier. Voir le log pour plus de détails.</string>
@@ -106,8 +101,7 @@
   <string name="close">Fermer</string>
   <string name="target_path">Chemin de destination</string>
   <string name="device">Appareil</string>
-  <string name="username">Nom d\'utilisateur</string>
-  <string name="password">Mot de passe</string>
+    <string name="password">Mot de passe</string>
   <string name="title">Titre</string>
   <string name="open">Ouvrir</string>
   <string name="disable_wide_screen_layouts_desc">Cette option désactive la prévisualisation des panels sur les appareils avec un écran large.</string>

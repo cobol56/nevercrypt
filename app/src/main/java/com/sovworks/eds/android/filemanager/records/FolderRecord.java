@@ -73,10 +73,7 @@ public class FolderRecord extends FsBrowserRecord
     {
         if(_folderIcon == null && context!=null)
         {
-            TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.folderIcon, typedValue, true);
-            //noinspection deprecation
-            _folderIcon = context.getResources().getDrawable(typedValue.resourceId);
+            _folderIcon = context.getResources().getDrawable(R.drawable.ic_folder, context.getTheme());
         }
         return _folderIcon;
     }

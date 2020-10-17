@@ -2,8 +2,7 @@
 <resources>
   <string name="add_container">Añadir contenedor existente</string>
   <string name="ok">OK</string>
-  <string name="enter_password">Introduzca la contraseña:</string>
-  <string name="select">Seleccionar</string>
+    <string name="select">Seleccionar</string>
   <string name="enter_new_folder_name">Introduzca el nombre de la nueva carpeta</string>
   <string name="new_file">Nuevo fichero</string>
   <string name="new_dir">Nueva carpeta</string>
@@ -38,8 +37,7 @@
   <string name="properties">Propiedades</string>
   <string name="total_space">Espacio total</string>
   <string name="free_space">Espacio libre</string>
-  <string name="use_password">Usar contraseña</string>
-  <string name="saving_changes">Guardando cambios</string>
+    <string name="saving_changes">Guardando cambios</string>
   <string name="preparing_file">Preparando ficheros</string>
   <string name="eds_service_is_running">El servicio EDS se está ejecutando</string>
   <string name="stop_service_and_exit">Detener el servicio y salir</string>
@@ -61,10 +59,7 @@
   <string name="container_file_name_is_not_specified">No se ha especificado el nombre del fichero del contenedor</string>
   <string name="do_you_want_to_overwrite_existing_file">¿Desea sobrescribir el fichero existente?</string>
   <string name="enter_file_name">Introduzca el nombre del fichero</string>
-  <string name="save_changes">Guardar cambios</string>
-  <string name="do_you_want_to_save_changes">¿Desea guardar los cambios?</string>
-  <string name="select_image">Seleccione una imagen</string>
-  <string name="do_you_really_want_to_delete_selected_files">¿Realmente desea eliminar los ficheros seleccionados (%s)?</string>
+    <string name="do_you_really_want_to_delete_selected_files">¿Realmente desea eliminar los ficheros seleccionados (%s)?</string>
   <string name="wiping_files">Limpiando ficheros</string>
   <string name="creating_container">Creando contenedor</string>
   <string name="err_failed_saving_changes">No se han podido guardar los cambios. Intente guardar el fichero nuevamente o cópielo manualmente. Consulte el registro de la aplicación para más detalles.</string>
@@ -111,8 +106,7 @@
   <string name="close">Cerrar</string>
   <string name="target_path">Ruta destino</string>
   <string name="device">Dispositivo</string>
-  <string name="username">Usuario</string>
-  <string name="password">Contraseña</string>
+    <string name="password">Contraseña</string>
   <string name="title">Título</string>
   <string name="open">Abrir</string>
   <string name="disable_wide_screen_layouts_desc">Esta opción desactiva los paneles de vista previa en el modo apaisado</string>
@@ -146,8 +140,7 @@
   <string name="container_format_desc">Puede especificar el formato del contenedor con el fin de acelerar su apertura</string>
   <string name="encryption_alg_desc">Puede especificar el algoritmo de encriptación con el fin de acelerar su apertura</string>
   <string name="hash_alg_desc">Puede especificar el algoritmo de hashing con el fin de acelerar su apertura</string>
-  <string name="working">Trabajando</string>
-  <string name="generic_error_message">Ha ocurrido un error. Puede ver los detalles en el fichero de registro de la aplicación.</string>
+    <string name="generic_error_message">Ha ocurrido un error. Puede ver los detalles en el fichero de registro de la aplicación.</string>
   <string name="err_no_application_found">No se ha encontrado una aplicación para gestionar este tipo de fichero. Puede anular el tipo mime de un fichero desde la pantalla principal de ajustes.</string>
   <string name="disable_modified_files_backup">Desactivar la copia de seguridad de los ficheros modificados</string>
   <string name="invalid_master_password">Contraseña maestra inválida</string>
@@ -156,8 +149,7 @@
   <string name="location_type">Tipo de localización</string>
   <string name="drawer_open">Abrir cajón</string>
   <string name="drawer_close">Cerrar cajón</string>
-  <string name="open_file">Abrir fichero</string>
-  <string name="add_new">Añadir nuevo</string>
+    <string name="add_new">Añadir nuevo</string>
   <string name="create_new_container_or_add_existing_container">¿Desea crear un nuevo contenedor o añadir uno existente?</string>
   <string name="changing_password">Cambiando contraseña</string>
   <string name="choose_files_to_copy_or_move">Seleccione los ficheros para copiar o mover…</string>
@@ -181,8 +173,7 @@
   <string name="encryption_alg_is">&lt;p&gt;El algoritmo de encriptación es &lt;b&gt;%1$s&lt;/b&gt;.&lt;/p&gt;</string>
   <string name="kdf_base_hash_func_is">KDF La función base de hash es &lt;b&gt;%1$s&lt;/b&gt;.</string>
   <string name="hidden">Oculto</string>
-  <string name="value_has_been_copied">El valor del campo ha sido copiado al portapapeles</string>
-  <string name="overwrite_and_delete">Sobrescribir y borrar</string>
+    <string name="overwrite_and_delete">Sobrescribir y borrar</string>
   <string name="list_is_empty">La lista está vacía </string>
   <string name="hide_eds_screen_from_other_apps">Ocultar la pantalla de EDS a otras aplicaciones</string>
   <string name="toggle_auto_zoom">Cambiar el zoom automático</string>

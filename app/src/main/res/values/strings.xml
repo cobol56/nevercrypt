@@ -3,8 +3,7 @@
     <string name="add_container">Add existing container</string>
 	<string name="eds" translatable="false"><xliff:g id="program_name">EDS</xliff:g></string>
     <string name="ok">OK</string>
-	<string name="enter_password">Enter password:</string>
-	<string name="select">Select</string>
+    <string name="select">Select</string>
 	<string name="enter_new_folder_name">Enter new folder name</string>
 	<string name="new_file">New file</string>
 	<string name="new_dir">New folder</string>
@@ -39,8 +38,7 @@
 	<string name="properties">Properties</string>
 	<string name="total_space">Total space</string>
 	<string name="free_space">Free space</string>
-	<string name="use_password">Use password</string>
-	<string name="saving_changes">Saving changes</string>
+    <string name="saving_changes">Saving changes</string>
 	<string name="preparing_file">Preparing files</string>
 	<string name="eds_service_is_running"><xliff:g id="program_name">EDS</xliff:g> service is running</string>
 	<string name="stop_service_and_exit">Stop service and exit</string>
@@ -63,10 +61,7 @@
 	<string name="container_file_name_is_not_specified">The file name of the container is not specified</string>
 	<string name="do_you_want_to_overwrite_existing_file">Do you want to overwrite existing file?</string>
 	<string name="enter_file_name">Enter the filename</string>
-	<string name="save_changes">Save changes</string>
-	<string name="do_you_want_to_save_changes">Do you want to save changes?</string>
-	<string name="select_image">Select an image</string>
-	<string name="do_you_really_want_to_delete_selected_files">Do you really want to delete selected files (%s)?</string>
+    <string name="do_you_really_want_to_delete_selected_files">Do you really want to delete selected files (%s)?</string>
 	<string name="wiping_files">Wiping files</string>
 	<string name="creating_container">Creating container</string>
 	<string name="err_failed_saving_changes">Failed to save changes. Try saving the file again or copy the file manually. See the program log file for details.</string>
@@ -113,8 +108,7 @@
 	<string name="close">Close</string>
 	<string name="target_path">Target path</string>
 	<string name="device">Device</string>
-	<string name="username">Username</string>
-	<string name="password">Password</string>
+    <string name="password">Password</string>
 	<string name="title">Title</string>
 	<string name="open">Open</string>
 	<string name="disable_wide_screen_layouts_desc">This option disables the preview panel in landscape mode</string>
@@ -148,8 +142,7 @@
 	<string name="container_format_desc">You can specify the format of the container in order to speed up container opening</string>
 	<string name="encryption_alg_desc">You can specify the encryption algorithm in order to speed up container opening</string>
 	<string name="hash_alg_desc">You can specify the hashing algorithm in order to speed up container opening</string>
-	<string name="working">Working</string>	
-	<string name="generic_error_message">An error occurred. You can get the details from the program log file.</string>
+    <string name="generic_error_message">An error occurred. You can get the details from the program log file.</string>
 	<string name="err_no_application_found">No application found to handle this type of file. You can override the mime type of a file from the main settings screen.</string>
 	<string name="disable_modified_files_backup">Disable backup copy of modified files</string>
     <string name="invalid_master_password">Invalid master password</string>
@@ -158,8 +151,7 @@
     <string name="location_type">location type</string>
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer close</string>
-    <string name="open_file">Open file</string>
-	<string name="add_new">Add new</string>
+    <string name="add_new">Add new</string>
 	<string name="create_new_container_or_add_existing_container">Would you like to create a new container or to add an existing container?</string>
 	<string name="changing_password">Changing password</string>
 	<string name="choose_files_to_copy_or_move">Choose files to copy or move…</string>
@@ -185,8 +177,7 @@
 	<string name="encryption_alg_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>Encryption algorithm is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="encryption_algorithm_name" example="AES">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
 	<string name="kdf_base_hash_func_is"><xliff:g id="key_derivation_function">KDF</xliff:g> base hash function is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="hash_algorithm_name" example="SHA-256">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.</string>
 	<string name="hidden">hidden</string>
-	<string name="value_has_been_copied">The field value has been copied to the clipboard</string>
-	<string name="overwrite_and_delete">Overwrite and delete</string>
+    <string name="overwrite_and_delete">Overwrite and delete</string>
 	<string name="list_is_empty">The list is empty</string>
 	<string name="hide_eds_screen_from_other_apps">Hide <xliff:g id="program_name">EDS</xliff:g> screen from other applications</string>
 	<string name="toggle_auto_zoom">Toggle auto zoom</string>

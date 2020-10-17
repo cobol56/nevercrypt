@@ -63,10 +63,7 @@ public class DummyUpDirRecord extends FolderRecord
     {
         if(_icon == null && context!=null)
 		{
-			TypedValue typedValue = new TypedValue();
-			context.getTheme().resolveAttribute(R.attr.folderUpIcon, typedValue, true);
-			//noinspection deprecation
-			_icon = context.getResources().getDrawable(typedValue.resourceId);
+			_icon = context.getResources().getDrawable(R.drawable.ic_folder_up, context.getTheme());
 		}
         return _icon;
     }

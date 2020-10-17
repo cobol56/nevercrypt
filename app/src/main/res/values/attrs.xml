@@ -19,24 +19,5 @@
     <attr name="fmListStyle" format="reference" />
     <attr name="iconsColor" format="reference" />
     <attr name="selectedItemBackground" format="reference" />
-    <attr name="aboutIcon" format="reference" />
-    <attr name="deviceMemoryIcon" format="reference" />
-    <attr name="deviceRootIcon" format="reference" />
-    <attr name="exitIcon" format="reference" />
-    <attr name="extStorageIcon" format="reference" />
-    <attr name="fileIcon" format="reference" />
-    <attr name="folderIcon" format="reference" />
-    <attr name="folderUpIcon" format="reference" />
-    <attr name="helpIcon" format="reference" />
-    <attr name="lockIcon" format="reference" />
-    <attr name="lockOpenIcon" format="reference" />
-    <attr name="manageLocationsIcon" format="reference" />
-    <attr name="settingsIcon" format="reference" />
-    <attr name="storageIcon" format="reference" />
-    <attr name="widgetLockedIcon" format="reference" />
-    <attr name="widgetLockedAllIcon" format="reference" />
-    <attr name="widgetUnlockedIcon" format="reference" />
-    <attr name="widgetUnlockedAllIcon" format="reference" />
-    <attr name="collapseIcon" format="reference" />
     <attr name="editTextStyle" format="reference" />
 </resources>

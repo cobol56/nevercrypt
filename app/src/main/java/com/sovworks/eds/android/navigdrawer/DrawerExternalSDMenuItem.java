@@ -44,10 +44,7 @@ public class DrawerExternalSDMenuItem extends DrawerLocationMenuItem
     {
         if(_icon == null)
         {
-            TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.extStorageIcon, typedValue, true);
-            //noinspection deprecation
-            _icon = context.getResources().getDrawable(typedValue.resourceId);
+            _icon = context.getResources().getDrawable(R.drawable.ic_ext_storage, context.getTheme());
         }
         return _icon;
     }

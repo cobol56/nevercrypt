@@ -7,7 +7,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="?attr/collapseIcon"
+        android:src="@drawable/ic_action_collapse"
         style="@style/DrawerMainIcon" />
     <TextView
 		android:id="@android:id/text1"

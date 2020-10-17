@@ -2,11 +2,13 @@ package com.sovworks.eds.android.locations.fragments;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.util.TypedValue;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -115,10 +117,7 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
     {
         if(_icon == null)
         {
-            TypedValue typedValue = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.attr.storageIcon, typedValue, true);
-            //noinspection deprecation
-            _icon = getActivity().getResources().getDrawable(typedValue.resourceId);
+            _icon = getResources().getDrawable(R.drawable.ic_ext_storage);
         }
         return _icon;
     }

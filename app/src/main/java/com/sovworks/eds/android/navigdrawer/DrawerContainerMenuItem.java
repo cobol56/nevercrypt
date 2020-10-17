@@ -77,10 +77,7 @@ public class DrawerContainerMenuItem extends DrawerLocationMenuItem
     {
         if(_openedIcon == null)
         {
-            TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.lockOpenIcon, typedValue, true);
-            //noinspection deprecation
-            _openedIcon = context.getResources().getDrawable(typedValue.resourceId);
+            _openedIcon = context.getResources().getDrawable(R.drawable.ic_lock_open, context.getTheme());
         }
         return _openedIcon;
     }
@@ -89,10 +86,7 @@ public class DrawerContainerMenuItem extends DrawerLocationMenuItem
     {
         if(_closedIcon == null)
         {
-            TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.lockIcon, typedValue, true);
-            //noinspection deprecation
-            _closedIcon = context.getResources().getDrawable(typedValue.resourceId);
+            _closedIcon = context.getResources().getDrawable(R.drawable.ic_lock, context.getTheme());
         }
         return _closedIcon;
     }

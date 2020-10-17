@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="long_press_buf">5dp</dimen>
     <dimen name="main_text">14sp</dimen>
     <dimen name="properties_button_text">12sp</dimen>
     <dimen name="file_list_row_height">60dp</dimen>

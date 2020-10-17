@@ -3,8 +3,7 @@
     <string name="add_container">添加现有容器</string>
 	<string name="eds" translatable="false"><xliff:g id="program_name">EDS</xliff:g></string>
     <string name="ok">确认</string>
-	<string name="enter_password">输入密码:</string>
-	<string name="select">选取</string>
+    <string name="select">选取</string>
 	<string name="enter_new_folder_name">输入新文件夹名称</string>
 	<string name="new_file">新建文件</string>
 	<string name="new_dir">新建文件夹</string>
@@ -39,8 +38,7 @@
 	<string name="properties">属性</string>
 	<string name="total_space">总空间</string>
 	<string name="free_space">可用空间</string>
-	<string name="use_password">使用密码</string>
-	<string name="saving_changes">保存更改</string>
+    <string name="saving_changes">保存更改</string>
 	<string name="preparing_file">正在准备文件</string>
 	<string name="eds_service_is_running"><xliff:g id="program_name">EDS</xliff:g> 服务正在运行</string>
 	<string name="stop_service_and_exit">停止服务并退出</string>
@@ -63,10 +61,7 @@
 	<string name="container_file_name_is_not_specified">容器的文件名未指定</string>
 	<string name="do_you_want_to_overwrite_existing_file">你要覆盖已存在的文件吗？</string>
 	<string name="enter_file_name">输入文件名</string>
-	<string name="save_changes">保存更改</string>
-	<string name="do_you_want_to_save_changes">你要保存更改吗？</string>
-	<string name="select_image">选取一张图片</string>
-	<string name="do_you_really_want_to_delete_selected_files">你真的要删除选定的文件吗？(%s)?</string>
+    <string name="do_you_really_want_to_delete_selected_files">你真的要删除选定的文件吗？(%s)?</string>
 	<string name="wiping_files">擦除文件</string>
 	<string name="creating_container">创建容器</string>
 	<string name="err_failed_saving_changes">保存更改失败.尝试再次保存或手动复制文件.详细信息请查看程序日志文件.</string>
@@ -113,8 +108,7 @@
 	<string name="close">关闭</string>
 	<string name="target_path">目标路径</string>
 	<string name="device">设备</string>
-	<string name="username">用户名</string>
-	<string name="password">密码</string>
+    <string name="password">密码</string>
 	<string name="title">标题</string>
 	<string name="open">打开</string>
 	<string name="disable_wide_screen_layouts_desc">这个选项禁止在横向模式下预览面板</string>
@@ -148,8 +142,7 @@
 	<string name="container_format_desc">你可以指定容器的格式，以加快打开速度</string>
 	<string name="encryption_alg_desc">你可以指定加密算法，以加快打开速度 </string>
 	<string name="hash_alg_desc">你可以指定Hash算法，以加快打开速度 </string>
-	<string name="working">工作中</string>	
-	<string name="generic_error_message">发生错误:可从程序日志中查看细节.</string>
+    <string name="generic_error_message">发生错误:可从程序日志中查看细节.</string>
 	<string name="err_no_application_found">没有发现处理该类型文件的应用程序. 您可以从主设置屏幕上覆盖文件的mime类型.</string>
 	<string name="disable_modified_files_backup">禁用修改后文件的备份</string>
     <string name="invalid_master_password">管理密码无效</string>
@@ -158,8 +151,7 @@
     <string name="location_type">位置类型</string>
     <string name="drawer_open">打开抽屉</string>
     <string name="drawer_close">关闭抽屉</string>
-    <string name="open_file">打开文件</string>
-	<string name="add_new">添加新的</string>
+    <string name="add_new">添加新的</string>
 	<string name="create_new_container_or_add_existing_container">你要创建一个新的容器或添加现有容器吗？</string>
 	<string name="changing_password">正在更改密码</string>
 	<string name="choose_files_to_copy_or_move">选取文件复制或移动…</string>
@@ -185,8 +177,7 @@
 	<string name="encryption_alg_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>加密算法是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="encryption_algorithm_name" example="AES">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
 	<string name="kdf_base_hash_func_is"><xliff:g id="key_derivation_function">KDF</xliff:g> hash 基本函数是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="hash_algorithm_name" example="SHA-256">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.</string>
 	<string name="hidden">隐藏</string>
-	<string name="value_has_been_copied">字段值已复制到剪贴板</string>
-	<string name="overwrite_and_delete">覆盖和删除</string>
+    <string name="overwrite_and_delete">覆盖和删除</string>
 	<string name="list_is_empty">列表是空的</string>
 	<string name="hide_eds_screen_from_other_apps">从其他应用程序中隐藏 <xliff:g id="program_name">EDS</xliff:g> 屏幕</string>
 	<string name="toggle_auto_zoom">切换自动缩放</string>

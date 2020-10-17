@@ -1,7 +1,6 @@
 package com.sovworks.eds.android.locations.fragments;
 
 import android.graphics.drawable.Drawable;
-import android.util.TypedValue;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.locations.ContainerBasedLocation;
@@ -47,10 +46,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     {
         if(_openedContainerIcon == null)
         {
-            TypedValue typedValue = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.attr.lockOpenIcon, typedValue, true);
-            //noinspection deprecation
-            _openedContainerIcon = getActivity().getResources().getDrawable(typedValue.resourceId);
+            _openedContainerIcon = getResources().getDrawable(R.drawable.ic_lock_open );
         }
         return _openedContainerIcon;
     }
@@ -59,10 +55,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     {
         if(_closedContainerIcon == null)
         {
-            TypedValue typedValue = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.attr.lockIcon, typedValue, true);
-            //noinspection deprecation
-            _closedContainerIcon = getActivity().getResources().getDrawable(typedValue.resourceId);
+            _closedContainerIcon = getResources().getDrawable(R.drawable.ic_lock );
         }
         return _closedContainerIcon;
     }

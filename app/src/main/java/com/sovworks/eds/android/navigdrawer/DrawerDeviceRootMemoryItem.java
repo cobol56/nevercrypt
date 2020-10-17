@@ -25,10 +25,7 @@ public class DrawerDeviceRootMemoryItem extends DrawerLocationMenuItem
     {
         if(_icon == null)
         {
-            TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.deviceRootIcon, typedValue, true);
-            //noinspection deprecation
-            _icon = context.getResources().getDrawable(typedValue.resourceId);
+            _icon = context.getResources().getDrawable(R.drawable.ic_device_root_memory, context.getTheme());
         }
         return _icon;
     }

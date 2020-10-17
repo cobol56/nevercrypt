@@ -2,8 +2,7 @@
 <resources>
   <string name="add_container">Добавить контейнер</string>
   <string name="ok">OK</string>
-  <string name="enter_password">Введите пароль:</string>
-  <string name="select">Выбрать</string>
+    <string name="select">Выбрать</string>
   <string name="enter_new_folder_name">Введите название новой директории</string>
   <string name="new_file">Новый файл</string>
   <string name="new_dir">Новый каталог</string>
@@ -38,8 +37,7 @@
   <string name="properties">Свойства</string>
   <string name="total_space">Общее пространство</string>
   <string name="free_space">Свободное пространство</string>
-  <string name="use_password">Ввести пароль</string>
-  <string name="saving_changes">Сохранение изменений</string>
+    <string name="saving_changes">Сохранение изменений</string>
   <string name="preparing_file">Подготовка файлов</string>
   <string name="eds_service_is_running">Работает служба EDS</string>
   <string name="stop_service_and_exit">Выход</string>
@@ -61,10 +59,7 @@
   <string name="container_file_name_is_not_specified">Не задано имя файла контейнера</string>
   <string name="do_you_want_to_overwrite_existing_file">Перезаписать существующий файл?</string>
   <string name="enter_file_name">Введите имя файла</string>
-  <string name="save_changes">Сохранить изменения</string>
-  <string name="do_you_want_to_save_changes">Вы хотите сохранить изменения?</string>
-  <string name="select_image">Выберите изображение</string>
-  <string name="do_you_really_want_to_delete_selected_files">Вы действительно хотите удалить выбранные файлы (%s)?</string>
+    <string name="do_you_really_want_to_delete_selected_files">Вы действительно хотите удалить выбранные файлы (%s)?</string>
   <string name="wiping_files">Удаление файлов</string>
   <string name="creating_container">Создание контейнера</string>
   <string name="err_failed_saving_changes">Не удалось сохранить изменения в файле. Вы можете попробовать сохранить файл ещё раз или скопировать файл вручную. Информацию об ошибке можно посмотреть в журнале программы.</string>
@@ -111,8 +106,7 @@
   <string name="close">Закрыть</string>
   <string name="target_path">Целевой путь</string>
   <string name="device">Устройство</string>
-  <string name="username">Имя пользователя</string>
-  <string name="password">Пароль</string>
+    <string name="password">Пароль</string>
   <string name="title">Название</string>
   <string name="open">Открыть</string>
   <string name="disable_wide_screen_layouts_desc">Эта настройка отключает панели для предпросмотра в портретном режиме</string>
@@ -146,8 +140,7 @@
   <string name="container_format_desc">Вы можете указать формат контейнера, чтобы уменьшить время открытия контейнера</string>
   <string name="encryption_alg_desc">Вы можете указать алгоритм шифрования контейнера, чтобы уменьшить время открытия контейнера</string>
   <string name="hash_alg_desc">Вы можете указать алгоритм хэширования пароля, чтобы уменьшить время открытия контейнера</string>
-  <string name="working">Выполнение</string>
-  <string name="generic_error_message">Произошла ошибка. Подробности доступны в отладочном журнале программы.</string>
+    <string name="generic_error_message">Произошла ошибка. Подробности доступны в отладочном журнале программы.</string>
   <string name="err_no_application_found">Не найдено приложение для просмотра данного типа файлов. Вы можете переопределить mime тип файла в основных настройках программы.</string>
   <string name="disable_modified_files_backup">Отключить резервное копирование изменённых файлов</string>
   <string name="invalid_master_password">Неправильный мастер-пароль</string>
@@ -156,8 +149,7 @@
   <string name="location_type">тип</string>
   <string name="drawer_open">Открыть выдвижное меню</string>
   <string name="drawer_close">Закрыть выдвижное меню</string>
-  <string name="open_file">Открыть файл</string>
-  <string name="add_new">Добавить </string>
+    <string name="add_new">Добавить </string>
   <string name="create_new_container_or_add_existing_container">Вы хотите создать новый контейнер или добавить существующий?</string>
   <string name="changing_password">Смена пароля</string>
   <string name="choose_files_to_copy_or_move">Выберите файлы для копирования или перемещения</string>
@@ -182,8 +174,7 @@
   <string name="encryption_alg_is">&lt;p&gt;Алгоритм шифрования: &lt;b&gt;%1$s&lt;/b&gt;.&lt;/p&gt;</string>
   <string name="kdf_base_hash_func_is">Базовая хэш-функция: &lt;b&gt;%1$s&lt;/b&gt;.</string>
   <string name="hidden">скрытый</string>
-  <string name="value_has_been_copied">Значение было скопировано в буфер обмена</string>
-  <string name="overwrite_and_delete">Перезаписать и удалить</string>
+    <string name="overwrite_and_delete">Перезаписать и удалить</string>
   <string name="list_is_empty">Список пуст</string>
   <string name="hide_eds_screen_from_other_apps">Скрыть экран EDS от других приложений</string>
   <string name="toggle_auto_zoom">Вкл/вкл автоматического масштабирования</string>
