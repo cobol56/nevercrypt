@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="eds" translatable="false"><xliff:g id="program_name">EDS Lite</xliff:g></string>
-    <string name="donation_notice">This is the open source version of EDS. <b>Please support</b> the development of <b>the open source version</b> by purchasing the full version or by making a donation.</string>
-    <string name="make_a_donation">Make a donation</string>
-    <string name="check_the_full_version">Check the full version</string>
-    <string name="check_source_code">Check the source code</string>
-</resources>

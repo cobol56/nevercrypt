@@ -40,7 +40,7 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/show_version_history_button"
+                android:id="@+id/close_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/version_history"

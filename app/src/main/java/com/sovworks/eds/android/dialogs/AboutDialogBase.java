@@ -7,13 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.sovworks.eds.android.Logger;
@@ -74,31 +74,23 @@ public abstract class AboutDialogBase extends DialogFragment
     			verName,
     			getResources().getString(R.string.about_message)
     		);
+		((TextView)v.findViewById(R.id.about_text_view)).setText(aboutMessage);
 
-    	((TextView)v.findViewById(R.id.about_text_view)).setText(aboutMessage);
-		v.findViewById(R.id.show_version_history_button).setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //TODO startActivity(new Intent(getActivity(), VersionHistory.class));
-            }
-        });
-		v.findViewById(R.id.contact_support_button).setOnClickListener(new OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                try
-                {
-                    sendSupportRequest();
-                }
-                catch (Throwable e)
-                {
-                    Logger.showAndLog(getActivity(), e);
-                }
-            }
-        });
+		v.findViewById(R.id.homepage_button).setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				try
+				{
+					openWebPage(GlobalConfig.HOMEPAGE_URL);
+				}
+				catch (Throwable e)
+				{
+					Logger.showAndLog(getActivity(), e);
+				}
+			}
+		});
 		v.findViewById(R.id.get_program_log).setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -114,7 +106,27 @@ public abstract class AboutDialogBase extends DialogFragment
 				}
 			}
 		});
+		v.findViewById(R.id.close_button).setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				getDialog().cancel();
+			}
+		});
 		return v;
+	}
+
+	protected void openWebPage(String url)
+	{
+		try
+		{
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		}
+		catch (Exception e)
+		{
+			Logger.showAndLog(getActivity(), e);
+		}
 	}
 
 	@Override
@@ -140,22 +152,6 @@ public abstract class AboutDialogBase extends DialogFragment
 	{
 		return WRAP_CONTENT;
 		//return getResources().getDimensionPixelSize(R.dimen.about_dialog_heigh);
-	}
-
-	protected String getSubjectString()
-	{
-		return "EDS support";
-	}
-
-	private void sendSupportRequest()
-	{
-		final Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setType("plain/text");
-		emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{GlobalConfig.SUPPORT_EMAIL});
-		String subj = getSubjectString();
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, subj);
-		emailIntent.putExtra(Intent.EXTRA_TEXT, Util.getSystemInfoString());
-		startActivity(Intent.createChooser(emailIntent, "Send mail"));
 	}
 
 	private void saveDebugLog() throws IOException, ApplicationException

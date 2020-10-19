@@ -7,7 +7,7 @@ public final class GlobalConfig extends GlobalConfigCommon
     {
         return false;
     }
-    public static final String DONATIONS_URL = "https://sovworks.com/eds/donations.php";
-    public static final String SOURCE_CODE_URL = "https://github.com/sovworks/edslite";
-    public static final String FULL_VERSION_URL = "https://play.google.com/store/apps/details?id=com.sovworks.eds.android";
+    public static final String HOMEPAGE_URL = "https://www.igel-tech.com";
+    public static final String DONATIONS_URL = "https://www.vware.at/donate";
+    public static final String SOURCE_CODE_URL = "https://github.com/vware/edslite";
 }

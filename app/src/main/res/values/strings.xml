@@ -54,8 +54,12 @@
 	<string name="err_container_size_is_too_small">Specified container size is too small</string>
 	<string name="err_failed_processing_settings_file">Failed processing the settings file</string>
 	<string name="err_failed_creating_container">Failed creating container</string>
-	<string name="about_message" translatable="false"><xliff:g id="copyright">\u00A9</xliff:g> 2012–2017, <xliff:g id="dev_name">sovworks</xliff:g></string>
+	<string name="about_message" translatable="false"><xliff:g id="copyright">\u00A9</xliff:g> 2012–2020, <xliff:g id="dev_name">vware</xliff:g></string>
 	<string name="about">About</string>
+	<string name="homepage">Open homepage</string>
+	<string name="donation_notice">This software is open source. It is a fork of EDS by Sovworks. <b>Please support</b> the development of by making a donation.</string>
+	<string name="make_a_donation">Make a donation</string>
+	<string name="check_source_code">Check the source code</string>
 	<string name="opening_container">Opening</string>
 	<string name="decrypt_to_temp_folder">Decrypt to the temporary folder</string>
 	<string name="container_file_name_is_not_specified">The file name of the container is not specified</string>
