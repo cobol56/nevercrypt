@@ -1,8 +1,8 @@
 package com.sovworks.eds.crypto.kdf;
 
-import java.security.NoSuchAlgorithmException;
-
 import com.sovworks.eds.crypto.EncryptionEngineException;
+
+import java.security.NoSuchAlgorithmException;
 
 public class HMACWhirlpoolKDF extends PBKDF
 {

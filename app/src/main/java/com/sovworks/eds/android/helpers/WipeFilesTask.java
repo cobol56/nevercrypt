@@ -1,13 +1,13 @@
 package com.sovworks.eds.android.helpers;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Random;
-
 import com.sovworks.eds.fs.File;
 import com.sovworks.eds.fs.Path;
 import com.sovworks.eds.fs.util.SrcDstCollection;
 import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Random;
 
 public class WipeFilesTask
 {

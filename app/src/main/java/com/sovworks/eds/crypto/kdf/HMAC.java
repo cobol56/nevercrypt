@@ -1,10 +1,10 @@
 package com.sovworks.eds.crypto.kdf;
 
+import com.sovworks.eds.crypto.EncryptionEngineException;
+
 import java.security.DigestException;
 import java.security.MessageDigest;
 import java.util.Arrays;
-
-import com.sovworks.eds.crypto.EncryptionEngineException;
 
 public class HMAC
 {

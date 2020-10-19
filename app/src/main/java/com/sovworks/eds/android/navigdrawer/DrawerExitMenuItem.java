@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.sovworks.eds.android.R;

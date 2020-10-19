@@ -3,16 +3,16 @@ package com.sovworks.eds.android.settings.fragments;
 import android.os.Bundle;
 
 import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.settings.container.UseExternalFileManagerPropertyEditor;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.android.settings.PropertiesHostWithLocation;
 import com.sovworks.eds.android.settings.PropertiesHostWithStateBundle;
 import com.sovworks.eds.android.settings.UserSettings;
 import com.sovworks.eds.android.settings.container.OpenInReadOnlyModePropertyEditor;
 import com.sovworks.eds.android.settings.container.PIMPropertyEditor;
+import com.sovworks.eds.android.settings.container.UseExternalFileManagerPropertyEditor;
 import com.sovworks.eds.locations.ContainerLocation;
 import com.sovworks.eds.locations.EDSLocation;
 import com.sovworks.eds.locations.Location;
+import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.locations.Openable;
 import com.sovworks.eds.settings.Settings;
 

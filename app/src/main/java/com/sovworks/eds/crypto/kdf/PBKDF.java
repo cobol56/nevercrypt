@@ -1,5 +1,10 @@
 package com.sovworks.eds.crypto.kdf;
 
+import com.sovworks.eds.android.helpers.ProgressReporter;
+import com.sovworks.eds.crypto.EncryptionEngineException;
+import com.sovworks.eds.crypto.hash.RIPEMD160;
+import com.sovworks.eds.crypto.hash.Whirlpool;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.security.DigestException;
@@ -7,11 +12,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.concurrent.CancellationException;
-
-import com.sovworks.eds.android.helpers.ProgressReporter;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.hash.RIPEMD160;
-import com.sovworks.eds.crypto.hash.Whirlpool;
 
 public abstract class PBKDF
 {	

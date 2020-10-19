@@ -6,7 +6,6 @@ import com.sovworks.eds.settings.GlobalConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 public abstract class TransInputStream extends InputStream implements DataInput
 {

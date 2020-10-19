@@ -2,10 +2,10 @@ package com.sovworks.eds.fs.encfs;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.fs.File;
-import com.sovworks.eds.util.IteratorConverter;
 import com.sovworks.eds.fs.util.DirectoryWrapper;
 import com.sovworks.eds.fs.util.FilteredIterator;
 import com.sovworks.eds.fs.util.StringPathUtil;
+import com.sovworks.eds.util.IteratorConverter;
 
 import java.io.IOException;
 import java.util.Iterator;

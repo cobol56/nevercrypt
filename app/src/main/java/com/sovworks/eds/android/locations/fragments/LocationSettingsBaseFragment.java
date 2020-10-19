@@ -8,12 +8,12 @@ import android.view.MenuItem;
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.android.settings.container.UseExternalFileManagerPropertyEditor;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.android.settings.PropertiesHostWithLocation;
 import com.sovworks.eds.android.settings.TextPropertyEditor;
+import com.sovworks.eds.android.settings.UserSettings;
+import com.sovworks.eds.android.settings.container.UseExternalFileManagerPropertyEditor;
 import com.sovworks.eds.locations.LocationBase;
+import com.sovworks.eds.locations.LocationsManager;
 
 public abstract class LocationSettingsBaseFragment extends PropertiesFragmentBase implements PropertiesHostWithLocation
 {

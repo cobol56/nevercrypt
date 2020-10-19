@@ -5,9 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.android.locations.tasks.AddExistingContainerTaskFragment;
 import com.sovworks.eds.locations.Location;
+import com.sovworks.eds.locations.LocationsManager;
 
 public class CheckStartPathTask extends AddExistingContainerTaskFragment
 {

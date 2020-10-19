@@ -3,12 +3,13 @@ package com.sovworks.eds.android.dialogs;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;

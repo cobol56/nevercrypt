@@ -2,9 +2,9 @@ package com.sovworks.eds.crypto.kdf;
 
 import android.annotation.SuppressLint;
 
-import java.security.MessageDigest;
-
 import com.sovworks.eds.crypto.EncryptionEngineException;
+
+import java.security.MessageDigest;
 
 @SuppressLint("DefaultLocale")
 public class HashBasedPBKDF2 extends PBKDF

@@ -3,7 +3,6 @@ package com.sovworks.eds.android.navigdrawer;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 

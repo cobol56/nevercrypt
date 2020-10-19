@@ -13,21 +13,21 @@ import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
-import androidx.annotation.NonNull;
 import android.util.Base64;
 
+import androidx.annotation.NonNull;
+
 import com.sovworks.eds.android.Logger;
+import com.sovworks.eds.android.filemanager.tasks.LoadPathInfoObservable;
 import com.sovworks.eds.android.helpers.CachedPathInfo;
 import com.sovworks.eds.android.helpers.TempFilesMonitor;
 import com.sovworks.eds.android.helpers.WipeFilesTask;
 import com.sovworks.eds.android.locations.PathsStore;
 import com.sovworks.eds.android.providers.cursor.FSCursor;
-import com.sovworks.eds.android.filemanager.tasks.LoadPathInfoObservable;
 import com.sovworks.eds.android.providers.cursor.SelectionChecker;
 import com.sovworks.eds.android.service.FileOpsService;
 import com.sovworks.eds.android.settings.UserSettings;

@@ -1,9 +1,10 @@
 package com.sovworks.eds.android.views;
 
 import android.content.Context;
-import androidx.appcompat.widget.AppCompatEditText;
 import android.text.Editable;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 import com.sovworks.eds.crypto.EditableSecureBuffer;
 import com.sovworks.eds.crypto.SecureBuffer;

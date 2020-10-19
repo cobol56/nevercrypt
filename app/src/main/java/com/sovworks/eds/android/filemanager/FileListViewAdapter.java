@@ -1,10 +1,11 @@
 package com.sovworks.eds.android.filemanager;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import androidx.annotation.NonNull;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.records.BrowserRecord;

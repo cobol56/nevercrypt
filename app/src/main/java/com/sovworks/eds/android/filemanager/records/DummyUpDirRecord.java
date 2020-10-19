@@ -2,7 +2,6 @@ package com.sovworks.eds.android.filemanager.records;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.TypedValue;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.fragments.FileListDataFragment;

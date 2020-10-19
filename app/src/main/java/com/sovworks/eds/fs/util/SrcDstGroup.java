@@ -1,14 +1,14 @@
 package com.sovworks.eds.fs.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.sovworks.eds.android.Logger;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 
 public class SrcDstGroup implements SrcDstCollection

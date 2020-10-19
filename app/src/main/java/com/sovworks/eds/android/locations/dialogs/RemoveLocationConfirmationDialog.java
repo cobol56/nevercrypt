@@ -6,9 +6,9 @@ import android.os.Bundle;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.dialogs.ConfirmationDialog;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.android.locations.fragments.LocationListBaseFragment;
 import com.sovworks.eds.locations.Location;
+import com.sovworks.eds.locations.LocationsManager;
 
 public class RemoveLocationConfirmationDialog extends ConfirmationDialog
 {

@@ -1,13 +1,13 @@
 package com.sovworks.eds.fs.std;
 
+import com.sovworks.eds.fs.Directory;
+import com.sovworks.eds.fs.Path;
+import com.sovworks.eds.fs.errors.DirectoryIsNotEmptyException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.errors.DirectoryIsNotEmptyException;
 
 class StdDirRecord extends StdFsRecord implements Directory
 {		

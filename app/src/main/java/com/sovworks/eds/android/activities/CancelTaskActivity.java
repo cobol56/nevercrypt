@@ -1,8 +1,5 @@
 package com.sovworks.eds.android.activities;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.Util;
-import com.sovworks.eds.android.service.FileOpsService;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,6 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+
+import com.sovworks.eds.android.R;
+import com.sovworks.eds.android.helpers.Util;
+import com.sovworks.eds.android.service.FileOpsService;
 
 public class CancelTaskActivity extends Activity
 {

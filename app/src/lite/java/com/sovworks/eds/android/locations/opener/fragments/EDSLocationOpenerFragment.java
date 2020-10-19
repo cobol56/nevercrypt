@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.locations.opener.fragments;
 
-import android.os.Build;
 import android.os.Bundle;
 
 import com.sovworks.eds.android.fragments.TaskFragment;

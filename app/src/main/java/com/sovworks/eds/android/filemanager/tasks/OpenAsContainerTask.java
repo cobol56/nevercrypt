@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.locations.Location;
+import com.sovworks.eds.locations.LocationsManager;
 
 public class OpenAsContainerTask extends CheckStartPathTask
 {

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.PowerManager;
+
 import androidx.exifinterface.media.ExifInterface;
 
 import com.drew.imaging.ImageMetadataReader;

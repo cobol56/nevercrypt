@@ -12,9 +12,9 @@ import android.provider.DocumentsContract;
 import android.util.Base64;
 
 import com.sovworks.eds.android.Logger;
+import com.sovworks.eds.android.filemanager.tasks.LoadPathInfoObservable;
 import com.sovworks.eds.android.providers.cursor.DocumentRootsCursor;
 import com.sovworks.eds.android.providers.cursor.FSCursor;
-import com.sovworks.eds.android.filemanager.tasks.LoadPathInfoObservable;
 import com.sovworks.eds.android.service.FileOpsService;
 import com.sovworks.eds.fs.Directory;
 import com.sovworks.eds.fs.Path;

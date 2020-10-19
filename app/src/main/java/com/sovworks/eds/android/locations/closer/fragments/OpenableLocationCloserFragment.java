@@ -2,7 +2,6 @@ package com.sovworks.eds.android.locations.closer.fragments;
 
 
 import android.content.Context;
-import android.os.Build;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.fragments.TaskFragment;

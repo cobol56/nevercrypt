@@ -1,7 +1,5 @@
 package com.sovworks.eds.exceptions;
 
-import com.sovworks.eds.exceptions.ApplicationException;
-
 public class UnsupportedContainerTypeException extends ApplicationException
 {
 	/**

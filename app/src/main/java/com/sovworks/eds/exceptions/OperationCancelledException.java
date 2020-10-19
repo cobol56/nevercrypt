@@ -1,7 +1,5 @@
 package com.sovworks.eds.exceptions;
 
-import com.sovworks.eds.exceptions.ApplicationException;
-
 public class OperationCancelledException extends ApplicationException
 {
 

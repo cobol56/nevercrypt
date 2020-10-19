@@ -1,7 +1,6 @@
 package com.sovworks.eds.android.navigdrawer;
 
 import android.content.Intent;
-import android.os.Build;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;

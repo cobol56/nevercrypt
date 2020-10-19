@@ -1,10 +1,10 @@
 package com.sovworks.eds.fs.fat;
 
-import java.io.IOException;
-import java.util.zip.DataFormatException;
-
 import com.sovworks.eds.fs.RandomAccessIO;
 import com.sovworks.eds.fs.util.Util;
+
+import java.io.IOException;
+import java.util.zip.DataFormatException;
 
 class FSInfo
 {

@@ -1,9 +1,9 @@
 package com.sovworks.eds.android.helpers;
 
+import com.sovworks.eds.fs.Path;
+
 import java.io.IOException;
 import java.util.Date;
-
-import com.sovworks.eds.fs.Path;
 
 public interface CachedPathInfo
 {	

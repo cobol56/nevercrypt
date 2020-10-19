@@ -2,7 +2,6 @@ package com.sovworks.eds.locations;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.DocumentsContract;
 
 import com.sovworks.eds.android.Logger;

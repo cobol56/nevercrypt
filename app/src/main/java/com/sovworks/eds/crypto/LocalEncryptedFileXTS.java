@@ -1,10 +1,10 @@
 package com.sovworks.eds.crypto;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.sovworks.eds.crypto.modes.XTS;
 import com.sovworks.eds.fs.RandomAccessIO;
+
+import java.io.File;
+import java.io.IOException;
 
 public class LocalEncryptedFileXTS implements RandomAccessIO
 {

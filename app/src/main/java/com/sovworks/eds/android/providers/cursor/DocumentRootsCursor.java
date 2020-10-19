@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.providers.cursor;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.AbstractCursor;
 import android.os.Build;

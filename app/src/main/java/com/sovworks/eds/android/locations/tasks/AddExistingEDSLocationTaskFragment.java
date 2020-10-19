@@ -5,11 +5,11 @@ import android.content.Context;
 
 import com.sovworks.eds.android.activities.SettingsBaseActivity;
 import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
 import com.sovworks.eds.container.ContainerFormatterBase;
 import com.sovworks.eds.locations.EDSLocation;
 import com.sovworks.eds.locations.Location;
+import com.sovworks.eds.locations.LocationsManager;
 
 public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
 {

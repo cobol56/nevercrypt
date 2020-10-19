@@ -9,9 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
+
 import androidx.core.app.NotificationCompat;
 
 import com.sovworks.eds.android.Logger;

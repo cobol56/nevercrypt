@@ -1,11 +1,11 @@
 package com.sovworks.eds.fs.util;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import com.sovworks.eds.fs.DataOutput;
 import com.sovworks.eds.fs.RandomAccessIO;
 import com.sovworks.eds.fs.RandomStorageAccess;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 
 public class RandomAccessOutputStream extends OutputStream implements DataOutput, RandomStorageAccess

@@ -9,10 +9,10 @@ import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.activities.SettingsBaseActivity;
 import com.sovworks.eds.android.fragments.TaskFragment;
 import com.sovworks.eds.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragment;
 import com.sovworks.eds.exceptions.ApplicationException;
 import com.sovworks.eds.locations.EDSLocation;
+import com.sovworks.eds.locations.LocationsManager;
 
 import java.io.IOException;
 

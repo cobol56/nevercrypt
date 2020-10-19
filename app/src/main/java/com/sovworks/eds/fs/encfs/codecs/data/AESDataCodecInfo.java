@@ -5,9 +5,9 @@ import com.sovworks.eds.crypto.FileEncryptionEngine;
 import com.sovworks.eds.fs.encfs.AlgInfo;
 import com.sovworks.eds.fs.encfs.Config;
 import com.sovworks.eds.fs.encfs.DataCodecInfo;
-import com.sovworks.eds.fs.encfs.macs.MACCalculator;
 import com.sovworks.eds.fs.encfs.ciphers.AESCBCFileCipher;
 import com.sovworks.eds.fs.encfs.ciphers.AESCFBStreamCipher;
+import com.sovworks.eds.fs.encfs.macs.MACCalculator;
 import com.sovworks.eds.fs.encfs.macs.SHA1MACCalculator;
 
 public class AESDataCodecInfo implements DataCodecInfo

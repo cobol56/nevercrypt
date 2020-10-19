@@ -2,7 +2,6 @@ package com.sovworks.eds.android.filemanager.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;

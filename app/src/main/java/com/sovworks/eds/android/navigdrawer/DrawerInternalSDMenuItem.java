@@ -3,7 +3,6 @@ package com.sovworks.eds.android.navigdrawer;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.TypedValue;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.locations.Location;

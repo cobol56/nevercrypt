@@ -2,9 +2,9 @@ package com.sovworks.eds.android.navigdrawer;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.locations.EncFsLocationBase;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.locations.ContainerLocation;
 import com.sovworks.eds.locations.EDSLocation;
+import com.sovworks.eds.locations.LocationsManager;
 
 import java.util.ArrayList;
 import java.util.Collection;

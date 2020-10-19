@@ -2,8 +2,9 @@ package com.sovworks.eds.android.helpers;
 
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.NonNull;
 import android.util.LruCache;
+
+import androidx.annotation.NonNull;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.filemanager.records.BrowserRecord;

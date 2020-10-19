@@ -1,8 +1,8 @@
 package com.sovworks.eds.fs.util;
 
-import java.io.IOException;
-
 import com.sovworks.eds.fs.RandomAccessIO;
+
+import java.io.IOException;
 
 public class RandomAccessIOWrapper implements RandomAccessIO
 {

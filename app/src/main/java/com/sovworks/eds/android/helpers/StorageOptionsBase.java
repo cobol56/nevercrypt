@@ -2,7 +2,6 @@ package com.sovworks.eds.android.helpers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.os.Environment;
 
 import com.sovworks.eds.android.Logger;
@@ -12,7 +11,6 @@ import com.sovworks.eds.fs.util.StringPathUtil;
 import com.sovworks.eds.settings.Settings;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;

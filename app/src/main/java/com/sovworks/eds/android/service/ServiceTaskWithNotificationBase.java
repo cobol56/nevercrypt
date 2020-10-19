@@ -4,13 +4,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.SystemClock;
+
 import androidx.core.app.NotificationCompat;
 
-import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.activities.CancelTaskActivity;
+import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.helpers.CompatHelper;
 
 public abstract class ServiceTaskWithNotificationBase implements Task

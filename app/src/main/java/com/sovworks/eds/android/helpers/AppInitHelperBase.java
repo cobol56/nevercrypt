@@ -2,10 +2,7 @@ package com.sovworks.eds.android.helpers;
 
 import android.annotation.SuppressLint;
 
-import com.sovworks.eds.android.locations.ContainerBasedLocation;
 import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.settings.Settings;
 import com.trello.rxlifecycle3.components.RxActivity;
 

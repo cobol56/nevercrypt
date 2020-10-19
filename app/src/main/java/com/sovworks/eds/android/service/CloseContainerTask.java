@@ -2,13 +2,14 @@ package com.sovworks.eds.android.service;
 
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.core.app.NotificationCompat;
 
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.android.locations.closer.fragments.OMLocationCloserFragment;
 import com.sovworks.eds.android.settings.UserSettings;
 import com.sovworks.eds.locations.EDSLocation;
+import com.sovworks.eds.locations.LocationsManager;
 
 public class CloseContainerTask extends ServiceTaskWithNotificationBase
 {

@@ -1,11 +1,10 @@
 package com.sovworks.eds.fs.util;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Iterator;
-
 import com.sovworks.eds.fs.Path;
 import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
+
+import java.io.IOException;
+import java.util.Iterator;
 
 
 public class FilesCountAndSize

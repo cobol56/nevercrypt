@@ -1,7 +1,6 @@
 package com.sovworks.eds.android.locations.fragments;
 
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 
 import com.sovworks.eds.android.R;

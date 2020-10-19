@@ -2,20 +2,17 @@ package com.sovworks.eds.android.locations.fragments;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.fs.DocumentTreeFS;
 import com.sovworks.eds.android.locations.DocumentTreeLocation;
-import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.locations.Location;
+import com.sovworks.eds.locations.LocationsManager;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
