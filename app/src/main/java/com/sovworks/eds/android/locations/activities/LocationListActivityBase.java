@@ -22,6 +22,7 @@ public abstract class LocationListActivityBase extends Activity
     {
         Util.setTheme(this);
         super.onCreate(savedInstanceState);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         if(UserSettings.getSettings(this).isFlagSecureEnabled())
             CompatHelper.setWindowFlagSecure(this);
         if(savedInstanceState == null)
@@ -29,6 +30,12 @@ public abstract class LocationListActivityBase extends Activity
                 beginTransaction().
                 add(android.R.id.content, getCreateLocationFragment(), LocationListBaseFragment.TAG).
                 commit();
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        finish();
+        return true;
     }
 
     protected Fragment getCreateLocationFragment()

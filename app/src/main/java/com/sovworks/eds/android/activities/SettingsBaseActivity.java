@@ -17,6 +17,7 @@ public abstract class SettingsBaseActivity extends Activity
     {
         Util.setTheme(this);
         super.onCreate(savedInstanceState);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         if(UserSettings.getSettings(this).isFlagSecureEnabled())
             CompatHelper.setWindowFlagSecure(this);
         if(savedInstanceState == null)
@@ -24,6 +25,12 @@ public abstract class SettingsBaseActivity extends Activity
                 beginTransaction().
                 add(android.R.id.content, getSettingsFragment(), SETTINGS_FRAGMENT_TAG).
                 commit();
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        finish();
+        return true;
     }
 
     protected abstract Fragment getSettingsFragment();
