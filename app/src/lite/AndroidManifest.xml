@@ -18,7 +18,7 @@
                   android:name=".providers.ContainersDocumentProvider"
                   android:grantUriPermissions="true"
                   android:permission="android.permission.MANAGE_DOCUMENTS"
-                  android:enabled="@bool/atLeastKitKat"
+                  android:enabled="true"
                   tools:ignore="ExportedContentProvider">
             <!--suppress AndroidElementNotAllowed -->
             <intent-filter>

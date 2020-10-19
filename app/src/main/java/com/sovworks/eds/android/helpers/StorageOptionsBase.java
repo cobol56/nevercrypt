@@ -127,11 +127,7 @@ public abstract class StorageOptionsBase
         if(Environment.MEDIA_MOUNTED.equals(defPathState) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(defPathState))
         {
             StorageInfo info = new StorageInfo();
-            if (
-                    Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD ||
-                            (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB && !Environment.isExternalStorageRemovable()) ||
-                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && (!Environment.isExternalStorageRemovable() || Environment.isExternalStorageEmulated()))
-                    )
+            if (!Environment.isExternalStorageRemovable() || Environment.isExternalStorageEmulated())
                 info.label = _context.getString(R.string.built_in_memory_card);
             else
             {
@@ -226,10 +222,7 @@ public abstract class StorageOptionsBase
 
     protected boolean checkMountPoint(Settings s, StorageOptionsBase.StorageInfo si)
     {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             return true;
-        File f = new File(si.path);
-        return f.isDirectory() && !si.path.startsWith("/mnt/media_rw");
     }
 
     private final Context _context;

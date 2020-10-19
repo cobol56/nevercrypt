@@ -984,7 +984,7 @@ public abstract class LocationsManagerBase
 			{
 				if(si.isExternal)
 				{
-					if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP || new File(si.path).isDirectory())
+					if(new File(si.path).isDirectory())
 					{
 						Location extLoc = new ExternalStorageLocation(_context, si.label, si.path, null);
 						extLoc.getFS(); //pre-create fs to use the same fs instance everywhere

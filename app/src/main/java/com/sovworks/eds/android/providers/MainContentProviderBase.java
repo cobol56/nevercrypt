@@ -165,7 +165,7 @@ public abstract class MainContentProviderBase extends ContentProvider
             if(u != null && ContentResolver.SCHEME_FILE.equalsIgnoreCase(u.getScheme()))
             {
                 java.io.File jf = new java.io.File(u.getPath());
-                return mode == ParcelFileDescriptor.MODE_READ_ONLY || Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT ?
+                return mode == ParcelFileDescriptor.MODE_READ_ONLY ?
                         ParcelFileDescriptor.open(jf, mode) :
                         ParcelFileDescriptor.open(jf, mode, new Handler(Looper.getMainLooper()),
                                 e ->

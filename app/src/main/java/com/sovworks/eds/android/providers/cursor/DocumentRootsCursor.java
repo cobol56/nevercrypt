@@ -23,7 +23,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.sovworks.eds.android.providers.ContainersDocumentProviderBase.getDocumentIdFromLocation;
 
-@TargetApi(Build.VERSION_CODES.KITKAT)
 public class DocumentRootsCursor extends AbstractCursor
 {
     public DocumentRootsCursor(Context context, LocationsManager lm, @NotNull String[] projection)
@@ -237,8 +236,7 @@ public class DocumentRootsCursor extends AbstractCursor
         int flags = DocumentsContract.Root.FLAG_SUPPORTS_SEARCH;
         if(!li.location.isReadOnly())
             flags |= DocumentsContract.Root.FLAG_SUPPORTS_CREATE;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            flags |= DocumentsContract.Root.FLAG_SUPPORTS_IS_CHILD;
+        flags |= DocumentsContract.Root.FLAG_SUPPORTS_IS_CHILD;
         return flags;
     }
 }

@@ -295,8 +295,6 @@ public abstract class LocationBase implements Location, Cloneable
 	@Override
 	public Intent getExternalFileManagerLaunchIntent()
 	{
-		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-			return null;
 		Settings.ExternalFileManagerInfo exFmInfo = _globalSettings.getExternalFileManagerInfo();
 		if(exFmInfo == null || !DocumentsContract.Document.MIME_TYPE_DIR.equals(exFmInfo.mimeType))
 			return null;

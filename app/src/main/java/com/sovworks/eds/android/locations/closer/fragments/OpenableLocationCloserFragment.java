@@ -71,7 +71,7 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
         LocationsManager lm = LocationsManager.getLocationsManager(context);
         LocationsManager.broadcastLocationChanged(context, loc);
         lm.unregOpenedLocation(loc);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && loc instanceof EDSLocation)
+        if(loc instanceof EDSLocation)
             ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(context);
 
         if(!lm.hasOpenLocations())

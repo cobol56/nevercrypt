@@ -95,8 +95,7 @@ public class PrepareToSendTask extends TaskFragment
 			if(uris.size() == checkedPaths.size())
 			{
 				result.urisToSend = uris;
-				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-					result.clipData = makeClipData(_context, location, checkedPaths);
+				result.clipData = makeClipData(_context, location, checkedPaths);
 			}
 			else
 				result.tempFilesToPrepare = checkedPaths;

@@ -377,11 +377,8 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 		_isFullScreen = !_isFullScreen;
 		UserSettings.getSettings(getActivity()).getSharedPreferences().edit().putBoolean(IMAGE_VIEWER_FULL_SCREEN_ENABLED, _isFullScreen).commit();
 
-		if(android.os.Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT)
-		{
-			if(_mainImageView!=null)
-				_mainImageView.setFullscreenMode(_isFullScreen);
-		}
+		if(_mainImageView!=null)
+			_mainImageView.setFullscreenMode(_isFullScreen);
 		getPreviewFragmentHost().onToggleFullScreen();
 		getActivity().invalidateOptionsMenu();
 	}

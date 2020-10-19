@@ -155,7 +155,6 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         Toast.makeText(getActivity(), R.string.select_root_folder_tip, Toast.LENGTH_LONG).show();
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -194,28 +193,25 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
     @Override
     protected void openLocation()
     {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        ExternalStorageLocation loc = getTargetLocation();
+        String docUri = loc.getExternalSettings().getDocumentsAPIUriString();
+        if (docUri != null)
         {
-            ExternalStorageLocation loc = getTargetLocation();
-            String docUri = loc.getExternalSettings().getDocumentsAPIUriString();
-            if (docUri != null)
+            LocationsManager lm = LocationsManager.getLocationsManager(getActivity());
+            try
             {
-                LocationsManager lm = LocationsManager.getLocationsManager(getActivity());
-                try
-                {
-                    Location docLoc = lm.getLocation(Uri.parse(docUri));
-                    finishOpener(true, docLoc);
-                    return;
-                }
-                catch (Exception e)
-                {
-                    Logger.showAndLog(getActivity(), e);
-                }
-            } else if (!loc.getExternalSettings().dontAskWritePermission())
-            {
-                startCheckWritableTask(loc);
+                Location docLoc = lm.getLocation(Uri.parse(docUri));
+                finishOpener(true, docLoc);
                 return;
             }
+            catch (Exception e)
+            {
+                Logger.showAndLog(getActivity(), e);
+            }
+        } else if (!loc.getExternalSettings().dontAskWritePermission())
+        {
+            startCheckWritableTask(loc);
+            return;
         }
         super.openLocation();
     }

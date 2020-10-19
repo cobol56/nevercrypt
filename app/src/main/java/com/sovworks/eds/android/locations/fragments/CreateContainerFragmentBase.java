@@ -84,10 +84,7 @@ public abstract class CreateContainerFragmentBase extends CreateEDSLocationFragm
         if(uri == null)
         {
             File path;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            else
-                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
             if (!path.exists() && !path.mkdirs())
                 path = getContext().getFilesDir();
             if (path != null)

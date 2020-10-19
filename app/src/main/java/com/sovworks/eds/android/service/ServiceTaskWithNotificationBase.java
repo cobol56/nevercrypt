@@ -85,7 +85,7 @@ public abstract class ServiceTaskWithNotificationBase implements Task
 		if(title == null)
 			return;
         NotificationCompat.Builder nb = new NotificationCompat.Builder(_context, CompatHelper.getFileOperationsNotificationsChannelId(_context))
-                .setSmallIcon(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? R.drawable.ic_notification_new : R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_notification_new)
                 .setOngoing(false)
                 .setAutoCancel(true)
                 .setContentTitle(title)
@@ -108,7 +108,7 @@ public abstract class ServiceTaskWithNotificationBase implements Task
     {
         NotificationCompat.Builder nb = new NotificationCompat.Builder(_context, CompatHelper.getFileOperationsNotificationsChannelId(_context))
 				.setContentTitle(_context.getString(R.string.eds))
-                .setSmallIcon(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? R.drawable.ic_notification_new : R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_notification_new)
                 .setOngoing(true)
                 .setAutoCancel(false)
 				.addAction(
@@ -116,15 +116,6 @@ public abstract class ServiceTaskWithNotificationBase implements Task
 						_context.getString(android.R.string.cancel),
 						FileOpsService.getCancelTaskActionPendingIntent(_context, _taskId)
 				);
-		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-			nb.setContentIntent(
-					PendingIntent.getActivity(
-							_context,
-							_taskId,
-							CancelTaskActivity.getCancelTaskIntent(_context, _taskId),
-							PendingIntent.FLAG_UPDATE_CURRENT
-					)
-			);
         return nb;
     }
 

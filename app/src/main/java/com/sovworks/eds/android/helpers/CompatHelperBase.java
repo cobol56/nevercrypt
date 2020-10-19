@@ -25,38 +25,19 @@ public class CompatHelperBase
 {
 	public static void setWindowFlagSecure(Activity act)
 	{
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-		    act.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+	    act.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 	}
 
 	public static void restartActivity(Activity activity)
 	{
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-		    activity.recreate();
-		else
-		{
-		    Intent intent = activity.getIntent();
-		    activity.overridePendingTransition(0, 0);
-		    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		    activity.finish();
-		    activity.overridePendingTransition(0, 0);
-		    activity.startActivity(intent);
-		}
+	    activity.recreate();
 	}
 
 	public static void storeTextInClipboard(Context context,String text)
 	{
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-        {
-            @SuppressWarnings("deprecation") android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText(text);
-        }
-        else
-        {
-            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("Text", text);
-            clipboard.setPrimaryClip(clip);
-        }
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Text", text);
+        clipboard.setPrimaryClip(clip);
 	}
 
 	public static Bitmap loadBitmapRegion(Path path,int sampleSize,Rect regionRect) throws IOException
@@ -66,20 +47,15 @@ public class CompatHelperBase
 	    InputStream data = path.getFile().getInputStream();
 		try
 		{
-			if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.GINGERBREAD_MR1)
+			BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(data, true);
+			try
 			{
-				BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(data, true);
-				try
-				{
-					return decoder.decodeRegion(regionRect, options);
-				}
-				finally
-				{
-					decoder.recycle();
-				}
+				return decoder.decodeRegion(regionRect, options);
 			}
-			else
-				return BitmapFactory.decodeStream(data, null, options);
+			finally
+			{
+				decoder.recycle();
+			}
 		}
 		finally
 		{

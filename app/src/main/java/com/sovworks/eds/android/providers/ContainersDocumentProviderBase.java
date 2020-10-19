@@ -31,7 +31,6 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-@TargetApi(Build.VERSION_CODES.KITKAT)
 public abstract class ContainersDocumentProviderBase extends android.provider.DocumentsProvider
 {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

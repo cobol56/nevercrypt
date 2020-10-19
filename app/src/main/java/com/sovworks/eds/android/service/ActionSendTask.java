@@ -74,7 +74,7 @@ public class ActionSendTask extends PrepareTempFilesTask
 			actionIntent.putExtra(Intent.EXTRA_STREAM, uris);
 		else
 			actionIntent.putExtra(Intent.EXTRA_STREAM, uris.get(0));
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && clipData!=null)
+		if(clipData!=null)
 		{
 			actionIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 			actionIntent.setClipData(clipData);

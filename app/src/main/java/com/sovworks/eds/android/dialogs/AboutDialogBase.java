@@ -194,16 +194,14 @@ public abstract class AboutDialogBase extends DialogFragment
 		Intent actionIntent = new Intent(Intent.ACTION_SEND);
 		actionIntent.setType("text/plain");
 		actionIntent.putExtra(Intent.EXTRA_STREAM, uri);
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-		{
-			ClipData cp = ClipData.newUri(
-					ctx.getContentResolver(),
-					ctx.getString(R.string.get_program_log),
-					uri
-			);
-			actionIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-			actionIntent.setClipData(cp);
-		}
+
+		ClipData cp = ClipData.newUri(
+				ctx.getContentResolver(),
+				ctx.getString(R.string.get_program_log),
+				uri
+		);
+		actionIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		actionIntent.setClipData(cp);
 
 		Intent startIntent = Intent.createChooser(
 				actionIntent,

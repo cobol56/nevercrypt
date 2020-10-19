@@ -108,8 +108,7 @@ public class ImageViewerActivity extends Activity implements PreviewFragment.Hos
 	@Override
 	public void onToggleFullScreen()
 	{
-		if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
-			CompatHelper.restartActivity(this);
+		CompatHelper.restartActivity(this);
 	}
 
 	public TaskFragment.TaskCallbacks getRestorePathsTaskCallbacks()
@@ -159,11 +158,8 @@ public class ImageViewerActivity extends Activity implements PreviewFragment.Hos
 	
 	private void enableFullScreen()
 	{		
-		if(android.os.Build.VERSION.SDK_INT< Build.VERSION_CODES.KITKAT)
-		{
-			requestWindowFeature(Window.FEATURE_NO_TITLE);
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		}
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		invalidateOptionsMenu();
 	}
 }

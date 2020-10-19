@@ -28,10 +28,7 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
     {
         super.onClick(view, position);
         Intent i;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-            i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        else
-            i = new Intent(Intent.ACTION_GET_CONTENT);
+        i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         i.setType("*/*");
         i.addCategory(Intent.CATEGORY_OPENABLE);
         //if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && !getDrawerController().getMainActivity().isSingleSelectionMode())

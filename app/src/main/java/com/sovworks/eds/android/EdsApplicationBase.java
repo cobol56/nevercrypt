@@ -86,7 +86,6 @@ public class EdsApplicationBase extends Application
     public void onCreate()
 	{
 		super.onCreate();
-		PRNGFixes.apply();
 
 		SystemConfig.setInstance(new com.sovworks.eds.android.settings.SystemConfig(getApplicationContext()));
 

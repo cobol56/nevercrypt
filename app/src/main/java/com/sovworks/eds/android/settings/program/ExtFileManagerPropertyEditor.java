@@ -117,18 +117,15 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, "resource/folder");
         addMatches(_extBrowserInfo, Intent.ACTION_MEDIA_MOUNTED, testPath, null);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            //Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-            //i.addCategory(Intent.CATEGORY_OPENABLE);
-            //addMatches(_extBrowserInfo, i);
-            testPath = DocumentsContract.buildTreeDocumentUri(
-                    ContainersDocumentProvider.AUTHORITY,
-                    "id"
-            );
-            addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, DocumentsContract.Document.MIME_TYPE_DIR);
-            //addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, "resource/folder");
-        }
+        //Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+        //i.addCategory(Intent.CATEGORY_OPENABLE);
+        //addMatches(_extBrowserInfo, i);
+        testPath = DocumentsContract.buildTreeDocumentUri(
+                ContainersDocumentProvider.AUTHORITY,
+                "id"
+        );
+        addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, DocumentsContract.Document.MIME_TYPE_DIR);
+        //addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, "resource/folder");
     }
 
     private void loadChoiceStrings()

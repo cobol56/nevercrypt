@@ -171,11 +171,9 @@ public abstract class FSCursorBase extends AbstractCursor
             case COLUMN_PATH:
                 return cpi.getPath().getPathString();
             default:
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                    return getDocumentValue(cpi, columnName);
+                return getDocumentValue(cpi, columnName);
 
         }
-        return null;
     }
 
     private Object getDocumentValue(CachedPathInfo cpi, String columnName)
@@ -204,7 +202,6 @@ public abstract class FSCursorBase extends AbstractCursor
         return null;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private int getDocumentFlags(CachedPathInfo cpi)
     {
         boolean ro = _location.isReadOnly();
@@ -216,8 +213,7 @@ public abstract class FSCursorBase extends AbstractCursor
             else if(cpi.isDirectory())
                 flags |= DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE;
             flags |= DocumentsContract.Document.FLAG_SUPPORTS_DELETE;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                flags |= DocumentsContract.Document.FLAG_SUPPORTS_RENAME;
+            flags |= DocumentsContract.Document.FLAG_SUPPORTS_RENAME;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 flags |= DocumentsContract.Document.FLAG_SUPPORTS_COPY |
                         DocumentsContract.Document.FLAG_SUPPORTS_MOVE;
@@ -225,7 +221,6 @@ public abstract class FSCursorBase extends AbstractCursor
         return flags;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private String getDocumentMimeType(CachedPathInfo cpi)
     {
         return cpi.isFile() ?

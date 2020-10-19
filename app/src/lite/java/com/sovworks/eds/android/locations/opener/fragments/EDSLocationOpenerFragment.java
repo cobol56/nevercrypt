@@ -25,8 +25,7 @@ public class EDSLocationOpenerFragment extends LocationOpenerFragment implements
                 if(location instanceof EDSLocation)
                 {
                     LocationsService.registerInactiveContainerCheck(_context, (EDSLocation) location);
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                        ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(_context);
+                    ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(_context);
                 }
             }
         }

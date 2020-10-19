@@ -173,7 +173,7 @@ public abstract class FileManagerActivityBase extends RxActivity implements Prev
     }
 
     @SuppressLint("InlinedApi")
-    public static final String EXTRA_ALLOW_MULTIPLE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 ? Intent.EXTRA_ALLOW_MULTIPLE : "com.sovworks.eds.android.ALLOW_MULTIPLE";
+    public static final String EXTRA_ALLOW_MULTIPLE = Intent.EXTRA_ALLOW_MULTIPLE;
     public static final String EXTRA_ALLOW_FILE_SELECT = "com.sovworks.eds.android.ALLOW_FILE_SELECT";
     public static final String EXTRA_ALLOW_FOLDER_SELECT = "com.sovworks.eds.android.ALLOW_FOLDER_SELECT";
     public static final String EXTRA_ALLOW_CREATE_NEW_FILE = "com.sovworks.eds.android.ALLOW_CREATE_NEW_FILE";

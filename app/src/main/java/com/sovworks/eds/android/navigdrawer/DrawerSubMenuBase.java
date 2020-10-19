@@ -66,7 +66,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
         if(drawable!=null)
             drawable.setState(_isExpanded ? new int[] {android.R.attr.state_expanded} : new int[0]);
         ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
-        if(iv != null && (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN || !iv.hasTransientState()))
+        if(iv != null && !iv.hasTransientState())
         {
             iv.setVisibility(View.VISIBLE);
             iv.setRotation(isExpanded() ? 180 : 0);
@@ -81,15 +81,13 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
             icon.clearAnimation();
             ObjectAnimator anim = ObjectAnimator.ofFloat(icon, View.ROTATION, isExpanded() ? 0 : 180);
             anim.setDuration(200);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                icon.setHasTransientState(true);
+            icon.setHasTransientState(true);
             anim.addListener(new AnimatorListenerAdapter()
             {
                 @Override
                 public void onAnimationEnd(Animator animation)
                 {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                        icon.setHasTransientState(false);
+                    icon.setHasTransientState(false);
                 }
             });
             anim.start();
@@ -107,8 +105,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
             icon.clearAnimation();
             ObjectAnimator anim = ObjectAnimator.ofFloat(icon, View.ROTATION, isExpanded() ? 0 : 180);
             anim.setDuration(200);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                icon.setHasTransientState(true);
+            icon.setHasTransientState(true);
             anim.addListener(new AnimatorListenerAdapter()
             {
                 @Override
@@ -122,8 +119,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
                         expand();
                     }
                     getAdapter().notifyDataSetChanged();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                        icon.setHasTransientState(false);
+                    icon.setHasTransientState(false);
                     IS_ANIMATING = false;
 
                 }

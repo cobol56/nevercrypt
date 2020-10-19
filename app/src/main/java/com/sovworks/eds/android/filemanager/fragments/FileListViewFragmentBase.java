@@ -278,7 +278,7 @@ public abstract class FileListViewFragmentBase extends RxFragment implements
             if(resultCode == Activity.RESULT_OK && data!=null)
             {
                 returnSelectionFromContentProvider(data);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && data.getData()!=null)
+                if(data.getData()!=null)
                 {
                     getActivity().getContentResolver().takePersistableUriPermission(
                             data.getData(),

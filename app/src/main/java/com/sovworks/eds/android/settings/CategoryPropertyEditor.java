@@ -87,8 +87,7 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
         _indicatorIcon.clearAnimation();
         ObjectAnimator anim = ObjectAnimator.ofFloat(_indicatorIcon, View.ROTATION, _isExpanded ? 0 : 180);
         anim.setDuration(200);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-            _indicatorIcon.setHasTransientState(true);
+        _indicatorIcon.setHasTransientState(true);
         anim.addListener(new AnimatorListenerAdapter()
         {
             @Override
@@ -98,8 +97,7 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
                     collapse();
                 else
                     expand();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-                    _indicatorIcon.setHasTransientState(false);
+                _indicatorIcon.setHasTransientState(false);
 				IS_ANIMATING = false;
 
             }
