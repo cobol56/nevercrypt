@@ -15,11 +15,4 @@ public class FileManagerActivity extends FileManagerActivityBase
     {
         return new DrawerController(this);
     }
-
-    @Override
-    protected void showPromoDialogIfNeeded()
-    {
-        if(_settings.getLastViewedPromoVersion() < 211)
-            super.showPromoDialogIfNeeded();
-    }
 }

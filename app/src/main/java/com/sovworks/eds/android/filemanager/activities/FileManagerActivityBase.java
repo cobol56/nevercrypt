@@ -22,7 +22,6 @@ import android.view.View;
 import com.sovworks.eds.android.EdsApplication;
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.activities.VersionHistory;
 import com.sovworks.eds.android.dialogs.AskOverwriteDialog;
 import com.sovworks.eds.android.filemanager.FileManagerFragment;
 import com.sovworks.eds.android.filemanager.fragments.FileListDataFragment;
@@ -677,7 +676,6 @@ public abstract class FileManagerActivityBase extends RxActivity implements Prev
         {
             if(getIntent().getData() == null)
                 _drawer.showContainers();
-            showPromoDialogIfNeeded();
         }
     }
 
@@ -778,12 +776,6 @@ public abstract class FileManagerActivityBase extends RxActivity implements Prev
             //closeIntegratedViewer();
             goTo(getStartLocation(this));
         }
-    }
-
-    protected void showPromoDialogIfNeeded()
-    {
-        if(!GlobalConfig.isDebug())
-            startActivity(new Intent(this, VersionHistory.class));
     }
 
     private void showPropertiesFragment(BrowserRecord currentFile)

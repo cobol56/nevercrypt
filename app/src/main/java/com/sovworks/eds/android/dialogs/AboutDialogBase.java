@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.activities.VersionHistory;
 import com.sovworks.eds.android.helpers.Util;
 import com.sovworks.eds.android.providers.MainContentProvider;
 import com.sovworks.eds.android.settings.UserSettings;
@@ -82,7 +81,7 @@ public abstract class AboutDialogBase extends DialogFragment
             @Override
             public void onClick(View v)
             {
-                startActivity(new Intent(getActivity(), VersionHistory.class));
+                //TODO startActivity(new Intent(getActivity(), VersionHistory.class));
             }
         });
 		v.findViewById(R.id.contact_support_button).setOnClickListener(new OnClickListener()

@@ -131,7 +131,6 @@ public interface SettingsCommon
 	boolean showPreviews();
 	String getWorkDir();
 	String getExtensionsMimeMapString();
-	int getLastViewedPromoVersion();
 	int getInternalImageViewerMode();
 	LocationShortcutWidgetInfo getLocationShortcutWidgetInfo(int widgetId);
 	void setLocationShortcutWidgetInfo(int widgetId, LocationShortcutWidgetInfo info);
@@ -144,7 +143,6 @@ public interface SettingsCommon
 	boolean disableDebugLog();
 	boolean disableModifiedFilesBackup();
 	List<String> getVisitedHintSections();
-	boolean isHintDisabled();
     SecureBuffer getSettingsProtectionKey() throws InvalidSettingsPassword;
     boolean isFlagSecureEnabled();
 	int getCurrentSettingsVersion();

@@ -52,12 +52,6 @@ public class DefaultSettingsCommon implements SettingsCommon
 	}
 
 	@Override
-	public int getLastViewedPromoVersion()
-	{
-		return 0;
-	}
-
-	@Override
 	public int getInternalImageViewerMode()
 	{
 		return USE_INTERNAL_IMAGE_VIEWER_VIRT_FS;
@@ -140,15 +134,6 @@ public class DefaultSettingsCommon implements SettingsCommon
 	public List<String> getVisitedHintSections()
 	{
 		return Arrays.asList(new String[0]);
-	}
-	
-	@Override
-	public boolean isHintDisabled()
-	{
-		if(GlobalConfig.isDebug())
-			return true;
-		int lv = getLastViewedPromoVersion();
-		return lv>124;			
 	}
 
 	@Override

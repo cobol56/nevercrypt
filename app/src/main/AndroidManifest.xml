@@ -91,9 +91,6 @@
             android:name=".locations.activities.OpenLocationsActivity"
             android:excludeFromRecents="true"/>
         <activity
-            android:name=".activities.VersionHistory"
-            android:label="@string/version_history"/>
-        <activity
             android:name=".settings.activities.ProgramSettingsActivity"
             android:label="@string/settings"
             android:launchMode="singleTop"

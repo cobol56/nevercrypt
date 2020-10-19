@@ -44,78 +44,13 @@ public abstract class AppInitHelperBase
 
         if(curSettingsVersion < 0)
         {
-            if(_settings.getLastViewedPromoVersion() > 160)
-                _settings.getSharedPreferences().edit().putInt(CURRENT_SETTINGS_VERSION, Settings.VERSION).commit();
-            else
-                curSettingsVersion = 1;
+            _settings.getSharedPreferences().edit().putInt(CURRENT_SETTINGS_VERSION, Settings.VERSION).commit();
         }
 
-        if(curSettingsVersion < 2)
-            updateSettingsV2();
-        if(curSettingsVersion < 3)
-            updateSettingsV3();
         _settings.
                 getSharedPreferences().
                 edit().
                 putInt(UserSettings.CURRENT_SETTINGS_VERSION, Settings.VERSION).
                 commit();
-    }
-
-    protected void updateSettingsV2()
-    {
-        makeContainersVisible();
-    }
-
-    private void updateSettingsV3()
-    {
-        convertEncAlgName();
-    }
-
-    private void convertEncAlgName()
-    {
-        LocationsManager lm = LocationsManager.getLocationsManager(_activity);
-        for (Location l : lm.getLoadedLocations(false))
-            if (l instanceof ContainerBasedLocation)
-            {
-                ContainerBasedLocation.ExternalSettings externalSettings = ((ContainerBasedLocation)l).getExternalSettings();
-                String encAlg = externalSettings.getEncEngineName();
-                if(encAlg == null)
-                    continue;
-                switch (encAlg)
-                {
-                    case "aes-twofish-serpent-xts-plain64":
-                        externalSettings.setEncEngineName("serpent-twofish-aes-xts-plain64");
-                        l.saveExternalSettings();
-                        break;
-                    case "serpent-twofish-aes-xts-plain64":
-                        externalSettings.setEncEngineName("aes-twofish-serpent-xts-plain64");
-                        l.saveExternalSettings();
-                        break;
-                    case "twofish-aes-xts-plain64":
-                        externalSettings.setEncEngineName("aes-twofish-xts-plain64");
-                        l.saveExternalSettings();
-                        break;
-                    case "aes-serpent-xts-plain64":
-                        externalSettings.setEncEngineName("serpent-aes-xts-plain64");
-                        l.saveExternalSettings();
-                        break;
-                    case "serpent-twofish-xts-plain64":
-                        externalSettings.setEncEngineName("twofish-serpent-xts-plain64");
-                        l.saveExternalSettings();
-                        break;
-                }
-            }
-    }
-
-
-    private void makeContainersVisible()
-    {
-        LocationsManager lm = LocationsManager.getLocationsManager(_activity);
-        for (Location l : lm.getLoadedLocations(false))
-            if (l instanceof ContainerBasedLocation && !l.getExternalSettings().isVisibleToUser())
-            {
-                l.getExternalSettings().setVisibleToUser(true);
-                l.saveExternalSettings();
-            }
     }
 }

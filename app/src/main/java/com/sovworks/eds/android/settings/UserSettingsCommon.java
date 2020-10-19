@@ -139,12 +139,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 	}
 
 	@Override
-	public int getLastViewedPromoVersion()
-	{
-		return _prefs.getInt(LAST_VIEWED_CHANGES,_defaultSettings.getLastViewedPromoVersion());
-	}
-
-	@Override
 	public int getInternalImageViewerMode()
 	{
 		return _prefs.getInt(USE_INTERNAL_IMAGE_VIEWER, _defaultSettings.getInternalImageViewerMode());
@@ -237,12 +231,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 		{
 			return _defaultSettings.getVisitedHintSections();
 		}
-	}
-
-	@Override
-	public boolean isHintDisabled()
-	{
-		return _prefs.getBoolean(DISABLE_HINTS, _defaultSettings.isHintDisabled());
 	}
 
 	@Override
