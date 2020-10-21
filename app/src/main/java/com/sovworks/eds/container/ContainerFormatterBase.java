@@ -1,6 +1,5 @@
 package com.sovworks.eds.container;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Parcel;
 
@@ -311,7 +310,6 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 	}
 	
 
-	@SuppressLint("TrulyRandom")
 	protected void fillFreeClustersWithRandomData(FatFS fat) throws IOException
 	{			
 		RandomAccessIO f = fat.getContainerFile();
@@ -331,7 +329,6 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 		}
 	}
 	
-	@SuppressLint("TrulyRandom")
 	protected void fillFreeSpace(RandomAccessIO f, long size) throws IOException
 	{
 		SecureRandom r = new SecureRandom();

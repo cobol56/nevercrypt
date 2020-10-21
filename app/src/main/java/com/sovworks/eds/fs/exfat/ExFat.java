@@ -1,7 +1,5 @@
 package com.sovworks.eds.fs.exfat;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.settings.SystemConfig;
 import com.sovworks.eds.fs.FileSystem;
@@ -113,7 +111,6 @@ public class ExFat implements FileSystem
         return _nativeModuleState == ModuleState.Incompatible;
     }
 
-    @SuppressLint("UnsafeDynamicallyLoadedCode")
     public static void loadNativeLibrary()
     {
         if(_nativeModuleState == ModuleState.Absent || _nativeModuleState == ModuleState.Unknown)
@@ -165,9 +162,7 @@ public class ExFat implements FileSystem
         }
     }
 
-    @SuppressWarnings("FieldCanBeLocal")
     private long _exfatPtr;
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final RandomAccessIO _exfatImageFile;
     final Object _sync = new Object();
 

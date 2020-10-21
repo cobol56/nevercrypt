@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.dialogs;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -45,7 +44,7 @@ public class SortDialog extends DialogFragment
     @Override
     public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
 	{			
-		@SuppressLint("InflateParams") View v = getActivity().getLayoutInflater().inflate(R.layout.sort_dialog, null);
+		View v = getActivity().getLayoutInflater().inflate(R.layout.sort_dialog, null);
 		final ListView listView = v.findViewById(android.R.id.list);
         final RadioGroup sortDirection = v.findViewById(R.id.sort_group);
 		listView.setAdapter(

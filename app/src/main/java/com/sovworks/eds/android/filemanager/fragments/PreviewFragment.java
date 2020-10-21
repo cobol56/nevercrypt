@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -370,7 +369,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 	}
 
 
-	@SuppressLint("ApplySharedPref")
 	private void toggleFullScreen()
 	{
 		_isFullScreen = !_isFullScreen;
@@ -404,7 +402,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 		synchronized (getPreviewFragmentHost().getFilesListSync())
 		{
 			Host h = getPreviewFragmentHost();
-			//noinspection unchecked
 			NavigableSet<CachedPathInfo> files = (NavigableSet<CachedPathInfo>) h.getCurrentFiles();
 			return files.isEmpty() ? null : files.first().getPath();
 		}
@@ -428,7 +425,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 		getActivity().invalidateOptionsMenu();
 	}
 
-	@SuppressLint("ApplySharedPref")
 	private void toggleAutoZoom()
 	{
 		UserSettings settings = UserSettings.getSettings(getActivity());
@@ -472,7 +468,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 		synchronized (getPreviewFragmentHost().getFilesListSync())
 		{
 			Host h = getPreviewFragmentHost();
-			//noinspection unchecked
 			NavigableSet<CachedPathInfo> files = (NavigableSet<CachedPathInfo>) h.getCurrentFiles();
 			if(files.isEmpty())
 				return;

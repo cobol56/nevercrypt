@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ public abstract class PropertiesFragmentBase extends Fragment implements Propert
         return view;
     }
 
-    @SuppressLint("Override")
     @Override
     public Context getContext()
     {

@@ -95,7 +95,7 @@ public class ActionSendTask extends PrepareTempFilesTask
 	{
 		try
 		{
-			@SuppressWarnings("unchecked") List<Location> tmpFilesList = (List<Location>) result.getResult();
+			List<Location> tmpFilesList = (List<Location>) result.getResult();
 			sendFiles(_context, tmpFilesList, getParam().getMimeType());
 		}
 		catch(CancellationException ignored)

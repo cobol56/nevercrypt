@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.helpers;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressLint("NewApi")
 public abstract class StorageOptionsBase
 {
     private static String readMounts()
@@ -118,7 +116,6 @@ public abstract class StorageOptionsBase
         return false;
     }
 
-    @SuppressLint("ObsoleteSdkInt")
     private StorageInfo getDefaultStorage()
     {
         String defPathState = Environment.getExternalStorageState();

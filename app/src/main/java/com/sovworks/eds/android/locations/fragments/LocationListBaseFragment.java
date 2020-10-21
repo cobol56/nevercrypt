@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.locations.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -60,7 +59,6 @@ public abstract class LocationListBaseFragment extends ListFragment
         }
 
         @NonNull
-        @SuppressLint("InflateParams")
         @Override
         public View getView(final int position, View convertView, @NonNull ViewGroup parent)
         {

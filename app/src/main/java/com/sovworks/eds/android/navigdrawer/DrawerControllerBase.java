@@ -111,7 +111,6 @@ public abstract class DrawerControllerBase
         return _drawerListView;
     }
 
-    @SuppressWarnings("unused")
     public DrawerLayout getDrawerLayout()
     {
         return _drawerLayout;

@@ -1,7 +1,5 @@
 package com.sovworks.eds.android.helpers;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.android.settings.UserSettings;
 import com.sovworks.eds.settings.Settings;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -32,7 +30,6 @@ public abstract class AppInitHelperBase
     protected final UserSettings _settings;
     final CompletableEmitter _initFinished;
 
-    @SuppressLint("ApplySharedPref")
     void convertLegacySettings()
     {
         int curSettingsVersion = _settings.getCurrentSettingsVersion();

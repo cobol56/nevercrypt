@@ -173,7 +173,6 @@ public class StdLayout extends VolumeLayoutBase
 		_encEngine.init();
 	}
 	
-	@SuppressWarnings("UnusedParameters")
 	protected boolean isUnsupportedHeaderType(byte[] encryptedHeader)
 	{
 		return false;

@@ -1,6 +1,5 @@
 package com.sovworks.eds.locations;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -53,7 +52,6 @@ public abstract class LocationsManagerBase
 
 	public static final String BROADCAST_LOCATION_CREATED = "com.sovworks.eds.BROADCAST_LOCATION_CREATED";
 	public static final String BROADCAST_LOCATION_REMOVED = "com.sovworks.eds.BROADCAST_LOCATION_REMOVED";
-	@SuppressWarnings("WeakerAccess")
 	public static final String BROADCAST_ALL_CONTAINERS_CLOSED = "com.sovworks.eds.android.BROADCAST_ALL_CONTAINERS_CLOSED";
 	public static final String BROADCAST_CLOSE_ALL = "com.sovworks.eds.CLOSE_ALL";
 	public static final String BROADCAST_LOCATION_CHANGED = "com.sovworks.eds.android.BROADCAST_LOCATION_CHANGED";
@@ -95,7 +93,6 @@ public abstract class LocationsManagerBase
 		_instance = lm;
 	}
 
-	@SuppressLint("StaticFieldLeak")
 	private static LocationsManagerBase _instance;
 
 	public static void storePathsInBundle(Bundle b, Location loc, Collection<? extends Path> paths)
@@ -128,7 +125,6 @@ public abstract class LocationsManagerBase
 		i.putExtras(b);
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public static ArrayList<Location> getLocationsFromBundle(LocationsManagerBase lm, Bundle b) throws Exception
 	{
 		ArrayList<Location> res = new ArrayList<>();
@@ -142,7 +138,6 @@ public abstract class LocationsManagerBase
 		return res;
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public static ArrayList<Location> getLocationsFromIntent(LocationsManagerBase lm, Intent i) throws Exception
 	{
 		ArrayList<Location> res = getLocationsFromBundle(lm,i.getExtras());
@@ -231,7 +226,6 @@ public abstract class LocationsManagerBase
 		context.sendBroadcast(i);
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	public static void broadcastAllContainersClosed(Context context)
 	{
 		context.sendBroadcast(new Intent(BROADCAST_ALL_CONTAINERS_CLOSED));
@@ -757,7 +751,6 @@ public abstract class LocationsManagerBase
 			}
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public E get(int location)
 		{

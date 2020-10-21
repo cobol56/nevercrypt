@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.activities;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
-@SuppressLint({"CommitPrefEdits", "ApplySharedPref", "InlinedApi"})
 public class ImageViewerActivity extends AppCompatActivity implements PreviewFragment.Host
 {	
 	public static final String INTENT_PARAM_CURRENT_PATH = "current_path";
@@ -54,7 +52,7 @@ public class ImageViewerActivity extends AppCompatActivity implements PreviewFra
 		protected void doWork(TaskState state) throws Exception
 		{			
 			ArrayList<Path> paths = Util.restorePaths(_loc.getFS(), _pathStrings);
-			@SuppressWarnings("unchecked") TreeSet<CachedPathInfo> res = new TreeSet(FileListDataFragment.getComparator(_settings));
+			TreeSet<CachedPathInfo> res = new TreeSet(FileListDataFragment.getComparator(_settings));
 			for(Path p: paths)
 			{
 				CachedPathInfoBase cpi = new CachedPathInfoBase();
@@ -115,7 +113,6 @@ public class ImageViewerActivity extends AppCompatActivity implements PreviewFra
 	{
 		return new ProgressDialogTaskFragmentCallbacks(this,R.string.loading)
 		{
-			@SuppressWarnings("unchecked")
 			@Override
 			public void onCompleted(Bundle args, Result result)
 			{

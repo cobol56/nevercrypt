@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.navigdrawer;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -57,12 +56,12 @@ public abstract class DrawerMenuItemBase
     public View createView(int position, ViewGroup parent)
     {
         LayoutInflater inflater = (LayoutInflater) getDrawerController().getMainActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View v = inflater.inflate(getLayoutId(), parent, false);
+        View v = inflater.inflate(getLayoutId(), parent, false);
         updateView(v, position);
         return v;
     }
 
-    public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
+    public void updateView(View view, int position)
     {
         AppCompatTextView tv = view.findViewById(android.R.id.text1);
         tv.setText(getTitle());
@@ -109,7 +108,6 @@ public abstract class DrawerMenuItemBase
 
     protected ArrayAdapter<DrawerMenuItemBase> getAdapter()
     {
-        //noinspection unchecked
         return (ArrayAdapter<DrawerMenuItemBase>) getDrawerController().getDrawerListView().getAdapter();
     }
 

@@ -14,7 +14,7 @@ class StartTempFileTask extends PrepareTempFilesTask
 	{
 		try
 		{
-			@SuppressWarnings("unchecked") List<Location> tmpFilesList = (List<Location>) result.getResult();
+			List<Location> tmpFilesList = (List<Location>) result.getResult();
 			for(Location f: tmpFilesList)
 				FileOpsService.startFileViewer(_context, f);
 

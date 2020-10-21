@@ -62,7 +62,6 @@ public abstract class SingleChoiceDialog<T> extends DialogFragment
     protected void onYes()
     {
         int pos = getListView().getCheckedItemPosition();
-        //noinspection unchecked
         onItemSelected(pos, (T) getListView().getItemAtPosition(pos));
     }
 

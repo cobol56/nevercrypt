@@ -1,12 +1,9 @@
 package com.sovworks.eds.crypto.kdf;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.crypto.EncryptionEngineException;
 
 import java.security.MessageDigest;
 
-@SuppressLint("DefaultLocale")
 public class HashBasedPBKDF2 extends PBKDF
 {
 	public HashBasedPBKDF2(MessageDigest md)
@@ -30,7 +27,6 @@ public class HashBasedPBKDF2 extends PBKDF
 	private final MessageDigest _md;
 	private final int _blockSize;	
 	
-	@SuppressLint("DefaultLocale")
 	private static int guessMDBlockSize(MessageDigest md)
 	{
 		String mdn = md.getAlgorithm().toLowerCase();

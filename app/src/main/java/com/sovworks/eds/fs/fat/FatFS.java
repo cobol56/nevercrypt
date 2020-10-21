@@ -72,7 +72,6 @@ public class FatFS implements FileSystem
     public static final boolean LOG_ACQUIRE = false;
     private static int logAquiring(String tag)
     {
-        //noinspection PointlessBooleanExpression,ConstantConditions
         if(BuildConfig.DEBUG && LOG_ACQUIRE)
         {
             Object o = new Object();
@@ -86,14 +85,12 @@ public class FatFS implements FileSystem
 
     private static void logAquired(int id)
     {
-        //noinspection PointlessBooleanExpression,ConstantConditions
         if(BuildConfig.DEBUG && LOG_ACQUIRE)
             Log.v(TAG, id + " has been acquired.");
     }
 
     private static void logReleased(int id)
     {
-        //noinspection PointlessBooleanExpression,ConstantConditions
         if(BuildConfig.DEBUG && LOG_ACQUIRE)
             Log.v(TAG, id + " has been released.");
     }
@@ -112,7 +109,6 @@ public class FatFS implements FileSystem
 	public static FatFS getFat(RandomAccessIO input) throws IOException
 	{
 		FatFS fat;
-        //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (input)
 		{
 			BPB bpb = new BPB();
@@ -142,7 +138,6 @@ public class FatFS implements FileSystem
 		if (size <= 0 || size > 1000000000000L) throw new IllegalArgumentException("Wrong size: " + size);
 
 		FatFS fat;
-        //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (input)
 		{
 			int clustSize = getOptimalClusterSize(size, SECTOR_SIZE);
@@ -498,7 +493,6 @@ public class FatFS implements FileSystem
 			return _path.getPathUtil().getFileName();
 		}
 
-		@SuppressWarnings("unused")
         public Date getCreateDate() throws IOException
 		{
 			DirEntry entry = _path.getEntry();
@@ -537,7 +531,6 @@ public class FatFS implements FileSystem
 			}
 		}
 
-		@SuppressWarnings("unused")
         public Date getAccessDate() throws IOException
 		{
 			DirEntry entry = _path.getEntry();
@@ -1170,7 +1163,6 @@ public class FatFS implements FileSystem
 		return 2 + (int)(data_sectors / _bpb.sectorsPerCluster);
 	}
 
-    @SuppressWarnings("unused")
     protected long getDataRegionSize(long totalSize)
 	{		
 		int fatSize = _bpb.getSectorsPerFat()*_bpb.bytesPerSector;	

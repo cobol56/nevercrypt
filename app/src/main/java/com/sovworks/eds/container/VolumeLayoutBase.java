@@ -1,8 +1,6 @@
 package com.sovworks.eds.container;
 
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.android.helpers.ContainerOpeningProgressReporter;
 import com.sovworks.eds.crypto.EncryptionEngine;
 import com.sovworks.eds.crypto.FileEncryptionEngine;
@@ -186,7 +184,6 @@ public abstract class VolumeLayoutBase implements VolumeLayout
     protected byte[] _password;
 	protected ContainerOpeningProgressReporter _openingProgressReporter;
 
-	@SuppressLint("TrulyRandom")
 	protected synchronized Random getRandom()
 	{
 		if(_sr == null)

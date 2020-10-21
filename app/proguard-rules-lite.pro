@@ -3,11 +3,6 @@
 
 -keep public class com.sovworks.eds.android.EdsApplication { public *; }
 
-# We want to keep methods in Activity that could be used in the XML attribute onClick
--keepclassmembers class * extends android.app.Activity {
-   public void *(android.view.View);
-}
-
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
@@ -37,14 +32,3 @@
     public void writeExternal(java.io.ObjectOutput);
 }
 
--keep class android.support.** { *; }
-
--keep class org.apache.** { *; }
-
--dontwarn org.apache.**
--dontwarn javax.servlet.**
-
--dontwarn android.support.**
--dontnote android.support.**
-
--dontwarn java.awt.*

@@ -3,7 +3,6 @@ package com.sovworks.eds.android.navigdrawer;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -55,9 +54,8 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
         return false;
     }
 
-    @SuppressLint("NewApi")
     @Override
-    public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
+    public void updateView(View view, int position)
     {
         super.updateView(view, position);
         AppCompatTextView tv = (AppCompatTextView)view.findViewById(android.R.id.text1);

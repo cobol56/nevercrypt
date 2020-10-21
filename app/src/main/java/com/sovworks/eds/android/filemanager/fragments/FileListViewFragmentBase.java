@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -330,7 +329,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         super.onDestroy();
     }
 
-    @SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
     @Override
     public void applySort(int sortMode)
     {
@@ -720,7 +718,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     protected void initListView()
     {
         ListView lv = getListView();
-        //noinspection ConstantConditions
         lv.setEmptyView(getView().findViewById(android.R.id.empty));
         lv.setChoiceMode(ListView.CHOICE_MODE_NONE);
         lv.setItemsCanFocus(true);
@@ -1342,7 +1339,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         }*/
     }
 
-    @SuppressWarnings("SameParameterValue")
     private SrcDstCollection getSrcDsts(Location srcLocation, boolean isDirLast, Collection<? extends Path> paths) throws IOException
     {
         return SrcDstRec.fromPaths(srcLocation, getRealLocation(), isDirLast, paths);

@@ -4,7 +4,6 @@ import com.sovworks.eds.fs.RandomAccessIO;
 
 import java.io.IOException;
 
-@SuppressWarnings("JniMissingFunction")
 public class FDRandomAccessIO implements RandomAccessIO
 {
 	public FDRandomAccessIO(int fd)

@@ -1,14 +1,11 @@
 package com.sovworks.eds.fs.fat;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.fs.util.StringPathUtil;
 
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
 
-@SuppressLint("DefaultLocale")
 class FileName
 {
 	public FileName(String name)

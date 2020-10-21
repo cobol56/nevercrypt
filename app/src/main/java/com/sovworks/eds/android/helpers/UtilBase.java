@@ -19,7 +19,6 @@ public class UtilBase
 {
 	public static String getSystemInfoString()
 	{
-		//noinspection deprecation
 		return String.format("Build.BOARD: %s\n", Build.BOARD) +
 				String.format("Build.BOOTLOADER: %s\n", Build.BOOTLOADER) +
 				String.format("Build.BRAND: %s\n", Build.BRAND) +

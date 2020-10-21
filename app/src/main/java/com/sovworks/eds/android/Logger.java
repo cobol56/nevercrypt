@@ -11,7 +11,6 @@ import com.sovworks.eds.settings.GlobalConfig;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 
-@SuppressWarnings("deprecation")
 public class Logger implements UncaughtExceptionHandler
 {
 	public static final String TAG = "EDS";

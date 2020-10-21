@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class Util extends UtilBase
 {
-    public static SecureBuffer getPassword(Bundle args, @SuppressWarnings("UnusedParameters") LocationsManager lm) throws IOException
+    public static SecureBuffer getPassword(Bundle args, LocationsManager lm) throws IOException
     {
         return args.getParcelable(Openable.PARAM_PASSWORD);
     }

@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -44,7 +43,6 @@ public class GestureImageViewWithFullScreenMode extends GestureImageView// imple
 
    }
     
-    @SuppressLint("InlinedApi")
     private void setNavVisibility(boolean visible)
     {
         int newVis = SYSTEM_UI_FLAG_LAYOUT_STABLE

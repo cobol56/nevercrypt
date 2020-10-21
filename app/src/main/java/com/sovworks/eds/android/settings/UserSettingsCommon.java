@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.settings;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -19,7 +18,6 @@ import org.json.JSONException;
 import java.security.SecureRandom;
 import java.util.List;
 
-@SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
 public abstract class UserSettingsCommon implements SettingsCommon
 {
 	public static final String LOCATION_SETTINGS_PREFIX= "location_settings_";
@@ -81,7 +79,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 		);
 	}
 	
-	@SuppressLint("CommitPrefEdits")
 	@Override
 	public void setLocationSettingsString(String locationId, String data)
 	{
@@ -102,7 +99,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 		);
 	}
 
-	@SuppressLint("CommitPrefEdits")
 	@Override
 	public void setStoredLocations(String locations)
 	{	
@@ -154,7 +150,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 		return i;
 	}
 	
-	@SuppressLint("CommitPrefEdits")
 	@Override
 	public void setLocationShortcutWidgetInfo(int widgetId,
 			LocationShortcutWidgetInfo info)
@@ -284,7 +279,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 		}
 	}
 
-    @SuppressLint("CommitPrefEdits")
     public void setProtectedField(String key, String value) throws InvalidSettingsPassword
     {
 		_prefs.edit().putString(
@@ -293,7 +287,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 		).commit();
 	}
 
-	@SuppressLint("CommitPrefEdits")
 	public void setProtectedField(String key, byte[] value) throws InvalidSettingsPassword
 	{
 		_prefs.edit().putString(

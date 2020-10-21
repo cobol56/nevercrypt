@@ -61,7 +61,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     }
 
     @Override
-    public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
+    public void updateView(View view, int position)
     {
         super.updateView(view, position);
         AppCompatImageView iv = view.findViewById(R.id.close);

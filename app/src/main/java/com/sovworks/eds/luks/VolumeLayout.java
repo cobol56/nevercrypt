@@ -1,7 +1,5 @@
 package com.sovworks.eds.luks;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.helpers.ContainerOpeningProgressReporter;
 import com.sovworks.eds.container.VolumeLayoutBase;
@@ -579,7 +577,6 @@ public class VolumeLayout extends VolumeLayoutBase
 		return res;
 	}
 
-	@SuppressLint("DefaultLocale")
 	protected byte[] getHashspecName()
 	{
 		String cn = _hashFunc.getAlgorithm().toLowerCase();

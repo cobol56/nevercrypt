@@ -196,7 +196,6 @@ public class PropertiesView extends LinearLayout
 			commitProperties();
 	}
 
-	@SuppressWarnings("unused")
 	public void removeProperty(int propertyId)
 	{
 		PropertyInfo pi = _properties.get(propertyId);

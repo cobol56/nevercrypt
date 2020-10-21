@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.dialogs;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -53,7 +52,7 @@ public class DeleteConfirmationDialog extends AppCompatDialogFragment
 		if(inflater == null)
 			throw new RuntimeException("Inflater is null");
 
-		@SuppressLint("InflateParams") View v = inflater.inflate(R.layout.delete_confirmation_dialog, null);
+		View v = inflater.inflate(R.layout.delete_confirmation_dialog, null);
 		AppCompatTextView tv = v.findViewById(android.R.id.text1);
 		tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, "..."));
 		builder.setView(v);

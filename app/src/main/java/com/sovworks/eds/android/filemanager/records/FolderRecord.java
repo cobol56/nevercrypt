@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.records;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -32,7 +31,7 @@ public class FolderRecord extends FsBrowserRecord
             return null;
 
         LayoutInflater inflater = (LayoutInflater) _host.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.fs_browser_folder_row, parent, false);
+        View v = inflater.inflate(R.layout.fs_browser_folder_row, parent, false);
         ((ViewGroup)v).setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         updateView(v, position);
         return v;

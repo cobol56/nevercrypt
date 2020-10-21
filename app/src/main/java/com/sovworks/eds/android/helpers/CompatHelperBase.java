@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.helpers;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ClipData;
@@ -21,7 +20,6 @@ import com.sovworks.eds.fs.Path;
 import java.io.IOException;
 import java.io.InputStream;
 
-@SuppressLint("NewApi")
 public class CompatHelperBase
 {
 	public static void setWindowFlagSecure(AppCompatActivity act)

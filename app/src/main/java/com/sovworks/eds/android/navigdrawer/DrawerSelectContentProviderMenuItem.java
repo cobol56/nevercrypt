@@ -46,7 +46,7 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
     }
 
     @Override
-    public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
+    public void updateView(View view, int position)
     {
         super.updateView(view, position);
         AppCompatImageView iv = (AppCompatImageView) view.findViewById(R.id.close);

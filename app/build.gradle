@@ -11,7 +11,6 @@ android {
         targetSdkVersion 28
         versionCode 237
         versionName "2.0.0.237"
-        multiDexEnabled true
 
         ndk {
             // Specifies the ABI configurations of your native
@@ -89,11 +88,6 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/NOTICE'
-    }
-
-    lintOptions {
-        //checkReleaseBuilds false
-        abortOnError false
     }
 
     applicationVariants.all { variant ->

@@ -9,7 +9,6 @@ import com.sovworks.eds.crypto.SecureBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@SuppressWarnings("WeakerAccess")
 public abstract class CTR implements EncryptionEngine
 {
 

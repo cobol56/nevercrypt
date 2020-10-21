@@ -539,17 +539,14 @@ public abstract class MainContentProviderBase extends ContentProvider
 
     protected static final String META_PATH = "fs";
     protected static final int META_PATH_CODE = 10;
-    @SuppressWarnings("StaticInitializerReferencesSubClass")
     protected static final Uri META_URI = Uri.parse("content://"
             + MainContentProvider.AUTHORITY + "/" + META_PATH);
     protected static final String CONTENT_PATH = "content";
     protected static final int CONTENT_PATH_CODE = 20;
-    @SuppressWarnings("StaticInitializerReferencesSubClass")
     protected static final Uri CONTENT_URI = Uri.parse("content://"
             + MainContentProvider.AUTHORITY + "/" + CONTENT_PATH);
     protected static final String CURRENT_SELECTION_PATH = "selection";
     protected static final int CURRENT_SELECTION_PATH_CODE = 30;
-    @SuppressWarnings("StaticInitializerReferencesSubClass")
     protected static final Uri CURRENT_SELECTION_URI = Uri.parse("content://"
             + MainContentProvider.AUTHORITY + "/" + CURRENT_SELECTION_PATH);
 
@@ -560,7 +557,6 @@ public abstract class MainContentProviderBase extends ContentProvider
     {
         _uriMatcher.addURI(MainContentProvider.AUTHORITY, META_PATH + "/*", META_PATH_CODE);
         _uriMatcher.addURI(MainContentProvider.AUTHORITY, CONTENT_PATH + "/*", CONTENT_PATH_CODE);
-        //noinspection StaticInitializerReferencesSubClass
         _uriMatcher.addURI(MainContentProvider.AUTHORITY, CURRENT_SELECTION_PATH, CURRENT_SELECTION_PATH_CODE);
     }
 

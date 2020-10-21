@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.records;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -100,7 +99,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         if(_host == null)
             return null;
         LayoutInflater inflater = (LayoutInflater) _host.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.fs_browser_row, parent, false);
+        View v = inflater.inflate(R.layout.fs_browser_row, parent, false);
         ((ViewGroup)v).setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         updateView(v, position);
         return v;
@@ -110,9 +109,6 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     public void updateView(View view, final int position)
     {
         final FileListViewFragment hf = getHostFragment();
-        //if(isSelected())
-        //    //noinspection deprecation
-        //    view.setBackgroundDrawable(getSelectedBackgroundDrawable(_context));
         AppCompatCheckBox cb = view.findViewById(android.R.id.checkbox);
         if(cb!=null)
         {

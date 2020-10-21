@@ -1,7 +1,5 @@
 package com.sovworks.eds.crypto;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.crypto.engines.AESCTR;
 import com.sovworks.eds.crypto.kdf.HMACSHA512KDF;
 
@@ -13,7 +11,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-@SuppressLint("TrulyRandom")
 public class SimpleCrypto
 {	
 	public static byte[] getStrongKeyBytes(byte[] srcKey,byte[] salt)
@@ -135,7 +132,6 @@ public class SimpleCrypto
 		return toHexString(encryptWithPasswordBytes(passwd, cleartext));
 	}
 
-    @SuppressLint("TrulyRandom")
     public static byte[] encryptWithPasswordBytes(byte[] passwd, byte[] cleartext)
 	{
 		SecureRandom sr = new SecureRandom();

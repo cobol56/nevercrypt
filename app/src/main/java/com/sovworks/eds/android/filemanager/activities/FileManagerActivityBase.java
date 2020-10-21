@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.activities;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -54,7 +53,6 @@ import java.util.concurrent.CancellationException;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-@SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
 public abstract class FileManagerActivityBase extends RxAppCompatActivity implements PreviewFragment.Host
 {
     public static final String TAG = "FileManagerActivity";
@@ -123,7 +121,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
 
     }
 
-    @SuppressWarnings("SameParameterValue")
     public static void selectPath(
             AppCompatActivity context,
             Fragment f,
@@ -147,7 +144,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
         f.startActivityForResult(i, requestCode);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public static void selectPath(
             AppCompatActivity context,
             Fragment f,
@@ -170,7 +166,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
         );
     }
 
-    @SuppressLint("InlinedApi")
     public static final String EXTRA_ALLOW_MULTIPLE = Intent.EXTRA_ALLOW_MULTIPLE;
     public static final String EXTRA_ALLOW_FILE_SELECT = "com.sovworks.eds.android.ALLOW_FILE_SELECT";
     public static final String EXTRA_ALLOW_FOLDER_SELECT = "com.sovworks.eds.android.ALLOW_FOLDER_SELECT";

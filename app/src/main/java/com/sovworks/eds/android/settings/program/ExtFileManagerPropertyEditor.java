@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.settings.program;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import static com.sovworks.eds.android.settings.UserSettings.EXTERNAL_FILE_MANAGER;
 
-@SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
 public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
 {
 
@@ -78,7 +76,6 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         );
     }
 
-    @SuppressLint("CommitPrefEdits")
     @Override
     protected void saveValue(int value)
     {

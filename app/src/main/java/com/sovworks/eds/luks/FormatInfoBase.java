@@ -1,7 +1,5 @@
 package com.sovworks.eds.luks;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.container.ContainerFormatInfo;
 import com.sovworks.eds.container.VolumeLayout;
 import com.sovworks.eds.crypto.EncryptedFile;
@@ -73,7 +71,6 @@ public abstract class FormatInfoBase implements ContainerFormatInfo
 		return getFormatName();
 	}
 
-	@SuppressLint("TrulyRandom")
 	@Override
 	public void formatContainer(RandomAccessIO io, VolumeLayout layout, FileSystemInfo fsInfo) throws IOException, ApplicationException
 	{

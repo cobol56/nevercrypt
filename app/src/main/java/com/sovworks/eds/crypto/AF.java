@@ -1,7 +1,5 @@
 package com.sovworks.eds.crypto;
 
-import android.annotation.SuppressLint;
-
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.security.DigestException;
@@ -25,7 +23,6 @@ public class AF
 		_blockSize = blockSize;
 	}
 	
-	@SuppressLint("TrulyRandom")
 	public void split(byte[] src, int srcOffset, byte[] dest, int destOffset, int blockNumber) throws DigestException
 	{
 		byte[] block = new byte[_blockSize];

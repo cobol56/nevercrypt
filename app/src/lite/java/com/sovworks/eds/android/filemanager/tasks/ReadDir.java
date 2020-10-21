@@ -17,7 +17,7 @@ import java.util.Collection;
 
 public class ReadDir extends ReadDirBase
 {
-    static BrowserRecord createBrowserRecordFromFile(Context context, @SuppressWarnings("UnusedParameters") Location loc, Path path, DirectorySettings directorySettings) throws IOException
+    static BrowserRecord createBrowserRecordFromFile(Context context, Location loc, Path path, DirectorySettings directorySettings) throws IOException
     {
         if (directorySettings != null)
         {

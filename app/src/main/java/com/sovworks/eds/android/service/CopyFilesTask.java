@@ -58,7 +58,6 @@ class CopyFilesTask extends FileOperationTaskBase
 		{
             result.getResult();
 			CopyFilesTaskParam p = getParam();
-            //noinspection ThrowableResultOfMethodCallIgnored
             if (p.getOverwriteTargetsStorage()!=null && !p.getOverwriteTargetsStorage().isEmpty())
 				_context.startActivity(getOverwriteRequestIntent(p.getOverwriteTargetsStorage()));
 		}

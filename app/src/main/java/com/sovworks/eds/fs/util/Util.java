@@ -492,7 +492,6 @@ public class Util
 				deleteFiles(src1);
 			}			
 		}
-        //noinspection ResultOfMethodCallIgnored
         src.delete();
 	}
 	

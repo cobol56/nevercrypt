@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.filemanager.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -197,7 +196,6 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 		return view;
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public void onStop()
 	{		

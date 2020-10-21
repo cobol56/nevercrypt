@@ -1,7 +1,5 @@
 package com.sovworks.eds.fs.fat;
 
-import android.annotation.SuppressLint;
-
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.fs.DataInput;
 import com.sovworks.eds.fs.DataOutput;
@@ -24,7 +22,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-@SuppressLint("DefaultLocale")
 class DirEntry
 {
 	public DirEntry()
