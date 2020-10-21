@@ -10,11 +10,11 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 
-public class GestureImageView extends ImageView
+public class GestureImageView extends AppCompatImageView
 {
 	//private static final float MIN_NAVIG_VELOCITY = 300;
 	private static final float MIN_SCALE = 0.1f;

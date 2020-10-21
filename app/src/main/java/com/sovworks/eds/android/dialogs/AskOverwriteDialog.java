@@ -1,19 +1,18 @@
 package com.sovworks.eds.android.dialogs;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.Util;
 import com.sovworks.eds.android.service.FileOpsService;
 import com.sovworks.eds.fs.util.PathUtil;
 import com.sovworks.eds.fs.util.SrcDstCollection;
@@ -21,7 +20,7 @@ import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
 import com.sovworks.eds.fs.util.SrcDstPlain;
 import com.sovworks.eds.locations.Location;
 import com.trello.rxlifecycle3.android.FragmentEvent;
-import com.trello.rxlifecycle3.components.RxDialogFragment;
+import com.trello.rxlifecycle3.components.support.RxAppCompatDialogFragment;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -32,7 +31,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AskOverwriteDialog extends RxDialogFragment
+public class AskOverwriteDialog extends RxAppCompatDialogFragment
 {
 	public static void showDialog(
 			FragmentManager fm,
@@ -58,20 +57,13 @@ public class AskOverwriteDialog extends RxDialogFragment
 	public static final String TAG = "com.sovworks.eds.android.dialogs.AskOverwriteDialog";
 
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		Util.setDialogStyle(this);
-	}
-
-	@Override
 	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View v = inflater.inflate(R.layout.ask_overwrite_dialog, container);
 		_textView = v.findViewById(R.id.askOverwriteDialogText);
 		v.findViewById(R.id.askOverwriteDialogSkipButton).setOnClickListener(arg0 -> skipRecord());
 		v.findViewById(R.id.askOverwriteDialogOverwriteButton).setOnClickListener(arg0 -> overwriteRecord());
-		((CheckBox)v.findViewById(R.id.applyToAllCheckBox)).setOnCheckedChangeListener((buttonView, isChecked) -> _applyToAll = isChecked);
+		((AppCompatCheckBox)v.findViewById(R.id.applyToAllCheckBox)).setOnCheckedChangeListener((buttonView, isChecked) -> _applyToAll = isChecked);
 		return v;
 	}
 
@@ -128,7 +120,7 @@ public class AskOverwriteDialog extends RxDialogFragment
 	private Iterator<SrcDst> _pathsIter;
 	private int _numProc;	
 	private boolean _applyToAll;
-	private TextView _textView;	
+	private AppCompatTextView _textView;
 	private SrcDst _next;
 	
 	private void overwriteRecord()

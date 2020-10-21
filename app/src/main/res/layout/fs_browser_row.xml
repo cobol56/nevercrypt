@@ -23,13 +23,13 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        style="?attr/fmCheckBoxStyle" />
+        style="@style/RowButton.Check" />
     <RadioButton
 		android:id="@+id/radio"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        style="?attr/fmRadioStyle" />
+        style="@style/RowButton.Radio" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"

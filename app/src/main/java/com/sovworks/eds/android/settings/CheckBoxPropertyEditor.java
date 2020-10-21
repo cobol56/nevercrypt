@@ -3,9 +3,10 @@ package com.sovworks.eds.android.settings;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 import com.sovworks.eds.android.R;
 
@@ -21,7 +22,7 @@ public abstract class CheckBoxPropertyEditor extends PropertyEditorBase
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_checkBox = (CheckBox) view.findViewById(android.R.id.checkbox);
+		_checkBox = (AppCompatCheckBox) view.findViewById(android.R.id.checkbox);
 		_checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
 		{			
 			@Override
@@ -89,7 +90,7 @@ public abstract class CheckBoxPropertyEditor extends PropertyEditorBase
 		_checkBox.setChecked(!_checkBox.isChecked());
 	}
 	
-	protected CheckBox _checkBox;
+	protected AppCompatCheckBox _checkBox;
 	protected boolean _loadingValue;
 	
 	protected abstract boolean loadValue();

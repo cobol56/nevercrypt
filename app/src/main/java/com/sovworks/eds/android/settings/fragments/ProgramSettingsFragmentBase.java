@@ -43,12 +43,9 @@ import static com.sovworks.eds.android.settings.UserSettingsCommon.IS_FLAG_SECUR
 import static com.sovworks.eds.android.settings.UserSettingsCommon.MAX_FILE_SIZE_TO_OPEN;
 import static com.sovworks.eds.android.settings.UserSettingsCommon.NEVER_SAVE_HISTORY;
 import static com.sovworks.eds.android.settings.UserSettingsCommon.SHOW_PREVIEWS;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.THEME;
 import static com.sovworks.eds.android.settings.UserSettingsCommon.USE_INTERNAL_IMAGE_VIEWER;
 import static com.sovworks.eds.android.settings.UserSettingsCommon.WIPE_TEMP_FILES;
 import static com.sovworks.eds.android.settings.UserSettingsCommon.WORK_DIR;
-import static com.sovworks.eds.settings.SettingsCommon.THEME_DARK;
-import static com.sovworks.eds.settings.SettingsCommon.THEME_DEFAULT;
 
 public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase implements MasterPasswordDialog.PasswordReceiver
 {
@@ -121,27 +118,6 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
 
     protected void createCommonProperties(List<Integer> commonPropertiesIds)
     {
-        commonPropertiesIds.add(getPropertiesView().addProperty(
-                new ChoiceDialogPropertyEditor(this, R.string.theme, R.string.theme_desc, getTag())
-        {
-            @Override
-            protected int loadValue()
-            {
-                return _settings.getCurrentTheme() == THEME_DEFAULT ? 0 : 1;
-            }
-
-            @Override
-            protected void saveValue(int value)
-            {
-                editSettings().putInt(THEME, value == 0 ? THEME_DEFAULT : THEME_DARK).commit();
-            }
-
-            @Override
-            protected List<String> getEntries()
-            {
-                return Arrays.asList(getString(R.string.default_theme), getString(R.string.dark_theme));
-            }
-        }));
         commonPropertiesIds.add(getPropertiesView().addProperty(new ButtonPropertyEditor(this, R.string.master_password, 0, R.string.enter_master_password)
         {
             @Override

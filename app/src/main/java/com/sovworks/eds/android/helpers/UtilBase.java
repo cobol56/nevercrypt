@@ -1,16 +1,10 @@
 package com.sovworks.eds.android.helpers;
 
-import android.app.Activity;
-import android.app.DialogFragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.util.TypedValue;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.UserSettings;
 import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.settings.SettingsCommon;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,19 +17,6 @@ import java.util.List;
 
 public class UtilBase
 {
-	public static void setDialogStyle(DialogFragment df)
-	{
-		TypedValue typedValue = new TypedValue();
-		df.getActivity().getTheme().resolveAttribute(R.attr.dialogStyle, typedValue, true);
-		df.setStyle(DialogFragment.STYLE_NO_TITLE, typedValue.resourceId);
-	}
-
-	public static void setDialogStyle(Activity act)
-	{
-		int theme = UserSettings.getSettings(act.getApplicationContext()).getCurrentTheme();
-		act.setTheme(theme == SettingsCommon.THEME_DARK ? R.style.Dialog_Dark : R.style.Dialog);
-	}
-
 	public static String getSystemInfoString()
 	{
 		//noinspection deprecation

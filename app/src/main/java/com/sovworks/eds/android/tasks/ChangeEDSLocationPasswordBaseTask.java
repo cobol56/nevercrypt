@@ -1,8 +1,9 @@
 package com.sovworks.eds.android.tasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public abstract class ChangeEDSLocationPasswordBaseTask extends TaskFragment
 {
     @Override
-    public void initTask(Activity activity)
+    public void initTask(FragmentActivity activity)
     {
         _context = activity.getApplicationContext();
         _location = (EDSLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
@@ -35,7 +36,7 @@ public abstract class ChangeEDSLocationPasswordBaseTask extends TaskFragment
 	}
 
 	@Override
-    protected TaskCallbacks getTaskCallbacks(Activity activity)
+    protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         final EDSLocationSettingsFragment f = (EDSLocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         if(f == null)

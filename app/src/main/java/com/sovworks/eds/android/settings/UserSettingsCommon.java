@@ -1,10 +1,11 @@
 package com.sovworks.eds.android.settings;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.sovworks.eds.android.EdsApplication;
 import com.sovworks.eds.android.helpers.Util;
@@ -27,7 +28,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 	public static final String WIPE_TEMP_FILES = "wipe_temp_files";
 	public static final String SHOW_PREVIEWS = "show_previews";
 	public static final String WORK_DIR = "work_dir";
-	public static final String LAST_VIEWED_CHANGES = "last_viewed_changes";
 	public static final String USE_INTERNAL_IMAGE_VIEWER = "use_internal_image_viewer";
 	public static final String LOCATION_SHORTCUT_WIDGET_PREFIX = "location_shortcut_widget_";
 	public static final String DISABLE_WIDE_SCREEN_LAYOUTS = "disable_wide_screen_layouts";
@@ -39,7 +39,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
 	public static final String NEVER_SAVE_HISTORY = "never_save_history";
 	public static final String DISABLE_DEBUG_LOG = "disable_debug_log";
 	public static final String VISITED_HINT_SECTIONS = "visited_hint_sections";
-	public static final String DISABLE_HINTS = "disable_hints";
 	public static final String DISABLE_MODIFIED_FILES_BACKUP = "disable_modified_files_backup";
 	public static final String IS_FLAG_SECURE_ENABLED = "is_flag_secure_enabled";
 	public static final String FORCE_UNMOUNT = "force_unmount";
@@ -57,7 +56,7 @@ public abstract class UserSettingsCommon implements SettingsCommon
 	public static final String PREFS_NAME = "com.sovworks.eds.PREFERENCES";
 
 
-	public static boolean isWideScreenLayout(SettingsCommon settings, Activity activity)
+	public static boolean isWideScreenLayout(SettingsCommon settings, AppCompatActivity activity)
 	{
 		return !settings.disableLargeSceenLayouts() && activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 	}

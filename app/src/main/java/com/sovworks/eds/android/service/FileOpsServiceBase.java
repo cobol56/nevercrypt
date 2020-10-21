@@ -1,7 +1,6 @@
 package com.sovworks.eds.android.service;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ActivityNotFoundException;
@@ -10,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.PowerManager;
 
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.sovworks.eds.android.EdsApplication;
@@ -353,8 +353,7 @@ public abstract class FileOpsServiceBase extends IntentService
         int notificationId = intent.getIntExtra(ARG_NOTIFICATION_ID, -1);
         if(notificationId>=0)
         {
-            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.cancel(notificationId);
+            NotificationManagerCompat.from(this).cancel(notificationId);
         }
 		_taskCancelled = false;		
 		Task task = getTask(intent);

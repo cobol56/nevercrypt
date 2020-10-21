@@ -26,8 +26,7 @@
 		        android:layout_marginRight="2dp"
 		        android:text="@string/yes"
 		        android:layout_weight="0.5"		        
-		        android:onClick="onYesClick"
-				style="?android:attr/buttonStyle"/>
+		        android:onClick="onYesClick" />
 		    <Button
 		        android:id="@+id/noButton"
 		        android:layout_width="0dp"
@@ -35,7 +34,6 @@
 		        android:layout_marginLeft="2dp"
 		        android:text="@string/no"
 		        android:layout_weight="0.5"
-		        android:onClick="onNoClick"
-				style="?android:attr/buttonStyle" />
+		        android:onClick="onNoClick" />
     </LinearLayout>
 </LinearLayout>

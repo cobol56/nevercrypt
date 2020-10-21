@@ -1,19 +1,19 @@
 package com.sovworks.eds.android.dialogs;
 
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.Util;
 
-public class ProgressDialog extends DialogFragment
+public class ProgressDialog extends AppCompatDialogFragment
 {
 	public static final String TAG = "ProgressDialog";
 	public static final String ARG_TITLE = "com.sovworks.eds.android.TITLE";
@@ -51,13 +51,6 @@ public class ProgressDialog extends DialogFragment
 		_cancelListener = listener;
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		Util.setDialogStyle(this);
-	}
-
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -78,7 +71,7 @@ public class ProgressDialog extends DialogFragment
 	}
 
 	private DialogInterface.OnCancelListener _cancelListener;
-	private TextView _statusTextView, _titleTextView;
+	private AppCompatTextView _statusTextView, _titleTextView;
 	private ProgressBar _progressBar;
 
 

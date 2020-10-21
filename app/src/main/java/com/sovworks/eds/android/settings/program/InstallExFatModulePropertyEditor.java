@@ -1,11 +1,13 @@
 package com.sovworks.eds.android.settings.program;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -45,7 +47,7 @@ public class InstallExFatModulePropertyEditor extends ButtonPropertyEditor
         }
 
         @Override
-        protected void initTask(Activity activity)
+        protected void initTask(FragmentActivity activity)
         {
             _context = activity.getApplicationContext();
         }
@@ -78,7 +80,7 @@ public class InstallExFatModulePropertyEditor extends ButtonPropertyEditor
         }
 
         @Override
-        protected TaskCallbacks getTaskCallbacks(final Activity activity)
+        protected TaskCallbacks getTaskCallbacks(final FragmentActivity activity)
         {
             return new ProgressDialogTaskFragmentCallbacks(activity, R.string.loading)
             {
@@ -128,7 +130,7 @@ public class InstallExFatModulePropertyEditor extends ButtonPropertyEditor
     @Override
     protected void onPropertyRequestResult(int propertyRequestCode, int resultCode, Intent data)
     {
-        if(propertyRequestCode == SELECT_PATH_REQ_CODE && resultCode == Activity.RESULT_OK && data!=null)
+        if(propertyRequestCode == SELECT_PATH_REQ_CODE && resultCode == AppCompatActivity.RESULT_OK && data!=null)
             onPathSelected(data);
     }
 

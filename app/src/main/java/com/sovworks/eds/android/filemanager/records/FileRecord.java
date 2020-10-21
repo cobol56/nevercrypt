@@ -12,8 +12,9 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -62,7 +63,7 @@ class FileRecord extends FsBrowserRecord
                 RowViewInfo rvi = FileRecord.getCurrentRowViewInfo(fr.getHostFragment(), fr);
                 if(rvi!=null)
                 {
-                    ImageView iv = rvi.view.findViewById(android.R.id.icon);
+                    AppCompatImageView iv = rvi.view.findViewById(android.R.id.icon);
                     iv.setImageDrawable(null);
                     iv.setImageBitmap(null);
                     FileRecord.updateRowView(rvi);
@@ -108,7 +109,7 @@ class FileRecord extends FsBrowserRecord
     public void updateView(View view, final int position)
     {
         super.updateView(view, position);
-        TextView tv = view.findViewById(android.R.id.text2);
+        AppCompatTextView tv = view.findViewById(android.R.id.text2);
         if(_infoString != null)
         {
             tv.setVisibility(View.VISIBLE);
@@ -117,7 +118,7 @@ class FileRecord extends FsBrowserRecord
         else
             tv.setVisibility(View.INVISIBLE);
 
-        ImageView iv = view.findViewById(android.R.id.icon);
+        AppCompatImageView iv = view.findViewById(android.R.id.icon);
         if(_mainIcon != null)
         {
             //iv.setScaleType(ImageView.ScaleType.FIT_CENTER);

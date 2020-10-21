@@ -2,7 +2,8 @@ package com.sovworks.eds.android.settings.container;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.locations.fragments.CreateContainerFragmentBase;
@@ -22,7 +23,7 @@ public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEdit
     public View createView(ViewGroup parent)
     {
         View view = super.createView(parent);
-        _titleTextView = (TextView) view.findViewById(R.id.title_edit);
+        _titleTextView = (AppCompatTextView) view.findViewById(R.id.title_edit);
         return view;
     }
 
@@ -45,6 +46,6 @@ public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEdit
         return (CreateContainerFragmentBase) getHost();
     }
 
-    protected TextView _titleTextView;
+    protected AppCompatTextView _titleTextView;
 
 }

@@ -1,22 +1,22 @@
 package com.sovworks.eds.android.locations.activities;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.dialogs.MasterPasswordDialog;
 import com.sovworks.eds.android.dialogs.PasswordDialog;
 import com.sovworks.eds.android.helpers.ActivityResultHandler;
-import com.sovworks.eds.android.helpers.Util;
 import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
 import com.sovworks.eds.locations.Location;
 import com.sovworks.eds.locations.LocationsManager;
 
 import java.util.ArrayList;
 
-public class CloseLocationsActivity extends Activity
+public class CloseLocationsActivity extends AppCompatActivity
 {
     public static class MainFragment extends Fragment implements LocationCloserBaseFragment.CloseLocationReceiver, MasterPasswordDialog.PasswordReceiver
     {
@@ -109,7 +109,7 @@ public class CloseLocationsActivity extends Activity
         {
             if(_targetLocations.isEmpty())
             {
-                getActivity().setResult(_failedToClose ? Activity.RESULT_CANCELED : Activity.RESULT_OK);
+                getActivity().setResult(_failedToClose ? AppCompatActivity.RESULT_CANCELED : AppCompatActivity.RESULT_OK);
                 getActivity().finish();
             }
             else
@@ -153,10 +153,9 @@ public class CloseLocationsActivity extends Activity
 	@Override
 	protected void onCreate(final Bundle savedInstanceState)
 	{
-        Util.setTheme(this);
 	    super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
         if(savedInstanceState == null)
-            getFragmentManager().beginTransaction().add(new MainFragment(), MainFragment.TAG).commit();
+            getSupportFragmentManager().beginTransaction().add(new MainFragment(), MainFragment.TAG).commit();
 	}
 }

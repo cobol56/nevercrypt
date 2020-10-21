@@ -6,7 +6,8 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.sovworks.eds.android.R;
 
@@ -76,7 +77,7 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
 	}
 
 	public static boolean IS_ANIMATING = false;
-	private ImageView _indicatorIcon;
+	private AppCompatImageView _indicatorIcon;
 	private boolean _isExpanded = true;
 
 

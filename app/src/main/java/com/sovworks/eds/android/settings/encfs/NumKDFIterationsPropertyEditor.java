@@ -1,6 +1,6 @@
 package com.sovworks.eds.android.settings.encfs;
 
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.settings.IntPropertyEditor;

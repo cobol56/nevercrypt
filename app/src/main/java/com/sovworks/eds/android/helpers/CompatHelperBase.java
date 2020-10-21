@@ -1,7 +1,6 @@
 package com.sovworks.eds.android.helpers;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.ClipData;
@@ -13,6 +12,9 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.fs.Path;
 
@@ -22,12 +24,12 @@ import java.io.InputStream;
 @SuppressLint("NewApi")
 public class CompatHelperBase
 {
-	public static void setWindowFlagSecure(Activity act)
+	public static void setWindowFlagSecure(AppCompatActivity act)
 	{
 	    act.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 	}
 
-	public static void restartActivity(Activity activity)
+	public static void restartActivity(AppCompatActivity activity)
 	{
 	    activity.recreate();
 	}
@@ -76,8 +78,7 @@ public class CompatHelperBase
 				);
 				channel.enableLights(false);
 				channel.enableVibration(false);
-				NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-				notificationManager.createNotificationChannel(channel);
+				NotificationManagerCompat.from(context).createNotificationChannel(channel);
 			}
 		}
 		return serviceRunningNotificationsChannelId;
@@ -97,8 +98,7 @@ public class CompatHelperBase
 				);
 				channel.enableLights(false);
 				channel.enableVibration(false);
-				NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-				notificationManager.createNotificationChannel(channel);
+				NotificationManagerCompat.from(context).createNotificationChannel(channel);
 			}
 		}
 		return fileOperationsNotificationsChannelId;

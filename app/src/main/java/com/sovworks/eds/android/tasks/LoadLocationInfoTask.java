@@ -1,8 +1,9 @@
 package com.sovworks.eds.android.tasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.activities.SettingsBaseActivity;
 import com.sovworks.eds.android.fragments.TaskFragment;
@@ -25,7 +26,7 @@ public class LoadLocationInfoTask extends TaskFragment
     }
 
     @Override
-    protected void initTask(Activity activity)
+    protected void initTask(FragmentActivity activity)
     {
         super.initTask(activity);
         _context = activity.getApplicationContext();
@@ -41,7 +42,7 @@ public class LoadLocationInfoTask extends TaskFragment
 	}
 
 	@Override
-    protected TaskCallbacks getTaskCallbacks(Activity activity)
+    protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         final EDSLocationSettingsFragment f = (EDSLocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         return f != null ? f.getLoadLocationInfoTaskCallbacks() : null;

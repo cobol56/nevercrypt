@@ -1,9 +1,5 @@
 package com.sovworks.eds.android.locations.opener.fragments;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -12,6 +8,11 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.text.Html;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -61,7 +62,7 @@ public class LocationOpenerBaseFragment extends Fragment
         protected ProgressReporter _openingProgressReporter;
 
         @Override
-        protected void initTask(Activity activity)
+        protected void initTask(FragmentActivity activity)
         {
             _context = activity.getApplicationContext();
             _locationsManager = LocationsManager.getLocationsManager(activity);
@@ -98,7 +99,7 @@ public class LocationOpenerBaseFragment extends Fragment
         }
 
         @Override
-        protected TaskCallbacks getTaskCallbacks(Activity activity)
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
         {
             LocationOpenerBaseFragment f = (LocationOpenerBaseFragment) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_OPENER_TAG));
             return f == null ? null : f.getOpenLocationTaskCallbacks();

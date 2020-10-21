@@ -1,11 +1,12 @@
 package com.sovworks.eds.android.fragments;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.helpers.ProgressReporter;
@@ -121,19 +122,6 @@ public abstract class TaskFragment extends Fragment
 		private final Object _result;
 	}
 	
-	/**
-	 * Hold a reference to the parent Activity so we can report the task's
-	 * current progress and results. The Android framework will pass us a
-	 * reference to the newly created Activity after each configuration change.
-	 */
-	@Override
-	public void onAttach(Activity activity)
-	{
-		super.onAttach(activity);
-		if(_callbacks == null)
-			initCallbacks();
-	}
-	
 	@Override
 	public void onActivityCreated (Bundle savedInstanceState)
 	{
@@ -221,7 +209,7 @@ public abstract class TaskFragment extends Fragment
 		}
 	}
 	
-	protected TaskCallbacks getTaskCallbacks(Activity activity)
+	protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
 	{
         if(activity instanceof CallbacksProvider)
             return ((CallbacksProvider)activity).getCallbacks(getTag());
@@ -230,7 +218,7 @@ public abstract class TaskFragment extends Fragment
         return null;
 	}
 
-    protected void initTask(Activity activity)
+    protected void initTask(FragmentActivity activity)
     {
 
     }

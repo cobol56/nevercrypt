@@ -1,7 +1,8 @@
 package com.sovworks.eds.android.filemanager.tasks;
 
-import android.app.Activity;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
 import com.sovworks.eds.locations.Location;
@@ -20,7 +21,7 @@ public class OpenAsContainerTask extends CheckStartPathTask
     }
 
     @Override
-    protected TaskCallbacks getTaskCallbacks(Activity activity)
+    protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         FileListViewFragment f = (FileListViewFragment) getFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
         return f == null ? null : f.getOpenAsContainerTaskCallbacks();

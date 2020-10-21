@@ -1,11 +1,12 @@
 package com.sovworks.eds.android.settings;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -29,8 +30,8 @@ public abstract class TextPropertyEditor extends PropertyEditorBase implements T
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_selectedValueTextView = (TextView) view.findViewById(android.R.id.text1);
-		Button selectButton = (Button) view.findViewById(android.R.id.button1);
+		_selectedValueTextView = (AppCompatTextView) view.findViewById(android.R.id.text1);
+		AppCompatButton selectButton = (AppCompatButton) view.findViewById(android.R.id.button1);
 		selectButton.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -78,7 +79,7 @@ public abstract class TextPropertyEditor extends PropertyEditorBase implements T
 		onTextChanged(value);
 	}
 
-	protected TextView _selectedValueTextView;
+	protected AppCompatTextView _selectedValueTextView;
 	
 	protected abstract String loadText();
 	protected abstract void saveText(String text) throws Exception;
@@ -86,7 +87,7 @@ public abstract class TextPropertyEditor extends PropertyEditorBase implements T
 	protected void startChangeValueDialog()
 	{
 		Bundle args = initDialogArgs();
-		DialogFragment df = new TextEditDialog();
+		AppCompatDialogFragment df = new TextEditDialog();
 		df.setArguments(args);
 		df.show(getHost().getFragmentManager(), TextEditDialog.TAG);
 	}

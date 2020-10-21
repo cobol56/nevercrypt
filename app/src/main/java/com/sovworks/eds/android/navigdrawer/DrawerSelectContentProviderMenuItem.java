@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
@@ -48,7 +49,7 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
     public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
     {
         super.updateView(view, position);
-        ImageView iv = (ImageView) view.findViewById(R.id.close);
+        AppCompatImageView iv = (AppCompatImageView) view.findViewById(R.id.close);
         if(iv!=null)
             iv.setVisibility(View.INVISIBLE);
     }

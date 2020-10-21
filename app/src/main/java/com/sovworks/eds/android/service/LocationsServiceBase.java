@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.ServiceCompat;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -176,7 +177,7 @@ public class LocationsServiceBase extends Service
 	public void onDestroy()
 	{
 		Logger.debug("LocationsService onDestroy");
-		stopForeground(true);
+		ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE);
 		if(_shutdownReceiver!=null)
 		{
 			unregisterReceiver(_shutdownReceiver);

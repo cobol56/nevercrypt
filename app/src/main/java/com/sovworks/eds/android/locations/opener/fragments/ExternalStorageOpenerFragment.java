@@ -1,12 +1,14 @@
 package com.sovworks.eds.android.locations.opener.fragments;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -36,7 +38,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         public static final String TAG = "CheckLocationWritableTaskFragment";
 
         @Override
-        protected void initTask(Activity activity)
+        protected void initTask(FragmentActivity activity)
         {
             _lm = LocationsManager.getLocationsManager(activity);
         }
@@ -68,7 +70,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
 
         }
         @Override
-        protected TaskCallbacks getTaskCallbacks(Activity activity)
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
         {
             final ExternalStorageOpenerFragment f = (ExternalStorageOpenerFragment) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_OPENER_TAG));
             return f == null ? null : new TaskCallbacks()
@@ -160,7 +162,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
     {
         if(requestCode == REQUEST_CODE_ADD_LOCATION)
         {
-            if(resultCode == Activity.RESULT_OK)
+            if(resultCode == AppCompatActivity.RESULT_OK)
             {
                 Uri treeUri = data.getData();
                 if(treeUri!=null)
@@ -259,6 +261,6 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         AskExtStorageWritePermissionDialog.showDialog(getFragmentManager(), getTag());
     }
 
-    private static int REQUEST_CODE_ADD_LOCATION = Activity.RESULT_FIRST_USER;
+    private static int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
 
 }

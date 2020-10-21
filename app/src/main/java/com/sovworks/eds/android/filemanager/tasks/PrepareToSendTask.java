@@ -1,10 +1,11 @@
 package com.sovworks.eds.android.filemanager.tasks;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.fragments.TaskFragment;
@@ -34,7 +35,7 @@ public class PrepareToSendTask extends TaskFragment
 	}
 	
 	@Override
-	public void initTask(Activity activity)
+	public void initTask(FragmentActivity activity)
 	{
 		_context = activity.getApplicationContext();
 	}
@@ -103,7 +104,7 @@ public class PrepareToSendTask extends TaskFragment
 	}
 
 	@Override
-	protected TaskCallbacks getTaskCallbacks(final Activity activity)
+	protected TaskCallbacks getTaskCallbacks(final FragmentActivity activity)
 	{
 		return new TaskCallbacks()
         {

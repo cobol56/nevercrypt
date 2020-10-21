@@ -34,51 +34,36 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:inputType="none"
-                    android:text="@string/donation_notice"
-                    android:textSize="14sp"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="1dp"/>
+                    android:text="@string/donation_notice" />
 
                 <Button
                     android:id="@+id/donation_button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/make_a_donation"
-                    style="?android:attr/buttonStyle"
-                    android:layout_marginTop="1dp"/>
+                    style="@style/Button" />
                 <Button
                     android:id="@+id/homepage_button"
-                    style="?android:attr/buttonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:text="@string/homepage" />
+                    android:text="@string/homepage"
+                    style="@style/Button" />
                 <Button
                     android:id="@+id/check_source_code_button"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/check_source_code"
-                    style="?android:attr/buttonStyle"
-                    android:layout_marginTop="1dp"/>
+                    style="@style/Button" />
 
                 <Button
                     android:id="@+id/get_program_log"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/get_program_log"
-                    style="?android:attr/buttonStyle"
-                    android:layout_marginTop="4dp"/>
-
+                    style="@style/Button" />
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="19dp" />
-
+                    android:layout_height="20dp" />
                 <Button
                     android:id="@+id/close_button"
-                    style="?android:attr/buttonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:text="@string/close" />
+                    android:text="@string/close"
+                    style="@style/Button" />
         </LinearLayout>
 </ScrollView>

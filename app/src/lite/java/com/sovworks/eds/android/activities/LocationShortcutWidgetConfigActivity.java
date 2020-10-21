@@ -1,12 +1,13 @@
 package com.sovworks.eds.android.activities;
 
-import android.app.Fragment;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import androidx.fragment.app.Fragment;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;

@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.navigdrawer;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,9 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
 
@@ -64,9 +64,9 @@ public abstract class DrawerMenuItemBase
 
     public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
     {
-        TextView tv = view.findViewById(android.R.id.text1);
+        AppCompatTextView tv = view.findViewById(android.R.id.text1);
         tv.setText(getTitle());
-        ImageView iconView = view.findViewById(android.R.id.icon);
+        AppCompatImageView iconView = view.findViewById(android.R.id.icon);
         if(iconView!=null)
         {
             iconView.setContentDescription(getTitle());

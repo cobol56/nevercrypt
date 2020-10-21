@@ -1,7 +1,5 @@
 package com.sovworks.eds.android.dialogs;
 
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +11,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.Util;
 import com.sovworks.eds.android.providers.MainContentProvider;
 import com.sovworks.eds.android.settings.UserSettings;
 import com.sovworks.eds.exceptions.ApplicationException;
@@ -56,13 +56,6 @@ public abstract class AboutDialogBase extends DialogFragment
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		Util.setDialogStyle(this);
-	}
-
-	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View v = inflater.inflate(R.layout.about_dialog, container);
@@ -73,7 +66,7 @@ public abstract class AboutDialogBase extends DialogFragment
     			verName,
     			getResources().getString(R.string.about_message)
     		);
-		((TextView)v.findViewById(R.id.about_text_view)).setText(aboutMessage);
+		((AppCompatTextView)v.findViewById(R.id.about_text_view)).setText(aboutMessage);
 
 		v.findViewById(R.id.homepage_button).setOnClickListener(new OnClickListener()
 		{

@@ -17,7 +17,7 @@
         <Button
             android:id="@android:id/button1"
             android:text="@string/select"
-            style="?attr/propertyButtonStyle"/>
+            style="@style/Button"/>
     </LinearLayout>
 	<TextView
 		android:id="@+id/desc"

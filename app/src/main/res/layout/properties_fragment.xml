@@ -8,10 +8,7 @@
               android:layout_height="wrap_content"
               android:layout_margin="5dp"
               android:gravity="center"
-              android:background="?attr/propertyDivider"
-              android:descendantFocusability="afterDescendants"
-              android:divider="?attr/propertyDivider"
-              android:showDividers="beginning|middle|end"
-              android:focusable="false"
+              android:divider="?android:listDivider"
+              android:showDividers="middle"
               android:orientation="vertical"/>
 </ScrollView>

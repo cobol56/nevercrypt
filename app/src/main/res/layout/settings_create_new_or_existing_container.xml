@@ -14,17 +14,13 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/create_new_container_button"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="0.5"
             android:text="@string/create_new_container"
-            style="?attr/propertyButtonStyle"/>
+            style="@style/Button"/>
         <Button
             android:id="@+id/add_existing_container_button"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
             android:layout_weight="0.5"
             android:text="@string/add_container"
-            style="?attr/propertyButtonStyle"/>
+            style="@style/Button"/>
     </LinearLayout>
 </LinearLayout>

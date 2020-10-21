@@ -1,28 +1,27 @@
 package com.sovworks.eds.android.dialogs;
 
-
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment;
+import com.trello.rxlifecycle3.components.support.RxAppCompatDialogFragment;
 
-public class AskPrimaryStoragePermissionDialog extends DialogFragment
+public class AskPrimaryStoragePermissionDialog extends RxAppCompatDialogFragment
 {
 	public static void showDialog(FragmentManager fm)
 	{
-		DialogFragment newFragment = new AskPrimaryStoragePermissionDialog();
+		RxAppCompatDialogFragment newFragment = new AskPrimaryStoragePermissionDialog();
 	    newFragment.show(fm, "AskPrimaryStoragePermissionDialog");
 	}
 	
 	@NonNull
     @Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) 
+	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setMessage(R.string.storage_permission_desc)

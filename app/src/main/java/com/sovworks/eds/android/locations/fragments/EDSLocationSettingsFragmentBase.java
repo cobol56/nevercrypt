@@ -1,8 +1,9 @@
 package com.sovworks.eds.android.locations.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.text.format.Formatter;
+
+import androidx.fragment.app.Fragment;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;

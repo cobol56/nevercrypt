@@ -8,9 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
 
@@ -59,12 +60,12 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
     {
         super.updateView(view, position);
-        TextView tv = (TextView)view.findViewById(android.R.id.text1);
+        AppCompatTextView tv = (AppCompatTextView)view.findViewById(android.R.id.text1);
         tv.setPressed(_isExpanded);
         Drawable drawable = view.getBackground();
         if(drawable!=null)
             drawable.setState(_isExpanded ? new int[] {android.R.attr.state_expanded} : new int[0]);
-        ImageView iv = (ImageView) view.findViewById(android.R.id.icon);
+        AppCompatImageView iv = (AppCompatImageView) view.findViewById(android.R.id.icon);
         if(iv != null && !iv.hasTransientState())
         {
             iv.setVisibility(View.VISIBLE);
@@ -74,7 +75,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
 
     public void rotateIcon(View view)
     {
-        final ImageView icon = (ImageView) view.findViewById(android.R.id.icon); //getIconImageView();
+        final AppCompatImageView icon = (AppCompatImageView) view.findViewById(android.R.id.icon); //getIconImageView();
         if(icon!=null)
         {
             icon.clearAnimation();
@@ -97,7 +98,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     {
         if(!isExpanded())
             rotateExpandedIcons();
-        final ImageView icon = (ImageView) view.findViewById(android.R.id.icon); //getIconImageView();
+        final AppCompatImageView icon = (AppCompatImageView) view.findViewById(android.R.id.icon); //getIconImageView();
         if(icon!=null)
         {
             IS_ANIMATING = true;

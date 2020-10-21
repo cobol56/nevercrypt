@@ -6,26 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatCheckedTextView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.Util;
 
 import java.util.List;
 
 public abstract class SingleChoiceDialog<T> extends DialogFragment
 {
-    @Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-        Util.setDialogStyle(this);
-	}
-
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -44,7 +37,7 @@ public abstract class SingleChoiceDialog<T> extends DialogFragment
         _okButton.setEnabled(false);
         _progressBar = v.findViewById(android.R.id.progress);
         _listView = v.findViewById(android.R.id.list);
-        ((TextView)v.findViewById(android.R.id.text1)).setText(getTitle());
+        ((AppCompatTextView)v.findViewById(android.R.id.text1)).setText(getTitle());
         if(_progressBar!=null)
         {
             _progressBar.setVisibility(View.VISIBLE);
@@ -103,7 +96,7 @@ public abstract class SingleChoiceDialog<T> extends DialogFragment
             @Override
             public View getView(final int position, View convertView, ViewGroup parent)
             {
-                final CheckedTextView tv = (CheckedTextView) super.getView(position, convertView, parent);
+                final AppCompatCheckedTextView tv = (AppCompatCheckedTextView) super.getView(position, convertView, parent);
                 tv.setOnClickListener(v ->
                 {
                     getListView().setItemChecked(position, true);
@@ -122,6 +115,6 @@ public abstract class SingleChoiceDialog<T> extends DialogFragment
 
     private ListView _listView;
     private ProgressBar _progressBar;
-    private Button _okButton;
+    private AppCompatButton _okButton;
 
 }

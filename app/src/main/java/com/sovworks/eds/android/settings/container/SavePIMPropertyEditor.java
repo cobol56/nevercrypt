@@ -1,7 +1,8 @@
 package com.sovworks.eds.android.settings.container;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragment;
@@ -68,7 +69,7 @@ public class SavePIMPropertyEditor extends SwitchPropertyEditor implements TextE
     protected void startChangeValueDialog()
     {
         Bundle args = initDialogArgs();
-        DialogFragment df = new TextEditDialog();
+        AppCompatDialogFragment df = new TextEditDialog();
         df.setArguments(args);
         df.show(getHost().getFragmentManager(), TextEditDialog.TAG);
     }

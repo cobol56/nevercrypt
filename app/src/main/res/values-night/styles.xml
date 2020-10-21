@@ -1,9 +1,9 @@
 <resources>
     <style name="Theme.EDS" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimary">@color/primary_night</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/grey</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/secondary_variant</item>
@@ -18,7 +18,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">start</item>
         <item name="android:choiceMode">singleChoice</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">@android:color/black</item>
     </style>
     <style name="Button">
         <item name="android:layout_width">wrap_content</item>

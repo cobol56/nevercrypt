@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.navigdrawer;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -32,24 +31,14 @@ public abstract class DrawerControllerBase
         _drawerLayout = _activity.findViewById(R.id.drawer_layout);
         _drawerListView = _activity.findViewById(R.id.left_drawer);
 
-        //noinspection deprecation
         _drawerToggle = new ActionBarDrawerToggle(
                 _activity,                  /* host Activity */
                 _drawerLayout,         /* DrawerLayout object */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
         );
-
-        // Set the drawer toggle as the DrawerListener
-        //noinspection deprecation
-        _drawerLayout.setDrawerListener(_drawerToggle);
-
-        ActionBar ab = _activity.getActionBar();
-        if(ab!=null)
-        {
-            ab.setDisplayHomeAsUpEnabled(true);
-            ab.setHomeButtonEnabled(true);
-        }
+        _drawerLayout.addDrawerListener(_drawerToggle);
+        _activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         List<DrawerMenuItemBase> list = fillDrawer();
 
@@ -250,8 +239,6 @@ public abstract class DrawerControllerBase
     private final FileManagerActivity _activity;
     private ListView _drawerListView;
     private DrawerLayout _drawerLayout;
-
-    @SuppressWarnings("deprecation")
     private ActionBarDrawerToggle _drawerToggle;
 
     private void saveState(Bundle outState)

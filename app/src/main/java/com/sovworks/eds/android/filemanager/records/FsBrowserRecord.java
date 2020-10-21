@@ -6,11 +6,12 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
@@ -33,7 +34,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 
     public static void updateRowView(FileManagerActivity host, Object item)
     {
-        updateRowView((FileListViewFragment) host.getFragmentManager().findFragmentByTag(FileListViewFragment.TAG), item);
+        updateRowView((FileListViewFragment) host.getSupportFragmentManager().findFragmentByTag(FileListViewFragment.TAG), item);
     }
 
     public static void updateRowView(FileListViewFragment host, Object item)
@@ -72,7 +73,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     {
         if(host == null)
             return null;
-        FileListViewFragment f = (FileListViewFragment) host.getFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+        FileListViewFragment f = (FileListViewFragment) host.getSupportFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
         return getCurrentRowViewInfo(f, item);
     }
 
@@ -112,7 +113,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         //if(isSelected())
         //    //noinspection deprecation
         //    view.setBackgroundDrawable(getSelectedBackgroundDrawable(_context));
-        CheckBox cb = view.findViewById(android.R.id.checkbox);
+        AppCompatCheckBox cb = view.findViewById(android.R.id.checkbox);
         if(cb!=null)
         {
             if(allowSelect() && (_host.isSelectAction() || hf.isInSelectionMode()) && (!_host.isSelectAction() || !_host.isSingleSelectionMode()))
@@ -151,12 +152,12 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
                 rb.setVisibility(View.INVISIBLE);
         }
 
-        TextView tv = view.findViewById(android.R.id.text1);
+        AppCompatTextView tv = view.findViewById(android.R.id.text1);
      	tv.setText(getName());
 
-        ImageView iv = view.findViewById(android.R.id.icon);
+        AppCompatImageView iv = view.findViewById(android.R.id.icon);
         iv.setImageDrawable(getDefaultIcon());
-        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        iv.setScaleType(AppCompatImageView.ScaleType.CENTER_CROP);
         iv.setOnClickListener(view1 ->
         {
             if (allowSelect())
@@ -250,19 +251,8 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 
     protected FileListViewFragment getHostFragment()
     {
-        return _host == null ? null : (FileListViewFragment) _host.getFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+        return _host == null ? null : (FileListViewFragment) _host.getSupportFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
     }
 
     private boolean _isSelected;
-
-    /*private static Drawable _selectedItemBackground;
-
-    private static synchronized Drawable getSelectedBackgroundDrawable(Context context)
-    {
-        if(_selectedItemBackground == null)
-            //noinspection deprecation
-            _selectedItemBackground = context.getResources().getDrawable(R.drawable.list_selected_item_background);
-        return _selectedItemBackground;
-    }*/
-
 }

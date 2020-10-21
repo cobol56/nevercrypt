@@ -1,16 +1,17 @@
 package com.sovworks.eds.android.filemanager.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -57,7 +58,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 		}
 
         @Override
-        public void initTask(Activity activity)
+        public void initTask(FragmentActivity activity)
         {
             try
             {
@@ -76,7 +77,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
         }
 		
 		@Override
-		protected TaskCallbacks getTaskCallbacks(Activity activity)
+		protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
 		{
 			FragmentManager fm = getFragmentManager();
 			if(fm == null)
@@ -184,12 +185,12 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 	{
 		View view = inflater.inflate(R.layout.file_properties_fragments,
 				container, false);
-		_sizeTextView = (TextView) view
+		_sizeTextView = (AppCompatTextView) view
 				.findViewById(R.id.selectionPropertiesSizeTextView);
-		_numberOfFilesTextView = (TextView) view
+		_numberOfFilesTextView = (AppCompatTextView) view
 				.findViewById(R.id.selectionPropertiesNumberOfFilesTextView);
-		_fullPathTextView = (TextView) view.findViewById(R.id.fullPathTextView);
-		_modDateTextView = (TextView) view
+		_fullPathTextView = (AppCompatTextView) view.findViewById(R.id.fullPathTextView);
+		_modDateTextView = (AppCompatTextView) view
 				.findViewById(R.id.lastModifiedTextView);				
 		if(_lastInfo!=null)
 			updateUI(_lastInfo, true);
@@ -200,7 +201,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 	@Override
 	public void onStop()
 	{		
-		Activity fa = getActivity();
+		FragmentActivity fa = getActivity();
 		if(fa!=null)
 		{
 			if(!fa.isChangingConfigurations() || (fa instanceof FileManagerActivity))
@@ -265,7 +266,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 
 	}
 
-	private TextView _sizeTextView, _numberOfFilesTextView, _fullPathTextView,
+	private AppCompatTextView _sizeTextView, _numberOfFilesTextView, _fullPathTextView,
 			_modDateTextView;
 	private FilesInfo _lastInfo;
 

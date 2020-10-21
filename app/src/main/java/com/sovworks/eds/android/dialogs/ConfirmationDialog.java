@@ -1,19 +1,18 @@
 package com.sovworks.eds.android.dialogs;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.Util;
 
 
-public abstract class ConfirmationDialog extends DialogFragment
+public abstract class ConfirmationDialog extends AppCompatDialogFragment
 {
     public static final String ARG_RECEIVER_TAG = "com.sovworks.eds.android.RECEIVER_TAG";
 
@@ -23,16 +22,9 @@ public abstract class ConfirmationDialog extends DialogFragment
         void onNo();
     }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-        Util.setDialogStyle(this);
-	}
-
     @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState)
+    public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(getTitle())
@@ -81,7 +73,7 @@ public abstract class ConfirmationDialog extends DialogFragment
         }
         else
         {
-            Activity act = getActivity();
+            FragmentActivity act =getActivity();
             if(act instanceof Receiver)
                 return (Receiver) act;
         }

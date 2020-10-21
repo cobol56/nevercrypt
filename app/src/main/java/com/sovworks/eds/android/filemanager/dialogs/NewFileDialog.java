@@ -1,13 +1,13 @@
 package com.sovworks.eds.android.filemanager.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.tasks.CreateNewFile;
@@ -34,7 +34,7 @@ public class NewFileDialog extends DialogFragment
 
 	@NonNull
     @Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) 
+	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
 	{
 		int ft = getArguments().getInt(ARG_TYPE);
 
@@ -42,7 +42,7 @@ public class NewFileDialog extends DialogFragment
 		//alert.setMessage(getString(R.string.enter_new_file_name));
 
 		// Set an EditText view to get user input
-		final EditText input = new EditText(getActivity());
+		final AppCompatEditText input = new AppCompatEditText(getActivity());
 		input.setSingleLine();
 		input.setHint(getString(ft == CreateNewFile.FILE_TYPE_FOLDER ?
                 R.string.enter_new_folder_name

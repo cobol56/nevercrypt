@@ -1,13 +1,13 @@
 package com.sovworks.eds.android.filemanager.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
@@ -28,7 +28,7 @@ public class RenameFileDialog extends DialogFragment
 
 	@NonNull
     @Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) 
+	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
 	{		
 		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 		alert.setMessage(getString(R.string.enter_new_file_name));

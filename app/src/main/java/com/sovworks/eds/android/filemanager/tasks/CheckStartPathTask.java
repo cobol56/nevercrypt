@@ -1,8 +1,9 @@
 package com.sovworks.eds.android.filemanager.tasks;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
 import com.sovworks.eds.android.locations.tasks.AddExistingContainerTaskFragment;
@@ -33,7 +34,7 @@ public class CheckStartPathTask extends AddExistingContainerTaskFragment
     }
 
     @Override
-    protected TaskCallbacks getTaskCallbacks(Activity activity)
+    protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         return ((FileManagerActivity)activity).getCheckStartPathCallbacks();
     }

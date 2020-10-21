@@ -1,13 +1,14 @@
 package com.sovworks.eds.android.filemanager.fragments;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.filemanager.DirectorySettings;
@@ -32,7 +33,7 @@ import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.settings.GlobalConfig;
 import com.sovworks.eds.settings.Settings;
 import com.trello.rxlifecycle3.android.FragmentEvent;
-import com.trello.rxlifecycle3.components.RxFragment;
+import com.trello.rxlifecycle3.components.support.RxFragment;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -145,7 +146,7 @@ public class FileListDataFragment extends RxFragment
 	{
 		if(requestCode == REQUEST_CODE_OPEN_LOCATION)
         {
-            if(resultCode != Activity.RESULT_OK)
+            if(resultCode != AppCompatActivity.RESULT_OK)
                 getActivity().setIntent(new Intent());
             lifecycle().
                     filter(event -> event == FragmentEvent.RESUME).

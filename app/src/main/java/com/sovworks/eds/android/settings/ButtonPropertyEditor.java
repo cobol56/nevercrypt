@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.sovworks.eds.android.R;
 
@@ -70,7 +71,7 @@ public abstract class ButtonPropertyEditor extends PropertyEditorBase
 		_buttonText = buttonText;
 	}
 	
-	protected Button _button;
+	protected AppCompatButton _button;
 	private final int _buttonTextId;
 	private final String _buttonText;
 	

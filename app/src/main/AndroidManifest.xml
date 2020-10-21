@@ -75,7 +75,6 @@
         <activity
             android:name=".activities.CancelTaskActivity"
             android:excludeFromRecents="true"
-            android:theme="@style/Dialog"
             android:label="@string/eds">
             <intent-filter>
                 <action android:name="com.sovworks.eds.android.ACTION_CANCEL_TASK"/>

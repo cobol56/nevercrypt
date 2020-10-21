@@ -1,11 +1,11 @@
 package com.sovworks.eds.android.helpers;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.fragments.TaskFragment.Result;
 import com.sovworks.eds.android.fragments.TaskFragment.TaskCallbacks;
@@ -38,7 +38,7 @@ public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
         }
     }
 
-	public ProgressDialogTaskFragmentCallbacks(Activity context, int dialogTextResId)
+	public ProgressDialogTaskFragmentCallbacks(FragmentActivity context, int dialogTextResId)
 	{
 		_context = context;
 		_dialogTextResId = dialogTextResId;
@@ -77,7 +77,7 @@ public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
 		
 	}
 	
-	protected final Activity _context;
+	protected final FragmentActivity _context;
 	
 	protected DialogFragment initDialog(Bundle args)
 	{

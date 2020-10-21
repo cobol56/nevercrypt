@@ -1,13 +1,13 @@
 package com.sovworks.eds.android.settings.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
 import com.sovworks.eds.android.settings.PropertyEditor;
@@ -38,7 +38,7 @@ public class ChoiceDialog extends DialogFragment
 
 	@NonNull
     @Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) 
+	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
 	{
         PropertyEditor.Host host = PropertiesView.getHost(ChoiceDialog.this);
         final ChoiceDialogPropertyEditor pe = (ChoiceDialogPropertyEditor) host.getPropertiesView().getPropertyById(getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID));

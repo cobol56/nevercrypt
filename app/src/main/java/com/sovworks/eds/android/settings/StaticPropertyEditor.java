@@ -3,8 +3,9 @@ package com.sovworks.eds.android.settings;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.helpers.CompatHelper;
@@ -25,7 +26,7 @@ public class StaticPropertyEditor extends PropertyEditorBase
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_descTextView = (TextView) view.findViewById(R.id.desc);
+		_descTextView = (AppCompatTextView) view.findViewById(R.id.desc);
 		return view;
 	}
 	
@@ -74,7 +75,7 @@ public class StaticPropertyEditor extends PropertyEditorBase
 		Toast.makeText(getHost().getContext(), R.string.text_has_been_copied, Toast.LENGTH_SHORT).show();
 	}
 
-	protected TextView _descTextView;
+	protected AppCompatTextView _descTextView;
 	
 	protected String loadText()
 	{

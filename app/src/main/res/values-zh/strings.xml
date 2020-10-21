@@ -183,14 +183,9 @@
 	<string name="toggle_auto_zoom">切换自动缩放</string>
 	<string name="change">更改</string>
 	<string name="do_you_really_want_to_remove_from_the_list">你真的要从列表中移除 <xliff:g id="title">\"%1$s\"</xliff:g> 吗?</string>
-	<string name="toggle_display_password">切换显示密码</string>
-	<string name="file_operation_started">文件处理开始</string>
+    <string name="file_operation_started">文件处理开始</string>
 	<string name="open_file_as_container">打开文件作为容器</string>
 	<string name="remember_kdf_iterations_multiplier">记住KDF迭代乘数</string>
-	<string name="default_theme">默认</string>
-	<string name="dark_theme">黑色</string>
-	<string name="theme">主题</string>
-	<string name="theme_desc">重启程序应用更改</string>
 	<string name="use_external_file_manager">外部文件管理器</string>
 	<string name="use_external_file_manager_desc">容器装载后打开外部文件管理器</string>
 	<string name="builtin_file_manager">内置文件管理器</string>

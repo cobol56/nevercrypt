@@ -1,9 +1,10 @@
 package com.sovworks.eds.android.locations.tasks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.PowerManager;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.activities.SettingsBaseActivity;
@@ -33,7 +34,7 @@ public abstract class CreateEDSLocationTaskFragmentBase extends
     public static final int RESULT_REQUEST_OVERWRITE = 1;
 
     @Override
-    public void initTask(Activity activity)
+    public void initTask(FragmentActivity activity)
     {
         _context = activity.getApplicationContext();
         _locationsManager = LocationsManager.getLocationsManager(_context);
@@ -43,7 +44,7 @@ public abstract class CreateEDSLocationTaskFragmentBase extends
     protected LocationsManager _locationsManager;
 
     @Override
-    protected TaskCallbacks getTaskCallbacks(Activity activity)
+    protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         CreateEDSLocationFragment f = (CreateEDSLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         return f == null ? null : f.getCreateLocationTaskCallbacks();

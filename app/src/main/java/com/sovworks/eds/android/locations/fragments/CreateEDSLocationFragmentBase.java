@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.locations.fragments;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -197,7 +198,7 @@ public abstract class CreateEDSLocationFragmentBase extends PropertiesFragmentBa
                     LocationsManager.broadcastLocationAdded(getContext(), loc);
                     Intent res = new Intent();
                     res.setData(loc.getLocationUri());
-                    getActivity().setResult(Activity.RESULT_OK, res);
+                    getActivity().setResult(AppCompatActivity.RESULT_OK, res);
                     getActivity().finish();
                 }
                 catch (CancellationException ignored)
@@ -269,7 +270,7 @@ public abstract class CreateEDSLocationFragmentBase extends PropertiesFragmentBa
                             .showDialog(getFragmentManager());
                 else
                 {
-                    getActivity().setResult(Activity.RESULT_OK);
+                    getActivity().setResult(AppCompatActivity.RESULT_OK);
                     getActivity().finish();
                 }
             }

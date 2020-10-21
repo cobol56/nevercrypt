@@ -1,12 +1,12 @@
 package com.sovworks.eds.android.service;
 
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -94,7 +94,7 @@ public abstract class ServiceTaskWithNotificationBase implements Task
         PendingIntent pi = PendingIntent.getActivity(_context, 0,emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(pi);
 
-        NotificationManager nm = (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManagerCompat nm = NotificationManagerCompat.from(_context);
         if(nm!=null)
 			nm.notify(FileOpsService.getNewNotificationId(), nb.build());
 	}
@@ -120,7 +120,7 @@ public abstract class ServiceTaskWithNotificationBase implements Task
 
     void removeNotification()
     {
-        NotificationManager nm = (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManagerCompat nm = NotificationManagerCompat.from(_context);
 		if (nm != null)
 			nm.cancel(_taskId);
 
@@ -128,7 +128,7 @@ public abstract class ServiceTaskWithNotificationBase implements Task
 
     private void updateNotification()
     {
-        NotificationManager nm = (NotificationManager) _context.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManagerCompat nm = NotificationManagerCompat.from(_context);
 		if (nm != null)
 			nm.notify(_taskId, _notificationBuilder.build());
 	}

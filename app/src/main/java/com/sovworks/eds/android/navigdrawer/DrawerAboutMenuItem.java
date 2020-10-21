@@ -25,7 +25,7 @@ public class DrawerAboutMenuItem extends DrawerMenuItemBase
     public void onClick(View view, int position)
     {
         super.onClick(view, position);
-        AboutDialog.showDialog(getDrawerController().getMainActivity().getFragmentManager());
+        AboutDialog.showDialog(getDrawerController().getMainActivity().getSupportFragmentManager());
     }
 
     @Override

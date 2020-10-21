@@ -1,11 +1,12 @@
 package com.sovworks.eds.android.locations.fragments;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -22,7 +23,7 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
     {
         if(requestCode == REQUEST_CODE_ADD_LOCATION)
         {
-            if(resultCode == Activity.RESULT_OK)
+            if(resultCode == AppCompatActivity.RESULT_OK)
             {
                 Uri treeUri = data.getData();
                 try
@@ -106,7 +107,7 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
         }
     }
 
-    private static int REQUEST_CODE_ADD_LOCATION = Activity.RESULT_FIRST_USER;
+    private static int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
 
     private static Drawable _icon;
 

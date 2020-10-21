@@ -180,14 +180,9 @@
   <string name="toggle_auto_zoom">Вкл/вкл автоматического масштабирования</string>
   <string name="change">Изменить</string>
   <string name="do_you_really_want_to_remove_from_the_list">Вы действительно хотите убрать \"%1$s\" из списка?</string>
-  <string name="toggle_display_password">Переключение отображения пароля</string>
-  <string name="file_operation_started">Операция с файлами выполняется</string>
+    <string name="file_operation_started">Операция с файлами выполняется</string>
   <string name="open_file_as_container">Открыть как контейнер</string>
   <string name="remember_kdf_iterations_multiplier">Запомнить PIM</string>
-  <string name="default_theme">По умолчанию</string>
-  <string name="dark_theme">Тёмная</string>
-  <string name="theme">Тема</string>
-  <string name="theme_desc">Перезапустите программу, чтобы изменения вступили в силу</string>
   <string name="use_external_file_manager">Сторонний менеджер файлов</string>
   <string name="use_external_file_manager_desc">Открывать сторонний менеджер файлов после монтирования контейнера</string>
   <string name="builtin_file_manager">Встроенный менеджер файлов</string>

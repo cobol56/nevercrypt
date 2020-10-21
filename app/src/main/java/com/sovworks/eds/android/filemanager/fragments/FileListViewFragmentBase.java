@@ -1,8 +1,6 @@
 package com.sovworks.eds.android.filemanager.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -21,10 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -63,7 +63,7 @@ import com.sovworks.eds.locations.Location;
 import com.sovworks.eds.locations.LocationsManager;
 import com.sovworks.eds.settings.GlobalConfig;
 import com.trello.rxlifecycle3.android.FragmentEvent;
-import com.trello.rxlifecycle3.components.RxFragment;
+import com.trello.rxlifecycle3.components.support.RxAppCompatDialogFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ import io.reactivex.subjects.Subject;
 
 import static com.sovworks.eds.android.settings.UserSettingsCommon.FILE_BROWSER_SORT_MODE;
 
-public abstract class FileListViewFragmentBase extends RxFragment implements
+public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment implements
         SortDialog.SortingReceiver,
         FileManagerFragment,
         LocationOpenerBaseFragment.LocationOpenerResultReceiver,
@@ -91,7 +91,7 @@ public abstract class FileListViewFragmentBase extends RxFragment implements
 {
     public static final String TAG = "com.sovworks.eds.android.filemanager.fragments.FileListViewFragment";
 
-    public static final int REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER = Activity.RESULT_FIRST_USER;
+    public static final int REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER = AppCompatActivity.RESULT_FIRST_USER;
     public static final String ARG_SCROLL_POSITION = "com.sovworks.eds.android.SCROLL_POSITION";
 
     public static ArrayList<Path> getPathsFromRecords(List<? extends BrowserRecord> records)
@@ -275,7 +275,7 @@ public abstract class FileListViewFragmentBase extends RxFragment implements
     {
         if(requestCode == REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER)
         {
-            if(resultCode == Activity.RESULT_OK && data!=null)
+            if(resultCode == AppCompatActivity.RESULT_OK && data!=null)
             {
                 returnSelectionFromContentProvider(data);
                 if(data.getData()!=null)
@@ -468,7 +468,7 @@ public abstract class FileListViewFragmentBase extends RxFragment implements
     public static final String ARG_WIPE_FILES = "com.sovworks.eds.android.WIPE_FILES";
 
     protected EditText _selectedFileEditText;
-    protected TextView _currentPathTextView;
+    protected AppCompatTextView _currentPathTextView;
     protected LocationsManager _locationsManager;
     protected ActionMode _actionMode;
     private ListView _listView;
@@ -1131,7 +1131,7 @@ public abstract class FileListViewFragmentBase extends RxFragment implements
 
     protected void returnSelectionFromContentProvider(Intent data)
     {
-        getActivity().setResult(Activity.RESULT_OK, data);
+        getActivity().setResult(AppCompatActivity.RESULT_OK, data);
         getActivity().finish();
     }
 
@@ -1166,7 +1166,7 @@ public abstract class FileListViewFragmentBase extends RxFragment implements
                                             loc,
                                             Collections.singletonList(rec.getPath())
                                     );
-                                    act.setResult(Activity.RESULT_OK, i);
+                                    act.setResult(AppCompatActivity.RESULT_OK, i);
                                     act.finish();
                                 }
 
@@ -1182,7 +1182,7 @@ public abstract class FileListViewFragmentBase extends RxFragment implements
         List<Path> paths = getPathsFromRecords(selectedRecs);
         if (paths.size() > 0)
         {
-            getActivity().setResult(Activity.RESULT_OK, getSelectResult(paths));
+            getActivity().setResult(AppCompatActivity.RESULT_OK, getSelectResult(paths));
             getActivity().finish();
         }
     }

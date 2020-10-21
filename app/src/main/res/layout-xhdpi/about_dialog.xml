@@ -44,21 +44,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/version_history"
-                style="?android:attr/buttonStyle"
                 android:layout_marginTop="1dp"/>
             <Button
                 android:id="@+id/contact_support_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_support"
-                style="?android:attr/buttonStyle"
                 android:layout_marginTop="4dp"/>
             <Button
                 android:id="@+id/get_program_log"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/get_program_log"
-                style="?android:attr/buttonStyle"
                 android:layout_marginTop="4dp"/>
 
         </LinearLayout>

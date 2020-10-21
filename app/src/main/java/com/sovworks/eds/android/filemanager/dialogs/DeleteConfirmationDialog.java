@@ -1,17 +1,17 @@
 package com.sovworks.eds.android.filemanager.dialogs;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -28,20 +28,20 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class DeleteConfirmationDialog extends DialogFragment
+public class DeleteConfirmationDialog extends AppCompatDialogFragment
 {
 
 	public static final String TAG = "DeleteConfirmationDialog";
 	public static void showDialog(FragmentManager fm,Bundle args)
 	{		
-		DialogFragment newFragment = new DeleteConfirmationDialog();
+		AppCompatDialogFragment newFragment = new DeleteConfirmationDialog();
 		newFragment.setArguments(args);
 	    newFragment.show(fm, TAG);
 	}
 	
 	@NonNull
     @Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) 
+	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
 	{
 		Bundle args = getArguments();
 		ArrayList<Path> paths = new ArrayList<>();
@@ -54,7 +54,7 @@ public class DeleteConfirmationDialog extends DialogFragment
 			throw new RuntimeException("Inflater is null");
 
 		@SuppressLint("InflateParams") View v = inflater.inflate(R.layout.delete_confirmation_dialog, null);
-		TextView tv = v.findViewById(android.R.id.text1);
+		AppCompatTextView tv = v.findViewById(android.R.id.text1);
 		tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, "..."));
 		builder.setView(v);
 

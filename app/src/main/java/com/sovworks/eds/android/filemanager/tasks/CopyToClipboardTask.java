@@ -1,11 +1,12 @@
 package com.sovworks.eds.android.filemanager.tasks;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
@@ -61,7 +62,7 @@ public class CopyToClipboardTask extends TaskFragment
 	}
 	
 	@Override
-	public void initTask(Activity activity)
+	public void initTask(FragmentActivity activity)
 	{
 		_context = activity.getApplicationContext();
 	}
@@ -93,7 +94,7 @@ public class CopyToClipboardTask extends TaskFragment
 			Logger.debug("CopyToClipboardTask: clip has been set: " + clip);
 	}
 	@Override
-	protected TaskCallbacks getTaskCallbacks(final Activity activity)
+	protected TaskCallbacks getTaskCallbacks(final FragmentActivity activity)
 	{
 		return new TaskCallbacks()
         {

@@ -1,15 +1,16 @@
 package com.sovworks.eds.android.locations.closer.fragments;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
+
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -21,7 +22,7 @@ import com.sovworks.eds.locations.LocationsManager;
 
 import java.util.concurrent.CancellationException;
 
-public class LocationCloserBaseFragment extends Fragment
+public class LocationCloserBaseFragment extends AppCompatDialogFragment
 {
     public static final String ARG_FORCE_CLOSE = "com.sovworks.eds.android.FORCE_CLOSE";
 
@@ -56,7 +57,7 @@ public class LocationCloserBaseFragment extends Fragment
         protected LocationsManager _locationsManager;
 
         @Override
-        protected void initTask(Activity activity)
+        protected void initTask(FragmentActivity activity)
         {
             _context = activity.getApplicationContext();
             _locationsManager = LocationsManager.getLocationsManager(_context);
@@ -84,7 +85,7 @@ public class LocationCloserBaseFragment extends Fragment
         }
 
         @Override
-        protected TaskCallbacks getTaskCallbacks(Activity activity)
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
         {
             LocationCloserBaseFragment f = (LocationCloserBaseFragment) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_CLOSER_TAG));
             return f == null ? null : f.getCloseLocationTaskCallbacks();
@@ -154,7 +155,7 @@ public class LocationCloserBaseFragment extends Fragment
 		@Override
 		public void onResumeUI(Bundle args)
 		{
-            Activity activity = getActivity();
+            FragmentActivity activity = getActivity();
             _dialog = new ProgressDialog(activity);
             _dialog.setMessage (activity.getText(R.string.closing));
             _dialog.setIndeterminate(true);

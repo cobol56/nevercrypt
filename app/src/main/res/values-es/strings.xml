@@ -179,8 +179,7 @@
   <string name="toggle_auto_zoom">Cambiar el zoom automático</string>
   <string name="change">Cambiar</string>
   <string name="do_you_really_want_to_remove_from_the_list">¿Realmente desea borrar \"%1$s\" de la lista?</string>
-  <string name="toggle_display_password">Cambiar la visualización de la contraseña</string>
-  <string name="file_operation_started">Operación de fichero iniciada</string>
+    <string name="file_operation_started">Operación de fichero iniciada</string>
   <string name="open_file_as_container">Abrir fichero como contenedor</string>
   <string name="use_external_file_manager">Gestor de ficheros externo</string>
   <string name="use_external_file_manager_desc">Abrir un gestor de ficheros externo una vez se monte un contenedor</string>

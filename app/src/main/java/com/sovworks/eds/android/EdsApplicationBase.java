@@ -1,7 +1,6 @@
 package com.sovworks.eds.android;
 
 import android.app.Application;
-import android.app.NotificationManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -10,6 +9,7 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.widget.Toast;
 
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
@@ -39,7 +39,7 @@ public class EdsApplicationBase extends Application
 	{
 		LocalBroadcastManager.getInstance(context).sendBroadcastSync(new Intent(BROADCAST_EXIT));
 		if(removeNotifications)
-			((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
+			NotificationManagerCompat.from(context).cancelAll();
 		setMasterPassword(null);
 		LocationsManager.setGlobalLocationsManager(null);
 		UserSettings.closeSettings();

@@ -1,10 +1,11 @@
 package com.sovworks.eds.android.navigdrawer;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.fragment.app.Fragment;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
@@ -85,7 +86,7 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
         super.onClick(view, position);
         getDrawerController().
                 getMainActivity().
-                getFragmentManager().
+                getSupportFragmentManager().
                 beginTransaction().
                 add(new ExitFragment(), ExitFragment.TAG).
                 commit();

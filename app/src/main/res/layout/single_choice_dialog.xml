@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    style="?attr/dialogStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
 
     <TextView
         android:id="@android:id/text1"
@@ -28,16 +29,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@android:string/cancel"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@android:string/cancel" />
 
         <Button
             android:id="@android:id/button2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@android:string/ok"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@android:string/ok" />
     </LinearLayout>
 
 

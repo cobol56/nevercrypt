@@ -20,5 +20,5 @@
     <!-- The navigation drawer -->
     <ListView
         android:id="@+id/left_drawer"
-        style="?attr/leftDrawerStyle" />
+        style="@style/LeftDrawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

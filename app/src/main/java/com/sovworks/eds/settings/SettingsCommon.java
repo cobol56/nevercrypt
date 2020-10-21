@@ -12,7 +12,6 @@ public interface SettingsCommon
 {
 	int VERSION = 3;
 
-	int USE_INTERNAL_IMAGE_VIEWER_NEVER = 0;
 	int USE_INTERNAL_IMAGE_VIEWER_VIRT_FS = 1;
 	int USE_INTERNAL_IMAGE_VIEWER_ALWAYS = 2;
 
@@ -26,8 +25,6 @@ public interface SettingsCommon
 	int FB_SORT_FILENAME_NUM_DESC = 7;
 
 	int THEME_DEFAULT = 0;
-	int THEME_DARK = 1;
-
 
 	class InvalidSettingsPassword extends Exception
     {

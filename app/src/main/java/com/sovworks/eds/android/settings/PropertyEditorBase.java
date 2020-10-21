@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
 
@@ -137,7 +138,7 @@ public abstract class PropertyEditorBase implements PropertyEditor
 	{
 		LayoutInflater li = (LayoutInflater)getHost().getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	  
 		View view = li.inflate(_layoutResId, parent, false);
-		TextView tv;
+		AppCompatTextView tv;
 		tv = view.findViewById(R.id.title_edit);
 		if (tv != null)
 		{

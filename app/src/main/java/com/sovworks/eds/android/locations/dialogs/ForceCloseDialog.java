@@ -1,9 +1,10 @@
 package com.sovworks.eds.android.locations.dialogs;
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.dialogs.ConfirmationDialog;
@@ -19,7 +20,7 @@ public class ForceCloseDialog extends ConfirmationDialog
 
     public static void showDialog(FragmentManager fm, String closerTag, String locTitle, String closerClassName, Bundle closerArgs)
     {
-        DialogFragment f = new ForceCloseDialog();
+        AppCompatDialogFragment f = new ForceCloseDialog();
         Bundle b = new Bundle();
         b.putString(ARG_LOCATION_TITLE, locTitle);
         b.putString(ARG_CLOSER_CLASS_NAME, closerClassName);

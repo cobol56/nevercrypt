@@ -1,10 +1,11 @@
 package com.sovworks.eds.android.navigdrawer;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
@@ -63,7 +64,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     public void updateView(View view, @SuppressWarnings("UnusedParameters") int position)
     {
         super.updateView(view, position);
-        ImageView iv = view.findViewById(R.id.close);
+        AppCompatImageView iv = view.findViewById(R.id.close);
         if(iv!=null)
         {
             if(LocationsManager.isOpenableAndOpen(_location))
@@ -96,7 +97,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
 
     public void openLocation()
     {
-        FragmentManager fm = getDrawerController().getMainActivity().getFragmentManager();
+        FragmentManager fm = getDrawerController().getMainActivity().getSupportFragmentManager();
         String openerTag = LocationOpenerBaseFragment.getOpenerTag(_location);
         if(fm.findFragmentByTag(openerTag)==null)
         {
@@ -108,7 +109,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
 
     public void closeLocation()
     {
-        FragmentManager fm = getDrawerController().getMainActivity().getFragmentManager();
+        FragmentManager fm = getDrawerController().getMainActivity().getSupportFragmentManager();
         String closerTag = LocationCloserBaseFragment.getCloserTag( _location);
         if(fm.findFragmentByTag(closerTag)==null)
         {
@@ -174,7 +175,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     {
         FileListDataFragment df = (FileListDataFragment) getDrawerController().
                 getMainActivity().
-                getFragmentManager().
+                getSupportFragmentManager().
                 findFragmentByTag(FileListDataFragment.TAG);
         if(df!=null)
         {

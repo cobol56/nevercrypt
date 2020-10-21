@@ -1,13 +1,13 @@
 package com.sovworks.eds.android.locations.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.activities.SettingsBaseActivity;
@@ -35,7 +35,7 @@ public class OverwriteContainerDialog extends DialogFragment
 	
 	@NonNull
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) 
+	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
 	{
 		Bundle args = getArguments();
 		int resId = args!=null ? args.getInt(ARG_REQUEST_RES_ID, R.string.do_you_want_to_overwrite_existing_file) : R.string.do_you_want_to_overwrite_existing_file;

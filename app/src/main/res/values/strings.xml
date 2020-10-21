@@ -187,14 +187,9 @@
 	<string name="toggle_auto_zoom">Toggle auto zoom</string>
 	<string name="change">Change</string>
 	<string name="do_you_really_want_to_remove_from_the_list">Do you really want to remove <xliff:g id="title">\"%1$s\"</xliff:g> from the list?</string>
-	<string name="toggle_display_password">Toggle display password</string>
-	<string name="file_operation_started">File operation started</string>
+    <string name="file_operation_started">File operation started</string>
 	<string name="open_file_as_container">Open file as container</string>
 	<string name="remember_kdf_iterations_multiplier">Remember KDF iterations multiplier</string>
-	<string name="default_theme">Default</string>
-	<string name="dark_theme">Dark</string>
-	<string name="theme">Theme</string>
-	<string name="theme_desc">Restart the program to apply changes</string>
 	<string name="use_external_file_manager">External file manager</string>
 	<string name="use_external_file_manager_desc">Open an external file manager once the container has been mounted</string>
 	<string name="builtin_file_manager">Built-in file manager</string>

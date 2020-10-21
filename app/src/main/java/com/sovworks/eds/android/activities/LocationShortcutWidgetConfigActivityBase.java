@@ -1,6 +1,5 @@
 package com.sovworks.eds.android.activities;
 
-import android.app.Fragment;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +7,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.fragment.app.Fragment;
+
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
 import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.helpers.Util;
 import com.sovworks.eds.android.settings.PathPropertyEditor;
 import com.sovworks.eds.android.settings.PropertyEditor;
 import com.sovworks.eds.android.settings.TextPropertyEditor;
@@ -175,7 +175,6 @@ public abstract class LocationShortcutWidgetConfigActivityBase extends SettingsB
 	@Override
     public void onCreate(Bundle icicle)
 	{
-        Util.setTheme(this);
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);
     }

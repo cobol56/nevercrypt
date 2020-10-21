@@ -3,8 +3,9 @@ package com.sovworks.eds.android.settings;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sovworks.eds.android.R;
 import com.sovworks.eds.android.settings.dialogs.ChoiceDialog;
@@ -32,8 +33,8 @@ public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_selectedItems = (TextView) view.findViewById(android.R.id.text1);
-		_selectButton = (Button) view.findViewById(android.R.id.button1);
+		_selectedItems = (AppCompatTextView) view.findViewById(android.R.id.text1);
+		_selectButton = (AppCompatButton) view.findViewById(android.R.id.button1);
         _selectButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -103,10 +104,10 @@ public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
 	protected abstract void saveValue(int value);
 	protected abstract List<String> getEntries();
 
-	protected TextView _selectedItems;
+	protected AppCompatTextView _selectedItems;
 
 	private List<String> _entries;
-    private Button _selectButton;
+    private AppCompatButton _selectButton;
 
     private void updateSelectionText()
     {

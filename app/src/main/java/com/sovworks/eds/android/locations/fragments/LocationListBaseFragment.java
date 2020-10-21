@@ -1,7 +1,6 @@
 package com.sovworks.eds.android.locations.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.ListFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,11 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.ListFragment;
 
 import com.sovworks.eds.android.Logger;
 import com.sovworks.eds.android.R;
@@ -54,13 +55,8 @@ public abstract class LocationListBaseFragment extends ListFragment
     {
         ListViewAdapter(Context context, List<LocationInfo> backingList)
         {
-            super(context, R.layout.locations_list_row , backingList);
+            super(context, R.layout.locations_list_row, backingList);
             TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.selectedItemBackground, typedValue, true);
-            //noinspection deprecation
-            _selectedItemBackgroundColor = context.getResources().getColor(typedValue.resourceId);
-            //noinspection deprecation
-            _notSelectedItemBackground = context.getResources().getColor(android.R.color.transparent);
         }
 
         @NonNull
@@ -69,33 +65,24 @@ public abstract class LocationListBaseFragment extends ListFragment
         public View getView(final int position, View convertView, @NonNull ViewGroup parent)
         {
             View v;
-            if(convertView == null)
+            if (convertView == null)
             {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 v = inflater.inflate(R.layout.locations_list_row, null);
-            }
-            else v = convertView;
+            } else v = convertView;
 
             final LocationInfo item = getItem(position);
             v.setTag(item);
-            if(item == null)
+            if (item == null)
                 return v;
-            //noinspection deprecation
-            v.setBackgroundColor(item.isSelected ? _selectedItemBackgroundColor : _notSelectedItemBackground);
 
-            //Drawable back = v.getBackground();
-            //if(back!=null)
-            //    back.setState(item.isSelected ? new int[]{android.R.attr.state_focused } : new int[0]);
-
-            TextView tv = ((TextView)v.findViewById(android.R.id.text1));
+            AppCompatTextView tv = ((AppCompatTextView) v.findViewById(android.R.id.text1));
             tv.setText(item.location.getTitle());
-            ImageView iv = (ImageView)v.findViewById(android.R.id.icon);
-            if(iv!=null)
+            AppCompatImageView iv = (AppCompatImageView) v.findViewById(android.R.id.icon);
+            if (iv != null)
                 iv.setImageDrawable(item.getIcon());
             return v;
         }
-
-        private final int _selectedItemBackgroundColor, _notSelectedItemBackground;
     }
 
 
@@ -451,17 +438,17 @@ public abstract class LocationListBaseFragment extends ListFragment
 
     private void startSelectionMode()
     {
-        _actionMode = getListView().startActionMode(new ActionMode.Callback()
+        _actionMode =  ((AppCompatActivity)getActivity()).startSupportActionMode(new ActionMode.Callback()
         {
             @Override
-            public boolean onCreateActionMode(ActionMode mode, android.view.Menu menu)
+            public boolean onCreateActionMode(ActionMode mode, Menu menu)
             {
                 mode.getMenuInflater().inflate(getContextMenuId(), menu);
                 return true;
             }
 
             @Override
-            public boolean onPrepareActionMode(ActionMode mode, android.view.Menu menu)
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu)
             {
                 if(!haveSelectedLocations())
                 {
@@ -472,7 +459,7 @@ public abstract class LocationListBaseFragment extends ListFragment
             }
 
             @Override
-            public boolean onActionItemClicked(ActionMode mode, android.view.MenuItem item)
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item)
             {
                 MenuHandlerInfo mhi = new MenuHandlerInfo();
                 mhi.menuItemId = item.getItemId();
@@ -489,7 +476,6 @@ public abstract class LocationListBaseFragment extends ListFragment
                 clearSelectedFlag();
                 _actionMode = null;
             }
-
         });
     }
 

@@ -1,34 +1,33 @@
 package com.sovworks.eds.android.activities;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.sovworks.eds.android.helpers.CompatHelper;
-import com.sovworks.eds.android.helpers.Util;
 import com.sovworks.eds.android.settings.UserSettings;
 
-public abstract class SettingsBaseActivity extends Activity
+public abstract class SettingsBaseActivity extends AppCompatActivity
 {
     public static final String SETTINGS_FRAGMENT_TAG = "com.sovworks.eds.android.locations.SETTINGS_FRAGMENT";
 
     @Override
 	public void onCreate(Bundle savedInstanceState)
     {
-        Util.setTheme(this);
         super.onCreate(savedInstanceState);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(UserSettings.getSettings(this).isFlagSecureEnabled())
             CompatHelper.setWindowFlagSecure(this);
         if(savedInstanceState == null)
-            getFragmentManager().
+            getSupportFragmentManager().
                 beginTransaction().
                 add(android.R.id.content, getSettingsFragment(), SETTINGS_FRAGMENT_TAG).
                 commit();
     }
 
     @Override
-    public boolean onNavigateUp() {
+    public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
