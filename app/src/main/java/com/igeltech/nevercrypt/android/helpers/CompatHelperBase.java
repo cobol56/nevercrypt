@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,8 +14,8 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.fs.Path;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,7 +67,7 @@ public class CompatHelperBase
 	{
 		if (serviceRunningNotificationsChannelId == null)
 		{
-			serviceRunningNotificationsChannelId = "com.sovworks.eds.SERVICE_RUNNING_CHANNEL2";
+			serviceRunningNotificationsChannelId = "com.igeltech.nevercrypt.SERVICE_RUNNING_CHANNEL2";
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 				NotificationChannel channel = new NotificationChannel(
 					serviceRunningNotificationsChannelId,
@@ -87,7 +87,7 @@ public class CompatHelperBase
 	{
 		if (fileOperationsNotificationsChannelId == null)
 		{
-			fileOperationsNotificationsChannelId = "com.sovworks.eds.FILE_OPERATIONS_CHANNEL2";
+			fileOperationsNotificationsChannelId = "com.igeltech.nevercrypt.FILE_OPERATIONS_CHANNEL2";
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 				NotificationChannel channel = new NotificationChannel(
 					fileOperationsNotificationsChannelId,

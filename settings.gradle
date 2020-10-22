@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "EDS Lite"
+rootProject.name = "NeverCrypt"

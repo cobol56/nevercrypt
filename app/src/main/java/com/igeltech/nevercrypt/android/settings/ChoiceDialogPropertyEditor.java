@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.dialogs.ChoiceDialog;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.dialogs.ChoiceDialog;
 
 import java.util.List;
 

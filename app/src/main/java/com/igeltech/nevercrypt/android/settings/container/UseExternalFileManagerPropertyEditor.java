@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.PropertiesHostWithLocation;
-import com.sovworks.eds.android.settings.SwitchPropertyEditor;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.PropertiesHostWithLocation;
+import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
+import com.igeltech.nevercrypt.locations.Location;
 
 public class UseExternalFileManagerPropertyEditor extends SwitchPropertyEditor
 {

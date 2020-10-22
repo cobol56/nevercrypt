@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.std;
+package com.igeltech.nevercrypt.fs.std;
 
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.errors.DirectoryIsNotEmptyException;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.errors.DirectoryIsNotEmptyException;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +55,7 @@ class StdDirRecord extends StdFsRecord implements Directory
 	}
 
 	@Override
-	public com.sovworks.eds.fs.File createFile(String name) throws IOException
+	public com.igeltech.nevercrypt.fs.File createFile(String name) throws IOException
 	{
 		StdFsPath newPath = (StdFsPath) _path.combine(name);
 		if(!newPath.getJavaFile().createNewFile())

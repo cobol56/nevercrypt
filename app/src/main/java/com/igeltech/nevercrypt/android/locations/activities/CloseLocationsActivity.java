@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.activities;
+package com.igeltech.nevercrypt.android.locations.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.dialogs.MasterPasswordDialog;
-import com.sovworks.eds.android.dialogs.PasswordDialog;
-import com.sovworks.eds.android.helpers.ActivityResultHandler;
-import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog;
+import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
+import com.igeltech.nevercrypt.android.helpers.ActivityResultHandler;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class CloseLocationsActivity extends AppCompatActivity
 {
     public static class MainFragment extends Fragment implements LocationCloserBaseFragment.CloseLocationReceiver, MasterPasswordDialog.PasswordReceiver
     {
-        public static final String TAG = "com.sovworks.eds.android.locations.activities.CloseLocationsActivity.MainFragment";
+        public static final String TAG = "com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity.MainFragment";
 
         @Override
         public void onCreate(Bundle state)
@@ -71,7 +71,7 @@ public class CloseLocationsActivity extends AppCompatActivity
             _resHandler.handle();
         }
 
-        private static final String ARG_FAILED_TO_CLOSE_ALL = "com.sovworks.eds.android.FAILED_TO_CLOSE";
+        private static final String ARG_FAILED_TO_CLOSE_ALL = "com.igeltech.nevercrypt.android.FAILED_TO_CLOSE";
 
         private final ActivityResultHandler _resHandler = new ActivityResultHandler();
         private ArrayList<Location> _targetLocations;

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.fs;
+package com.igeltech.nevercrypt.android.fs;
 
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
@@ -13,16 +13,16 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.util.PFDRandomAccessIO;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.PFDRandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class DocumentTreeFS implements FileSystem
         return false;
     }
 
-    public class File implements com.sovworks.eds.fs.File
+    public class File implements com.igeltech.nevercrypt.fs.File
     {
         public File(DocumentPath path)
         {
@@ -122,7 +122,7 @@ public class DocumentTreeFS implements FileSystem
         }
 
         @Override
-        public void moveTo(com.sovworks.eds.fs.Directory newParent) throws IOException
+        public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
         {
             Path np = Util.copyFile(this, newParent).getPath();
             delete();
@@ -182,7 +182,7 @@ public class DocumentTreeFS implements FileSystem
         private DocumentPath _path;
     }
 
-    public class Directory implements com.sovworks.eds.fs.Directory
+    public class Directory implements com.igeltech.nevercrypt.fs.Directory
     {
         public Directory(DocumentPath path)
         {
@@ -190,7 +190,7 @@ public class DocumentTreeFS implements FileSystem
         }
 
         @Override
-        public void moveTo(com.sovworks.eds.fs.Directory newParent) throws IOException
+        public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
         {
             if(PathUtil.isParentDirectory(_path, newParent.getPath()))
                 throw new IOException("Can't move the folder to its sub-folder");
@@ -238,7 +238,7 @@ public class DocumentTreeFS implements FileSystem
 
 
         @Override
-        public com.sovworks.eds.fs.Directory createDirectory(String name) throws IOException
+        public com.igeltech.nevercrypt.fs.Directory createDirectory(String name) throws IOException
         {
             Uri uri = DocumentsContract.createDocument(
                     _context.getContentResolver(),
@@ -252,7 +252,7 @@ public class DocumentTreeFS implements FileSystem
         }
 
         @Override
-        public com.sovworks.eds.fs.File createFile(String name) throws IOException
+        public com.igeltech.nevercrypt.fs.File createFile(String name) throws IOException
         {
             String mimeType = FileOpsService.getMimeTypeFromExtension(_context, new StringPathUtil(name).getFileExtension());
             Uri uri = DocumentsContract.createDocument(
@@ -265,7 +265,7 @@ public class DocumentTreeFS implements FileSystem
         }
 
         @Override
-        public com.sovworks.eds.fs.Directory.Contents list() throws IOException
+        public com.igeltech.nevercrypt.fs.Directory.Contents list() throws IOException
         {
             final Uri uri = _path.getDocumentUri();
             final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(uri,
@@ -278,7 +278,7 @@ public class DocumentTreeFS implements FileSystem
                     new String[] { ".android_secure" },
                     null
             );
-            return new com.sovworks.eds.fs.Directory.Contents()
+            return new com.igeltech.nevercrypt.fs.Directory.Contents()
             {
                 @Override
                 public void close() throws IOException
@@ -546,13 +546,13 @@ public class DocumentTreeFS implements FileSystem
         }
 
         @Override
-        public com.sovworks.eds.fs.Directory getDirectory() throws IOException
+        public com.igeltech.nevercrypt.fs.Directory getDirectory() throws IOException
         {
             return new Directory(this);
         }
 
         @Override
-        public com.sovworks.eds.fs.File getFile() throws IOException
+        public com.igeltech.nevercrypt.fs.File getFile() throws IOException
         {
             return new File(this);
         }
@@ -726,7 +726,7 @@ public class DocumentTreeFS implements FileSystem
     {
         if(!startSearchPath.isDirectory())
             return null;
-        com.sovworks.eds.fs.Directory.Contents dc = startSearchPath.getDirectory().list();
+        com.igeltech.nevercrypt.fs.Directory.Contents dc = startSearchPath.getDirectory().list();
         try
         {
             for(Path p: dc)

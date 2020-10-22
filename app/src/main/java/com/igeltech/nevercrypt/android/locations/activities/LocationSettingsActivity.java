@@ -1,17 +1,17 @@
-package com.sovworks.eds.android.locations.activities;
+package com.igeltech.nevercrypt.android.locations.activities;
 
 import android.net.Uri;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.locations.ContainerBasedLocation;
-import com.sovworks.eds.android.locations.EncFsLocationBase;
-import com.sovworks.eds.android.locations.LUKSLocation;
-import com.sovworks.eds.android.locations.TrueCryptLocation;
-import com.sovworks.eds.android.locations.VeraCryptLocation;
-import com.sovworks.eds.android.locations.fragments.ContainerSettingsFragment;
-import com.sovworks.eds.android.locations.fragments.EncFsSettingsFragment;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
+import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
+import com.igeltech.nevercrypt.android.locations.LUKSLocation;
+import com.igeltech.nevercrypt.android.locations.TrueCryptLocation;
+import com.igeltech.nevercrypt.android.locations.VeraCryptLocation;
+import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.EncFsSettingsFragment;
 
 public class LocationSettingsActivity extends SettingsBaseActivity
 {

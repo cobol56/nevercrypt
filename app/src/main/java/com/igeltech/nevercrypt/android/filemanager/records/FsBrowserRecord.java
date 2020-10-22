@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.records;
+package com.igeltech.nevercrypt.android.filemanager.records;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -12,13 +12,13 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
-import com.sovworks.eds.android.helpers.CachedPathInfoBase;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfoBase;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.IOException;
 

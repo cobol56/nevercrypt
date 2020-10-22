@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.filemanager.records;
+package com.igeltech.nevercrypt.android.filemanager.records;
 
 import android.content.Context;
 
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.IOException;
 

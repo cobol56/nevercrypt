@@ -1,9 +1,9 @@
-package com.sovworks.eds.fs.std;
+package com.igeltech.nevercrypt.fs.std;
 
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class StdFs implements FileSystem
 	}
 	
 	@Override
-	public com.sovworks.eds.fs.Path getPath(String pathString)
+	public com.igeltech.nevercrypt.fs.Path getPath(String pathString)
 			throws IOException
 	{
 		return new StdFsPath(this, pathString);		

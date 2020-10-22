@@ -1,21 +1,21 @@
-package com.sovworks.eds.container;
+package com.igeltech.nevercrypt.container;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.filemanager.DirectorySettings;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.DefaultSettings;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.filemanager.DirectorySettings;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.DefaultSettings;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 import java.util.Collections;

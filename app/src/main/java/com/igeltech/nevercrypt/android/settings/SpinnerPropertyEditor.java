@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 public abstract class SpinnerPropertyEditor extends PropertyEditorBase
 {

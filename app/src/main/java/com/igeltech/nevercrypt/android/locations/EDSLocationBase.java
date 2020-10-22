@@ -1,24 +1,24 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.ActivityTrackingFSWrapper;
-import com.sovworks.eds.fs.util.ContainerFSWrapper;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.LocationsManagerBase;
-import com.sovworks.eds.locations.OMLocationBase;
-import com.sovworks.eds.settings.Settings;
-import com.sovworks.eds.settings.SettingsCommon;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.ActivityTrackingFSWrapper;
+import com.igeltech.nevercrypt.fs.util.ContainerFSWrapper;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.LocationsManagerBase;
+import com.igeltech.nevercrypt.locations.OMLocationBase;
+import com.igeltech.nevercrypt.settings.Settings;
+import com.igeltech.nevercrypt.settings.SettingsCommon;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -260,7 +260,7 @@ public abstract class EDSLocationBase extends OMLocationBase implements Cloneabl
 		if (settingsPath == null || !settingsPath.isFile())
 			getSharedData().internalSettings.load("");
 		else
-			getSharedData().internalSettings.load(com.sovworks.eds.fs.util.Util.readFromFile(settingsPath));
+			getSharedData().internalSettings.load(com.igeltech.nevercrypt.fs.util.Util.readFromFile(settingsPath));
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public abstract class EDSLocationBase extends OMLocationBase implements Cloneabl
 	public void writeInternalSettings() throws IOException
 	{
 		FileSystem fs = getFS();
-		com.sovworks.eds.fs.util.Util.writeToFile(fs.getRootPath().getDirectory(), INTERNAL_SETTINGS_FILE_NAME, getInternalSettings().save());
+		com.igeltech.nevercrypt.fs.util.Util.writeToFile(fs.getRootPath().getDirectory(), INTERNAL_SETTINGS_FILE_NAME, getInternalSettings().save());
 	}
 
 	@Override

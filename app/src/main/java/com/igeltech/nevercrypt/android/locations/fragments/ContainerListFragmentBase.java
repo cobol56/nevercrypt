@@ -1,11 +1,11 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
 import android.graphics.drawable.Drawable;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.ContainerBasedLocation;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class ContainerListFragmentBase extends LocationListBaseFragment
 {

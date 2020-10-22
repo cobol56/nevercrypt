@@ -1,9 +1,9 @@
-package com.sovworks.eds.crypto.engines;
+package com.igeltech.nevercrypt.crypto.engines;
 
-import com.sovworks.eds.crypto.BlockCipherNative;
-import com.sovworks.eds.crypto.CipherFactory;
-import com.sovworks.eds.crypto.blockciphers.Serpent;
-import com.sovworks.eds.crypto.modes.XTS;
+import com.igeltech.nevercrypt.crypto.BlockCipherNative;
+import com.igeltech.nevercrypt.crypto.CipherFactory;
+import com.igeltech.nevercrypt.crypto.blockciphers.Serpent;
+import com.igeltech.nevercrypt.crypto.modes.XTS;
 
 
 public class SerpentXTS extends XTS

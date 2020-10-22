@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.dialogs;
+package com.igeltech.nevercrypt.android.filemanager.dialogs;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
-import com.sovworks.eds.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 
 public class RenameFileDialog extends DialogFragment
 {

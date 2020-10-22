@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.fragments;
+package com.igeltech.nevercrypt.android.filemanager.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,15 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.FileManagerFragment;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.fragments.TaskFragment.Result;
-import com.sovworks.eds.android.fragments.TaskFragment.TaskCallbacks;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.FileManagerFragment;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment.Result;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment.TaskCallbacks;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.Path;
 
 import java.io.IOException;
 import java.text.ParseException;

@@ -1,27 +1,27 @@
-package com.sovworks.eds.container;
+package com.igeltech.nevercrypt.container;
 
 import android.content.Context;
 import android.os.Parcel;
 
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.locations.ContainerBasedLocation;
-import com.sovworks.eds.android.locations.LUKSLocation;
-import com.sovworks.eds.android.locations.TrueCryptLocation;
-import com.sovworks.eds.android.locations.VeraCryptLocation;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.FileSystemInfo;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.fat.FATInfo;
-import com.sovworks.eds.fs.fat.FatFS;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.settings.Settings;
-import com.sovworks.eds.truecrypt.StdLayout;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
+import com.igeltech.nevercrypt.android.locations.LUKSLocation;
+import com.igeltech.nevercrypt.android.locations.TrueCryptLocation;
+import com.igeltech.nevercrypt.android.locations.VeraCryptLocation;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.FileSystemInfo;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.fat.FATInfo;
+import com.igeltech.nevercrypt.fs.fat.FatFS;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.settings.Settings;
+import com.igeltech.nevercrypt.truecrypt.StdLayout;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -39,11 +39,11 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 
 		switch (formatName)
 		{
-			case com.sovworks.eds.luks.FormatInfo.FORMAT_NAME:
+			case com.igeltech.nevercrypt.luks.FormatInfo.FORMAT_NAME:
 				return new LUKSLocation(containerLocation, cont, context, settings);
-			case com.sovworks.eds.truecrypt.FormatInfo.FORMAT_NAME:
+			case com.igeltech.nevercrypt.truecrypt.FormatInfo.FORMAT_NAME:
 				return new TrueCryptLocation(containerLocation, cont, context, settings);
-			case com.sovworks.eds.veracrypt.FormatInfo.FORMAT_NAME:
+			case com.igeltech.nevercrypt.veracrypt.FormatInfo.FORMAT_NAME:
 				return new VeraCryptLocation(containerLocation, cont, context, settings);
 			default:
 				return new ContainerBasedLocation(containerLocation, cont, context, settings);
@@ -226,20 +226,20 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 		if(layout instanceof StdLayout)
 			formatTCBasedContainer(
 					io,
-					(com.sovworks.eds.truecrypt.FormatInfo)_containerFormat,
+					(com.igeltech.nevercrypt.truecrypt.FormatInfo)_containerFormat,
 					(StdLayout)layout,
 					_containerSize,
 					_randFreeSpace);
-		else if(layout instanceof com.sovworks.eds.luks.VolumeLayout)
+		else if(layout instanceof com.igeltech.nevercrypt.luks.VolumeLayout)
 			formatLUKSContainer(
 				io,
-				(com.sovworks.eds.luks.FormatInfo)_containerFormat,
-				(com.sovworks.eds.luks.VolumeLayout)layout,
+				(com.igeltech.nevercrypt.luks.FormatInfo)_containerFormat,
+				(com.igeltech.nevercrypt.luks.VolumeLayout)layout,
 				_containerSize,
 				_randFreeSpace);
 	}
 
-	protected void formatLUKSContainer(RandomAccessIO io, com.sovworks.eds.luks.FormatInfo containerFormat, com.sovworks.eds.luks.VolumeLayout layout, long containerSize, boolean randFreeSpace) throws IOException, ApplicationException
+	protected void formatLUKSContainer(RandomAccessIO io, com.igeltech.nevercrypt.luks.FormatInfo containerFormat, com.igeltech.nevercrypt.luks.VolumeLayout layout, long containerSize, boolean randFreeSpace) throws IOException, ApplicationException
 	{
 		if(randFreeSpace)
 		{
@@ -291,7 +291,7 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 		super.setExternalContainerSettings(loc);
 	}
 
-	protected void formatTCBasedContainer(RandomAccessIO io, com.sovworks.eds.truecrypt.FormatInfo containerFormat, StdLayout layout, long containerSize, boolean randFreeSpace) throws IOException, ApplicationException
+	protected void formatTCBasedContainer(RandomAccessIO io, com.igeltech.nevercrypt.truecrypt.FormatInfo containerFormat, StdLayout layout, long containerSize, boolean randFreeSpace) throws IOException, ApplicationException
 	{
 		if(randFreeSpace)
 		{

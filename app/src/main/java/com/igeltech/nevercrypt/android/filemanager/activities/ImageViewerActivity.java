@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.activities;
+package com.igeltech.nevercrypt.android.filemanager.activities;
 
 import android.os.Bundle;
 import android.view.Window;
@@ -7,22 +7,22 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.fragments.FileListDataFragment;
-import com.sovworks.eds.android.filemanager.fragments.PreviewFragment;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.fragments.TaskFragment.Result;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.helpers.CachedPathInfoBase;
-import com.sovworks.eds.android.helpers.CompatHelper;
-import com.sovworks.eds.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.PreviewFragment;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment.Result;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfoBase;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.util.ArrayList;
 import java.util.NavigableSet;

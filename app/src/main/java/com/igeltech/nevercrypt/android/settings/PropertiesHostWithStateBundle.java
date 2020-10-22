@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.os.Bundle;
 

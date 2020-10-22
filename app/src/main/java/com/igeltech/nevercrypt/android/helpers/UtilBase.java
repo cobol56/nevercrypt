@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.fs.Path;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -7,11 +7,11 @@ import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.Iterator;
 
@@ -20,7 +20,7 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
 
     public static class ExitFragment extends Fragment implements LocationCloserBaseFragment.CloseLocationReceiver
     {
-        public static final String TAG = "com.sovworks.eds.android.ExitFragment";
+        public static final String TAG = "com.igeltech.nevercrypt.android.ExitFragment";
 
         @Override
         public void onCreate(Bundle savedInstanceState)

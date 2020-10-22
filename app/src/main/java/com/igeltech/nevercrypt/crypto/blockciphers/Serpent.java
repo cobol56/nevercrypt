@@ -1,7 +1,7 @@
-package com.sovworks.eds.crypto.blockciphers;
+package com.igeltech.nevercrypt.crypto.blockciphers;
 
-import com.sovworks.eds.crypto.BlockCipherNative;
-import com.sovworks.eds.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.BlockCipherNative;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
 
 
 public class Serpent implements BlockCipherNative

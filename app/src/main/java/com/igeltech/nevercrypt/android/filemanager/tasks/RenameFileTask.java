@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,18 +6,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class RenameFileTask extends TaskFragment
 {
 	public static final String TAG = "RenameFileTask";
 
-	public static final String ARG_NEW_NAME = "com.sovworks.eds.android.NEW_NAME";
+	public static final String ARG_NEW_NAME = "com.igeltech.nevercrypt.android.NEW_NAME";
 
 	public static RenameFileTask newInstance(Location target, String newName)
 	{

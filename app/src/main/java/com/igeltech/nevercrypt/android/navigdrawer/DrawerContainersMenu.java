@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.EncFsLocationBase;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.ArrayList;
 import java.util.Collection;

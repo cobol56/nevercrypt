@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.views;
+package com.igeltech.nevercrypt.android.views;
 
 import android.content.Context;
 import android.os.Handler;

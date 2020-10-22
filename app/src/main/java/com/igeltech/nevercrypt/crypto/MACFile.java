@@ -1,9 +1,9 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.encfs.macs.MACCalculator;
-import com.sovworks.eds.fs.util.TransRandomAccessIO;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.encfs.macs.MACCalculator;
+import com.igeltech.nevercrypt.fs.util.TransRandomAccessIO;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

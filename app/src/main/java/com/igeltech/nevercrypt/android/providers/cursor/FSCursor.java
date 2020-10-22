@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.providers.cursor;
+package com.igeltech.nevercrypt.android.providers.cursor;
 
 import android.content.Context;
 
 import com.drew.lang.annotations.NotNull;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.locations.Location;
 
 import io.reactivex.Observable;
 

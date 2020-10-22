@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.providers.cursor;
+package com.igeltech.nevercrypt.android.providers.cursor;
 
 
 import android.net.Uri;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.helpers.CachedPathInfoBase;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.FSRecord;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfoBase;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.FSRecord;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.io.IOException;
 

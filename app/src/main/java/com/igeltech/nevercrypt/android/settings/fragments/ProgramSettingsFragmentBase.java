@@ -1,51 +1,51 @@
-package com.sovworks.eds.android.settings.fragments;
+package com.igeltech.nevercrypt.android.settings.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.sovworks.eds.android.EdsApplication;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.MasterPasswordDialog;
-import com.sovworks.eds.android.dialogs.PasswordDialog;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.settings.ButtonPropertyEditor;
-import com.sovworks.eds.android.settings.CategoryPropertyEditor;
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.android.settings.IntPropertyEditor;
-import com.sovworks.eds.android.settings.MultilineTextPropertyEditor;
-import com.sovworks.eds.android.settings.PathPropertyEditor;
-import com.sovworks.eds.android.settings.SwitchPropertyEditor;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.android.settings.program.ExtFileManagerPropertyEditor;
-import com.sovworks.eds.android.settings.program.InstallExFatModulePropertyEditor;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog;
+import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
+import com.igeltech.nevercrypt.android.settings.ButtonPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.CategoryPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.IntPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.MultilineTextPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.settings.program.ExtFileManagerPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.program.InstallExFatModulePropertyEditor;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.sovworks.eds.android.settings.UserSettingsCommon.DISABLE_DEBUG_LOG;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.DISABLE_MODIFIED_FILES_BACKUP;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.DISABLE_WIDE_SCREEN_LAYOUTS;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.DONT_USE_CONTENT_PROVIDER;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.EXTENSIONS_MIME;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.FORCE_TEMP_FILES;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.IS_FLAG_SECURE_ENABLED;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.MAX_FILE_SIZE_TO_OPEN;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.NEVER_SAVE_HISTORY;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.SHOW_PREVIEWS;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.USE_INTERNAL_IMAGE_VIEWER;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.WIPE_TEMP_FILES;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.WORK_DIR;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.DISABLE_DEBUG_LOG;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.DISABLE_MODIFIED_FILES_BACKUP;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.DISABLE_WIDE_SCREEN_LAYOUTS;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.DONT_USE_CONTENT_PROVIDER;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.EXTENSIONS_MIME;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.FORCE_TEMP_FILES;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.IS_FLAG_SECURE_ENABLED;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.MAX_FILE_SIZE_TO_OPEN;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.NEVER_SAVE_HISTORY;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.SHOW_PREVIEWS;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.USE_INTERNAL_IMAGE_VIEWER;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.WIPE_TEMP_FILES;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.WORK_DIR;
 
 public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase implements MasterPasswordDialog.PasswordReceiver
 {

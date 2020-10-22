@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 public class PasswordDialog extends PasswordDialogBase
 {

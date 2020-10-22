@@ -1,9 +1,9 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
 
 import java.io.IOException;
 

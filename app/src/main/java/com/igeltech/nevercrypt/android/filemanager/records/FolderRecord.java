@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.records;
+package com.igeltech.nevercrypt.android.filemanager.records;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 import java.io.IOException;
 

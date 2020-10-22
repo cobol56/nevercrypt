@@ -1,17 +1,17 @@
-package com.sovworks.eds.container;
+package com.igeltech.nevercrypt.container;
 
-import com.sovworks.eds.android.locations.EncFsLocation;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.encfs.AlgInfo;
-import com.sovworks.eds.fs.encfs.Config;
-import com.sovworks.eds.fs.encfs.DataCodecInfo;
-import com.sovworks.eds.fs.encfs.FS;
-import com.sovworks.eds.fs.encfs.NameCodecInfo;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.locations.EncFsLocation;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.encfs.AlgInfo;
+import com.igeltech.nevercrypt.fs.encfs.Config;
+import com.igeltech.nevercrypt.fs.encfs.DataCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.FS;
+import com.igeltech.nevercrypt.fs.encfs.NameCodecInfo;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.IOException;
 

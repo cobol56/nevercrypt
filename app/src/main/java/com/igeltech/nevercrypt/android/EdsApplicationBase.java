@@ -1,4 +1,4 @@
-package com.sovworks.eds.android;
+package com.igeltech.nevercrypt.android;
 
 import android.app.Application;
 import android.content.ClipData;
@@ -12,12 +12,12 @@ import android.widget.Toast;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.android.providers.MainContentProvider;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.SystemConfig;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.android.providers.MainContentProvider;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.SystemConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,11 +29,11 @@ import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.sovworks.eds.android.settings.UserSettings.getSettings;
+import static com.igeltech.nevercrypt.android.settings.UserSettings.getSettings;
 
 public class EdsApplicationBase extends Application
 {
-	public static final String BROADCAST_EXIT = "com.sovworks.eds.android.BROADCAST_EXIT";
+	public static final String BROADCAST_EXIT = "com.igeltech.nevercrypt.android.BROADCAST_EXIT";
 
 	public static void stopProgramBase(Context context, boolean removeNotifications)
 	{
@@ -88,7 +88,7 @@ public class EdsApplicationBase extends Application
 	{
 		super.onCreate();
 
-		SystemConfig.setInstance(new com.sovworks.eds.android.settings.SystemConfig(getApplicationContext()));
+		SystemConfig.setInstance(new com.igeltech.nevercrypt.android.settings.SystemConfig(getApplicationContext()));
 
 		UserSettings us;
 		try

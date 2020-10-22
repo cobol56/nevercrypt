@@ -1,7 +1,7 @@
 -dontobfuscate
 -optimizations !code/allocation/variable,!code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
 
--keep public class com.sovworks.eds.android.EdsApplication { public *; }
+-keep public class com.igeltech.nevercrypt.android.EdsApplication { public *; }
 
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
@@ -19,13 +19,13 @@
     java.lang.Object readResolve();
 }
 
--keep public class com.sovworks.eds.fs.FileSystem
--keep public class com.sovworks.eds.fs.Path
--keep public class com.sovworks.eds.fs.RandomAccessIO
--keep interface com.sovworks.eds.settings.Settings
+-keep public class com.igeltech.nevercrypt.fs.FileSystem
+-keep public class com.igeltech.nevercrypt.fs.Path
+-keep public class com.igeltech.nevercrypt.fs.RandomAccessIO
+-keep interface com.igeltech.nevercrypt.settings.Settings
 
--keep public class com.sovworks.eds.android.views.GestureImageView$NavigListener
--keep public class com.sovworks.eds.android.views.GestureImageView$OptimImageRequiredListener
+-keep public class com.igeltech.nevercrypt.android.views.GestureImageView$NavigListener
+-keep public class com.igeltech.nevercrypt.android.views.GestureImageView$OptimImageRequiredListener
 
 -keepclassmembers class * implements java.io.Externalizable {
     public void readExternal(java.io.ObjectInput);

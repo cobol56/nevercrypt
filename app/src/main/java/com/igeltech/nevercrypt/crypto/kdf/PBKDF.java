@@ -1,9 +1,9 @@
-package com.sovworks.eds.crypto.kdf;
+package com.igeltech.nevercrypt.crypto.kdf;
 
-import com.sovworks.eds.android.helpers.ProgressReporter;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.hash.RIPEMD160;
-import com.sovworks.eds.crypto.hash.Whirlpool;
+import com.igeltech.nevercrypt.android.helpers.ProgressReporter;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.hash.RIPEMD160;
+import com.igeltech.nevercrypt.crypto.hash.Whirlpool;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

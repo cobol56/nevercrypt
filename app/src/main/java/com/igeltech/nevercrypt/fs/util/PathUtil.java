@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
 
 import java.io.IOException;
 

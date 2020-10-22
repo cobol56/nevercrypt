@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckedTextView;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 import java.util.List;
 

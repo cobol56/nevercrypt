@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.settings.views.PropertiesView;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 
 public interface PropertyEditor
 {
-	String ARG_PROPERTY_ID = "com.sovworks.eds.android.PROPERTY_ID";
+	String ARG_PROPERTY_ID = "com.igeltech.nevercrypt.android.PROPERTY_ID";
 	String ARG_HOST_FRAGMENT_TAG = TaskFragment.ARG_HOST_FRAGMENT;
 	
 	interface Host

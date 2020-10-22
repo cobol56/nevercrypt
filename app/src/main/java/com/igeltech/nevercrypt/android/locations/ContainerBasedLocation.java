@@ -1,27 +1,27 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.errors.WrongPasswordOrBadContainerException;
-import com.sovworks.eds.android.helpers.ContainerOpeningProgressReporter;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.EdsContainer;
-import com.sovworks.eds.container.VolumeLayout;
-import com.sovworks.eds.container.VolumeLayoutBase;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.crypto.SimpleCrypto;
-import com.sovworks.eds.exceptions.WrongFileFormatException;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManagerBase;
-import com.sovworks.eds.settings.Settings;
-import com.sovworks.eds.settings.SettingsCommon;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerException;
+import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.VolumeLayout;
+import com.igeltech.nevercrypt.container.VolumeLayoutBase;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.crypto.SimpleCrypto;
+import com.igeltech.nevercrypt.exceptions.WrongFileFormatException;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManagerBase;
+import com.igeltech.nevercrypt.settings.Settings;
+import com.igeltech.nevercrypt.settings.SettingsCommon;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -221,7 +221,7 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 	@Override
 	public void close(boolean force) throws IOException
 	{
-		com.sovworks.eds.android.Logger.debug("Closing container at " + getLocation().getLocationUri());
+		com.igeltech.nevercrypt.android.Logger.debug("Closing container at " + getLocation().getLocationUri());
 		super.close(force);
 		if(isOpen())
 		{
@@ -238,7 +238,7 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 			}
 			getSharedData().container = null;
 		}
-		com.sovworks.eds.android.Logger.debug("Container has been closed");
+		com.igeltech.nevercrypt.android.Logger.debug("Container has been closed");
 	}
 
 	@Override

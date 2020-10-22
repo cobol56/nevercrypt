@@ -1,6 +1,6 @@
-package com.sovworks.eds.fs.encfs.ciphers;
+package com.igeltech.nevercrypt.fs.encfs.ciphers;
 
-import com.sovworks.eds.crypto.engines.AESCFB;
+import com.igeltech.nevercrypt.crypto.engines.AESCFB;
 
 public class AESCFBStreamCipher extends StreamCipherBase
 {

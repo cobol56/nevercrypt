@@ -1,20 +1,20 @@
-package com.sovworks.eds.android.settings.fragments;
+package com.igeltech.nevercrypt.android.settings.fragments;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.settings.PropertiesHostWithLocation;
-import com.sovworks.eds.android.settings.PropertiesHostWithStateBundle;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.android.settings.container.OpenInReadOnlyModePropertyEditor;
-import com.sovworks.eds.android.settings.container.PIMPropertyEditor;
-import com.sovworks.eds.android.settings.container.UseExternalFileManagerPropertyEditor;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
+import com.igeltech.nevercrypt.android.settings.PropertiesHostWithLocation;
+import com.igeltech.nevercrypt.android.settings.PropertiesHostWithStateBundle;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.settings.container.OpenInReadOnlyModePropertyEditor;
+import com.igeltech.nevercrypt.android.settings.container.PIMPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.container.UseExternalFileManagerPropertyEditor;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
+import com.igeltech.nevercrypt.settings.Settings;
 
 public abstract class OpeningOptionsFragmentBase extends PropertiesFragmentBase implements PropertiesHostWithStateBundle, PropertiesHostWithLocation
 {

@@ -1,11 +1,11 @@
-package com.sovworks.eds.truecrypt;
+package com.igeltech.nevercrypt.truecrypt;
 
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.VolumeLayout;
-import com.sovworks.eds.crypto.EncryptedFileWithCache;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.FileSystemInfo;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.VolumeLayout;
+import com.igeltech.nevercrypt.crypto.EncryptedFileWithCache;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.FileSystemInfo;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 import java.security.SecureRandom;

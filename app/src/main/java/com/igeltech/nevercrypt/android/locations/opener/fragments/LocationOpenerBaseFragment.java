@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.opener.fragments;
+package com.igeltech.nevercrypt.android.locations.opener.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,16 +14,16 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.ProgressDialog;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.helpers.ActivityResultHandler;
-import com.sovworks.eds.android.helpers.ContainerOpeningProgressReporter;
-import com.sovworks.eds.android.locations.OpenersRegistry;
-import com.sovworks.eds.android.service.LocationsService;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.ProgressDialog;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.helpers.ActivityResultHandler;
+import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
+import com.igeltech.nevercrypt.android.locations.OpenersRegistry;
+import com.igeltech.nevercrypt.android.service.LocationsService;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.io.IOException;
 import java.util.concurrent.CancellationException;
@@ -51,11 +51,11 @@ public class LocationOpenerBaseFragment extends Fragment
         return OpenersRegistry.getDefaultOpenerForLocation(location);
     }
 
-    public static final String PARAM_RECEIVER_FRAGMENT_TAG = "com.sovworks.eds.android.locations.opener.fragments.LocationOpenerFragment.RECEIVER_FRAGMENT_TAG";
+    public static final String PARAM_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerFragment.RECEIVER_FRAGMENT_TAG";
 
     public static class OpenLocationTaskFragment extends TaskFragment
     {
-        public static final String ARG_OPENER_TAG = "com.sovworks.eds.android.OPENER_TAG";
+        public static final String ARG_OPENER_TAG = "com.igeltech.nevercrypt.android.OPENER_TAG";
 
         protected Context _context;
         protected LocationsManager _locationsManager;
@@ -143,7 +143,7 @@ public class LocationOpenerBaseFragment extends Fragment
             }
         }
 
-        private static final String TAG = "com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment.OpenLocationTaskFragment";
+        private static final String TAG = "com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment.OpenLocationTaskFragment";
     }
 
     public static class ProgressReporter implements ContainerOpeningProgressReporter
@@ -338,7 +338,7 @@ public class LocationOpenerBaseFragment extends Fragment
 
 		}
 
-		private com.sovworks.eds.android.dialogs.ProgressDialog _dialog;
+		private com.igeltech.nevercrypt.android.dialogs.ProgressDialog _dialog;
 	}
 
 	protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
@@ -431,5 +431,5 @@ public class LocationOpenerBaseFragment extends Fragment
         getFragmentManager().beginTransaction().add(f, getOpenLocationTaskTag()).commit();
 	}
 
-    private static final String TAG = "com.sovworks.eds.android.locations.opener.fragments.LocationOpenerFragment";
+    private static final String TAG = "com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerFragment";
 }

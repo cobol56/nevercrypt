@@ -1,13 +1,13 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragmentBase;
-import com.sovworks.eds.android.locations.tasks.CreateContainerTaskFragmentBase;
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.container.VolumeLayout;
-import com.sovworks.eds.container.VolumeLayoutBase;
-import com.sovworks.eds.crypto.hash.RIPEMD160;
-import com.sovworks.eds.crypto.hash.Whirlpool;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.container.VolumeLayout;
+import com.igeltech.nevercrypt.container.VolumeLayoutBase;
+import com.igeltech.nevercrypt.crypto.hash.RIPEMD160;
+import com.igeltech.nevercrypt.crypto.hash.Whirlpool;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;

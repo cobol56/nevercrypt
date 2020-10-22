@@ -1,4 +1,4 @@
-package com.sovworks.eds.fs.encfs;
+package com.igeltech.nevercrypt.fs.encfs;
 
 public class B64
 {

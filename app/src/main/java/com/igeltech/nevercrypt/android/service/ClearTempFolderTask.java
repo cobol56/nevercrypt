@@ -1,23 +1,23 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.sovworks.eds.android.EdsApplication;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstPlain;
-import com.sovworks.eds.fs.util.SrcDstRec;
-import com.sovworks.eds.fs.util.SrcDstSingle;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstPlain;
+import com.igeltech.nevercrypt.fs.util.SrcDstRec;
+import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.IOException;
 import java.util.concurrent.CancellationException;
 
 public class ClearTempFolderTask extends WipeFilesTask
 {
-	public static final String ARG_EXIT_PROGRAM = "com.sovworks.eds.android.EXIT_PROGRAM";
+	public static final String ARG_EXIT_PROGRAM = "com.igeltech.nevercrypt.android.EXIT_PROGRAM";
 
 	public static SrcDstCollection getMirrorFiles(Context context) throws IOException
 	{

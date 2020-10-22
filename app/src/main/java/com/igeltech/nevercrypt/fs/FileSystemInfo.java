@@ -1,10 +1,10 @@
-package com.sovworks.eds.fs;
+package com.igeltech.nevercrypt.fs;
 
 import android.os.Parcelable;
 
-import com.sovworks.eds.fs.exfat.ExFATInfo;
-import com.sovworks.eds.fs.exfat.ExFat;
-import com.sovworks.eds.fs.fat.FATInfo;
+import com.igeltech.nevercrypt.fs.exfat.ExFATInfo;
+import com.igeltech.nevercrypt.fs.exfat.ExFat;
+import com.igeltech.nevercrypt.fs.fat.FATInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -7,19 +7,19 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.service.ActionSendTask;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.service.ActionSendTask;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.sovworks.eds.android.filemanager.tasks.CopyToClipboardTask.makeClipData;
+import static com.igeltech.nevercrypt.android.filemanager.tasks.CopyToClipboardTask.makeClipData;
 
 public class PrepareToSendTask extends TaskFragment
 {

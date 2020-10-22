@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.DataOutput;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.DataOutput;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.IOException;
 import java.io.OutputStream;

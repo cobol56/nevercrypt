@@ -1,27 +1,27 @@
-package com.sovworks.eds.fs.fat;
+package com.igeltech.nevercrypt.fs.fat;
 
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
-import com.sovworks.eds.android.BuildConfig;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.FSRecord;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.errors.DirectoryIsNotEmptyException;
-import com.sovworks.eds.fs.errors.FileInUseException;
-import com.sovworks.eds.fs.errors.FileSystemClosedException;
-import com.sovworks.eds.fs.errors.NoFreeSpaceLeftException;
-import com.sovworks.eds.fs.errors.WrongImageFormatException;
-import com.sovworks.eds.fs.util.PathBase;
-import com.sovworks.eds.fs.util.RandomAccessInputStream;
-import com.sovworks.eds.fs.util.RandomAccessOutputStream;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.BuildConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.FSRecord;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.errors.DirectoryIsNotEmptyException;
+import com.igeltech.nevercrypt.fs.errors.FileInUseException;
+import com.igeltech.nevercrypt.fs.errors.FileSystemClosedException;
+import com.igeltech.nevercrypt.fs.errors.NoFreeSpaceLeftException;
+import com.igeltech.nevercrypt.fs.errors.WrongImageFormatException;
+import com.igeltech.nevercrypt.fs.util.PathBase;
+import com.igeltech.nevercrypt.fs.util.RandomAccessInputStream;
+import com.igeltech.nevercrypt.fs.util.RandomAccessOutputStream;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.EOFException;
 import java.io.FileNotFoundException;

@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.std;
+package com.igeltech.nevercrypt.fs.std;
 
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.util.PathBase;
-import com.sovworks.eds.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.util.PathBase;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class StdFsPath extends PathBase
 	}
 
 	@Override
-	public com.sovworks.eds.fs.File getFile() throws IOException
+	public com.igeltech.nevercrypt.fs.File getFile() throws IOException
 	{
 		return new StdFileRecord(this);
 	}

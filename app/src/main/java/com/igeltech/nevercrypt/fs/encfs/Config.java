@@ -1,17 +1,17 @@
-package com.sovworks.eds.fs.encfs;
+package com.igeltech.nevercrypt.fs.encfs;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.util.Base64;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.encfs.codecs.data.AESDataCodecInfo;
-import com.sovworks.eds.fs.encfs.codecs.name.BlockNameCodecInfo;
-import com.sovworks.eds.fs.util.PathUtil;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.encfs.codecs.data.AESDataCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.codecs.name.BlockNameCodecInfo;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,7 +35,7 @@ public class Config
     public static final String CONFIG_FILENAME2 = "encfs6.xml";
     public static final String CONFIG_FILENAME = '.' + CONFIG_FILENAME2;
 
-    public static Path getConfigFilePath(com.sovworks.eds.fs.Directory dir) throws IOException
+    public static Path getConfigFilePath(com.igeltech.nevercrypt.fs.Directory dir) throws IOException
     {
         Path p = PathUtil.buildPath(dir.getPath(), CONFIG_FILENAME);
         if(p!=null && p.isFile())

@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.locations.tasks;
+package com.igeltech.nevercrypt.android.locations.tasks;
 
 import android.content.Context;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
-import com.sovworks.eds.container.ContainerFormatterBase;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.container.ContainerFormatterBase;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
 {
@@ -21,7 +21,7 @@ public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
 		_context = activity.getApplicationContext();
 	}
 
-    protected static final String ARG_STORE_LINK = "com.sovworks.eds.android.STORE_LINK";
+    protected static final String ARG_STORE_LINK = "com.igeltech.nevercrypt.android.STORE_LINK";
 	protected Context _context;
 
     @Override
@@ -29,7 +29,7 @@ public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
     {
 		LocationsManager lm = LocationsManager.getLocationsManager(_context);
         Location location = lm.getFromBundle(getArguments(), null);
-        state.setResult(findOrCreateEDSLocation(lm, location, getArguments().getBoolean(ARG_STORE_LINK)));
+        state.setResult(findOrCreateLocation(lm, location, getArguments().getBoolean(ARG_STORE_LINK)));
     }
 
 	@Override
@@ -39,7 +39,7 @@ public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
         return f == null ? null : f.getAddExistingEDSLocationTaskCallbacks();
     }
 
-    protected EDSLocation findOrCreateEDSLocation(LocationsManager lm, Location locationLocation, boolean storeLink) throws Exception
+    protected EDSLocation findOrCreateLocation(LocationsManager lm, Location locationLocation, boolean storeLink) throws Exception
     {
         EDSLocation loc = createEDSLocation(locationLocation);
         EDSLocation exCont = (EDSLocation) lm.findExistingLocation(loc);

@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
 import android.net.Uri;
 
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

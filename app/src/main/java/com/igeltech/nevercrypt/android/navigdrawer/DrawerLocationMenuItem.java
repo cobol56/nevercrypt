@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,16 +7,16 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.filemanager.fragments.FileListDataFragment;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragmentBase;
-import com.sovworks.eds.android.locations.activities.LocationSettingsActivity;
-import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragmentBase;
+import com.igeltech.nevercrypt.android.locations.activities.LocationSettingsActivity;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.Stack;
 

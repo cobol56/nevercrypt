@@ -1,9 +1,9 @@
-package com.sovworks.eds.veracrypt;
+package com.igeltech.nevercrypt.veracrypt;
 
-import com.sovworks.eds.container.VolumeLayout;
+import com.igeltech.nevercrypt.container.VolumeLayout;
 
 
-public class FormatInfo extends com.sovworks.eds.truecrypt.FormatInfo 
+public class FormatInfo extends com.igeltech.nevercrypt.truecrypt.FormatInfo
 {
 
 	public static final String FORMAT_NAME = "VeraCrypt";
@@ -17,7 +17,7 @@ public class FormatInfo extends com.sovworks.eds.truecrypt.FormatInfo
 	@Override
 	public VolumeLayout getVolumeLayout()
 	{
-		return new com.sovworks.eds.veracrypt.VolumeLayout();
+		return new com.igeltech.nevercrypt.veracrypt.VolumeLayout();
 	}
 
 	@Override

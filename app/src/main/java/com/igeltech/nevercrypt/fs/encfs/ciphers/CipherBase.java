@@ -1,10 +1,10 @@
-package com.sovworks.eds.fs.encfs.ciphers;
+package com.igeltech.nevercrypt.fs.encfs.ciphers;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.kdf.HMAC;
-import com.sovworks.eds.crypto.kdf.HMACSHA1;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.kdf.HMAC;
+import com.igeltech.nevercrypt.crypto.kdf.HMACSHA1;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;

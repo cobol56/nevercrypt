@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.fragments;
+package com.igeltech.nevercrypt.android.filemanager.fragments;
 
 
 import android.content.Context;
@@ -10,28 +10,28 @@ import android.os.Parcelable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.filemanager.DirectorySettings;
-import com.sovworks.eds.android.filemanager.FileListViewAdapter;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.filemanager.comparators.FileNamesComparator;
-import com.sovworks.eds.android.filemanager.comparators.FileNamesNumericComparator;
-import com.sovworks.eds.android.filemanager.comparators.FileSizesComparator;
-import com.sovworks.eds.android.filemanager.comparators.ModDateComparator;
-import com.sovworks.eds.android.filemanager.records.BrowserRecord;
-import com.sovworks.eds.android.filemanager.tasks.CreateNewFile;
-import com.sovworks.eds.android.filemanager.tasks.LoadDirSettingsObservable;
-import com.sovworks.eds.android.filemanager.tasks.ReadDir;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.helpers.CachedPathInfoBase;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.android.locations.activities.OpenLocationsActivity;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.GlobalConfig;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.filemanager.DirectorySettings;
+import com.igeltech.nevercrypt.android.filemanager.FileListViewAdapter;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.comparators.FileNamesComparator;
+import com.igeltech.nevercrypt.android.filemanager.comparators.FileNamesNumericComparator;
+import com.igeltech.nevercrypt.android.filemanager.comparators.FileSizesComparator;
+import com.igeltech.nevercrypt.android.filemanager.comparators.ModDateComparator;
+import com.igeltech.nevercrypt.android.filemanager.records.BrowserRecord;
+import com.igeltech.nevercrypt.android.filemanager.tasks.CreateNewFile;
+import com.igeltech.nevercrypt.android.filemanager.tasks.LoadDirSettingsObservable;
+import com.igeltech.nevercrypt.android.filemanager.tasks.ReadDir;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfoBase;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.android.locations.activities.OpenLocationsActivity;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
+import com.igeltech.nevercrypt.settings.Settings;
 import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
@@ -54,14 +54,14 @@ import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_DATE_ASC;
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_DATE_DESC;
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_FILENAME_ASC;
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_FILENAME_DESC;
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_FILENAME_NUM_ASC;
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_FILENAME_NUM_DESC;
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_SIZE_ASC;
-import static com.sovworks.eds.settings.SettingsCommon.FB_SORT_SIZE_DESC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_DATE_ASC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_DATE_DESC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_FILENAME_ASC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_FILENAME_DESC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_FILENAME_NUM_ASC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_FILENAME_NUM_DESC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_SIZE_ASC;
+import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_SIZE_DESC;
 
 public class FileListDataFragment extends RxFragment
 {
@@ -114,7 +114,7 @@ public class FileListDataFragment extends RxFragment
         return locUri;
     }
 
-    public static final String TAG = "com.sovworks.eds.android.filemanager.fragments.FileListDataFragment";
+    public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment";
 
     @Override
     public void onCreate(Bundle state)
@@ -555,7 +555,7 @@ public class FileListDataFragment extends RxFragment
         }
     }
 
-    private static final String STATE_NAVIG_HISTORY = "com.sovworks.eds.android.PATH_HISTORY";
+    private static final String STATE_NAVIG_HISTORY = "com.igeltech.nevercrypt.android.PATH_HISTORY";
 
     private static final int REQUEST_CODE_OPEN_LOCATION = 1;
 

@@ -1,11 +1,11 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.locations.Location;
 
 public class DrawerInternalSDMenuItem extends DrawerLocationMenuItem
 {

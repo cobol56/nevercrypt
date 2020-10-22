@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.content.Context;
 
 import java.io.File;
 
-public abstract class SystemConfigCommon extends com.sovworks.eds.settings.SystemConfig
+public abstract class SystemConfigCommon extends com.igeltech.nevercrypt.settings.SystemConfig
 {
     public SystemConfigCommon(Context context)
     {

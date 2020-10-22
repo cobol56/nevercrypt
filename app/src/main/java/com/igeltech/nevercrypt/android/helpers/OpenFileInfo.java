@@ -1,6 +1,6 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.locations.Location;
 
 
 public class OpenFileInfo

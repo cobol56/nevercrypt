@@ -1,24 +1,24 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.TempFilesMonitor;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.FSRecord;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
-import com.sovworks.eds.fs.util.SrcDstGroup;
-import com.sovworks.eds.fs.util.SrcDstRec;
-import com.sovworks.eds.fs.util.SrcDstSingle;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.FSRecord;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection.SrcDst;
+import com.igeltech.nevercrypt.fs.util.SrcDstGroup;
+import com.igeltech.nevercrypt.fs.util.SrcDstRec;
+import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
-import com.sovworks.eds.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
 
 
 public class EncryptionEngineException extends ApplicationException

@@ -1,4 +1,4 @@
-package com.sovworks.eds.fs.encfs.macs;
+package com.igeltech.nevercrypt.fs.encfs.macs;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

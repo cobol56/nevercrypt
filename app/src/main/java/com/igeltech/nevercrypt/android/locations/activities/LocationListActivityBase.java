@@ -1,21 +1,21 @@
-package com.sovworks.eds.android.locations.activities;
+package com.igeltech.nevercrypt.android.locations.activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.helpers.CompatHelper;
-import com.sovworks.eds.android.locations.ContainerBasedLocation;
-import com.sovworks.eds.android.locations.DocumentTreeLocation;
-import com.sovworks.eds.android.locations.fragments.ContainerListFragment;
-import com.sovworks.eds.android.locations.fragments.DocumentTreeLocationsListFragment;
-import com.sovworks.eds.android.locations.fragments.LocationListBaseFragment;
-import com.sovworks.eds.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
+import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
+import com.igeltech.nevercrypt.android.locations.fragments.ContainerListFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.DocumentTreeLocationsListFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationListBaseFragment;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
 
 public abstract class LocationListActivityBase extends AppCompatActivity
 {
-    public static final String EXTRA_LOCATION_TYPE = "com.sovworks.eds.android.LOCATION_TYPE";
+    public static final String EXTRA_LOCATION_TYPE = "com.igeltech.nevercrypt.android.LOCATION_TYPE";
 
     @Override
 	public void onCreate(Bundle savedInstanceState)

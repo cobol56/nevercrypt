@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,15 +24,15 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.ListFragment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.activities.CreateLocationActivity;
-import com.sovworks.eds.android.locations.activities.LocationSettingsActivity;
-import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
-import com.sovworks.eds.android.locations.dialogs.RemoveLocationConfirmationDialog;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.activities.CreateLocationActivity;
+import com.igeltech.nevercrypt.android.locations.activities.LocationSettingsActivity;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment;
+import com.igeltech.nevercrypt.android.locations.dialogs.RemoveLocationConfirmationDialog;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.ArrayList;
 import java.util.List;

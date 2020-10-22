@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.encfs.ciphers;
+package com.igeltech.nevercrypt.fs.encfs.ciphers;
 
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
 
 public class BlockAndStreamCipher implements FileEncryptionEngine
 {

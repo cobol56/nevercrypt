@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 
 import android.content.DialogInterface;
@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.opener.fragments.ExternalStorageOpenerFragment;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.ExternalStorageOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
 
 public class AskExtStorageWritePermissionDialog extends DialogFragment
 {

@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.PasswordDialog;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragment;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragmentBase;
-import com.sovworks.eds.android.settings.PropertyEditor;
-import com.sovworks.eds.android.settings.SwitchPropertyEditor;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public class SavePasswordPropertyEditorBase extends SwitchPropertyEditor implements PasswordDialog.PasswordReceiver
 {

@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.fat;
+package com.igeltech.nevercrypt.fs.fat;
 
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.errors.WrongImageFormatException;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.errors.WrongImageFormatException;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import java.io.EOFException;
 import java.io.IOException;

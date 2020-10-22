@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.locations.opener.fragments;
+package com.igeltech.nevercrypt.android.locations.opener.fragments;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.providers.ContainersDocumentProviderBase;
-import com.sovworks.eds.android.service.LocationsService;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.providers.ContainersDocumentProviderBase;
+import com.igeltech.nevercrypt.android.service.LocationsService;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public class EDSLocationOpenerFragment extends LocationOpenerFragment implements LocationOpenerBaseFragment.LocationOpenerResultReceiver
 {

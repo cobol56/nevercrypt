@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.encfs.codecs.name;
+package com.igeltech.nevercrypt.fs.encfs.codecs.name;
 
-import com.sovworks.eds.fs.encfs.AlgInfo;
-import com.sovworks.eds.fs.encfs.Config;
-import com.sovworks.eds.fs.encfs.NameCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.AlgInfo;
+import com.igeltech.nevercrypt.fs.encfs.Config;
+import com.igeltech.nevercrypt.fs.encfs.NameCodecInfo;
 
 public abstract class NameCodecInfoBase implements NameCodecInfo
 {

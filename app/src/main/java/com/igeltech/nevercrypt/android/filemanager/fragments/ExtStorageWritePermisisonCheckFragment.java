@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.fragments;
+package com.igeltech.nevercrypt.android.filemanager.fragments;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.dialogs.AskPrimaryStoragePermissionDialog;
+import com.igeltech.nevercrypt.android.dialogs.AskPrimaryStoragePermissionDialog;
 import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle3.components.support.RxAppCompatDialogFragment;
@@ -22,7 +22,7 @@ import io.reactivex.subjects.CompletableSubject;
 
 public class ExtStorageWritePermisisonCheckFragment extends RxAppCompatDialogFragment
 {
-    public static final String TAG = "com.sovworks.eds.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment";
+    public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment";
 
     public static Completable getObservable(RxAppCompatActivity activity)
     {

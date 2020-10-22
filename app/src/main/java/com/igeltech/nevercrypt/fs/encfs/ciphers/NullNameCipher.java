@@ -1,6 +1,6 @@
-package com.sovworks.eds.fs.encfs.ciphers;
+package com.igeltech.nevercrypt.fs.encfs.ciphers;
 
-import com.sovworks.eds.fs.encfs.NameCodec;
+import com.igeltech.nevercrypt.fs.encfs.NameCodec;
 
 public class NullNameCipher implements NameCodec
 {

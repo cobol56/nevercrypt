@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings.dialogs;
+package com.igeltech.nevercrypt.android.settings.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,17 +9,17 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.android.settings.PropertyEditor;
-import com.sovworks.eds.android.settings.views.PropertiesView;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChoiceDialog extends DialogFragment
 {
-    public static final String ARG_VARIANTS = "com.sovworks.eds.android.VARIANTS";
-    public static final String ARG_TITLE = "com.sovworks.eds.android.TITLE";
+    public static final String ARG_VARIANTS = "com.igeltech.nevercrypt.android.VARIANTS";
+    public static final String ARG_TITLE = "com.igeltech.nevercrypt.android.TITLE";
 
     public static final String TAG = "ChoiceDialog";
 	

@@ -1,7 +1,7 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.DocumentTreeLocation;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
 
 public class DrawerManageLocalStorages extends DrawerManageLocationMenuItem
 {

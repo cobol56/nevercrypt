@@ -344,53 +344,53 @@ void rmd160_final(unsigned char *digest, RMD160_CTX *ctx)
 
 
 /*
- * Class:     com_sovworks_eds_crypto_hash_RIPEMD160
+ * Class:     com_igeltech_nevercrypt_crypto_hash_RIPEMD160
  * Method:    initContext
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_hash_RIPEMD160_initContext(JNIEnv *env, jobject obj)
+JNIEXPORT jlong JNICALL Java_com_igeltech_nevercrypt_crypto_hash_RIPEMD160_initContext(JNIEnv *env, jobject obj)
 {
 	return (jlong)malloc(sizeof(RMD160_CTX));
 }
 
 /*
- * Class:     com_sovworks_eds_crypto_hash_RIPEMD160
+ * Class:     com_igeltech_nevercrypt_crypto_hash_RIPEMD160
  * Method:    freeContext
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_hash_RIPEMD160_freeContext(JNIEnv *env, jobject obj, jlong contextPtr)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_hash_RIPEMD160_freeContext(JNIEnv *env, jobject obj, jlong contextPtr)
 {
 	if(contextPtr!=0)
 		free((void *)contextPtr);
 }
 
 /*
- * Class:     com_sovworks_eds_crypto_hash_RIPEMD160
+ * Class:     com_igeltech_nevercrypt_crypto_hash_RIPEMD160
  * Method:    resetDigest
  * Signature: (J)V
  */
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_hash_RIPEMD160_resetDigest(JNIEnv *env, jobject obj, jlong contextPtr)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_hash_RIPEMD160_resetDigest(JNIEnv *env, jobject obj, jlong contextPtr)
 {
 	memset((RMD160_CTX *)contextPtr,0,sizeof(RMD160_CTX));
 	rmd160_init((RMD160_CTX *)contextPtr);
 }
 
 /*
- * Class:     com_sovworks_eds_crypto_hash_RIPEMD160
+ * Class:     com_igeltech_nevercrypt_crypto_hash_RIPEMD160
  * Method:    updateDigest
  * Signature: (JB)V
  */
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_hash_RIPEMD160_updateDigestByte(JNIEnv *env, jobject obj, jlong contextPtr, jbyte val)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_hash_RIPEMD160_updateDigestByte(JNIEnv *env, jobject obj, jlong contextPtr, jbyte val)
 {
 	rmd160_update((RMD160_CTX *)contextPtr,&val,1);
 }
 
 /*
- * Class:     com_sovworks_eds_crypto_hash_RIPEMD160
+ * Class:     com_igeltech_nevercrypt_crypto_hash_RIPEMD160
  * Method:    updateDigest
  * Signature: (J[BII)V
  */
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_hash_RIPEMD160_updateDigest(JNIEnv *env, jobject obj, jlong contextPtr, jbyteArray data, jint offset, jint length)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_hash_RIPEMD160_updateDigest(JNIEnv *env, jobject obj, jlong contextPtr, jbyteArray data, jint offset, jint length)
 {
 	jbyte *raw_data = (*env)->GetPrimitiveArrayCritical(env,data,NULL);
 	if(raw_data == NULL)
@@ -400,13 +400,13 @@ JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_hash_RIPEMD160_updateDigest(
 }
 
 /*
- * Class:     com_sovworks_eds_crypto_hash_RIPEMD160
+ * Class:     com_igeltech_nevercrypt_crypto_hash_RIPEMD160
  * Method:    finishDigest
  * Signature: (J[B)V
  */
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_hash_RIPEMD160_finishDigest(JNIEnv *env, jobject obj, jlong contextPtr, jbyteArray res)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_hash_RIPEMD160_finishDigest(JNIEnv *env, jobject obj, jlong contextPtr, jbyteArray res)
 {
-	unsigned char digest[com_sovworks_eds_crypto_hash_RIPEMD160_DIGEST_LENGTH];
+	unsigned char digest[com_igeltech_nevercrypt_crypto_hash_RIPEMD160_DIGEST_LENGTH];
 	rmd160_final(digest,(RMD160_CTX *)contextPtr);
-	(*env)->SetByteArrayRegion(env,res,0,com_sovworks_eds_crypto_hash_RIPEMD160_DIGEST_LENGTH,digest);
+	(*env)->SetByteArrayRegion(env,res,0,com_igeltech_nevercrypt_crypto_hash_RIPEMD160_DIGEST_LENGTH,digest);
 }

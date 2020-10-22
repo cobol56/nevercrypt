@@ -1,12 +1,12 @@
-package com.sovworks.eds.android;
+package com.igeltech.nevercrypt.android;
 
 import android.content.Context;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;

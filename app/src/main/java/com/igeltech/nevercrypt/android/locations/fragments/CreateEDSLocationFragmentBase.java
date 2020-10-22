@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -12,28 +12,28 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.helpers.ActivityResultHandler;
-import com.sovworks.eds.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.sovworks.eds.android.locations.dialogs.OverwriteContainerDialog;
-import com.sovworks.eds.android.locations.tasks.AddExistingContainerTaskFragment;
-import com.sovworks.eds.android.locations.tasks.CreateContainerTaskFragmentBase;
-import com.sovworks.eds.android.locations.tasks.CreateEDSLocationTaskFragment;
-import com.sovworks.eds.android.settings.PropertiesHostWithStateBundle;
-import com.sovworks.eds.android.settings.container.ExistingContainerPropertyEditor;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.helpers.ActivityResultHandler;
+import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
+import com.igeltech.nevercrypt.android.locations.dialogs.OverwriteContainerDialog;
+import com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateEDSLocationTaskFragment;
+import com.igeltech.nevercrypt.android.settings.PropertiesHostWithStateBundle;
+import com.igeltech.nevercrypt.android.settings.container.ExistingContainerPropertyEditor;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 import java.util.concurrent.CancellationException;
 
 public abstract class CreateEDSLocationFragmentBase extends PropertiesFragmentBase implements PropertiesHostWithStateBundle
 {
-    public static final String ARG_ADD_EXISTING_LOCATION = "com.sovworks.eds.android.ADD_EXISTING_CONTAINER";
+    public static final String ARG_ADD_EXISTING_LOCATION = "com.igeltech.nevercrypt.android.ADD_EXISTING_CONTAINER";
 
     @Override
     public void onCreate(Bundle state)

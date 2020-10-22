@@ -1,4 +1,4 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 import android.net.Uri;
 import android.os.Parcel;
@@ -6,12 +6,12 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.LocationsManagerBase;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.LocationsManagerBase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -195,7 +195,7 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
 
         Directory directory = startPath.getDirectory();
         String directoryName = directory.getName();
-		com.sovworks.eds.fs.Directory.Contents dc = directory.list();
+		com.igeltech.nevercrypt.fs.Directory.Contents dc = directory.list();
 		try
 		{
 			for(Path subPath: dc)

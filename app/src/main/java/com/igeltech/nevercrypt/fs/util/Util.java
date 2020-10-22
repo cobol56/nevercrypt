@@ -1,14 +1,14 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 import android.os.ParcelFileDescriptor;
 
-import com.sovworks.eds.fs.DataInput;
-import com.sovworks.eds.fs.DataOutput;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.DataInput;
+import com.igeltech.nevercrypt.fs.DataOutput;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -33,12 +33,12 @@ import io.reactivex.functions.Cancellable;
 
 public class Util
 {
-	public static long copyFileToOutputStream(OutputStream output, com.sovworks.eds.fs.File file, long offset, long count, com.sovworks.eds.fs.File.ProgressInfo pi) throws IOException
+	public static long copyFileToOutputStream(OutputStream output, com.igeltech.nevercrypt.fs.File file, long offset, long count, com.igeltech.nevercrypt.fs.File.ProgressInfo pi) throws IOException
 	{
 		InputStream input;
 		if (offset>0)
 		{
-			RandomAccessIO f = file.getRandomAccessIO(com.sovworks.eds.fs.File.AccessMode.Read);
+			RandomAccessIO f = file.getRandomAccessIO(com.igeltech.nevercrypt.fs.File.AccessMode.Read);
 			try
 			{
 				f.seek(offset);
@@ -61,7 +61,7 @@ public class Util
 		}
 	}
 
-	public static long copyFileFromInputStream(InputStream input, com.sovworks.eds.fs.File file, long offset, long count, com.sovworks.eds.fs.File.ProgressInfo pi) throws IOException
+	public static long copyFileFromInputStream(InputStream input, com.igeltech.nevercrypt.fs.File file, long offset, long count, com.igeltech.nevercrypt.fs.File.ProgressInfo pi) throws IOException
 	{
 		OutputStream output;
 		if (offset>0)
@@ -89,7 +89,7 @@ public class Util
 		}
 	}
 
-	public static long copyStream(InputStream src, OutputStream dst, long count, com.sovworks.eds.fs.File.ProgressInfo pi) throws IOException
+	public static long copyStream(InputStream src, OutputStream dst, long count, com.igeltech.nevercrypt.fs.File.ProgressInfo pi) throws IOException
 	{
 		long limit = count <= 0 ? Long.MAX_VALUE : count;
 		long bytesRead = 0;
@@ -159,7 +159,7 @@ public class Util
 		throw new IllegalArgumentException("Unsupported mode: " + mode);
 	}
 
-	public static String getCStringModeFromAccessMode(com.sovworks.eds.fs.File.AccessMode mode)
+	public static String getCStringModeFromAccessMode(com.igeltech.nevercrypt.fs.File.AccessMode mode)
 	{
 		switch (mode)
 		{
@@ -314,14 +314,14 @@ public class Util
 		return res;			
 	}
 
-	public static com.sovworks.eds.fs.File  copyFile(com.sovworks.eds.fs.File src, Directory dest, String fileName) throws IOException
+	public static com.igeltech.nevercrypt.fs.File  copyFile(com.igeltech.nevercrypt.fs.File src, Directory dest, String fileName) throws IOException
 	{
-		com.sovworks.eds.fs.File dstFile = PathUtil.getFile(dest.getPath(), fileName);
+		com.igeltech.nevercrypt.fs.File dstFile = PathUtil.getFile(dest.getPath(), fileName);
 		copyFile(src, dstFile);
 		return dstFile;
 	}
 
-	public static void copyFile(com.sovworks.eds.fs.File src, com.sovworks.eds.fs.File dst) throws IOException
+	public static void copyFile(com.igeltech.nevercrypt.fs.File src, com.igeltech.nevercrypt.fs.File dst) throws IOException
 	{
 		OutputStream out = dst.getOutputStream();
 		try
@@ -334,7 +334,7 @@ public class Util
 		}
 	}
 
-	public static com.sovworks.eds.fs.File copyFile(com.sovworks.eds.fs.File src, Directory dest) throws IOException
+	public static com.igeltech.nevercrypt.fs.File copyFile(com.igeltech.nevercrypt.fs.File src, Directory dest) throws IOException
 	{
 		return copyFile(src, dest, src.getName());
 	}
@@ -519,7 +519,7 @@ public class Util
 			path.getFile().delete();
 	}
 
-	public static com.sovworks.eds.fs.File writeToFile(Path path, CharSequence content) throws IOException
+	public static com.igeltech.nevercrypt.fs.File writeToFile(Path path, CharSequence content) throws IOException
 	{
 		return writeToFile(
 				path.getParentPath().getDirectory(),
@@ -528,7 +528,7 @@ public class Util
 		);
 	}
 	
-	public static com.sovworks.eds.fs.File writeToFile(Directory dir, String fileName, CharSequence content) throws IOException
+	public static com.igeltech.nevercrypt.fs.File writeToFile(Directory dir, String fileName, CharSequence content) throws IOException
 	{
 		Path dstPath;
 		try
@@ -539,12 +539,12 @@ public class Util
 		{
 			dstPath = null;
 		}
-		com.sovworks.eds.fs.File res = dstPath != null && dstPath.isFile() ? dstPath.getFile() : dir.createFile(fileName);
+		com.igeltech.nevercrypt.fs.File res = dstPath != null && dstPath.isFile() ? dstPath.getFile() : dir.createFile(fileName);
 		writeToFile(res, content);
 		return res;
 	}
 
-	public static void writeToFile(com.sovworks.eds.fs.File dst, CharSequence content) throws IOException
+	public static void writeToFile(com.igeltech.nevercrypt.fs.File dst, CharSequence content) throws IOException
 	{
 		OutputStreamWriter w = new OutputStreamWriter(dst.getOutputStream());
 		try
@@ -595,7 +595,7 @@ public class Util
 		return readFromFile(path.getFile());
 	}
 
-	public static String readFromFile(com.sovworks.eds.fs.File file) throws IOException
+	public static String readFromFile(com.igeltech.nevercrypt.fs.File file) throws IOException
 	{
 		return readFromFile(file.getInputStream());
 	}
@@ -915,7 +915,7 @@ public class Util
 		}
 	}
 
-	public static class CancellableProgressInfo implements com.sovworks.eds.fs.File.ProgressInfo, Cancellable
+	public static class CancellableProgressInfo implements com.igeltech.nevercrypt.fs.File.ProgressInfo, Cancellable
 	{
 
 		@Override

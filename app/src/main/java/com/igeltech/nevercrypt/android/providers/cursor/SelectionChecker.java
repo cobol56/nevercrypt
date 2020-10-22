@@ -1,7 +1,7 @@
-package com.sovworks.eds.android.providers.cursor;
+package com.igeltech.nevercrypt.android.providers.cursor;
 
 
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.locations.Location;
 
 //full version compatibility
 public class SelectionChecker extends SelectionCheckerBase

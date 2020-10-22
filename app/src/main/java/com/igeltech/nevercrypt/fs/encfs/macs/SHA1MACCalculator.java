@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.encfs.macs;
+package com.igeltech.nevercrypt.fs.encfs.macs;
 
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.kdf.HMACSHA1;
-import com.sovworks.eds.fs.encfs.ciphers.CipherBase;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.kdf.HMACSHA1;
+import com.igeltech.nevercrypt.fs.encfs.ciphers.CipherBase;
 
 import java.security.DigestException;
 import java.security.NoSuchAlgorithmException;

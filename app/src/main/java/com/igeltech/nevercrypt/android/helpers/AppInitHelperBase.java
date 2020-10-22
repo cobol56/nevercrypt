@@ -1,13 +1,13 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.settings.Settings;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 
-import static com.sovworks.eds.android.settings.UserSettingsCommon.CURRENT_SETTINGS_VERSION;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.CURRENT_SETTINGS_VERSION;
 
 public abstract class AppInitHelperBase
 {

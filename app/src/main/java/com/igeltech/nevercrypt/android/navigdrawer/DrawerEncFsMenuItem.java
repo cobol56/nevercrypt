@@ -1,18 +1,18 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
-import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
-import com.sovworks.eds.android.locations.closer.fragments.OMLocationCloserFragment;
-import com.sovworks.eds.android.locations.opener.fragments.EncFSOpenerFragment;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.OMLocationCloserFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.EncFSOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
 
 public class DrawerEncFsMenuItem extends DrawerLocationMenuItem
 {

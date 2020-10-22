@@ -1,25 +1,25 @@
-package com.sovworks.eds.container;
+package com.igeltech.nevercrypt.container;
 
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.helpers.ContainerOpeningProgressReporter;
-import com.sovworks.eds.crypto.EncryptedFileWithCache;
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.crypto.LocalEncryptedFileXTS;
-import com.sovworks.eds.crypto.modes.XTS;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.exceptions.WrongFileFormatException;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.exfat.ExFat;
-import com.sovworks.eds.fs.fat.FatFS;
-import com.sovworks.eds.fs.std.StdFs;
-import com.sovworks.eds.fs.std.StdFsPath;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
+import com.igeltech.nevercrypt.crypto.EncryptedFileWithCache;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.LocalEncryptedFileXTS;
+import com.igeltech.nevercrypt.crypto.modes.XTS;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.exceptions.WrongFileFormatException;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.exfat.ExFat;
+import com.igeltech.nevercrypt.fs.fat.FatFS;
+import com.igeltech.nevercrypt.fs.std.StdFs;
+import com.igeltech.nevercrypt.fs.std.StdFsPath;
 
 import java.io.Closeable;
 import java.io.IOException;

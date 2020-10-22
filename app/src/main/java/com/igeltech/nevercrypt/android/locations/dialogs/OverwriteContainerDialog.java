@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.dialogs;
+package com.igeltech.nevercrypt.android.locations.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
 
 public class OverwriteContainerDialog extends DialogFragment
 {
@@ -30,7 +30,7 @@ public class OverwriteContainerDialog extends DialogFragment
 			args.putInt(ARG_REQUEST_RES_ID, requestResId);
 			newFragment.setArguments(args);
 		}
-	    newFragment.show(fm, "com.sovworks.eds.android.locations.dialogs.OverwriteContainerDialog");
+	    newFragment.show(fm, "com.igeltech.nevercrypt.android.locations.dialogs.OverwriteContainerDialog");
 	}
 	
 	@NonNull
@@ -71,6 +71,6 @@ public class OverwriteContainerDialog extends DialogFragment
         }
     }
 	
-	private static final String ARG_REQUEST_RES_ID = "com.sovworks.eds.android.TEXT_ID";
+	private static final String ARG_REQUEST_RES_ID = "com.igeltech.nevercrypt.android.TEXT_ID";
 
 }

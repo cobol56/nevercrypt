@@ -1,7 +1,7 @@
-package com.sovworks.eds.veracrypt;
+package com.igeltech.nevercrypt.veracrypt;
 
 
-import com.sovworks.eds.truecrypt.StdLayout;
+import com.igeltech.nevercrypt.truecrypt.StdLayout;
 
 import java.io.IOException;
 import java.security.MessageDigest;

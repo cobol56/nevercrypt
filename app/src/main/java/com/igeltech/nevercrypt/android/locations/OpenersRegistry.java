@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
-import com.sovworks.eds.android.locations.opener.fragments.ContainerOpenerFragment;
-import com.sovworks.eds.android.locations.opener.fragments.EDSLocationOpenerFragment;
-import com.sovworks.eds.android.locations.opener.fragments.EncFSOpenerFragment;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerFragment;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.ContainerOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.EDSLocationOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.EncFSOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerFragment;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public class OpenersRegistry
 {

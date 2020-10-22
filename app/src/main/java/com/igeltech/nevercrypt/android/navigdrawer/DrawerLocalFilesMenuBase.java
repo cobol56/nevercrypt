@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Intent;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.locations.DocumentTreeLocation;
-import com.sovworks.eds.android.locations.ExternalStorageLocation;
-import com.sovworks.eds.android.locations.InternalSDLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
+import com.igeltech.nevercrypt.android.locations.ExternalStorageLocation;
+import com.igeltech.nevercrypt.android.locations.InternalSDLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.ArrayList;
 import java.util.Collection;

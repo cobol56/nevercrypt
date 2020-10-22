@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,14 +11,14 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
-import com.sovworks.eds.fs.util.SrcDstPlain;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection.SrcDst;
+import com.igeltech.nevercrypt.fs.util.SrcDstPlain;
+import com.igeltech.nevercrypt.locations.Location;
 import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.trello.rxlifecycle3.components.support.RxAppCompatDialogFragment;
 
@@ -54,7 +54,7 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
 		d.show(fm, TAG);
 	}
 
-	public static final String TAG = "com.sovworks.eds.android.dialogs.AskOverwriteDialog";
+	public static final String TAG = "com.igeltech.nevercrypt.android.dialogs.AskOverwriteDialog";
 
 	@Override
 	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

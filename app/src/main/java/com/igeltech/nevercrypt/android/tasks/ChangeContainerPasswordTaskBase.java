@@ -1,22 +1,22 @@
-package com.sovworks.eds.android.tasks;
+package com.igeltech.nevercrypt.android.tasks;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.helpers.Util;
-import com.sovworks.eds.container.VolumeLayout;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.helpers.Util;
+import com.igeltech.nevercrypt.container.VolumeLayout;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 
 public abstract class ChangeContainerPasswordTaskBase extends ChangeEDSLocationPasswordTask
 {
-    public static final String TAG = "com.sovworks.eds.android.tasks.ChangeContainerPasswordTask";
+    public static final String TAG = "com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask";
     //public static final String ARG_FIN_ACTIVITY = "fin_activity";
 
 	@Override

@@ -1,19 +1,19 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.settings.PropertiesHostWithLocation;
-import com.sovworks.eds.android.settings.TextPropertyEditor;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.android.settings.container.UseExternalFileManagerPropertyEditor;
-import com.sovworks.eds.locations.LocationBase;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
+import com.igeltech.nevercrypt.android.settings.PropertiesHostWithLocation;
+import com.igeltech.nevercrypt.android.settings.TextPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.settings.container.UseExternalFileManagerPropertyEditor;
+import com.igeltech.nevercrypt.locations.LocationBase;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public abstract class LocationSettingsBaseFragment extends PropertiesFragmentBase implements PropertiesHostWithLocation
 {

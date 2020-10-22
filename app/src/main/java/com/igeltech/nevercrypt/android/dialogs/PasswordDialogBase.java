@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,21 +17,21 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.activities.OpeningOptionsActivity;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.activities.OpeningOptionsActivity;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 import com.trello.rxlifecycle3.components.support.RxDialogFragment;
 
 public abstract class PasswordDialogBase extends RxDialogFragment
 {
-    public static final String TAG = "com.sovworks.eds.android.dialogs.PasswordDialog";
+    public static final String TAG = "com.igeltech.nevercrypt.android.dialogs.PasswordDialog";
 
-    public static final String ARG_LABEL = "com.sovworks.eds.android.LABEL";
-    public static final String ARG_VERIFY_PASSWORD = "com.sovworks.eds.android.VERIFY_PASSWORD";
-    public static final String ARG_HAS_PASSWORD = "com.sovworks.eds.android.HAS_PASSWORD";
-    public static final String ARG_RECEIVER_FRAGMENT_TAG = "com.sovworks.eds.android.RECEIVER_FRAGMENT_TAG";
+    public static final String ARG_LABEL = "com.igeltech.nevercrypt.android.LABEL";
+    public static final String ARG_VERIFY_PASSWORD = "com.igeltech.nevercrypt.android.VERIFY_PASSWORD";
+    public static final String ARG_HAS_PASSWORD = "com.igeltech.nevercrypt.android.HAS_PASSWORD";
+    public static final String ARG_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.RECEIVER_FRAGMENT_TAG";
 
     public interface PasswordReceiver
     {

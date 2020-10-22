@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -16,16 +16,16 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.providers.MainContentProvider;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.DeviceBasedLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.settings.GlobalConfig;
-import com.sovworks.eds.util.exec.ExecuteExternalProgram;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.providers.MainContentProvider;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.DeviceBasedLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
+import com.igeltech.nevercrypt.util.exec.ExecuteExternalProgram;
 
 import java.io.File;
 import java.io.IOException;

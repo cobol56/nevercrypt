@@ -1,18 +1,18 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.providers.ContainersDocumentProviderBase;
-import com.sovworks.eds.crypto.SimpleCrypto;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.std.StdFs;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.settings.DefaultSettings;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.providers.ContainersDocumentProviderBase;
+import com.igeltech.nevercrypt.crypto.SimpleCrypto;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.std.StdFs;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.settings.DefaultSettings;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import org.json.JSONException;
 import org.json.JSONObject;

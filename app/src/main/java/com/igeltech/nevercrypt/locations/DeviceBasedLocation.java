@@ -1,9 +1,9 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
 import android.net.Uri;
 
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 

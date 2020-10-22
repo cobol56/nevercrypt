@@ -1,11 +1,11 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.AboutDialog;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.AboutDialog;
 
 public class DrawerAboutMenuItem extends DrawerMenuItemBase
 {

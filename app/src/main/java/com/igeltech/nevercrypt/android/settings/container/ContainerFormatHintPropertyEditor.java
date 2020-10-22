@@ -1,11 +1,11 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.ContainerSettingsFragment;
-import com.sovworks.eds.android.locations.fragments.ContainerSettingsFragmentBase;
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.veracrypt.FormatInfo;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.veracrypt.FormatInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public class ContainerFormatHintPropertyEditor extends ChoiceDialogPropertyEdito
         else
         {
             String cfn = selectedFormat.getFormatName();
-            if (cfn.equalsIgnoreCase(com.sovworks.eds.truecrypt.FormatInfo.FORMAT_NAME) || cfn.equalsIgnoreCase(FormatInfo.FORMAT_NAME))
+            if (cfn.equalsIgnoreCase(com.igeltech.nevercrypt.truecrypt.FormatInfo.FORMAT_NAME) || cfn.equalsIgnoreCase(FormatInfo.FORMAT_NAME))
                 enableAlgHints();
             else
                 disableAlgHints();

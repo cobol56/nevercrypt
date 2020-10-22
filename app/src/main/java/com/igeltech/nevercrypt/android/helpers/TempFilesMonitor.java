@@ -1,21 +1,21 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.errors.ExternalStorageNotAvailableException;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.crypto.SimpleCrypto;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.fs.util.SrcDstSingle;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.errors.ExternalStorageNotAvailableException;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.crypto.SimpleCrypto;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 import java.util.Date;

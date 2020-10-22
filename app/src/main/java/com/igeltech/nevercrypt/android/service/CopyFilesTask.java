@@ -1,23 +1,23 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.Intent;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.fs.DocumentTreeFS;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.FSRecord;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.errors.NoFreeSpaceLeftException;
-import com.sovworks.eds.fs.util.FilesCountAndSize;
-import com.sovworks.eds.fs.util.FilesOperationStatus;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
-import com.sovworks.eds.fs.util.SrcDstPlain;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.fs.DocumentTreeFS;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.FSRecord;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.errors.NoFreeSpaceLeftException;
+import com.igeltech.nevercrypt.fs.util.FilesCountAndSize;
+import com.igeltech.nevercrypt.fs.util.FilesOperationStatus;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection.SrcDst;
+import com.igeltech.nevercrypt.fs.util.SrcDstPlain;
+import com.igeltech.nevercrypt.locations.Location;
 
 import org.json.JSONException;
 
@@ -117,7 +117,7 @@ class CopyFilesTask extends FileOperationTaskBase
 		}
 		catch(NoFreeSpaceLeftException e)
 		{
-			throw new com.sovworks.eds.android.errors.NoFreeSpaceLeftException(_context);
+			throw new com.igeltech.nevercrypt.android.errors.NoFreeSpaceLeftException(_context);
 		}
 		catch (IOException e)
 		{

@@ -1,7 +1,7 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
-import com.sovworks.eds.crypto.engines.AESCTR;
-import com.sovworks.eds.crypto.kdf.HMACSHA512KDF;
+import com.igeltech.nevercrypt.crypto.engines.AESCTR;
+import com.igeltech.nevercrypt.crypto.kdf.HMACSHA512KDF;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

@@ -1,13 +1,13 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 import android.content.Context;
 import android.os.Environment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -147,7 +147,7 @@ public abstract class StorageOptionsBase
         InputStream inp = new BufferedInputStream(finp);
         try
         {
-            return com.sovworks.eds.fs.util.Util.readFromFile(inp);
+            return com.igeltech.nevercrypt.fs.util.Util.readFromFile(inp);
         }
         finally
         {

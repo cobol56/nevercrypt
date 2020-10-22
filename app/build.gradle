@@ -6,7 +6,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.sovworks.edslite"
+        applicationId 'com.igeltech.nevercrypt'
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 237

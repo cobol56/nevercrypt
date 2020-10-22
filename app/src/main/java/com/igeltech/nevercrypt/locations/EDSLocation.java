@@ -1,7 +1,7 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
 
-import com.sovworks.eds.fs.util.ContainerFSWrapper;
+import com.igeltech.nevercrypt.fs.util.ContainerFSWrapper;
 
 import java.io.IOException;
 

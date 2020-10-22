@@ -1,11 +1,11 @@
-package com.sovworks.eds.fs.encfs;
+package com.igeltech.nevercrypt.fs.encfs;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.util.PathBase;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.util.PathBase;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class Path extends PathBase
 {
     public Path(
             FS fs,
-            com.sovworks.eds.fs.Path realPath,
+            com.igeltech.nevercrypt.fs.Path realPath,
             NameCodecInfo namingAlg,
             byte[] encryptionKey)
     {
@@ -29,7 +29,7 @@ public class Path extends PathBase
         return (FS)super.getFileSystem();
     }
 
-    public com.sovworks.eds.fs.Path getRealPath()
+    public com.igeltech.nevercrypt.fs.Path getRealPath()
     {
         return _realPath;
     }
@@ -74,7 +74,7 @@ public class Path extends PathBase
     {
         if(_realPath.equals(getFileSystem().getEncFSRootPath()))
             return null;
-        com.sovworks.eds.fs.Path pp = _realPath.getParentPath();
+        com.igeltech.nevercrypt.fs.Path pp = _realPath.getParentPath();
         return pp == null ? null : getFileSystem().getPathFromRealPath(pp);
     }
 
@@ -82,7 +82,7 @@ public class Path extends PathBase
     public Path combine(String part) throws IOException
     {
         StringPathUtil encodedParts = calcCombinedEncodedParts(part);
-        com.sovworks.eds.fs.Path newRealPath = _realPath.combine(encodedParts.getFileName());
+        com.igeltech.nevercrypt.fs.Path newRealPath = _realPath.combine(encodedParts.getFileName());
         Path newPath = getFileSystem().getPathFromRealPath(newRealPath);
         if(newPath._decodedPath == null)
         {
@@ -118,7 +118,7 @@ public class Path extends PathBase
     @Override
     public Directory getDirectory() throws IOException
     {
-        return new com.sovworks.eds.fs.encfs.Directory(
+        return new com.igeltech.nevercrypt.fs.encfs.Directory(
                 this,
                 getRealPath().getDirectory()
         );
@@ -128,7 +128,7 @@ public class Path extends PathBase
     public File getFile() throws IOException
     {
         Config c = getFileSystem().getConfig();
-        return new com.sovworks.eds.fs.encfs.File(
+        return new com.igeltech.nevercrypt.fs.encfs.File(
                 this,
                 getRealPath().getFile(),
                 c.getDataCodecInfo(),
@@ -202,7 +202,7 @@ public class Path extends PathBase
     }
 
     private final NameCodecInfo _namingInfo;
-    private final com.sovworks.eds.fs.Path _realPath;
+    private final com.igeltech.nevercrypt.fs.Path _realPath;
     private StringPathUtil _encodedPath;
     private final byte[] _encryptionKey;
     private byte[] _chainedIV;
@@ -250,10 +250,10 @@ public class Path extends PathBase
         }
     }
 
-    StringPathUtil buildEncodedPathFromRealPath(com.sovworks.eds.fs.Path realPath) throws IOException
+    StringPathUtil buildEncodedPathFromRealPath(com.igeltech.nevercrypt.fs.Path realPath) throws IOException
     {
         StringPathUtil encodedParts = new StringPathUtil();
-        com.sovworks.eds.fs.Path rootPath = getFileSystem().getEncFSRootPath();
+        com.igeltech.nevercrypt.fs.Path rootPath = getFileSystem().getEncFSRootPath();
         while(!realPath.equals(rootPath))
         {
             encodedParts = new StringPathUtil(PathUtil.getNameFromPath(realPath), encodedParts);

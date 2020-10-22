@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
 public class ContainerSettingsFragment extends ContainerSettingsFragmentBase
 {

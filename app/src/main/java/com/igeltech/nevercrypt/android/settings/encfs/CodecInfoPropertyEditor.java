@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.settings.encfs;
+package com.igeltech.nevercrypt.android.settings.encfs;
 
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.fs.encfs.AlgInfo;
-import com.sovworks.eds.util.RefVal;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.fs.encfs.AlgInfo;
+import com.igeltech.nevercrypt.util.RefVal;
 
 import java.util.ArrayList;
 

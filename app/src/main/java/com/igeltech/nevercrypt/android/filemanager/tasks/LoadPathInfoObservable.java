@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
 
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.helpers.CachedPathInfoBase;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfoBase;
+import com.igeltech.nevercrypt.locations.Location;
 
 import io.reactivex.Single;
 

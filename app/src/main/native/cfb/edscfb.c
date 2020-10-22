@@ -8,14 +8,14 @@
 #include <android/log.h>
 #include "cfb.h"
 
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "EDS (native code edscfb)", __VA_ARGS__);
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code edscfb)", __VA_ARGS__);
 #ifdef DEBUG
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "EDS (native code edscfb)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code edscfb)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif
 
-JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_modes_CFB_initContext(JNIEnv *env, jobject obj)
+JNIEXPORT jlong JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CFB_initContext(JNIEnv *env, jobject obj)
 {
     cfb_context *ctx = malloc(sizeof(cfb_context));
     if(ctx == NULL)
@@ -174,13 +174,13 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved)
 }
 
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_modes_CFB_attachNativeCipher(JNIEnv *env, jobject obj, jlong context, jlong cipherPtr)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CFB_attachNativeCipher(JNIEnv *env, jobject obj, jlong context, jlong cipherPtr)
 {
 	cfb_context *ctx = (cfb_context *)context;
 	attach_ciphers_to_tail(ctx,(block_cipher_interface *)cipherPtr);
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CFB_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CFB_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
 {
 	jbyte *raw_data = (*env)->GetPrimitiveArrayCritical(env,data,NULL);
 	if(raw_data == NULL)
@@ -197,7 +197,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CFB_encrypt(JNIEnv *en
 	return 0;
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CFB_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CFB_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
 {	
 	jbyte *raw_data = (*env)->GetPrimitiveArrayCritical(env,data,NULL);
 	if(raw_data == NULL)
@@ -214,7 +214,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CFB_decrypt(JNIEnv *en
 	return 0;
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_modes_CFB_closeContext(JNIEnv *env, jobject obj, jlong context)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CFB_closeContext(JNIEnv *env, jobject obj, jlong context)
 {
 	if((void *)context!=NULL)
 	{

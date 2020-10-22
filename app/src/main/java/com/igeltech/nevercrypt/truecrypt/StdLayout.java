@@ -1,20 +1,20 @@
-package com.sovworks.eds.truecrypt;
+package com.igeltech.nevercrypt.truecrypt;
 
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.container.EdsContainer;
-import com.sovworks.eds.container.VolumeLayoutBase;
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.crypto.engines.AESXTS;
-import com.sovworks.eds.crypto.hash.RIPEMD160;
-import com.sovworks.eds.crypto.hash.Whirlpool;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.exceptions.HeaderCRCException;
-import com.sovworks.eds.exceptions.WrongContainerVersionException;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.VolumeLayoutBase;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.engines.AESXTS;
+import com.igeltech.nevercrypt.crypto.hash.RIPEMD160;
+import com.igeltech.nevercrypt.crypto.hash.Whirlpool;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.exceptions.HeaderCRCException;
+import com.igeltech.nevercrypt.exceptions.WrongContainerVersionException;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

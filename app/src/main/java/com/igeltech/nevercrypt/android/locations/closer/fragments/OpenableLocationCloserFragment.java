@@ -1,22 +1,22 @@
-package com.sovworks.eds.android.locations.closer.fragments;
+package com.igeltech.nevercrypt.android.locations.closer.fragments;
 
 
 import android.content.Context;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.helpers.TempFilesMonitor;
-import com.sovworks.eds.android.helpers.WipeFilesTask;
-import com.sovworks.eds.android.providers.ContainersDocumentProviderBase;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.android.service.LocationsService;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.util.SrcDstRec;
-import com.sovworks.eds.fs.util.SrcDstSingle;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
+import com.igeltech.nevercrypt.android.helpers.WipeFilesTask;
+import com.igeltech.nevercrypt.android.providers.ContainersDocumentProviderBase;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.service.LocationsService;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.util.SrcDstRec;
+import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 

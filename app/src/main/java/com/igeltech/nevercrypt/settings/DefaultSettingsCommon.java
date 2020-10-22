@@ -1,8 +1,8 @@
-package com.sovworks.eds.settings;
+package com.igeltech.nevercrypt.settings;
 
 import android.os.Build;
 
-import com.sovworks.eds.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
 
 import java.util.Arrays;
 import java.util.List;

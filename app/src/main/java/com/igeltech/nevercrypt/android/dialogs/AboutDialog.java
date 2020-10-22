@@ -1,12 +1,12 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 public class AboutDialog extends AboutDialogBase
 {

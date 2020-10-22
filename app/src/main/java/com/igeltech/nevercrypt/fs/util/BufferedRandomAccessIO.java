@@ -1,9 +1,9 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

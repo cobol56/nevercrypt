@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.locations.EncFsLocationBase;
-import com.sovworks.eds.android.locations.opener.fragments.EDSLocationOpenerFragment;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.sovworks.eds.android.tasks.ChangeEncFsPasswordTask;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.EDSLocationOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.android.tasks.ChangeEncFsPasswordTask;
 
 public class EncFsSettingsFragment extends EDSLocationSettingsFragment
 {

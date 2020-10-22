@@ -1,8 +1,8 @@
-package com.sovworks.eds.android.errors;
+package com.igeltech.nevercrypt.android.errors;
 
 import android.content.Context;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 public class ClosedContainerException extends UserException
 {

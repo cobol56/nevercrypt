@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings.program;
+package com.igeltech.nevercrypt.android.settings.program;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -7,20 +7,20 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.providers.ContainersDocumentProvider;
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.android.settings.fragments.ProgramSettingsFragmentBase;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.providers.ContainersDocumentProvider;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.settings.fragments.ProgramSettingsFragmentBase;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sovworks.eds.android.settings.UserSettings.EXTERNAL_FILE_MANAGER;
+import static com.igeltech.nevercrypt.android.settings.UserSettings.EXTERNAL_FILE_MANAGER;
 
 public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
 {

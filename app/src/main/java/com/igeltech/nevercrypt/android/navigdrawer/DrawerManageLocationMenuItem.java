@@ -1,12 +1,12 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.activities.LocationListActivity;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.activities.LocationListActivity;
 
 public abstract class DrawerManageLocationMenuItem extends DrawerMenuItemBase
 {

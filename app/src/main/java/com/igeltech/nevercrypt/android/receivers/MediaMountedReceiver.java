@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.receivers;
+package com.igeltech.nevercrypt.android.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.usb.UsbManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.locations.ExternalStorageLocation;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.LocationsManagerBase;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.locations.ExternalStorageLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.LocationsManagerBase;
 
 public class MediaMountedReceiver extends BroadcastReceiver
 {

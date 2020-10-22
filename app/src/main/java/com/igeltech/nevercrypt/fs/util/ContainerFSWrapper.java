@@ -1,9 +1,9 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.filemanager.DirectorySettings;
-import com.sovworks.eds.android.filemanager.tasks.ReadDir;
-import com.sovworks.eds.fs.FileSystem;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.filemanager.DirectorySettings;
+import com.igeltech.nevercrypt.android.filemanager.tasks.ReadDir;
+import com.igeltech.nevercrypt.fs.FileSystem;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class ContainerFSWrapper extends ActivityTrackingFSWrapper
         throw new UnsupportedOperationException();
     }
 
-    public synchronized DirectorySettings getDirectorySettings(com.sovworks.eds.fs.Path path)
+    public synchronized DirectorySettings getDirectorySettings(com.igeltech.nevercrypt.fs.Path path)
     {
         if(path == null)
             return null;
@@ -40,6 +40,6 @@ public class ContainerFSWrapper extends ActivityTrackingFSWrapper
         return ds;
     }
 
-    private final HashMap<com.sovworks.eds.fs.Path, DirectorySettings> _dirSettingsCache = new HashMap<>();
+    private final HashMap<com.igeltech.nevercrypt.fs.Path, DirectorySettings> _dirSettingsCache = new HashMap<>();
 
 }

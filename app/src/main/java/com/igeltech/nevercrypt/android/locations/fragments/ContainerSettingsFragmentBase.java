@@ -1,21 +1,21 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.dialogs.PasswordDialog;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.locations.opener.fragments.ContainerOpenerFragment;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.sovworks.eds.android.settings.container.ContainerFormatHintPropertyEditor;
-import com.sovworks.eds.android.settings.container.EncEngineHintPropertyEditor;
-import com.sovworks.eds.android.settings.container.HashAlgHintPropertyEditor;
-import com.sovworks.eds.android.tasks.ChangeContainerPasswordTask;
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.EdsContainer;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.ContainerOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.android.settings.container.ContainerFormatHintPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.container.EncEngineHintPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.container.HashAlgHintPropertyEditor;
+import com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 import java.util.Collection;
 import java.util.List;

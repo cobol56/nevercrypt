@@ -1,12 +1,12 @@
-package com.sovworks.eds.luks;
+package com.igeltech.nevercrypt.luks;
 
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.VolumeLayout;
-import com.sovworks.eds.crypto.EncryptedFile;
-import com.sovworks.eds.crypto.EncryptedFileWithCache;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.FileSystemInfo;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.VolumeLayout;
+import com.igeltech.nevercrypt.crypto.EncryptedFile;
+import com.igeltech.nevercrypt.crypto.EncryptedFileWithCache;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.FileSystemInfo;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -26,7 +26,7 @@ public abstract class FormatInfoBase implements ContainerFormatInfo
 	@Override
 	public VolumeLayout getVolumeLayout()
 	{
-		return new com.sovworks.eds.luks.VolumeLayout();
+		return new com.igeltech.nevercrypt.luks.VolumeLayout();
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public abstract class FormatInfoBase implements ContainerFormatInfo
 	@Override
 	public void formatContainer(RandomAccessIO io, VolumeLayout layout, FileSystemInfo fsInfo) throws IOException, ApplicationException
 	{
-		com.sovworks.eds.luks.VolumeLayout vl = ((com.sovworks.eds.luks.VolumeLayout)layout);
+		com.igeltech.nevercrypt.luks.VolumeLayout vl = ((com.igeltech.nevercrypt.luks.VolumeLayout)layout);
 		long len = vl.getEncryptedDataSize(io.length()) + vl.getEncryptedDataOffset();
 		io.setLength(len);
 		SecureRandom sr = new SecureRandom();
@@ -85,7 +85,7 @@ public abstract class FormatInfoBase implements ContainerFormatInfo
 		et.close(false);				
 	}
 	
-	protected void prepareHeaderLocations(SecureRandom sr, RandomAccessIO io, com.sovworks.eds.luks.VolumeLayout layout) throws IOException
+	protected void prepareHeaderLocations(SecureRandom sr, RandomAccessIO io, com.igeltech.nevercrypt.luks.VolumeLayout layout) throws IOException
 	{
 		writeRandomData(sr, io, 0, layout.getEncryptedDataOffset());
 	}

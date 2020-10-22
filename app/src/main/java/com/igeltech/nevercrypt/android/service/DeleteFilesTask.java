@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.FilesCountAndSize;
-import com.sovworks.eds.fs.util.FilesOperationStatus;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.FilesCountAndSize;
+import com.igeltech.nevercrypt.fs.util.FilesOperationStatus;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection.SrcDst;
 
 import java.io.IOException;
 import java.util.concurrent.CancellationException;

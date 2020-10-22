@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragmentBase;
-import com.sovworks.eds.android.locations.tasks.CreateContainerTaskFragmentBase;
-import com.sovworks.eds.android.settings.IntPropertyEditor;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
+import com.igeltech.nevercrypt.android.settings.IntPropertyEditor;
 
 public class ContainerSizePropertyEditor extends IntPropertyEditor
 {

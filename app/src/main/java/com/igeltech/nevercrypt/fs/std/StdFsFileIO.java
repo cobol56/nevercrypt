@@ -1,7 +1,7 @@
-package com.sovworks.eds.fs.std;
+package com.igeltech.nevercrypt.fs.std;
 
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.File;
 import java.io.FileDescriptor;

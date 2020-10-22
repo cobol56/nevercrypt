@@ -1,8 +1,8 @@
-package com.sovworks.eds.android.filemanager.comparators;
+package com.igeltech.nevercrypt.android.filemanager.comparators;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.filemanager.records.LocRootDirRecord;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.filemanager.records.LocRootDirRecord;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
 
 import java.io.IOException;
 import java.util.Comparator;

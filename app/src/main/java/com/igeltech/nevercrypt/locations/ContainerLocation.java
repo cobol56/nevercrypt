@@ -1,7 +1,7 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.EdsContainer;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.EdsContainer;
 
 import java.io.IOException;
 import java.util.List;

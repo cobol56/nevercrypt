@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 public abstract class CheckBoxPropertyEditor extends PropertyEditorBase
 {

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.os.Bundle;
 
@@ -7,8 +7,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment;
 import com.trello.rxlifecycle3.components.support.RxAppCompatDialogFragment;
 
 public class AskPrimaryStoragePermissionDialog extends RxAppCompatDialogFragment

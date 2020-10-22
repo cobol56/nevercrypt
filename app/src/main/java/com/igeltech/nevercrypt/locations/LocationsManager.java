@@ -1,8 +1,8 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
 import android.content.Context;
 
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.settings.Settings;
 
 public class LocationsManager extends LocationsManagerBase
 {

@@ -1,4 +1,4 @@
-package com.sovworks.eds.settings;
+package com.igeltech.nevercrypt.settings;
 
 import java.io.File;
 

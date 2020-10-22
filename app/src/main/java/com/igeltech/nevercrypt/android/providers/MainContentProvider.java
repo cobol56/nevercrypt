@@ -1,7 +1,7 @@
-package com.sovworks.eds.android.providers;
+package com.igeltech.nevercrypt.android.providers;
 
 
 public class MainContentProvider extends MainContentProviderBase
 {
-    public static final String AUTHORITY = "com.sovworks.eds.android.providers.main.lite";
+    public static final String AUTHORITY = "com.igeltech.nevercrypt.android.providers.main";
 }

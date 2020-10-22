@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.tasks;
+package com.igeltech.nevercrypt.android.tasks;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class ChangeContainerPasswordTask extends ChangeContainerPasswordTaskBase
 {

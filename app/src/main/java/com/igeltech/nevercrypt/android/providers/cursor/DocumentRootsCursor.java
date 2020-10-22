@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.providers.cursor;
+package com.igeltech.nevercrypt.android.providers.cursor;
 
 import android.content.Context;
 import android.database.AbstractCursor;
@@ -7,11 +7,11 @@ import android.provider.DocumentsContract;
 import android.text.format.Formatter;
 
 import com.drew.lang.annotations.NotNull;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.List;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.sovworks.eds.android.providers.ContainersDocumentProviderBase.getDocumentIdFromLocation;
+import static com.igeltech.nevercrypt.android.providers.ContainersDocumentProviderBase.getDocumentIdFromLocation;
 
 public class DocumentRootsCursor extends AbstractCursor
 {

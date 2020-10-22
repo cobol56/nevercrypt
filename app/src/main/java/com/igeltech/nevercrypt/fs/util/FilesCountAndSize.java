@@ -1,7 +1,7 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection.SrcDst;
 
 import java.io.IOException;
 import java.util.Iterator;

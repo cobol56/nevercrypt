@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.ContainerSettingsFragment;
-import com.sovworks.eds.android.locations.fragments.ContainerSettingsFragmentBase;
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;

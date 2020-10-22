@@ -9,14 +9,14 @@
 #include "ctr.h"
 
 
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "EDS (native code edsctr)", __VA_ARGS__);
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code edsctr)", __VA_ARGS__);
 #ifdef DEBUG
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "EDS (native code edsctr)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code edsctr)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif
 
-JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_modes_CTR_initContext(JNIEnv *env, jobject obj)
+JNIEXPORT jlong JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CTR_initContext(JNIEnv *env, jobject obj)
 {
     ctr_context *ctx = malloc(sizeof(ctr_context));
     if(ctx == NULL)
@@ -198,13 +198,13 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved)
 }
 
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_modes_CTR_attachNativeCipher(JNIEnv *env, jobject obj, jlong context, jlong cipherPtr)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CTR_attachNativeCipher(JNIEnv *env, jobject obj, jlong context, jlong cipherPtr)
 {
 	ctr_context *ctx = (ctr_context *)context;
 	attach_ciphers_to_tail(ctx,(block_cipher_interface *)cipherPtr);
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CTR_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CTR_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
 {
 	jbyte *raw_data = (*env)->GetPrimitiveArrayCritical(env,data,NULL);
 	if(raw_data == NULL)
@@ -221,7 +221,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CTR_encrypt(JNIEnv *en
 	return 0;
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CTR_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CTR_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jbyteArray iv, jlong context)
 {	
 	jbyte *raw_data = (*env)->GetPrimitiveArrayCritical(env,data,NULL);
 	if(raw_data == NULL)
@@ -238,7 +238,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_CTR_decrypt(JNIEnv *en
 	return 0;
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_modes_CTR_closeContext(JNIEnv *env, jobject obj, jlong context)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_modes_CTR_closeContext(JNIEnv *env, jobject obj, jlong context)
 {
 	if((void *)context!=NULL)
 	{

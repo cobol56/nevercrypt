@@ -1,11 +1,11 @@
-package com.sovworks.eds.android.settings.encfs;
+package com.igeltech.nevercrypt.android.settings.encfs;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
-import com.sovworks.eds.android.locations.tasks.CreateEDSLocationTaskFragment;
-import com.sovworks.eds.android.settings.views.PropertiesView;
-import com.sovworks.eds.fs.encfs.AlgInfo;
-import com.sovworks.eds.fs.encfs.FS;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateEDSLocationTaskFragment;
+import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
+import com.igeltech.nevercrypt.fs.encfs.AlgInfo;
+import com.igeltech.nevercrypt.fs.encfs.FS;
 
 public class DataCodecPropertyEditor extends CodecInfoPropertyEditor
 {

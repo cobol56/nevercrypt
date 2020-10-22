@@ -1,8 +1,8 @@
-package com.sovworks.eds.crypto.modes;
+package com.igeltech.nevercrypt.crypto.modes;
 
-import com.sovworks.eds.crypto.BlockCipher;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.BlockCipher;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
 
 import java.util.Arrays;
 

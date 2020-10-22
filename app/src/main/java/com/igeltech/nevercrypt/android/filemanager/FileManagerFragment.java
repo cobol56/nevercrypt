@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager;
+package com.igeltech.nevercrypt.android.filemanager;
 
 public interface FileManagerFragment
 {

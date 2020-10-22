@@ -1,4 +1,4 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 import android.os.Parcelable;
 
@@ -8,8 +8,8 @@ public interface SrcDstCollection extends Iterable<SrcDstCollection.SrcDst>, Par
 {
 	interface SrcDst
 	{
-		com.sovworks.eds.locations.Location getSrcLocation() throws IOException;
-		com.sovworks.eds.locations.Location getDstLocation() throws IOException;
+		com.igeltech.nevercrypt.locations.Location getSrcLocation() throws IOException;
+		com.igeltech.nevercrypt.locations.Location getDstLocation() throws IOException;
 	}
 
 }

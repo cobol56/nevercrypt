@@ -1,8 +1,8 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
 
-import com.sovworks.eds.fs.encfs.macs.MACCalculator;
-import com.sovworks.eds.fs.util.TransOutputStream;
+import com.igeltech.nevercrypt.fs.encfs.macs.MACCalculator;
+import com.igeltech.nevercrypt.fs.util.TransOutputStream;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

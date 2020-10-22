@@ -1,12 +1,12 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.locations.DeviceBasedLocation;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.locations.DeviceBasedLocation;
+import com.igeltech.nevercrypt.settings.Settings;
 
 public class DeviceRootNPLocation extends DeviceBasedLocation
 {

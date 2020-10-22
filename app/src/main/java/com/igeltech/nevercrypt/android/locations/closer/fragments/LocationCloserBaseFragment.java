@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.closer.fragments;
+package com.igeltech.nevercrypt.android.locations.closer.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,19 +12,19 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.helpers.ActivityResultHandler;
-import com.sovworks.eds.android.locations.dialogs.ForceCloseDialog;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.helpers.ActivityResultHandler;
+import com.igeltech.nevercrypt.android.locations.dialogs.ForceCloseDialog;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.concurrent.CancellationException;
 
 public class LocationCloserBaseFragment extends AppCompatDialogFragment
 {
-    public static final String ARG_FORCE_CLOSE = "com.sovworks.eds.android.FORCE_CLOSE";
+    public static final String ARG_FORCE_CLOSE = "com.igeltech.nevercrypt.android.FORCE_CLOSE";
 
     public static String getCloserTag(Location location)
     {
@@ -47,11 +47,11 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         return ClosersRegistry.getDefaultCloserForLocation(location);
     }
 
-    public static final String PARAM_RECEIVER_FRAGMENT_TAG = "com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment.RECEIVER_FRAGMENT_TAG";
+    public static final String PARAM_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment.RECEIVER_FRAGMENT_TAG";
 
     public static class CloseLocationTaskFragment extends TaskFragment
     {
-        public static final String ARG_CLOSER_TAG = "com.sovworks.eds.android.CLOSER_TAG";
+        public static final String ARG_CLOSER_TAG = "com.igeltech.nevercrypt.android.CLOSER_TAG";
 
         protected Context _context;
         protected LocationsManager _locationsManager;
@@ -113,7 +113,7 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
             }
         }
 
-        private static final String TAG = "com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment.CloseLocationTaskFragment";
+        private static final String TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment.CloseLocationTaskFragment";
     }
 
     @Override
@@ -301,5 +301,5 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         getFragmentManager().beginTransaction().add(f, getCloseLocationTaskTag()).commit();
 	}
 
-    private static final String TAG = "com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment";
+    private static final String TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment";
 }

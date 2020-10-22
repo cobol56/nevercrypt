@@ -1,11 +1,11 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
 
-import com.sovworks.eds.container.EncryptedFileLayout;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.util.TransRandomAccessIO;
+import com.igeltech.nevercrypt.container.EncryptedFileLayout;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.TransRandomAccessIO;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,6 +1,6 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.fs.Path;
 
 import java.io.IOException;
 import java.util.Date;

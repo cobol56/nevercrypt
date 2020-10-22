@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.dialogs;
+package com.igeltech.nevercrypt.android.filemanager.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,14 +12,14 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragmentBase;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragmentBase;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.ArrayList;
 

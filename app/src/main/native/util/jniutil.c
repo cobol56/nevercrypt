@@ -5,12 +5,12 @@
 
 #ifdef DEBUG
 #include <android/log.h>
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "EDS (native code fuseeds)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code fuseeds)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif
 
-#define EDS_ERROR_CLASSNAME "com/sovworks/eds/exceptions/NativeError"
+#define ERROR_CLASSNAME "com/igeltech/nevercrypt/exceptions/NativeError"
 
 #define ERRNO_SIG "errno","I"
 
@@ -49,7 +49,7 @@ static jint cache_methods(JNIEnv *env)
 
 static jint cache_classes_common(JNIEnv *env)
 {
-    jclass cls = (*env)->FindClass(env,EDS_ERROR_CLASSNAME);
+    jclass cls = (*env)->FindClass(env,ERROR_CLASSNAME);
     if (cls == NULL)
         return JNI_ERR;
 

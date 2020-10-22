@@ -1,18 +1,18 @@
-package com.sovworks.eds.fs.encfs;
+package com.igeltech.nevercrypt.fs.encfs;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.util.DirectoryWrapper;
-import com.sovworks.eds.fs.util.FilteredIterator;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.util.IteratorConverter;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.util.DirectoryWrapper;
+import com.igeltech.nevercrypt.fs.util.FilteredIterator;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.util.IteratorConverter;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 public class Directory extends DirectoryWrapper
 {
-    public Directory(Path path, com.sovworks.eds.fs.Directory realDir) throws IOException
+    public Directory(Path path, com.igeltech.nevercrypt.fs.Directory realDir) throws IOException
     {
         super(path, realDir);
     }
@@ -36,7 +36,7 @@ public class Directory extends DirectoryWrapper
             }
 
             @Override
-            public Iterator<com.sovworks.eds.fs.Path> iterator()
+            public Iterator<com.igeltech.nevercrypt.fs.Path> iterator()
             {
                 return new FilteringIterator(
                         new Directory.DirIterator(getPath().getFileSystem(), contents.iterator())
@@ -67,7 +67,7 @@ public class Directory extends DirectoryWrapper
         if(decodedPath!=null)
             decodedPath = decodedPath.combine(name);
         StringPathUtil newEncodedPath = getPath().calcCombinedEncodedParts(name);
-        com.sovworks.eds.fs.encfs.File res = (com.sovworks.eds.fs.encfs.File) super.createFile(newEncodedPath.getFileName());
+        com.igeltech.nevercrypt.fs.encfs.File res = (com.igeltech.nevercrypt.fs.encfs.File) super.createFile(newEncodedPath.getFileName());
         res.getPath().setEncodedPath(newEncodedPath);
         if(decodedPath!=null)
             res.getPath().setDecodedPath(decodedPath);
@@ -76,7 +76,7 @@ public class Directory extends DirectoryWrapper
     }
 
     @Override
-    public com.sovworks.eds.fs.Directory createDirectory(String name) throws IOException
+    public com.igeltech.nevercrypt.fs.Directory createDirectory(String name) throws IOException
     {
         StringPathUtil decodedPath = getPath().getDecodedPath();
         if(decodedPath!=null)
@@ -90,7 +90,7 @@ public class Directory extends DirectoryWrapper
     }
 
     @Override
-    public void moveTo(com.sovworks.eds.fs.Directory dst) throws IOException
+    public void moveTo(com.igeltech.nevercrypt.fs.Directory dst) throws IOException
     {
         if(getPath().getNamingCodecInfo().useChainedNamingIV() || getPath().getFileSystem().getConfig().useExternalFileIV())
             throw new UnsupportedOperationException();
@@ -98,21 +98,21 @@ public class Directory extends DirectoryWrapper
     }
 
     @Override
-    protected com.sovworks.eds.fs.Path getPathFromBasePath(com.sovworks.eds.fs.Path basePath) throws IOException
+    protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
     {
         return getPath().getFileSystem().getPathFromRealPath(basePath);
     }
 
-    private static class DirIterator extends IteratorConverter<com.sovworks.eds.fs.Path, Path>
+    private static class DirIterator extends IteratorConverter<com.igeltech.nevercrypt.fs.Path, Path>
     {
-        protected DirIterator(FS fs, Iterator<? extends com.sovworks.eds.fs.Path> srcIterator)
+        protected DirIterator(FS fs, Iterator<? extends com.igeltech.nevercrypt.fs.Path> srcIterator)
         {
             super(srcIterator);
             _fs = fs;
         }
 
         @Override
-        protected Path convert(com.sovworks.eds.fs.Path src)
+        protected Path convert(com.igeltech.nevercrypt.fs.Path src)
         {
             try
             {
@@ -128,7 +128,7 @@ public class Directory extends DirectoryWrapper
         private final FS _fs;
     }
 
-    private static class FilteringIterator extends FilteredIterator<com.sovworks.eds.fs.Path>
+    private static class FilteringIterator extends FilteredIterator<com.igeltech.nevercrypt.fs.Path>
     {
 
         public FilteringIterator(Iterator<Path> base)
@@ -137,7 +137,7 @@ public class Directory extends DirectoryWrapper
         }
 
         @Override
-        protected boolean isValidItem(com.sovworks.eds.fs.Path item)
+        protected boolean isValidItem(com.igeltech.nevercrypt.fs.Path item)
         {
             try
             {

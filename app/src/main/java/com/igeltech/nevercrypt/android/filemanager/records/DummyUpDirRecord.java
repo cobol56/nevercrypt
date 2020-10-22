@@ -1,10 +1,10 @@
-package com.sovworks.eds.android.filemanager.records;
+package com.igeltech.nevercrypt.android.filemanager.records;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.fragments.FileListDataFragment;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment;
 
 import java.io.IOException;
 import java.util.Stack;

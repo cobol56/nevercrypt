@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.activities;
+package com.igeltech.nevercrypt.android.activities;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.helpers.CompatHelper;
-import com.sovworks.eds.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
 
 public abstract class SettingsBaseActivity extends AppCompatActivity
 {
-    public static final String SETTINGS_FRAGMENT_TAG = "com.sovworks.eds.android.locations.SETTINGS_FRAGMENT";
+    public static final String SETTINGS_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.locations.SETTINGS_FRAGMENT";
 
     @Override
 	public void onCreate(Bundle savedInstanceState)

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.fs;
+package com.igeltech.nevercrypt.android.fs;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -14,11 +14,11 @@ import android.provider.OpenableColumns;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.util.PFDRandomAccessIO;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.PFDRandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -73,10 +73,10 @@ public class ContentResolverFs implements FileSystem
 		return null;
 	}
 
-	public static ArrayList<com.sovworks.eds.fs.Path> fromSendIntent(Intent intent, ContentResolver contentResolver)
+	public static ArrayList<com.igeltech.nevercrypt.fs.Path> fromSendIntent(Intent intent, ContentResolver contentResolver)
 	{
 		ContentResolverFs fs = new ContentResolverFs(contentResolver);
-		ArrayList<com.sovworks.eds.fs.Path> paths = new ArrayList<>();
+		ArrayList<com.igeltech.nevercrypt.fs.Path> paths = new ArrayList<>();
 		Bundle extras = intent.getExtras();
 		if(extras.containsKey(Intent.EXTRA_STREAM))
 		{
@@ -100,13 +100,13 @@ public class ContentResolverFs implements FileSystem
 	}
 	
 	@Override
-	public com.sovworks.eds.fs.Path getPath(String pathString) throws IOException
+	public com.igeltech.nevercrypt.fs.Path getPath(String pathString) throws IOException
 	{			
  		return new Path(Uri.parse(pathString));
 	}
 	
 	@Override
-	public com.sovworks.eds.fs.Path getRootPath()
+	public com.igeltech.nevercrypt.fs.Path getRootPath()
 	{
 		return new Path(new Uri.Builder().build());
 	}
@@ -124,7 +124,7 @@ public class ContentResolverFs implements FileSystem
 		return false;
 	}
 
-	public class Path implements com.sovworks.eds.fs.Path
+	public class Path implements com.igeltech.nevercrypt.fs.Path
 	{	
 		
 		public Path(Uri uri)
@@ -252,7 +252,7 @@ public class ContentResolverFs implements FileSystem
 		}
 
 		@Override
-		public com.sovworks.eds.fs.Path getParentPath() throws IOException
+		public com.igeltech.nevercrypt.fs.Path getParentPath() throws IOException
 		{
 			String pathString = _uri.getPath();
 			if(pathString == null)
@@ -266,7 +266,7 @@ public class ContentResolverFs implements FileSystem
 		}
 
 		@Override
-		public com.sovworks.eds.fs.Path combine(String part) throws IOException
+		public com.igeltech.nevercrypt.fs.Path combine(String part) throws IOException
 		{
 			final Cursor cursor = queryPath();
 			if(cursor == null)
@@ -286,19 +286,19 @@ public class ContentResolverFs implements FileSystem
 		}
 
 		@Override
-		public com.sovworks.eds.fs.Directory getDirectory() throws IOException
+		public com.igeltech.nevercrypt.fs.Directory getDirectory() throws IOException
 		{
 			return new Directory(this);
 		}
 
 		@Override
-		public com.sovworks.eds.fs.File getFile() throws IOException
+		public com.igeltech.nevercrypt.fs.File getFile() throws IOException
 		{
 			return new File(this);
 		}
 
 		@Override
-		public int compareTo(@NonNull com.sovworks.eds.fs.Path another)
+		public int compareTo(@NonNull com.igeltech.nevercrypt.fs.Path another)
 		{
 			return _uri.compareTo(((Path)another)._uri);
 		}
@@ -306,7 +306,7 @@ public class ContentResolverFs implements FileSystem
 		private final Uri _uri;
 	}
 
-	class Directory implements com.sovworks.eds.fs.Directory
+	class Directory implements com.igeltech.nevercrypt.fs.Directory
 	{
 		public Directory(Path path)
 		{
@@ -315,13 +315,13 @@ public class ContentResolverFs implements FileSystem
 		}
 
 		@Override
-		public void moveTo(com.sovworks.eds.fs.Directory newParent) throws IOException
+		public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public com.sovworks.eds.fs.Path getPath()
+		public com.igeltech.nevercrypt.fs.Path getPath()
 		{
 			return _path;
 		}
@@ -357,26 +357,26 @@ public class ContentResolverFs implements FileSystem
 		}
 
 		@Override
-		public com.sovworks.eds.fs.Directory createDirectory(String name) throws IOException
+		public com.igeltech.nevercrypt.fs.Directory createDirectory(String name) throws IOException
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public com.sovworks.eds.fs.File createFile(String name) throws IOException
+		public com.igeltech.nevercrypt.fs.File createFile(String name) throws IOException
 		{
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public com.sovworks.eds.fs.Directory.Contents list() throws IOException
+		public com.igeltech.nevercrypt.fs.Directory.Contents list() throws IOException
 		{
 			final Cursor cursor = _path.queryPath();
 			if(cursor == null)
 				return null;
 			final int columnIndex = cursor.getColumnIndex(BaseColumns._ID);
 			cursor.moveToFirst();
-			return new com.sovworks.eds.fs.Directory.Contents()
+			return new com.igeltech.nevercrypt.fs.Directory.Contents()
 			{
 				@Override
 				public void close() throws IOException
@@ -385,9 +385,9 @@ public class ContentResolverFs implements FileSystem
 				}
 
 				@Override
-				public Iterator<com.sovworks.eds.fs.Path> iterator()
+				public Iterator<com.igeltech.nevercrypt.fs.Path> iterator()
 				{
-					return new Iterator<com.sovworks.eds.fs.Path>()
+					return new Iterator<com.igeltech.nevercrypt.fs.Path>()
 					{
 						@Override
 						public void remove()
@@ -396,7 +396,7 @@ public class ContentResolverFs implements FileSystem
 						}
 
 						@Override
-						public com.sovworks.eds.fs.Path next()
+						public com.igeltech.nevercrypt.fs.Path next()
 						{
 							Uri.Builder ub = _path.getUri().buildUpon();
 							ub.appendPath(cursor.getString(columnIndex));
@@ -433,7 +433,7 @@ public class ContentResolverFs implements FileSystem
 		private final Path _path;
 	}
 
-	class File implements com.sovworks.eds.fs.File
+	class File implements com.igeltech.nevercrypt.fs.File
 	{
 		public File(Path path)
 		{
@@ -441,7 +441,7 @@ public class ContentResolverFs implements FileSystem
 		}
 
 		@Override
-		public com.sovworks.eds.fs.Path getPath()
+		public com.igeltech.nevercrypt.fs.Path getPath()
 		{
 			return _path;
 		}
@@ -477,7 +477,7 @@ public class ContentResolverFs implements FileSystem
 		}
 
 		@Override
-		public void moveTo(com.sovworks.eds.fs.Directory newParent) throws IOException
+		public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
 		{
 			throw new UnsupportedOperationException();
 		}
@@ -539,7 +539,7 @@ public class ContentResolverFs implements FileSystem
 		@Override
 		public ParcelFileDescriptor getFileDescriptor(AccessMode accessMode) throws IOException
 		{
-			return _contentResolver.openFileDescriptor(_path.getUri(), com.sovworks.eds.fs.util.Util.getStringModeFromAccessMode(accessMode));
+			return _contentResolver.openFileDescriptor(_path.getUri(), com.igeltech.nevercrypt.fs.util.Util.getStringModeFromAccessMode(accessMode));
 		}
 
 		@Override

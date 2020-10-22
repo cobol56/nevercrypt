@@ -1,4 +1,4 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -9,28 +9,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.helpers.StorageOptions;
-import com.sovworks.eds.android.locations.ContainerBasedLocation;
-import com.sovworks.eds.android.locations.ContentResolverLocation;
-import com.sovworks.eds.android.locations.DeviceRootNPLocation;
-import com.sovworks.eds.android.locations.DocumentTreeLocation;
-import com.sovworks.eds.android.locations.EncFsLocation;
-import com.sovworks.eds.android.locations.EncFsLocationBase;
-import com.sovworks.eds.android.locations.ExternalStorageLocation;
-import com.sovworks.eds.android.locations.InternalSDLocation;
-import com.sovworks.eds.android.locations.LUKSLocation;
-import com.sovworks.eds.android.locations.TrueCryptLocation;
-import com.sovworks.eds.android.locations.VeraCryptLocation;
-import com.sovworks.eds.android.locations.closer.fragments.OpenableLocationCloserFragment;
-import com.sovworks.eds.android.receivers.MediaMountedReceiver;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.crypto.SimpleCrypto;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.std.StdFs;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.helpers.StorageOptions;
+import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
+import com.igeltech.nevercrypt.android.locations.ContentResolverLocation;
+import com.igeltech.nevercrypt.android.locations.DeviceRootNPLocation;
+import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
+import com.igeltech.nevercrypt.android.locations.EncFsLocation;
+import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
+import com.igeltech.nevercrypt.android.locations.ExternalStorageLocation;
+import com.igeltech.nevercrypt.android.locations.InternalSDLocation;
+import com.igeltech.nevercrypt.android.locations.LUKSLocation;
+import com.igeltech.nevercrypt.android.locations.TrueCryptLocation;
+import com.igeltech.nevercrypt.android.locations.VeraCryptLocation;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.OpenableLocationCloserFragment;
+import com.igeltech.nevercrypt.android.receivers.MediaMountedReceiver;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.crypto.SimpleCrypto;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.std.StdFs;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import org.json.JSONException;
 
@@ -46,15 +46,15 @@ import java.util.Stack;
 
 public abstract class LocationsManagerBase
 {
-	public static final String PARAM_LOCATION_URIS = "com.sovworks.eds.android.LOCATION_URIS";
-	public static final String PARAM_PATHS = "com.sovworks.eds.android.PATHS";
-	public static final String PARAM_LOCATION_URI = "com.sovworks.eds.android.LOCATION_URI";
+	public static final String PARAM_LOCATION_URIS = "com.igeltech.nevercrypt.android.LOCATION_URIS";
+	public static final String PARAM_PATHS = "com.igeltech.nevercrypt.android.PATHS";
+	public static final String PARAM_LOCATION_URI = "com.igeltech.nevercrypt.android.LOCATION_URI";
 
-	public static final String BROADCAST_LOCATION_CREATED = "com.sovworks.eds.BROADCAST_LOCATION_CREATED";
-	public static final String BROADCAST_LOCATION_REMOVED = "com.sovworks.eds.BROADCAST_LOCATION_REMOVED";
-	public static final String BROADCAST_ALL_CONTAINERS_CLOSED = "com.sovworks.eds.android.BROADCAST_ALL_CONTAINERS_CLOSED";
-	public static final String BROADCAST_CLOSE_ALL = "com.sovworks.eds.CLOSE_ALL";
-	public static final String BROADCAST_LOCATION_CHANGED = "com.sovworks.eds.android.BROADCAST_LOCATION_CHANGED";
+	public static final String BROADCAST_LOCATION_CREATED = "com.igeltech.nevercrypt.BROADCAST_LOCATION_CREATED";
+	public static final String BROADCAST_LOCATION_REMOVED = "com.igeltech.nevercrypt.BROADCAST_LOCATION_REMOVED";
+	public static final String BROADCAST_ALL_CONTAINERS_CLOSED = "com.igeltech.nevercrypt.android.BROADCAST_ALL_CONTAINERS_CLOSED";
+	public static final String BROADCAST_CLOSE_ALL = "com.igeltech.nevercrypt.CLOSE_ALL";
+	public static final String BROADCAST_LOCATION_CHANGED = "com.igeltech.nevercrypt.android.BROADCAST_LOCATION_CHANGED";
 
 	/*public static synchronized LocationsManager getLocationsManager()
 	{
@@ -443,7 +443,7 @@ public abstract class LocationsManagerBase
 		ArrayList<Uri> res = new ArrayList<>();
 		try
 		{
-			List<String> locationStrings = com.sovworks.eds.android.helpers.Util.loadStringArrayFromString(settings.getStoredLocations());
+			List<String> locationStrings = com.igeltech.nevercrypt.android.helpers.Util.loadStringArrayFromString(settings.getStoredLocations());
 			for(String p: locationStrings)
 			{
 				try
@@ -637,7 +637,7 @@ public abstract class LocationsManagerBase
 				if(li.store)
 					links.add(li.location.getLocationUri().toString());
 		}
-		_settings.setStoredLocations(com.sovworks.eds.android.helpers.Util.storeElementsToString(links));
+		_settings.setStoredLocations(com.igeltech.nevercrypt.android.helpers.Util.storeElementsToString(links));
 	}
 	
 	public String genNewLocationId()

@@ -1,6 +1,6 @@
-package com.sovworks.eds.fs.fat;
+package com.igeltech.nevercrypt.fs.fat;
 
-import com.sovworks.eds.fs.File;
+import com.igeltech.nevercrypt.fs.File;
 
 class OpenFileInfo
 {

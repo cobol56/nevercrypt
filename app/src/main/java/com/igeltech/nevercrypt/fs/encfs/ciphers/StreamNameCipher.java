@@ -1,10 +1,10 @@
-package com.sovworks.eds.fs.encfs.ciphers;
+package com.igeltech.nevercrypt.fs.encfs.ciphers;
 
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.fs.encfs.B64;
-import com.sovworks.eds.fs.encfs.NameCodec;
-import com.sovworks.eds.fs.encfs.macs.MACCalculator;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.fs.encfs.B64;
+import com.igeltech.nevercrypt.fs.encfs.NameCodec;
+import com.igeltech.nevercrypt.fs.encfs.macs.MACCalculator;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

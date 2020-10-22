@@ -1,6 +1,6 @@
-package com.sovworks.eds.fs.fat;
+package com.igeltech.nevercrypt.fs.fat;
 
-import com.sovworks.eds.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,12 +6,12 @@ import android.content.res.Configuration;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sovworks.eds.android.EdsApplication;
-import com.sovworks.eds.android.helpers.Util;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.crypto.SimpleCrypto;
-import com.sovworks.eds.settings.GlobalConfig;
-import com.sovworks.eds.settings.SettingsCommon;
+import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.helpers.Util;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.crypto.SimpleCrypto;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
+import com.igeltech.nevercrypt.settings.SettingsCommon;
 
 import org.json.JSONException;
 
@@ -51,7 +51,7 @@ public abstract class UserSettingsCommon implements SettingsCommon
 
 	public static final String SETTINGS_PROTECTION_KEY_CHECK = "protection_key_check";
 
-	public static final String PREFS_NAME = "com.sovworks.eds.PREFERENCES";
+	public static final String PREFS_NAME = "com.igeltech.nevercrypt.PREFERENCES";
 
 
 	public static boolean isWideScreenLayout(SettingsCommon settings, AppCompatActivity activity)

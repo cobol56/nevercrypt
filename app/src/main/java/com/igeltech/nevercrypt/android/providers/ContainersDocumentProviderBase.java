@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.providers;
+package com.igeltech.nevercrypt.android.providers;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,18 +11,18 @@ import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
 import android.util.Base64;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.filemanager.tasks.LoadPathInfoObservable;
-import com.sovworks.eds.android.providers.cursor.DocumentRootsCursor;
-import com.sovworks.eds.android.providers.cursor.FSCursor;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.SystemConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.filemanager.tasks.LoadPathInfoObservable;
+import com.igeltech.nevercrypt.android.providers.cursor.DocumentRootsCursor;
+import com.igeltech.nevercrypt.android.providers.cursor.FSCursor;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.SystemConfig;
 
 import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
@@ -164,7 +164,7 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
     @Override
     public boolean onCreate()
     {
-        SystemConfig.setInstance(new com.sovworks.eds.android.settings.SystemConfig(getContext()));
+        SystemConfig.setInstance(new com.igeltech.nevercrypt.android.settings.SystemConfig(getContext()));
         return true;
     }
 

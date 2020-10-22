@@ -1,26 +1,26 @@
-package com.sovworks.eds.fs.encfs;
+package com.igeltech.nevercrypt.fs.encfs;
 
 import android.os.ParcelFileDescriptor;
 
-import com.sovworks.eds.container.EncryptedFileLayout;
-import com.sovworks.eds.crypto.EncryptedFile;
-import com.sovworks.eds.crypto.EncryptedInputStream;
-import com.sovworks.eds.crypto.EncryptedOutputStream;
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.crypto.MACFile;
-import com.sovworks.eds.crypto.MACInputStream;
-import com.sovworks.eds.crypto.MACOutputStream;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.encfs.ciphers.BlockAndStreamCipher;
-import com.sovworks.eds.fs.encfs.macs.MACCalculator;
-import com.sovworks.eds.fs.util.FileWrapper;
-import com.sovworks.eds.fs.util.RandomAccessInputStream;
-import com.sovworks.eds.fs.util.RandomAccessOutputStream;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.container.EncryptedFileLayout;
+import com.igeltech.nevercrypt.crypto.EncryptedFile;
+import com.igeltech.nevercrypt.crypto.EncryptedInputStream;
+import com.igeltech.nevercrypt.crypto.EncryptedOutputStream;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.MACFile;
+import com.igeltech.nevercrypt.crypto.MACInputStream;
+import com.igeltech.nevercrypt.crypto.MACOutputStream;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.encfs.ciphers.BlockAndStreamCipher;
+import com.igeltech.nevercrypt.fs.encfs.macs.MACCalculator;
+import com.igeltech.nevercrypt.fs.util.FileWrapper;
+import com.igeltech.nevercrypt.fs.util.RandomAccessInputStream;
+import com.igeltech.nevercrypt.fs.util.RandomAccessOutputStream;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class File extends FileWrapper
 {
     public File(
             Path path,
-            com.sovworks.eds.fs.File realFile,
+            com.igeltech.nevercrypt.fs.File realFile,
             DataCodecInfo encryptionInfo,
             byte[] encryptionKey,
             byte[] externalIV,
@@ -204,7 +204,7 @@ public class File extends FileWrapper
         StringPathUtil newEncodedPath = getPath().getParentPath().calcCombinedEncodedParts(newName);
         if(_externalIV!=null || getPath().getNamingCodecInfo().useChainedNamingIV())
         {
-            com.sovworks.eds.fs.File newFile = getPath().getParentPath().getDirectory().createFile(newName);
+            com.igeltech.nevercrypt.fs.File newFile = getPath().getParentPath().getDirectory().createFile(newName);
             OutputStream out = newFile.getOutputStream();
             try
             {
@@ -222,11 +222,11 @@ public class File extends FileWrapper
     }
 
     @Override
-    public void moveTo(com.sovworks.eds.fs.Directory newParent) throws IOException
+    public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
     {
         if(_externalIV!=null || getPath().getNamingCodecInfo().useChainedNamingIV())
         {
-            com.sovworks.eds.fs.File newFile = newParent.createFile(getName());
+            com.igeltech.nevercrypt.fs.File newFile = newParent.createFile(getName());
             OutputStream out = newFile.getOutputStream();
             try
             {
@@ -244,7 +244,7 @@ public class File extends FileWrapper
     }
 
     @Override
-    protected com.sovworks.eds.fs.Path getPathFromBasePath(com.sovworks.eds.fs.Path basePath) throws IOException
+    protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
     {
         return getPath().getFileSystem().getPathFromRealPath(basePath);
     }

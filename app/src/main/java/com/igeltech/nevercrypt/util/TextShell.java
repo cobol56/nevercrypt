@@ -1,6 +1,6 @@
-package com.sovworks.eds.util;
+package com.igeltech.nevercrypt.util;
 
-import com.sovworks.eds.util.exec.ExternalProgramFailedException;
+import com.igeltech.nevercrypt.util.exec.ExternalProgramFailedException;
 
 import java.io.IOException;
 

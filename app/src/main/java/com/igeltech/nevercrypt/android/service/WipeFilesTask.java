@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.TempFilesMonitor;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.util.FilesCountAndSize;
-import com.sovworks.eds.fs.util.FilesOperationStatus;
-import com.sovworks.eds.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.util.FilesCountAndSize;
+import com.igeltech.nevercrypt.fs.util.FilesOperationStatus;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
 
 import java.io.IOException;
 import java.util.concurrent.CancellationException;
@@ -70,10 +70,10 @@ class WipeFilesTask extends DeleteFilesTask
 	{
 		synchronized (_mon.getSyncObject())
 		{
-			com.sovworks.eds.android.helpers.WipeFilesTask.wipeFile(
+			com.igeltech.nevercrypt.android.helpers.WipeFilesTask.wipeFile(
 					file,
 					_wipe,
-					new com.sovworks.eds.android.helpers.WipeFilesTask.ITask()
+					new com.igeltech.nevercrypt.android.helpers.WipeFilesTask.ITask()
 					{
 						@Override
 						public void progress(int sizeInc)

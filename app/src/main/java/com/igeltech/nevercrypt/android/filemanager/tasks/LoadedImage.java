@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -12,19 +12,19 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.helpers.CompatHelper;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import io.reactivex.Single;
 
-import static com.sovworks.eds.android.filemanager.fragments.PreviewFragment.calcSampleSize;
-import static com.sovworks.eds.android.filemanager.fragments.PreviewFragment.loadDownsampledImage;
-import static com.sovworks.eds.android.filemanager.fragments.PreviewFragment.loadImageParams;
+import static com.igeltech.nevercrypt.android.filemanager.fragments.PreviewFragment.calcSampleSize;
+import static com.igeltech.nevercrypt.android.filemanager.fragments.PreviewFragment.loadDownsampledImage;
+import static com.igeltech.nevercrypt.android.filemanager.fragments.PreviewFragment.loadImageParams;
 
 public class LoadedImage
 {

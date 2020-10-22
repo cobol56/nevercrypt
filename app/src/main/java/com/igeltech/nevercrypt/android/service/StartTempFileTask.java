@@ -1,8 +1,8 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.Intent;
 
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.util.List;
 import java.util.concurrent.CancellationException;

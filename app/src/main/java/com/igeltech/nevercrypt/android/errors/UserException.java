@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.errors;
+package com.igeltech.nevercrypt.android.errors;
 
 import android.content.Context;
 

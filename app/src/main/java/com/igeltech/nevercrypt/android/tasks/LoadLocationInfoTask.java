@@ -1,20 +1,20 @@
-package com.sovworks.eds.android.tasks;
+package com.igeltech.nevercrypt.android.tasks;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragment;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 
 public class LoadLocationInfoTask extends TaskFragment
 {
-    public static final String TAG = "com.sovworks.eds.android.tasks.LoadLocationInfoTask";
+    public static final String TAG = "com.igeltech.nevercrypt.android.tasks.LoadLocationInfoTask";
 
 	public static LoadLocationInfoTask newInstance(EDSLocation location)
     {

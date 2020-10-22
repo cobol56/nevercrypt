@@ -1,15 +1,15 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
 import android.content.Intent;
 import android.net.Uri;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragment;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragmentBase;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
-import com.sovworks.eds.android.locations.tasks.CreateContainerTaskFragmentBase;
-import com.sovworks.eds.android.settings.PathPropertyEditor;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
+import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
 
 import java.io.IOException;
 

@@ -1,11 +1,11 @@
-package com.sovworks.eds.container;
+package com.igeltech.nevercrypt.container;
 
 
-import com.sovworks.eds.android.helpers.ContainerOpeningProgressReporter;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.FileSystemInfo;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.FileSystemInfo;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 import java.security.MessageDigest;

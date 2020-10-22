@@ -1,19 +1,19 @@
-package com.sovworks.eds.android.locations.tasks;
+package com.igeltech.nevercrypt.android.locations.tasks;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.ContainerFormatter;
-import com.sovworks.eds.container.ContainerFormatterBase;
-import com.sovworks.eds.container.EDSLocationFormatter;
-import com.sovworks.eds.container.EdsContainer;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.fs.FileSystemInfo;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.ContainerFormatter;
+import com.igeltech.nevercrypt.container.ContainerFormatterBase;
+import com.igeltech.nevercrypt.container.EDSLocationFormatter;
+import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.fs.FileSystemInfo;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public abstract class CreateContainerTaskFragmentBase extends CreateEDSLocationTaskFragment
 {
@@ -25,12 +25,12 @@ public abstract class CreateContainerTaskFragmentBase extends CreateEDSLocationT
         return null;
     }
 
-    public static final String ARG_CONTAINER_FORMAT = "com.sovworks.eds.android.CONTAINER_FORMAT";
-    public static final String ARG_CIPHER_MODE_NAME = "com.sovworks.eds.android.CIPHER_MODE_NAME";
-    public static final String ARG_HASHING_ALG = "com.sovworks.eds.android.HASHING_ALG";
-    public static final String ARG_SIZE = "com.sovworks.eds.android.SIZE";
-    public static final String ARG_FILL_FREE_SPACE = "com.sovworks.eds.android.FILL_FREE_SPACE";
-    public static final String ARG_FILE_SYSTEM_TYPE = "com.sovworks.eds.android.FILE_SYSTEM_TYPE";
+    public static final String ARG_CONTAINER_FORMAT = "com.igeltech.nevercrypt.android.CONTAINER_FORMAT";
+    public static final String ARG_CIPHER_MODE_NAME = "com.igeltech.nevercrypt.android.CIPHER_MODE_NAME";
+    public static final String ARG_HASHING_ALG = "com.igeltech.nevercrypt.android.HASHING_ALG";
+    public static final String ARG_SIZE = "com.igeltech.nevercrypt.android.SIZE";
+    public static final String ARG_FILL_FREE_SPACE = "com.igeltech.nevercrypt.android.FILL_FREE_SPACE";
+    public static final String ARG_FILE_SYSTEM_TYPE = "com.igeltech.nevercrypt.android.FILE_SYSTEM_TYPE";
 
     @Override
     protected EDSLocationFormatter createFormatter()

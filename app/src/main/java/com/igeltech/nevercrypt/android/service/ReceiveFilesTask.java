@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 class ReceiveFilesTask extends CopyFilesTask
 {

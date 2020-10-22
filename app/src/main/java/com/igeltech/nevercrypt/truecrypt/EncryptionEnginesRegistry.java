@@ -1,10 +1,10 @@
-package com.sovworks.eds.truecrypt;
+package com.igeltech.nevercrypt.truecrypt;
 
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.crypto.engines.AESXTS;
-import com.sovworks.eds.crypto.engines.SerpentXTS;
-import com.sovworks.eds.crypto.engines.TwofishXTS;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.engines.AESXTS;
+import com.igeltech.nevercrypt.crypto.engines.SerpentXTS;
+import com.igeltech.nevercrypt.crypto.engines.TwofishXTS;
 
 import java.util.Arrays;
 import java.util.List;

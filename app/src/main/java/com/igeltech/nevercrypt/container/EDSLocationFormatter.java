@@ -1,4 +1,4 @@
-package com.sovworks.eds.container;
+package com.igeltech.nevercrypt.container;
 
 import android.os.Parcel;
 

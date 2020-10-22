@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.providers.MainContentProvider;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.providers.MainContentProvider;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.concurrent.CancellationException;
 
 public class ActionSendTask extends PrepareTempFilesTask
 {
-	public static final String ARG_MIME_TYPE = "com.sovworks.eds.android.ARG_MIME_TYPE";
+	public static final String ARG_MIME_TYPE = "com.igeltech.nevercrypt.android.ARG_MIME_TYPE";
 
 	public static class Param extends FilesTaskParam
 	{

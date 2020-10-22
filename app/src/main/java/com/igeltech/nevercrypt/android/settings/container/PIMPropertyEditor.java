@@ -1,11 +1,11 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.IntPropertyEditor;
-import com.sovworks.eds.android.settings.PropertiesHostWithStateBundle;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.IntPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.PropertiesHostWithStateBundle;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public class PIMPropertyEditor extends IntPropertyEditor
 {

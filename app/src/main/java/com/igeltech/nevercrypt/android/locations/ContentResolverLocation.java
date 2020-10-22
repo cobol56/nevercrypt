@@ -1,15 +1,15 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.fs.ContentResolverFs;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.LocationBase;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.fs.ContentResolverFs;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.LocationBase;
 
 import java.io.IOException;
 
@@ -95,7 +95,7 @@ public class ContentResolverLocation extends LocationBase
 	}
 
 	@Override
-	public Uri getDeviceAccessibleUri(com.sovworks.eds.fs.Path path)
+	public Uri getDeviceAccessibleUri(com.igeltech.nevercrypt.fs.Path path)
 	{
 		try
 		{

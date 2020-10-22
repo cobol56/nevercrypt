@@ -1,7 +1,7 @@
-package com.sovworks.eds.crypto.engines;
+package com.igeltech.nevercrypt.crypto.engines;
 
-import com.sovworks.eds.crypto.blockciphers.GOST;
-import com.sovworks.eds.crypto.modes.ECB;
+import com.igeltech.nevercrypt.crypto.blockciphers.GOST;
+import com.igeltech.nevercrypt.crypto.modes.ECB;
 
 public class GOSTECB extends ECB
 {

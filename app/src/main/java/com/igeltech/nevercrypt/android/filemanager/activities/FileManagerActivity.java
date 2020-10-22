@@ -1,7 +1,7 @@
-package com.sovworks.eds.android.filemanager.activities;
+package com.igeltech.nevercrypt.android.filemanager.activities;
 
-import com.sovworks.eds.android.navigdrawer.DrawerController;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.navigdrawer.DrawerController;
+import com.igeltech.nevercrypt.locations.Location;
 
 public class FileManagerActivity extends FileManagerActivityBase
 {

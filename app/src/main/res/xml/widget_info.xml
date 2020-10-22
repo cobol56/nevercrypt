@@ -4,4 +4,4 @@
     android:minWidth="40dp" 
     android:minHeight="40dp" 
     android:initialLayout="@layout/widget"
-    android:configure="com.sovworks.eds.android.activities.LocationShortcutWidgetConfigActivity" />
+    android:configure="com.igeltech.nevercrypt.android.activities.LocationShortcutWidgetConfigActivity" />

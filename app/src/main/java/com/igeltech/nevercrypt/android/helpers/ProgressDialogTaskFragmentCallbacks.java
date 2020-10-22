@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.fragments.TaskFragment.Result;
-import com.sovworks.eds.android.fragments.TaskFragment.TaskCallbacks;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment.Result;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment.TaskCallbacks;
 
 public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
 {

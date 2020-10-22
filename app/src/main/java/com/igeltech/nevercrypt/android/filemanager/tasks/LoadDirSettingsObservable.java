@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
-import com.sovworks.eds.android.filemanager.DirectorySettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.ContainerFSWrapper;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.filemanager.DirectorySettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.ContainerFSWrapper;
+import com.igeltech.nevercrypt.locations.Location;
 
 import org.json.JSONException;
 
@@ -35,7 +35,7 @@ public class LoadDirSettingsObservable
         try
         {
             return dsPath.isFile() ?
-                    new DirectorySettings(com.sovworks.eds.fs.util.Util.readFromFile(dsPath))
+                    new DirectorySettings(com.igeltech.nevercrypt.fs.util.Util.readFromFile(dsPath))
                     :
                     null;
 

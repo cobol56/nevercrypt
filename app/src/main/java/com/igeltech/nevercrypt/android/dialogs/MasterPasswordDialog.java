@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,25 +8,25 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.EdsApplication;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.settings.GlobalConfig;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
+import com.igeltech.nevercrypt.settings.Settings;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-import static com.sovworks.eds.android.settings.UserSettingsCommon.SETTINGS_PROTECTION_KEY_CHECK;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.SETTINGS_PROTECTION_KEY_CHECK;
 
 public class MasterPasswordDialog extends PasswordDialog
 {
-    public static final String TAG = "com.sovworks.eds.android.dialogs.MasterPasswordDialog";
-    public static final String ARG_IS_OBSERVABLE = "com.sovworks.eds.android.IS_OBSERVABLE";
+    public static final String TAG = "com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog";
+    public static final String ARG_IS_OBSERVABLE = "com.igeltech.nevercrypt.android.IS_OBSERVABLE";
 
     public static Single<Boolean> getObservable(RxAppCompatActivity activity)
     {

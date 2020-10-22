@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
@@ -9,11 +9,11 @@ import android.provider.DocumentsContract;
 
 import androidx.documentfile.provider.DocumentFile;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.fs.DocumentTreeFS;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.LocationBase;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.fs.DocumentTreeFS;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.LocationBase;
 
 import java.io.IOException;
 

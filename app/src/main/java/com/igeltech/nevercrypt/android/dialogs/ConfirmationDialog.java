@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.os.Bundle;
 
@@ -9,12 +9,12 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 
 public abstract class ConfirmationDialog extends AppCompatDialogFragment
 {
-    public static final String ARG_RECEIVER_TAG = "com.sovworks.eds.android.RECEIVER_TAG";
+    public static final String ARG_RECEIVER_TAG = "com.igeltech.nevercrypt.android.RECEIVER_TAG";
 
     public interface Receiver
     {

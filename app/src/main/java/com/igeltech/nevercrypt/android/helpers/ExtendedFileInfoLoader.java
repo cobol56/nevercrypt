@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -6,10 +6,10 @@ import android.util.LruCache;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.filemanager.records.BrowserRecord;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.filemanager.records.BrowserRecord;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.Closeable;
 import java.io.IOException;

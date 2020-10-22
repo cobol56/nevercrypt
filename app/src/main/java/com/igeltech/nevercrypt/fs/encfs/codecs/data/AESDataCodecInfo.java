@@ -1,14 +1,14 @@
-package com.sovworks.eds.fs.encfs.codecs.data;
+package com.igeltech.nevercrypt.fs.encfs.codecs.data;
 
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.fs.encfs.AlgInfo;
-import com.sovworks.eds.fs.encfs.Config;
-import com.sovworks.eds.fs.encfs.DataCodecInfo;
-import com.sovworks.eds.fs.encfs.ciphers.AESCBCFileCipher;
-import com.sovworks.eds.fs.encfs.ciphers.AESCFBStreamCipher;
-import com.sovworks.eds.fs.encfs.macs.MACCalculator;
-import com.sovworks.eds.fs.encfs.macs.SHA1MACCalculator;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.fs.encfs.AlgInfo;
+import com.igeltech.nevercrypt.fs.encfs.Config;
+import com.igeltech.nevercrypt.fs.encfs.DataCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.ciphers.AESCBCFileCipher;
+import com.igeltech.nevercrypt.fs.encfs.ciphers.AESCFBStreamCipher;
+import com.igeltech.nevercrypt.fs.encfs.macs.MACCalculator;
+import com.igeltech.nevercrypt.fs.encfs.macs.SHA1MACCalculator;
 
 public class AESDataCodecInfo implements DataCodecInfo
 {

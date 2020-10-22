@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragment;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragmentBase;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
-import com.sovworks.eds.android.locations.tasks.CreateContainerTaskFragmentBase;
-import com.sovworks.eds.android.settings.ChoiceDialogPropertyEditor;
-import com.sovworks.eds.android.settings.encfs.DataCodecPropertyEditor;
-import com.sovworks.eds.android.settings.views.PropertiesView;
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.EDSLocationFormatter;
-import com.sovworks.eds.container.EdsContainer;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
+import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.encfs.DataCodecPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.EDSLocationFormatter;
+import com.igeltech.nevercrypt.container.EdsContainer;
 
 import java.util.ArrayList;
 import java.util.List;

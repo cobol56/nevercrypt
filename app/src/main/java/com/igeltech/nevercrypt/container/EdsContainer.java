@@ -1,6 +1,6 @@
-package com.sovworks.eds.container;
+package com.igeltech.nevercrypt.container;
 
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.fs.Path;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,9 +17,9 @@ public class EdsContainer extends EdsContainerBase
 
 	private static final ContainerFormatInfo[] SUPPORTED_FORMATS =
 			new ContainerFormatInfo[]{
-					new com.sovworks.eds.truecrypt.FormatInfo(),
-					new com.sovworks.eds.veracrypt.FormatInfo(),
-					new com.sovworks.eds.luks.FormatInfo()
+					new com.igeltech.nevercrypt.truecrypt.FormatInfo(),
+					new com.igeltech.nevercrypt.veracrypt.FormatInfo(),
+					new com.igeltech.nevercrypt.luks.FormatInfo()
 			};
 	
 	public static ContainerFormatInfo findFormatByName(String name)

@@ -16,7 +16,7 @@
 //extern "C" {
 //#endif
 
-//#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "EDS native code", __VA_ARGS__)
+//#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt native code", __VA_ARGS__)
 
 int serpent_encrypt_block(const uint8_t *in, uint8_t *out, void *context)
 {
@@ -30,7 +30,7 @@ int serpent_decrypt_block(const uint8_t *in, uint8_t *out, void *context)
 	return 0;
 }
 
-JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_blockciphers_Serpent_initContext(JNIEnv *env, jobject obj,jbyteArray key)
+JNIEXPORT jlong JNICALL Java_com_igeltech_nevercrypt_crypto_blockciphers_Serpent_initContext(JNIEnv *env, jobject obj,jbyteArray key)
 {
 	block_cipher_interface *bci = malloc(sizeof(block_cipher_interface));
 	if(bci == NULL)
@@ -52,7 +52,7 @@ JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_blockciphers_Serpent_initCo
 }
 
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_blockciphers_Serpent_closeContext(JNIEnv *env, jobject obj, jlong context)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_blockciphers_Serpent_closeContext(JNIEnv *env, jobject obj, jlong context)
 {
 	block_cipher_interface *bci = ((block_cipher_interface *)context);
 	if(bci!=NULL)
@@ -63,7 +63,7 @@ JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_blockciphers_Serpent_closeCo
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_blockciphers_Serpent_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jlong context)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_blockciphers_Serpent_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jlong context)
 {
 	block_cipher_interface *bci = ((block_cipher_interface *)context);
 	jint len = (*env)->GetArrayLength(env,data);
@@ -74,7 +74,7 @@ JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_blockciphers_Serpent_encrypt
 	(*env)->ReleasePrimitiveArrayCritical(env,data,raw_data,0);
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_blockciphers_Serpent_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jlong context)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_blockciphers_Serpent_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jlong context)
 {
 	block_cipher_interface *bci = ((block_cipher_interface *)context);
 	jint len = (*env)->GetArrayLength(env,data);

@@ -1,6 +1,6 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 public abstract class MultilineTextPropertyEditor extends TextPropertyEditor
 {

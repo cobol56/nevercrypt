@@ -1,19 +1,19 @@
-package com.sovworks.eds.android.tasks;
+package com.igeltech.nevercrypt.android.tasks;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragment;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.io.IOException;
 

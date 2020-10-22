@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.records;
+package com.igeltech.nevercrypt.android.filemanager.records;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,15 +16,15 @@ import android.view.animation.AnimationUtils;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.android.helpers.Util;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.android.helpers.Util;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.IOException;
 import java.util.ArrayList;

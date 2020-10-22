@@ -1,7 +1,7 @@
-package com.sovworks.eds.fs.encfs.ciphers;
+package com.igeltech.nevercrypt.fs.encfs.ciphers;
 
-import com.sovworks.eds.crypto.FileEncryptionEngine;
-import com.sovworks.eds.crypto.engines.AESCBC;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.engines.AESCBC;
 
 public class AESCBCFileCipher extends CipherBase implements FileEncryptionEngine
 {

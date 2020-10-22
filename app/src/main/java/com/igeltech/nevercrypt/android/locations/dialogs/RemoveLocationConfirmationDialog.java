@@ -1,15 +1,15 @@
-package com.sovworks.eds.android.locations.dialogs;
+package com.igeltech.nevercrypt.android.locations.dialogs;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.ConfirmationDialog;
-import com.sovworks.eds.android.locations.fragments.LocationListBaseFragment;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.ConfirmationDialog;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationListBaseFragment;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class RemoveLocationConfirmationDialog extends ConfirmationDialog
 {

@@ -1,13 +1,13 @@
-package com.sovworks.eds.android.settings.activities;
+package com.igeltech.nevercrypt.android.settings.activities;
 
 import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.settings.PropertiesHostWithStateBundle;
-import com.sovworks.eds.android.settings.fragments.OpeningOptionsFragment;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.settings.PropertiesHostWithStateBundle;
+import com.igeltech.nevercrypt.android.settings.fragments.OpeningOptionsFragment;
 
 public class OpeningOptionsActivity extends SettingsBaseActivity
 {

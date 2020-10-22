@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.dialogs;
+package com.igeltech.nevercrypt.android.locations.dialogs;
 
 import android.os.Bundle;
 
@@ -6,15 +6,15 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.ConfirmationDialog;
-import com.sovworks.eds.android.locations.closer.fragments.LocationCloserBaseFragment;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.ConfirmationDialog;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment;
 
 public class ForceCloseDialog extends ConfirmationDialog
 {
-    public static final String ARG_LOCATION_TITLE = "com.sovworks.eds.android.LOCATION_TITLE";
-    public static final String ARG_CLOSER_ARGS = "com.sovworks.eds.android.CLOSER_ARGS";
-    public static final String ARG_CLOSER_CLASS_NAME = "com.sovworks.eds.android.CLOSER_CLASS_NAME";
+    public static final String ARG_LOCATION_TITLE = "com.igeltech.nevercrypt.android.LOCATION_TITLE";
+    public static final String ARG_CLOSER_ARGS = "com.igeltech.nevercrypt.android.CLOSER_ARGS";
+    public static final String ARG_CLOSER_CLASS_NAME = "com.igeltech.nevercrypt.android.CLOSER_CLASS_NAME";
 
     public static final String TAG = "ForceCloseDialog";
 

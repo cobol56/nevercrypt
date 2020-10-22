@@ -1,11 +1,11 @@
-package com.sovworks.eds.fs.exfat;
+package com.igeltech.nevercrypt.fs.exfat;
 
-import com.sovworks.eds.exceptions.NativeError;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.FileStat;
-import com.sovworks.eds.fs.util.PathBase;
+import com.igeltech.nevercrypt.exceptions.NativeError;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.FileStat;
+import com.igeltech.nevercrypt.fs.util.PathBase;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.sovworks.eds.fs.errors;
+package com.igeltech.nevercrypt.fs.errors;
 
 import java.io.IOException;
 

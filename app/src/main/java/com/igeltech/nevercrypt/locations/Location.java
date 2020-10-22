@@ -1,11 +1,11 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
 import android.content.Intent;
 import android.net.Uri;
 
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
 
 import org.json.JSONException;
 import org.json.JSONObject;

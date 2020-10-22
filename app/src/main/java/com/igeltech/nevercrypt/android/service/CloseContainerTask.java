@@ -1,15 +1,15 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.closer.fragments.OMLocationCloserFragment;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.closer.fragments.OMLocationCloserFragment;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class CloseContainerTask extends ServiceTaskWithNotificationBase
 {

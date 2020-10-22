@@ -1,7 +1,7 @@
-package com.sovworks.eds.android.filemanager;
+package com.igeltech.nevercrypt.android.filemanager;
 
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;

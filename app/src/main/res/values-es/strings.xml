@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="add_container">Añadir contenedor existente</string>
   <string name="ok">OK</string>
     <string name="select">Seleccionar</string>
@@ -19,7 +19,7 @@
   <string name="settings">Ajustes</string>
   <string name="bad_container_file_or_wrong_password">Fichero de contenedor erróneo o contraseña incorrecta</string>
   <string name="main_settings">Ajustes principales</string>
-  <string name="eds_shortcut">Atajo EDS</string>
+  <string name="eds_shortcut">Atajo <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="enter_widget_title">Introduzca el título del widget</string>
   <string name="select_path">Seleccionar ruta</string>
   <string name="container_size">Tamaño del contenedor</string>
@@ -39,7 +39,7 @@
   <string name="free_space">Espacio libre</string>
     <string name="saving_changes">Guardando cambios</string>
   <string name="preparing_file">Preparando ficheros</string>
-  <string name="eds_service_is_running">El servicio EDS se está ejecutando</string>
+  <string name="eds_service_is_running">El servicio <xliff:g id="program_name">NeverCrypt</xliff:g> se está ejecutando</string>
   <string name="stop_service_and_exit">Detener el servicio y salir</string>
   <string name="send_files_to">Enviar ficheros a</string>
   <string name="send">Enviar</string>
@@ -82,7 +82,7 @@
   <string name="show_previews">Mostrar vistas previas en el gestor de ficheros</string>
   <string name="open_read_only">Abrir en modo sólo lectura</string>
   <string name="disable_wide_screen_layouts">Desactivar el modo apaisado</string>
-  <string name="close_all_containers">Cerrar todos los contenedores EDS</string>
+  <string name="close_all_containers">Cerrar todos los contenedores <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="fill_free_space_with_random_data">Llenar el espacio libre con datos aleatorios</string>
   <string name="ascending">Ascendente</string>
   <string name="descending">Descendente</string>
@@ -132,7 +132,7 @@
   <string name="save_password_desc">Guardar la contraseña del contenedor. Guardar la contraseña puede ser inseguro.</string>
   <string name="enable_full_screen_mode">Habilitar modo pantalla completa</string>
   <string name="never_save_history">No guardar nunca enlaces a los contenedores</string>
-  <string name="never_save_history_desc">El enlace al nuevo contenedor se eliminará luego de cerrar EDS</string>
+  <string name="never_save_history_desc">El enlace al nuevo contenedor se eliminará luego de cerrar <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="contact_support">Contacte con soporte</string>
   <string name="no_free_space_left">No hay espacio libre disponible</string>
   <string name="speed">Velocidad actual: %1$.1f Mb/s</string>
@@ -175,7 +175,7 @@
   <string name="hidden">Oculto</string>
     <string name="overwrite_and_delete">Sobrescribir y borrar</string>
   <string name="list_is_empty">La lista está vacía </string>
-  <string name="hide_eds_screen_from_other_apps">Ocultar la pantalla de EDS a otras aplicaciones</string>
+  <string name="hide_eds_screen_from_other_apps">Ocultar la pantalla de <xliff:g id="program_name">NeverCrypt</xliff:g> a otras aplicaciones</string>
   <string name="toggle_auto_zoom">Cambiar el zoom automático</string>
   <string name="change">Cambiar</string>
   <string name="do_you_really_want_to_remove_from_the_list">¿Realmente desea borrar \"%1$s\" de la lista?</string>

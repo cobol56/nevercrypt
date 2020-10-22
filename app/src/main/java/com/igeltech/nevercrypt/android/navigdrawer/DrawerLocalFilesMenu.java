@@ -1,7 +1,7 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
-import com.sovworks.eds.android.locations.DeviceRootNPLocation;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.locations.DeviceRootNPLocation;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.util.List;
 

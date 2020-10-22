@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager;
+package com.igeltech.nevercrypt.android.filemanager;
 
 import android.content.Context;
 import android.view.View;
@@ -7,9 +7,9 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.records.BrowserRecord;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.records.BrowserRecord;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 
 public class FileListViewAdapter extends ArrayAdapter<BrowserRecord>
 {

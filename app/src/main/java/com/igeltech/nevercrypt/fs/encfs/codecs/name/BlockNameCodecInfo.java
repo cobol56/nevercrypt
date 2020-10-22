@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.encfs.codecs.name;
+package com.igeltech.nevercrypt.fs.encfs.codecs.name;
 
-import com.sovworks.eds.fs.encfs.DataCodecInfo;
-import com.sovworks.eds.fs.encfs.NameCodec;
-import com.sovworks.eds.fs.encfs.ciphers.BlockNameCipher;
+import com.igeltech.nevercrypt.fs.encfs.DataCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.NameCodec;
+import com.igeltech.nevercrypt.fs.encfs.ciphers.BlockNameCipher;
 
 public class BlockNameCodecInfo extends NameCodecInfoBase
 {

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.dialogs;
+package com.igeltech.nevercrypt.android.filemanager.dialogs;
 
 import android.os.Bundle;
 
@@ -9,8 +9,8 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.tasks.CreateNewFile;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.tasks.CreateNewFile;
 
 public class NewFileDialog extends DialogFragment
 {
@@ -19,8 +19,8 @@ public class NewFileDialog extends DialogFragment
 		void makeNewFile(String name, int type);
 	}
 
-	private static final String ARG_TYPE = "com.sovworks.eds.android.TYPE";
-	private static final String ARG_RECEIVER_TAG = "com.sovworks.eds.android.RECEIVER_TAG";
+	private static final String ARG_TYPE = "com.igeltech.nevercrypt.android.TYPE";
+	private static final String ARG_RECEIVER_TAG = "com.igeltech.nevercrypt.android.RECEIVER_TAG";
 
 	public static void showDialog(FragmentManager fm, int type, String receiverTag)
 	{

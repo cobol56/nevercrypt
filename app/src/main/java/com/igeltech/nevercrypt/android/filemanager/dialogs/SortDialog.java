@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.dialogs;
+package com.igeltech.nevercrypt.android.filemanager.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 public class SortDialog extends DialogFragment
 {
@@ -104,8 +104,8 @@ public class SortDialog extends DialogFragment
 			((SortingReceiver)getActivity()).applySort(sortMode);
 	}
 	
-	private static final String ARG_SORT_MODE = "com.sovworks.eds.android.SORT_MODE";
-	private static final String ARG_SORT_LABELS_RES_ID = "com.sovworks.eds.android.SORT_LABELS_RES_ID";
-    private static final String ARG_RECEIVER_FRAGMENT_TAG = "com.sovworks.eds.android.RECEIVER_FRAGMENT_TAG";
+	private static final String ARG_SORT_MODE = "com.igeltech.nevercrypt.android.SORT_MODE";
+	private static final String ARG_SORT_LABELS_RES_ID = "com.igeltech.nevercrypt.android.SORT_LABELS_RES_ID";
+    private static final String ARG_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.RECEIVER_FRAGMENT_TAG";
 
 }

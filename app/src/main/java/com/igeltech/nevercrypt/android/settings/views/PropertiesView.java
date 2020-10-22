@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings.views;
+package com.igeltech.nevercrypt.android.settings.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
 
 import java.util.ArrayList;
 import java.util.Collection;

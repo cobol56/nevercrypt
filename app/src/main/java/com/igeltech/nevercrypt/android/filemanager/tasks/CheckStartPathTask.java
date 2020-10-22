@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.locations.tasks.AddExistingContainerTaskFragment;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class CheckStartPathTask extends AddExistingContainerTaskFragment
 {
@@ -28,7 +28,7 @@ public class CheckStartPathTask extends AddExistingContainerTaskFragment
         LocationsManager lm = LocationsManager.getLocationsManager(_context);
         Location loc = lm.getFromBundle(getArguments(), null);
         if(loc.getCurrentPath().isFile())
-            state.setResult(findOrCreateEDSLocation(lm, loc, getArguments().getBoolean(ARG_STORE_LINK)));
+            state.setResult(findOrCreateLocation(lm, loc, getArguments().getBoolean(ARG_STORE_LINK)));
         else
             state.setResult(null);
     }

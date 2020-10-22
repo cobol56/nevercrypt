@@ -1,7 +1,7 @@
-package com.sovworks.eds.android.providers.cursor;
+package com.igeltech.nevercrypt.android.providers.cursor;
 
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.util.ArrayList;
 import java.util.Arrays;

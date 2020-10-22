@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.locations.activities;
+package com.igeltech.nevercrypt.android.locations.activities;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.locations.ContainerBasedLocation;
-import com.sovworks.eds.android.locations.TrueCryptLocation;
-import com.sovworks.eds.android.locations.VeraCryptLocation;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragment;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
+import com.igeltech.nevercrypt.android.locations.TrueCryptLocation;
+import com.igeltech.nevercrypt.android.locations.VeraCryptLocation;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragment;
 
 public class CreateLocationActivity extends SettingsBaseActivity
 {
-    public static final String EXTRA_LOCATION_TYPE = "com.sovworks.eds.android.LOCATION_TYPE";
+    public static final String EXTRA_LOCATION_TYPE = "com.igeltech.nevercrypt.android.LOCATION_TYPE";
 
     @Override
     protected Fragment getSettingsFragment()

@@ -1,7 +1,7 @@
-package com.sovworks.eds.fs.exfat;
+package com.igeltech.nevercrypt.fs.exfat;
 
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 

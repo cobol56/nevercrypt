@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.providers.cursor;
+package com.igeltech.nevercrypt.android.providers.cursor;
 
 import android.content.Context;
 import android.database.AbstractCursor;
@@ -9,16 +9,16 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 
 import com.drew.lang.annotations.NotNull;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.Location;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.sovworks.eds.android.providers.ContainersDocumentProviderBase.getDocumentIdFromLocation;
+import static com.igeltech.nevercrypt.android.providers.ContainersDocumentProviderBase.getDocumentIdFromLocation;
 
 public abstract class FSCursorBase extends AbstractCursor
 {

@@ -1,7 +1,7 @@
-package com.sovworks.eds.util.exec;
+package com.igeltech.nevercrypt.util.exec;
 
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.util.TextShell;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.util.TextShell;
 
 import java.io.IOException;
 

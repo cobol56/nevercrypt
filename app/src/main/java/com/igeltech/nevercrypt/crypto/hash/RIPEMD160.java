@@ -1,4 +1,4 @@
-package com.sovworks.eds.crypto.hash;
+package com.igeltech.nevercrypt.crypto.hash;
 
 import java.security.MessageDigest;
 

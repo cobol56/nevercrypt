@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.activities;
+package com.igeltech.nevercrypt.android.activities;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,12 +9,12 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
 
 public class CancelTaskActivity extends AppCompatActivity
 {
-	public static final String ACTION_CANCEL_TASK = "com.sovworks.eds.android.CANCEL_TASK";
+	public static final String ACTION_CANCEL_TASK = "com.igeltech.nevercrypt.android.CANCEL_TASK";
 
 	public static Intent getCancelTaskIntent(Context context,int taskId)
 	{

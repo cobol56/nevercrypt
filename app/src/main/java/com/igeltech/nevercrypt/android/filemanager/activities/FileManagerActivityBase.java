@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.activities;
+package com.igeltech.nevercrypt.android.filemanager.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,31 +18,31 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.sovworks.eds.android.EdsApplication;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.AskOverwriteDialog;
-import com.sovworks.eds.android.filemanager.FileManagerFragment;
-import com.sovworks.eds.android.filemanager.fragments.FileListDataFragment;
-import com.sovworks.eds.android.filemanager.fragments.FileListViewFragment;
-import com.sovworks.eds.android.filemanager.fragments.FilePropertiesFragment;
-import com.sovworks.eds.android.filemanager.fragments.PreviewFragment;
-import com.sovworks.eds.android.filemanager.records.BrowserRecord;
-import com.sovworks.eds.android.filemanager.tasks.CheckStartPathTask;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.helpers.AppInitHelper;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.helpers.CompatHelper;
-import com.sovworks.eds.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.sovworks.eds.android.navigdrawer.DrawerController;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.AskOverwriteDialog;
+import com.igeltech.nevercrypt.android.filemanager.FileManagerFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FilePropertiesFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.PreviewFragment;
+import com.igeltech.nevercrypt.android.filemanager.records.BrowserRecord;
+import com.igeltech.nevercrypt.android.filemanager.tasks.CheckStartPathTask;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.helpers.AppInitHelper;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
+import com.igeltech.nevercrypt.android.navigdrawer.DrawerController;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
@@ -56,7 +56,7 @@ import io.reactivex.subjects.Subject;
 public abstract class FileManagerActivityBase extends RxAppCompatActivity implements PreviewFragment.Host
 {
     public static final String TAG = "FileManagerActivity";
-    public static final String ACTION_ASK_OVERWRITE = "com.sovworks.eds.android.ACTION_ASK_OVERWRITE";
+    public static final String ACTION_ASK_OVERWRITE = "com.igeltech.nevercrypt.android.ACTION_ASK_OVERWRITE";
 
     static
     {
@@ -167,17 +167,17 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     }
 
     public static final String EXTRA_ALLOW_MULTIPLE = Intent.EXTRA_ALLOW_MULTIPLE;
-    public static final String EXTRA_ALLOW_FILE_SELECT = "com.sovworks.eds.android.ALLOW_FILE_SELECT";
-    public static final String EXTRA_ALLOW_FOLDER_SELECT = "com.sovworks.eds.android.ALLOW_FOLDER_SELECT";
-    public static final String EXTRA_ALLOW_CREATE_NEW_FILE = "com.sovworks.eds.android.ALLOW_CREATE_NEW_FILE";
-    public static final String EXTRA_ALLOW_CREATE_NEW_FOLDER = "com.sovworks.eds.android.ALLOW_CREATE_NEW_FOLDER";
+    public static final String EXTRA_ALLOW_FILE_SELECT = "com.igeltech.nevercrypt.android.ALLOW_FILE_SELECT";
+    public static final String EXTRA_ALLOW_FOLDER_SELECT = "com.igeltech.nevercrypt.android.ALLOW_FOLDER_SELECT";
+    public static final String EXTRA_ALLOW_CREATE_NEW_FILE = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FILE";
+    public static final String EXTRA_ALLOW_CREATE_NEW_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FOLDER";
 
-    public static final String EXTRA_ALLOW_BROWSE_CONTAINERS = "com.sovworks.eds.android.ALLOW_BROWSE_CONTAINERS";
-    public static final String EXTRA_ALLOW_BROWSE_DEVICE = "com.sovworks.eds.android.ALLOW_BROWSE_DEVICE";
-    public static final String EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS = "com.sovworks.eds.android.ALLOW_BROWSE_DOCUMENT_PROVIDERS";
+    public static final String EXTRA_ALLOW_BROWSE_CONTAINERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_CONTAINERS";
+    public static final String EXTRA_ALLOW_BROWSE_DEVICE = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DEVICE";
+    public static final String EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DOCUMENT_PROVIDERS";
 
-    public static final String EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS = "com.sovworks.eds.android.ALLOW_SELECT_FROM_CONTENT_PROVIDERS";
-    public static final String EXTRA_ALLOW_SELECT_ROOT_FOLDER = "com.sovworks.eds.android.ALLOW_SELECT_ROOT_FOLDER";
+    public static final String EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_SELECT_FROM_CONTENT_PROVIDERS";
+    public static final String EXTRA_ALLOW_SELECT_ROOT_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_SELECT_ROOT_FOLDER";
 
     public static Location getRealLocation(Location loc)
     {

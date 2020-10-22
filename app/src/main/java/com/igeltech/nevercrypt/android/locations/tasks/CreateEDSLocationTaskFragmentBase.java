@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.tasks;
+package com.igeltech.nevercrypt.android.locations.tasks;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,30 +6,30 @@ import android.os.PowerManager;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.activities.SettingsBaseActivity;
-import com.sovworks.eds.android.errors.InputOutputException;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.errors.WrongPasswordOrBadContainerException;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
-import com.sovworks.eds.container.ContainerFormatterBase;
-import com.sovworks.eds.container.EDSLocationFormatter;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.fs.errors.WrongImageFormatException;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
+import com.igeltech.nevercrypt.android.errors.InputOutputException;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerException;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.container.ContainerFormatterBase;
+import com.igeltech.nevercrypt.container.EDSLocationFormatter;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.fs.errors.WrongImageFormatException;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 
 public abstract class CreateEDSLocationTaskFragmentBase extends
-        com.sovworks.eds.android.fragments.TaskFragment
+        com.igeltech.nevercrypt.android.fragments.TaskFragment
 {
-    public static final String TAG = "com.sovworks.eds.android.locations.tasks.CreateEDSLocationTaskFragment";
+    public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.CreateEDSLocationTaskFragment";
 
-    public static final String ARG_LOCATION = "com.sovworks.eds.android.LOCATION";
-    public static final String ARG_CIPHER_NAME = "com.sovworks.eds.android.CIPHER_NAME";
-    public static final String ARG_OVERWRITE = "com.sovworks.eds.android.OVERWRITE";
+    public static final String ARG_LOCATION = "com.igeltech.nevercrypt.android.LOCATION";
+    public static final String ARG_CIPHER_NAME = "com.igeltech.nevercrypt.android.CIPHER_NAME";
+    public static final String ARG_OVERWRITE = "com.igeltech.nevercrypt.android.OVERWRITE";
 
     public static final int RESULT_REQUEST_OVERWRITE = 1;
 

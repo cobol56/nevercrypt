@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.providers;
+package com.igeltech.nevercrypt.android.providers;
 
 
 import android.content.ClipData;
@@ -21,27 +21,27 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.filemanager.tasks.LoadPathInfoObservable;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.helpers.TempFilesMonitor;
-import com.sovworks.eds.android.helpers.WipeFilesTask;
-import com.sovworks.eds.android.locations.PathsStore;
-import com.sovworks.eds.android.providers.cursor.FSCursor;
-import com.sovworks.eds.android.providers.cursor.SelectionChecker;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.FSRecord;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.fs.util.SrcDstSingle;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.GlobalConfig;
-import com.sovworks.eds.settings.SystemConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.filemanager.tasks.LoadPathInfoObservable;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
+import com.igeltech.nevercrypt.android.helpers.WipeFilesTask;
+import com.igeltech.nevercrypt.android.locations.PathsStore;
+import com.igeltech.nevercrypt.android.providers.cursor.FSCursor;
+import com.igeltech.nevercrypt.android.providers.cursor.SelectionChecker;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.FSRecord;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
+import com.igeltech.nevercrypt.settings.SystemConfig;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -56,13 +56,13 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.sovworks.eds.android.providers.cursor.FSCursorBase.COLUMN_ID;
-import static com.sovworks.eds.android.providers.cursor.FSCursorBase.COLUMN_IS_FOLDER;
-import static com.sovworks.eds.android.providers.cursor.FSCursorBase.COLUMN_LAST_MODIFIED;
-import static com.sovworks.eds.android.providers.cursor.FSCursorBase.COLUMN_NAME;
-import static com.sovworks.eds.android.providers.cursor.FSCursorBase.COLUMN_PATH;
-import static com.sovworks.eds.android.providers.cursor.FSCursorBase.COLUMN_SIZE;
-import static com.sovworks.eds.android.providers.cursor.FSCursorBase.COLUMN_TITLE;
+import static com.igeltech.nevercrypt.android.providers.cursor.FSCursorBase.COLUMN_ID;
+import static com.igeltech.nevercrypt.android.providers.cursor.FSCursorBase.COLUMN_IS_FOLDER;
+import static com.igeltech.nevercrypt.android.providers.cursor.FSCursorBase.COLUMN_LAST_MODIFIED;
+import static com.igeltech.nevercrypt.android.providers.cursor.FSCursorBase.COLUMN_NAME;
+import static com.igeltech.nevercrypt.android.providers.cursor.FSCursorBase.COLUMN_PATH;
+import static com.igeltech.nevercrypt.android.providers.cursor.FSCursorBase.COLUMN_SIZE;
+import static com.igeltech.nevercrypt.android.providers.cursor.FSCursorBase.COLUMN_TITLE;
 
 public abstract class MainContentProviderBase extends ContentProvider
 {
@@ -380,7 +380,7 @@ public abstract class MainContentProviderBase extends ContentProvider
     @Override
     public boolean onCreate()
     {
-        SystemConfig.setInstance(new com.sovworks.eds.android.settings.SystemConfig(getContext()));
+        SystemConfig.setInstance(new com.igeltech.nevercrypt.android.settings.SystemConfig(getContext()));
         return true;
     }
 

@@ -1,15 +1,15 @@
-package com.sovworks.eds.android.locations;
+package com.igeltech.nevercrypt.android.locations;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.container.ContainerFormatInfo;
-import com.sovworks.eds.container.EdsContainer;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManagerBase;
-import com.sovworks.eds.settings.Settings;
-import com.sovworks.eds.veracrypt.FormatInfo;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
+import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManagerBase;
+import com.igeltech.nevercrypt.settings.Settings;
+import com.igeltech.nevercrypt.veracrypt.FormatInfo;
 
 import java.io.IOException;
 import java.util.Collections;

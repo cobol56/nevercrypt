@@ -1,4 +1,4 @@
-package com.sovworks.eds.exceptions;
+package com.igeltech.nevercrypt.exceptions;
 
 public class ApplicationException extends Exception
 {	

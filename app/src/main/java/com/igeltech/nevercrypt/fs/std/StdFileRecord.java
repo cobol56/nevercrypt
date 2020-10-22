@@ -1,9 +1,9 @@
-package com.sovworks.eds.fs.std;
+package com.igeltech.nevercrypt.fs.std;
 
 import android.os.ParcelFileDescriptor;
 
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class StdFileRecord extends StdFsRecord implements com.sovworks.eds.fs.File
+public class StdFileRecord extends StdFsRecord implements com.igeltech.nevercrypt.fs.File
 {
 	public StdFileRecord(StdFsPath path) throws IOException
 	{

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.fragments;
+package com.igeltech.nevercrypt.android.fragments;
 
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.helpers.ProgressReporter;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.helpers.ProgressReporter;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.concurrent.CancellationException;
 
 public abstract class TaskFragment extends Fragment
 {
-	public static final String ARG_HOST_FRAGMENT = "com.sovworks.eds.android.HOST_FRAGMENT_TAG";
+	public static final String ARG_HOST_FRAGMENT = "com.igeltech.nevercrypt.android.HOST_FRAGMENT_TAG";
 
 	public static synchronized void addEventListener(EventListener listener)
 	{

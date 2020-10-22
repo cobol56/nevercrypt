@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.exfat;
+package com.igeltech.nevercrypt.fs.exfat;
 
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.FSRecord;
-import com.sovworks.eds.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.FSRecord;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 
 import java.io.IOException;
 import java.util.Date;

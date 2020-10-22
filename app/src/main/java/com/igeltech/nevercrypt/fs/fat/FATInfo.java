@@ -1,10 +1,10 @@
-package com.sovworks.eds.fs.fat;
+package com.igeltech.nevercrypt.fs.fat;
 
 import android.os.Parcel;
 
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.FileSystemInfo;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.FileSystemInfo;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 

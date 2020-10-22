@@ -1,4 +1,4 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
 public interface CipherFactory
 {

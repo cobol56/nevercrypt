@@ -1,10 +1,10 @@
-package com.sovworks.eds.fs.exfat;
+package com.igeltech.nevercrypt.fs.exfat;
 
 import android.os.Parcel;
 
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.FileSystemInfo;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.FileSystemInfo;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
-package com.sovworks.eds.android.providers.cursor;
+package com.igeltech.nevercrypt.android.providers.cursor;
 
-import com.sovworks.eds.fs.Path;
+import com.igeltech.nevercrypt.fs.Path;
 
 public interface PathChecker
 {

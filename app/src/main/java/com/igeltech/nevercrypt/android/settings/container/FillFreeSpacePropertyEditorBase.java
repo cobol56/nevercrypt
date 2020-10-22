@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.CreateContainerFragmentBase;
-import com.sovworks.eds.android.locations.tasks.CreateContainerTaskFragmentBase;
-import com.sovworks.eds.android.settings.SwitchPropertyEditor;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
+import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 
 public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEditor
 {

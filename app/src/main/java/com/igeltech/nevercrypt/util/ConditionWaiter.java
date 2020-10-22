@@ -1,4 +1,4 @@
-package com.sovworks.eds.util;
+package com.igeltech.nevercrypt.util;
 
 
 public class ConditionWaiter extends Thread

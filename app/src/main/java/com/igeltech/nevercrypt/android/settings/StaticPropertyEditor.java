@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +7,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 
 public class StaticPropertyEditor extends PropertyEditorBase
 {

@@ -1,9 +1,9 @@
-package com.sovworks.eds.crypto.modes;
+package com.igeltech.nevercrypt.crypto.modes;
 
-import com.sovworks.eds.crypto.BlockCipherNative;
-import com.sovworks.eds.crypto.CipherFactory;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.FileEncryptionEngine;
+import com.igeltech.nevercrypt.crypto.BlockCipherNative;
+import com.igeltech.nevercrypt.crypto.CipherFactory;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
 
 import java.util.ArrayList;
 import java.util.Arrays;

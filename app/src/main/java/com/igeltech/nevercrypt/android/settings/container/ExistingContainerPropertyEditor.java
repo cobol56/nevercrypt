@@ -1,12 +1,12 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragment;
-import com.sovworks.eds.android.locations.fragments.CreateEDSLocationFragmentBase;
-import com.sovworks.eds.android.settings.PropertyEditorBase;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragmentBase;
+import com.igeltech.nevercrypt.android.settings.PropertyEditorBase;
 
 public class ExistingContainerPropertyEditor extends PropertyEditorBase
 {

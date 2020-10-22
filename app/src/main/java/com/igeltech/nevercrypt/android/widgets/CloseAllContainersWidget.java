@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.widgets;
+package com.igeltech.nevercrypt.android.widgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -10,11 +10,11 @@ import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.locations.activities.CloseLocationsActivity;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class CloseAllContainersWidget extends AppWidgetProvider
 {	

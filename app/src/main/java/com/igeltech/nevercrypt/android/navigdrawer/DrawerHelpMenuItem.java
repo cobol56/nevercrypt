@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,8 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 public class DrawerHelpMenuItem extends DrawerMenuItemBase
 {

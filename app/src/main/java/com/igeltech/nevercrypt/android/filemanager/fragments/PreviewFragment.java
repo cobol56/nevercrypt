@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.fragments;
+package com.igeltech.nevercrypt.android.filemanager.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,21 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewSwitcher;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.FileManagerFragment;
-import com.sovworks.eds.android.filemanager.tasks.LoadPathInfoObservable;
-import com.sovworks.eds.android.filemanager.tasks.LoadedImage;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.android.views.GestureImageView.NavigListener;
-import com.sovworks.eds.android.views.GestureImageViewWithFullScreenMode;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.FileManagerFragment;
+import com.igeltech.nevercrypt.android.filemanager.tasks.LoadPathInfoObservable;
+import com.igeltech.nevercrypt.android.filemanager.tasks.LoadedImage;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.views.GestureImageView.NavigListener;
+import com.igeltech.nevercrypt.android.views.GestureImageViewWithFullScreenMode;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
 import java.io.IOException;
@@ -42,8 +42,8 @@ import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-import static com.sovworks.eds.android.settings.UserSettingsCommon.IMAGE_VIEWER_AUTO_ZOOM_ENABLED;
-import static com.sovworks.eds.android.settings.UserSettingsCommon.IMAGE_VIEWER_FULL_SCREEN_ENABLED;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.IMAGE_VIEWER_AUTO_ZOOM_ENABLED;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.IMAGE_VIEWER_FULL_SCREEN_ENABLED;
 
 public class PreviewFragment extends RxFragment implements FileManagerFragment
 {
@@ -57,7 +57,7 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 	
 	public static final String TAG = "PreviewFragment";
 
-    public static final String STATE_CURRENT_PATH = "com.sovworks.eds.android.CURRENT_PATH";
+    public static final String STATE_CURRENT_PATH = "com.igeltech.nevercrypt.android.CURRENT_PATH";
 	
 	public static PreviewFragment newInstance(Path currentImagePath)
 	{

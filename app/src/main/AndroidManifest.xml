@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.sovworks.eds.android"
+    package="com.igeltech.nevercrypt.android"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -10,12 +10,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name="com.sovworks.eds.android.EdsApplication"
+        android:name="com.igeltech.nevercrypt.android.EdsApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backupscheme"
         android:icon="@drawable/ic_launcher_eds"
         android:label="@string/eds"
-        android:theme="@style/Theme.EDS">
+        android:theme="@style/Theme.NeverCrypt">
         <activity
             android:name=".filemanager.activities.FileManagerActivity"
             android:label="@string/eds">
@@ -77,7 +77,7 @@
             android:excludeFromRecents="true"
             android:label="@string/eds">
             <intent-filter>
-                <action android:name="com.sovworks.eds.android.ACTION_CANCEL_TASK"/>
+                <action android:name="com.igeltech.nevercrypt.android.ACTION_CANCEL_TASK"/>
             </intent-filter>
         </activity>
         <activity
@@ -106,7 +106,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.sovworks.eds.android.BROADCAST_LOCATION_CHANGED"/>
+                <action android:name="com.igeltech.nevercrypt.android.BROADCAST_LOCATION_CHANGED"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/widget_info"/>
@@ -117,21 +117,21 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.sovworks.eds.android.BROADCAST_LOCATION_CHANGED"/>
+                <action android:name="com.igeltech.nevercrypt.android.BROADCAST_LOCATION_CHANGED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.sovworks.eds.android.BROADCAST_ALL_CONTAINERS_CLOSED"/>
+                <action android:name="com.igeltech.nevercrypt.android.BROADCAST_ALL_CONTAINERS_CLOSED"/>
             </intent-filter>
 
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/close_all_containers_widget_info"/>
         </receiver>
-        <provider android:authorities="com.sovworks.eds.android.providers.main.lite"
+        <provider android:authorities="com.igeltech.nevercrypt.android.providers.main"
                   android:exported="true"
                   android:name=".providers.MainContentProvider">
             <grant-uri-permission android:path="selection" />
         </provider>
-        <provider android:authorities="com.sovworks.eds.android.providers.documents.lite"
+        <provider android:authorities="com.igeltech.nevercrypt.android.providers.documents"
                   android:exported="true"
                   android:name=".providers.ContainersDocumentProvider"
                   android:grantUriPermissions="true"

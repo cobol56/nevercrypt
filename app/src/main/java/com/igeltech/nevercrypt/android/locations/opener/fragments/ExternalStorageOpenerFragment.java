@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.opener.fragments;
+package com.igeltech.nevercrypt.android.locations.opener.fragments;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -10,19 +10,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.AskExtStorageWritePermissionDialog;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.locations.DocumentTreeLocation;
-import com.sovworks.eds.android.locations.ExternalStorageLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.AskExtStorageWritePermissionDialog;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
+import com.igeltech.nevercrypt.android.locations.ExternalStorageLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.io.File;
 import java.io.IOException;
 
-import static com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment.OpenLocationTaskFragment.ARG_OPENER_TAG;
+import static com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment.OpenLocationTaskFragment.ARG_OPENER_TAG;
 
 public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
 {

@@ -1,8 +1,8 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.content.Intent;
 
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 
 import java.util.ArrayList;
 import java.util.List;

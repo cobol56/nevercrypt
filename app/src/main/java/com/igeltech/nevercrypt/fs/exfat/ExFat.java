@@ -1,13 +1,13 @@
-package com.sovworks.eds.fs.exfat;
+package com.igeltech.nevercrypt.fs.exfat;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.settings.SystemConfig;
-import com.sovworks.eds.fs.FileSystem;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.util.FileStat;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.settings.SystemConfig;
+import com.igeltech.nevercrypt.fs.FileSystem;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.util.FileStat;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.File;
 import java.io.IOException;

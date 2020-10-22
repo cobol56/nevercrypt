@@ -1,14 +1,14 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.crypto.SimpleCrypto;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.crypto.SimpleCrypto;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 

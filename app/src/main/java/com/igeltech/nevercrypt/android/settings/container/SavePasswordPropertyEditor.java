@@ -1,6 +1,6 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragmentBase;
 
 public class SavePasswordPropertyEditor extends SavePasswordPropertyEditorBase
 {

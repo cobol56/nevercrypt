@@ -1,15 +1,15 @@
-package com.sovworks.eds.fs.fat;
+package com.igeltech.nevercrypt.fs.fat;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.fs.DataInput;
-import com.sovworks.eds.fs.DataOutput;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.RandomStorageAccess;
-import com.sovworks.eds.fs.fat.FatFS.FatPath;
-import com.sovworks.eds.fs.util.RandomAccessInputStream;
-import com.sovworks.eds.fs.util.RandomAccessOutputStream;
-import com.sovworks.eds.fs.util.Util;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.fs.DataInput;
+import com.igeltech.nevercrypt.fs.DataOutput;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.RandomStorageAccess;
+import com.igeltech.nevercrypt.fs.fat.FatFS.FatPath;
+import com.igeltech.nevercrypt.fs.util.RandomAccessInputStream;
+import com.igeltech.nevercrypt.fs.util.RandomAccessOutputStream;
+import com.igeltech.nevercrypt.fs.util.Util;
 
 import java.io.Closeable;
 import java.io.EOFException;

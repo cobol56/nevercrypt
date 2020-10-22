@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="add_container">Add existing container</string>
-	<string name="eds" translatable="false"><xliff:g id="program_name">EDS</xliff:g></string>
+	<string name="eds" translatable="false"><xliff:g id="program_name">NeverCrypt</xliff:g></string>
     <string name="ok">OK</string>
     <string name="select">Select</string>
 	<string name="enter_new_folder_name">Enter new folder name</string>
@@ -20,7 +20,7 @@
 	<string name="settings">Settings</string>
 	<string name="bad_container_file_or_wrong_password">Wrong password or unsupported container format</string>
 	<string name="main_settings">Main settings</string>
-	<string name="eds_shortcut"><xliff:g id="program_name">EDS</xliff:g> shortcut</string>
+	<string name="eds_shortcut"><xliff:g id="program_name">NeverCrypt</xliff:g> shortcut</string>
 	<string name="enter_widget_title">Enter widget title</string>	
 	<string name="select_path">Select path</string>
 	<string name="container_size">Container size</string>
@@ -40,7 +40,7 @@
 	<string name="free_space">Free space</string>
     <string name="saving_changes">Saving changes</string>
 	<string name="preparing_file">Preparing files</string>
-	<string name="eds_service_is_running"><xliff:g id="program_name">EDS</xliff:g> service is running</string>
+	<string name="eds_service_is_running"><xliff:g id="program_name">NeverCrypt</xliff:g> service is running</string>
 	<string name="stop_service_and_exit">Stop service and exit</string>
 	<string name="send_files_to">Send files to</string>
 	<string name="send">Send</string>
@@ -88,7 +88,7 @@
 	<string name="show_previews">Show previews in the file manager</string>
 	<string name="open_read_only">Open in read only mode</string>
 	<string name="disable_wide_screen_layouts">Disable landscape layout</string>
-	<string name="close_all_containers">Close all <xliff:g id="program_name">EDS</xliff:g> containers</string>
+	<string name="close_all_containers">Close all <xliff:g id="program_name">NeverCrypt</xliff:g> containers</string>
 	<string name="fill_free_space_with_random_data">Fill free space with random data</string>
 	<string name="ascending">Ascending</string>
 	<string name="descending">Descending</string>
@@ -138,7 +138,7 @@
 	<string name="save_password_desc">Save the password of the container. Saving a password may be insecure.</string>
 	<string name="enable_full_screen_mode">Enable full screen mode</string>
 	<string name="never_save_history">Never save links to containers</string>
-	<string name="never_save_history_desc">A link to the new container will be removed after you close <xliff:g id="program_name">EDS</xliff:g></string>
+	<string name="never_save_history_desc">A link to the new container will be removed after you close <xliff:g id="program_name">NeverCrypt</xliff:g></string>
 	<string name="contact_support">Contact support</string>
 	<string name="no_free_space_left">No free space left</string>
 	<string name="speed">Current speed: <xliff:g id="current_speed">%1$.1f</xliff:g> Mb/s</string>
@@ -173,7 +173,7 @@
 	<string name="copy_here">Copy here</string>
 	<string name="move_here">Move here</string>
 	<string name="storage_permission_desc">Storage access permission is required in order to access memory cards and usb storages</string>
-	<string name="ext_storage_write_permission_request">Would you like to grant external storage write access permission to EDS?</string>
+	<string name="ext_storage_write_permission_request">Would you like to grant external storage write access permission to NeverCrypt?</string>
 	<string name="grant">Grant</string>
 	<string name="number_of_kdf_iterations_veracrypt_descr">Enter the <xliff:g id="key_derivation_function">KDF</xliff:g> iterations multiplier (<xliff:g id="pim">PIM</xliff:g>). The greater value you choose the longer it will take to open the container. Enter 0 to use the default value. Check <xliff:g id="url">https://veracrypt.codeplex.com/wikipage?title=Personal%20Iterations%20Multiplier%20(PIM)</xliff:g> for details.</string>
 	<string name="kdf_iterations_multiplier"><xliff:g id="key_derivation_function">KDF</xliff:g> iterations multiplier (<xliff:g id="pim">PIM</xliff:g>)</string>
@@ -183,7 +183,7 @@
 	<string name="hidden">hidden</string>
     <string name="overwrite_and_delete">Overwrite and delete</string>
 	<string name="list_is_empty">The list is empty</string>
-	<string name="hide_eds_screen_from_other_apps">Hide <xliff:g id="program_name">EDS</xliff:g> screen from other applications</string>
+	<string name="hide_eds_screen_from_other_apps">Hide <xliff:g id="program_name">NeverCrypt</xliff:g> screen from other applications</string>
 	<string name="toggle_auto_zoom">Toggle auto zoom</string>
 	<string name="change">Change</string>
 	<string name="do_you_really_want_to_remove_from_the_list">Do you really want to remove <xliff:g id="title">\"%1$s\"</xliff:g> from the list?</string>
@@ -193,7 +193,7 @@
 	<string name="use_external_file_manager">External file manager</string>
 	<string name="use_external_file_manager_desc">Open an external file manager once the container has been mounted</string>
 	<string name="builtin_file_manager">Built-in file manager</string>
-	<string name="dont_use_content_provider">Don\'t use EDS content provider to open decrypted files in other applications.</string>
+	<string name="dont_use_content_provider">Don\'t use NeverCrypt content provider to open decrypted files in other applications.</string>
     <string name="dont_use_content_provider_desc">Some applications can\'t work with content providers.</string>
     <string name="uri_of_the_container">URI of the container</string>
     <string name="text_has_been_copied">Text has been copied to the clipboard</string>
@@ -227,7 +227,7 @@
 	<string name="save_log_file_to">Save the log file to…</string>
     <string name="update_exfat_module">Please update the <xliff:g id="exfat">exFAT</xliff:g> module</string>
 	<string name="exfat_module_required">Please install the <xliff:g id="exfat">exFAT</xliff:g> module</string>
-    <string name="restart_application">Please restart EDS</string>
+    <string name="restart_application">Please restart NeverCrypt</string>
     <string name="force_temp_files">Force temp files</string>
 	<string name="force_temp_files_desc">Use temp files instead of \"pipes\" even for read-only requests. Some apps can\'t work with \"pipes\".</string>
 	<string name="wrong_path">Wrong path</string>

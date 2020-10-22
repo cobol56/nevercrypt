@@ -1,31 +1,31 @@
-package com.sovworks.eds.android.locations.tasks;
+package com.igeltech.nevercrypt.android.locations.tasks;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.container.EDSLocationFormatter;
-import com.sovworks.eds.container.EncFsFormatter;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.encfs.Config;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.container.EDSLocationFormatter;
+import com.igeltech.nevercrypt.container.EncFsFormatter;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.encfs.Config;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public class CreateEncFsTaskFragment extends CreateEDSLocationTaskFragment
 {
-    public static final String TAG = "com.sovworks.eds.android.locations.tasks.CreateEncFsTaskFragment";
+    public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.CreateEncFsTaskFragment";
 
-    public static final String ARG_NAME_CIPHER_NAME = "com.sovworks.eds.android.NAME_CIPHER_NAME";
-    public static final String ARG_KEY_SIZE = "com.sovworks.eds.android.KEY_SIZE";
-    public static final String ARG_BLOCK_SIZE = "com.sovworks.eds.android.BLOCK_SIZE";
-    public static final String ARG_MAC_BYTES = "com.sovworks.eds.android.MAC_BYTES";
-    public static final String ARG_RAND_BYTES = "com.sovworks.eds.android.RAND_BYTES";
-    public static final String ARG_UNIQUE_IV = "com.sovworks.eds.android.UNIQUE_IV";
-    public static final String ARG_EXTERNAL_IV = "com.sovworks.eds.android.EXTERNAL_IV";
-    public static final String ARG_CHAINED_NAME_IV = "com.sovworks.eds.android.CHAINED_NAME_IV";
-    public static final String ARG_ALLOW_EMPTY_BLOCKS = "com.sovworks.eds.android.ALLOW_EMPTY_BLOCKS";
+    public static final String ARG_NAME_CIPHER_NAME = "com.igeltech.nevercrypt.android.NAME_CIPHER_NAME";
+    public static final String ARG_KEY_SIZE = "com.igeltech.nevercrypt.android.KEY_SIZE";
+    public static final String ARG_BLOCK_SIZE = "com.igeltech.nevercrypt.android.BLOCK_SIZE";
+    public static final String ARG_MAC_BYTES = "com.igeltech.nevercrypt.android.MAC_BYTES";
+    public static final String ARG_RAND_BYTES = "com.igeltech.nevercrypt.android.RAND_BYTES";
+    public static final String ARG_UNIQUE_IV = "com.igeltech.nevercrypt.android.UNIQUE_IV";
+    public static final String ARG_EXTERNAL_IV = "com.igeltech.nevercrypt.android.EXTERNAL_IV";
+    public static final String ARG_CHAINED_NAME_IV = "com.igeltech.nevercrypt.android.CHAINED_NAME_IV";
+    public static final String ARG_ALLOW_EMPTY_BLOCKS = "com.igeltech.nevercrypt.android.ALLOW_EMPTY_BLOCKS";
 
     @Override
     protected EDSLocationFormatter createFormatter()

@@ -1,9 +1,9 @@
-package com.sovworks.eds.android.settings;
+package com.igeltech.nevercrypt.android.settings;
 
 import android.content.Context;
 
-import com.sovworks.eds.settings.DefaultSettings;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.settings.DefaultSettings;
+import com.igeltech.nevercrypt.settings.Settings;
 
 public class UserSettings extends UserSettingsCommon implements Settings
 {

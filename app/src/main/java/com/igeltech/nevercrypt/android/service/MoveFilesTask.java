@@ -1,18 +1,18 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.content.Intent;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.FSRecord;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.errors.NoFreeSpaceLeftException;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.FSRecord;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.errors.NoFreeSpaceLeftException;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection.SrcDst;
+import com.igeltech.nevercrypt.locations.Location;
 
 import org.json.JSONException;
 
@@ -66,7 +66,7 @@ class MoveFilesTask extends CopyFilesTask
 		}
 		catch(NoFreeSpaceLeftException e)
 		{
-			throw new com.sovworks.eds.android.errors.NoFreeSpaceLeftException(_context);
+			throw new com.igeltech.nevercrypt.android.errors.NoFreeSpaceLeftException(_context);
 		}
 		catch (IOException e)
 		{
@@ -143,10 +143,10 @@ class MoveFilesTask extends CopyFilesTask
 
 	private void deleteFile(File file) throws IOException
 	{
-		com.sovworks.eds.android.helpers.WipeFilesTask.wipeFile(
+		com.igeltech.nevercrypt.android.helpers.WipeFilesTask.wipeFile(
 				file,
 				_wipe,
-				new com.sovworks.eds.android.helpers.WipeFilesTask.ITask()
+				new com.igeltech.nevercrypt.android.helpers.WipeFilesTask.ITask()
 				{
 					@Override
 					public void progress(int sizeInc)

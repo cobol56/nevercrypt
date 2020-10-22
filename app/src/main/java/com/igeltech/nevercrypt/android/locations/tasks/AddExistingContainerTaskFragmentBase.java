@@ -1,28 +1,28 @@
-package com.sovworks.eds.android.locations.tasks;
+package com.igeltech.nevercrypt.android.locations.tasks;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.locations.EncFsLocation;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.container.ContainerFormatter;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.encfs.Config;
-import com.sovworks.eds.locations.ContainerLocation;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.locations.EncFsLocation;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.container.ContainerFormatter;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.encfs.Config;
+import com.igeltech.nevercrypt.locations.ContainerLocation;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 
 public abstract class AddExistingContainerTaskFragmentBase extends AddExistingEDSLocationTaskFragment
 {
-    public static final String TAG = "com.sovworks.eds.android.locations.tasks.AddExistingContainerTaskFragment";
+    public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment";
 
     @Override
     protected EDSLocation createEDSLocation(Location locationLocation) throws Exception
     {
-        Logger.debug("Adding EDS loc at " + locationLocation.getLocationUri());
+        Logger.debug("Adding location at " + locationLocation.getLocationUri());
         Path cp = locationLocation.getCurrentPath();
         boolean isEncFs = false;
         if(cp.isFile())

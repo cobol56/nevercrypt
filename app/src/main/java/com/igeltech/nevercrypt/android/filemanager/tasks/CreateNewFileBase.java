@@ -1,17 +1,17 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
 import android.content.Context;
 
-import com.sovworks.eds.android.filemanager.records.BrowserRecord;
-import com.sovworks.eds.android.filemanager.records.ExecutableFileRecord;
-import com.sovworks.eds.android.filemanager.records.FolderRecord;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.Directory;
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.filemanager.records.BrowserRecord;
+import com.igeltech.nevercrypt.android.filemanager.records.ExecutableFileRecord;
+import com.igeltech.nevercrypt.android.filemanager.records.FolderRecord;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.Directory;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import org.json.JSONException;
 

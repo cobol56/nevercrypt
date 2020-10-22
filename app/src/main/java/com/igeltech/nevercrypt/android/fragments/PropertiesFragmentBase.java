@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.fragments;
+package com.igeltech.nevercrypt.android.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.PropertyEditor;
-import com.sovworks.eds.android.settings.views.PropertiesView;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 
 public abstract class PropertiesFragmentBase extends Fragment implements PropertyEditor.Host
 {

@@ -1,21 +1,21 @@
-package com.sovworks.eds.fs.encfs;
+package com.igeltech.nevercrypt.fs.encfs;
 
-import com.sovworks.eds.android.helpers.ContainerOpeningProgressReporter;
-import com.sovworks.eds.android.helpers.ProgressReporter;
-import com.sovworks.eds.crypto.EncryptionEngine;
-import com.sovworks.eds.crypto.EncryptionEngineException;
-import com.sovworks.eds.crypto.kdf.HMACSHA1KDF;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.exceptions.WrongPasswordException;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.encfs.codecs.data.AESDataCodecInfo;
-import com.sovworks.eds.fs.encfs.codecs.name.BlockCSNameCodecInfo;
-import com.sovworks.eds.fs.encfs.codecs.name.BlockNameCodecInfo;
-import com.sovworks.eds.fs.encfs.codecs.name.NullNameCodecInfo;
-import com.sovworks.eds.fs.encfs.codecs.name.StreamNameCodecInfo;
-import com.sovworks.eds.fs.encfs.macs.MACCalculator;
-import com.sovworks.eds.fs.util.FileSystemWrapper;
-import com.sovworks.eds.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
+import com.igeltech.nevercrypt.android.helpers.ProgressReporter;
+import com.igeltech.nevercrypt.crypto.EncryptionEngine;
+import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
+import com.igeltech.nevercrypt.crypto.kdf.HMACSHA1KDF;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.exceptions.WrongPasswordException;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.encfs.codecs.data.AESDataCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.codecs.name.BlockCSNameCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.codecs.name.BlockNameCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.codecs.name.NullNameCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.codecs.name.StreamNameCodecInfo;
+import com.igeltech.nevercrypt.fs.encfs.macs.MACCalculator;
+import com.igeltech.nevercrypt.fs.util.FileSystemWrapper;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -133,13 +133,13 @@ public class FS extends FileSystemWrapper
     }
 
     @Override
-    public com.sovworks.eds.fs.encfs.Path getRootPath()
+    public com.igeltech.nevercrypt.fs.encfs.Path getRootPath()
     {
         return _rootPath;
     }
 
     @Override
-    public synchronized com.sovworks.eds.fs.encfs.Path getPath(String pathString) throws IOException
+    public synchronized com.igeltech.nevercrypt.fs.encfs.Path getPath(String pathString) throws IOException
     {
         return getPathFromRealPath(getBase().getPath(pathString));
     }
@@ -172,16 +172,16 @@ public class FS extends FileSystemWrapper
         }*/
     }
 
-    synchronized com.sovworks.eds.fs.encfs.Path getPathFromRealPath(Path realPath) throws IOException
+    synchronized com.igeltech.nevercrypt.fs.encfs.Path getPathFromRealPath(Path realPath) throws IOException
     {
         if(realPath == null)
             return null;
         if(realPath.equals(_rootRealPath))
             return _rootPath;
-        com.sovworks.eds.fs.encfs.Path p = getCachedPath(realPath);
+        com.igeltech.nevercrypt.fs.encfs.Path p = getCachedPath(realPath);
         if(p==null)
         {
-            p = new com.sovworks.eds.fs.encfs.Path(
+            p = new com.igeltech.nevercrypt.fs.encfs.Path(
                     this,
                     realPath,
                     getConfig().getNameCodecInfo(),
@@ -192,12 +192,12 @@ public class FS extends FileSystemWrapper
         return p;
     }
 
-    com.sovworks.eds.fs.encfs.Path getCachedPath(Path realPath) throws IOException
+    com.igeltech.nevercrypt.fs.encfs.Path getCachedPath(Path realPath) throws IOException
     {
         return _cache.get(realPath);
     }
 
-    private class RootPath extends com.sovworks.eds.fs.encfs.Path
+    private class RootPath extends com.igeltech.nevercrypt.fs.encfs.Path
     {
         public RootPath()
         {
@@ -219,7 +219,7 @@ public class FS extends FileSystemWrapper
         }
 
         @Override
-        public com.sovworks.eds.fs.encfs.Path getParentPath() throws IOException
+        public com.igeltech.nevercrypt.fs.encfs.Path getParentPath() throws IOException
         {
             return null;
         }
@@ -233,7 +233,7 @@ public class FS extends FileSystemWrapper
     };
 
     private final Path _rootRealPath;
-    private final Map<com.sovworks.eds.fs.Path, com.sovworks.eds.fs.encfs.Path> _cache = new HashMap<>();
+    private final Map<com.igeltech.nevercrypt.fs.Path, com.igeltech.nevercrypt.fs.encfs.Path> _cache = new HashMap<>();
     private final RootPath _rootPath;
     private byte[] _encryptionKey;
     private Config _config;

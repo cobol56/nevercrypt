@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 
 import android.content.Context;
@@ -6,10 +6,10 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.fs.util.FilesOperationStatus;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstCollection.SrcDst;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.fs.util.FilesOperationStatus;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection.SrcDst;
 
 import java.util.concurrent.CancellationException;
 

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.fragments;
+package com.igeltech.nevercrypt.android.locations.fragments;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -8,12 +8,12 @@ import android.os.Build;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.fs.DocumentTreeFS;
-import com.sovworks.eds.android.locations.DocumentTreeLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.fs.DocumentTreeFS;
+import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class DocumentTreeLocationsListFragment extends LocationListBaseFragment

@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragment;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragmentBase;
-import com.sovworks.eds.android.settings.PropertyEditor;
-import com.sovworks.eds.android.settings.SwitchPropertyEditor;
-import com.sovworks.eds.android.settings.dialogs.TextEditDialog;
-import com.sovworks.eds.locations.EDSLocation;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.dialogs.TextEditDialog;
+import com.igeltech.nevercrypt.locations.EDSLocation;
 
 public class SavePIMPropertyEditor extends SwitchPropertyEditor implements TextEditDialog.TextResultReceiver
 {

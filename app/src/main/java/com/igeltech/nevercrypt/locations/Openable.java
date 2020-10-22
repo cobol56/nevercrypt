@@ -1,14 +1,14 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
-import com.sovworks.eds.android.helpers.ProgressReporter;
-import com.sovworks.eds.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.android.helpers.ProgressReporter;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
 
 import java.io.IOException;
 
 public interface Openable extends Location
 {
-	String PARAM_PASSWORD = "com.sovworks.eds.android.PASSWORD";
-	String PARAM_KDF_ITERATIONS = "com.sovworks.eds.android.KDF_ITERATIONS";
+	String PARAM_PASSWORD = "com.igeltech.nevercrypt.android.PASSWORD";
+	String PARAM_KDF_ITERATIONS = "com.igeltech.nevercrypt.android.KDF_ITERATIONS";
 
 	void setPassword(SecureBuffer pass);
 	boolean hasPassword();

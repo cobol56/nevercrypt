@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,9 +8,9 @@ import android.os.SystemClock;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 
 public abstract class ServiceTaskWithNotificationBase implements Task
 {

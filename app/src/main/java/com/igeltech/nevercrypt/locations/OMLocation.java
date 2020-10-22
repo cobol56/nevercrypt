@@ -1,4 +1,4 @@
-package com.sovworks.eds.locations;
+package com.igeltech.nevercrypt.locations;
 
 
 public interface OMLocation extends Openable

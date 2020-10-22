@@ -1,18 +1,18 @@
-package com.sovworks.eds.android.tasks;
+package com.igeltech.nevercrypt.android.tasks;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.helpers.Util;
-import com.sovworks.eds.android.locations.EncFsLocationBase;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.helpers.Util;
+import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.io.IOException;
 
 public class ChangeEncFsPasswordTask extends ChangeEDSLocationPasswordTask
 {
-    public static final String TAG = "com.sovworks.eds.android.tasks.ChangeContainerPasswordTask";
+    public static final String TAG = "com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask";
     //public static final String ARG_FIN_ACTIVITY = "fin_activity";
 
 	public static ChangeEncFsPasswordTask newInstance(EncFsLocationBase container, Bundle passwordDialogResult)

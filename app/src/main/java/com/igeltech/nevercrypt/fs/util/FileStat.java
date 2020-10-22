@@ -1,4 +1,4 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 public class FileStat
 {

@@ -1,7 +1,7 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
-import com.sovworks.eds.crypto.modes.XTS;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.crypto.modes.XTS;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.File;
 import java.io.IOException;

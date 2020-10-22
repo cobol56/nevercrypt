@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.dialogs;
+package com.igeltech.nevercrypt.android.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 public class ProgressDialog extends AppCompatDialogFragment
 {
 	public static final String TAG = "ProgressDialog";
-	public static final String ARG_TITLE = "com.sovworks.eds.android.TITLE";
+	public static final String ARG_TITLE = "com.igeltech.nevercrypt.android.TITLE";
 
 	public static ProgressDialog showDialog(FragmentManager fm, String title)
 	{

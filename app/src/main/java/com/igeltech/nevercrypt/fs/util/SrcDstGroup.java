@@ -1,9 +1,9 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.sovworks.eds.android.Logger;
+import com.igeltech.nevercrypt.android.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;

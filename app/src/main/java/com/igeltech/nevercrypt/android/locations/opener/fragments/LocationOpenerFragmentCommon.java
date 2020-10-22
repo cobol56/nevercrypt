@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.locations.opener.fragments;
+package com.igeltech.nevercrypt.android.locations.opener.fragments;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.dialogs.PasswordDialog;
-import com.sovworks.eds.android.dialogs.PasswordDialogBase;
-import com.sovworks.eds.android.errors.WrongPasswordOrBadContainerException;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.crypto.SecureBuffer;
-import com.sovworks.eds.exceptions.WrongPasswordException;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
+import com.igeltech.nevercrypt.android.dialogs.PasswordDialogBase;
+import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerException;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.crypto.SecureBuffer;
+import com.igeltech.nevercrypt.exceptions.WrongPasswordException;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public class LocationOpenerFragmentCommon extends LocationOpenerBaseFragment implements PasswordDialog.PasswordReceiver
 {

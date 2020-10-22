@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.filemanager.fragments;
+package com.igeltech.nevercrypt.android.filemanager.fragments;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -25,42 +25,42 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.FileListViewAdapter;
-import com.sovworks.eds.android.filemanager.FileManagerFragment;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.filemanager.dialogs.DeleteConfirmationDialog;
-import com.sovworks.eds.android.filemanager.dialogs.NewFileDialog;
-import com.sovworks.eds.android.filemanager.dialogs.RenameFileDialog;
-import com.sovworks.eds.android.filemanager.dialogs.SortDialog;
-import com.sovworks.eds.android.filemanager.records.BrowserRecord;
-import com.sovworks.eds.android.filemanager.records.ExecutableFileRecord;
-import com.sovworks.eds.android.filemanager.tasks.CopyToClipboardTask;
-import com.sovworks.eds.android.filemanager.tasks.CreateNewFile;
-import com.sovworks.eds.android.filemanager.tasks.OpenAsContainerTask;
-import com.sovworks.eds.android.filemanager.tasks.PrepareToSendTask;
-import com.sovworks.eds.android.filemanager.tasks.RenameFileTask;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.fs.ContentResolverFs;
-import com.sovworks.eds.android.helpers.CachedPathInfo;
-import com.sovworks.eds.android.helpers.ExtendedFileInfoLoader;
-import com.sovworks.eds.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.sovworks.eds.android.locations.ContentResolverLocation;
-import com.sovworks.eds.android.locations.DocumentTreeLocation;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.sovworks.eds.android.providers.MainContentProvider;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.SrcDstGroup;
-import com.sovworks.eds.fs.util.SrcDstPlain;
-import com.sovworks.eds.fs.util.SrcDstRec;
-import com.sovworks.eds.fs.util.SrcDstSingle;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.FileListViewAdapter;
+import com.igeltech.nevercrypt.android.filemanager.FileManagerFragment;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.dialogs.DeleteConfirmationDialog;
+import com.igeltech.nevercrypt.android.filemanager.dialogs.NewFileDialog;
+import com.igeltech.nevercrypt.android.filemanager.dialogs.RenameFileDialog;
+import com.igeltech.nevercrypt.android.filemanager.dialogs.SortDialog;
+import com.igeltech.nevercrypt.android.filemanager.records.BrowserRecord;
+import com.igeltech.nevercrypt.android.filemanager.records.ExecutableFileRecord;
+import com.igeltech.nevercrypt.android.filemanager.tasks.CopyToClipboardTask;
+import com.igeltech.nevercrypt.android.filemanager.tasks.CreateNewFile;
+import com.igeltech.nevercrypt.android.filemanager.tasks.OpenAsContainerTask;
+import com.igeltech.nevercrypt.android.filemanager.tasks.PrepareToSendTask;
+import com.igeltech.nevercrypt.android.filemanager.tasks.RenameFileTask;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.fs.ContentResolverFs;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
+import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
+import com.igeltech.nevercrypt.android.locations.ContentResolverLocation;
+import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.android.providers.MainContentProvider;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.SrcDstGroup;
+import com.igeltech.nevercrypt.fs.util.SrcDstPlain;
+import com.igeltech.nevercrypt.fs.util.SrcDstRec;
+import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.trello.rxlifecycle3.components.support.RxAppCompatDialogFragment;
 
@@ -80,7 +80,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-import static com.sovworks.eds.android.settings.UserSettingsCommon.FILE_BROWSER_SORT_MODE;
+import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.FILE_BROWSER_SORT_MODE;
 
 public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment implements
         SortDialog.SortingReceiver,
@@ -88,10 +88,10 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         LocationOpenerBaseFragment.LocationOpenerResultReceiver,
         NewFileDialog.Receiver
 {
-    public static final String TAG = "com.sovworks.eds.android.filemanager.fragments.FileListViewFragment";
+    public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment";
 
     public static final int REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER = AppCompatActivity.RESULT_FIRST_USER;
-    public static final String ARG_SCROLL_POSITION = "com.sovworks.eds.android.SCROLL_POSITION";
+    public static final String ARG_SCROLL_POSITION = "com.igeltech.nevercrypt.android.SCROLL_POSITION";
 
     public static ArrayList<Path> getPathsFromRecords(List<? extends BrowserRecord> records)
 	{
@@ -463,7 +463,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         getFileManagerActivity().invalidateOptionsMenu();
     }
 
-    public static final String ARG_WIPE_FILES = "com.sovworks.eds.android.WIPE_FILES";
+    public static final String ARG_WIPE_FILES = "com.igeltech.nevercrypt.android.WIPE_FILES";
 
     protected EditText _selectedFileEditText;
     protected AppCompatTextView _currentPathTextView;

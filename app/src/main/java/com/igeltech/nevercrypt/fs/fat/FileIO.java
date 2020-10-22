@@ -1,9 +1,9 @@
-package com.sovworks.eds.fs.fat;
+package com.igeltech.nevercrypt.fs.fat;
 
-import com.sovworks.eds.fs.File;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.fat.FatFS.ClusterChainIO;
-import com.sovworks.eds.fs.fat.FatFS.FatPath;
+import com.igeltech.nevercrypt.fs.File;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.fat.FatFS.ClusterChainIO;
+import com.igeltech.nevercrypt.fs.fat.FatFS.FatPath;
 
 import java.io.IOException;
 import java.util.Date;

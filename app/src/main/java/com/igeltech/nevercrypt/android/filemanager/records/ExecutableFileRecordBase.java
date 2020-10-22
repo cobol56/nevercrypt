@@ -1,20 +1,20 @@
-package com.sovworks.eds.android.filemanager.records;
+package com.igeltech.nevercrypt.android.filemanager.records;
 
 import android.content.Context;
 import android.net.Uri;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.helpers.TempFilesMonitor;
-import com.sovworks.eds.android.service.FileOpsService;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.exceptions.ApplicationException;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.Openable;
-import com.sovworks.eds.settings.Settings;
-import com.sovworks.eds.settings.SettingsCommon;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
+import com.igeltech.nevercrypt.android.service.FileOpsService;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.exceptions.ApplicationException;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.Openable;
+import com.igeltech.nevercrypt.settings.Settings;
+import com.igeltech.nevercrypt.settings.SettingsCommon;
 
 import java.io.IOException;
 

@@ -1,8 +1,8 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
-import com.sovworks.eds.fs.DataOutput;
-import com.sovworks.eds.fs.RandomAccessIO;
-import com.sovworks.eds.fs.RandomStorageAccess;
+import com.igeltech.nevercrypt.fs.DataOutput;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.RandomStorageAccess;
 
 import java.io.IOException;
 import java.io.OutputStream;

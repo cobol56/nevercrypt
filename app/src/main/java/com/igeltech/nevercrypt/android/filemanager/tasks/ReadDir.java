@@ -1,15 +1,15 @@
-package com.sovworks.eds.android.filemanager.tasks;
+package com.igeltech.nevercrypt.android.filemanager.tasks;
 
 
 import android.content.Context;
 
-import com.sovworks.eds.android.filemanager.DirectorySettings;
-import com.sovworks.eds.android.filemanager.records.BrowserRecord;
-import com.sovworks.eds.android.filemanager.records.ExecutableFileRecord;
-import com.sovworks.eds.android.filemanager.records.FolderRecord;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.Location;
+import com.igeltech.nevercrypt.android.filemanager.DirectorySettings;
+import com.igeltech.nevercrypt.android.filemanager.records.BrowserRecord;
+import com.igeltech.nevercrypt.android.filemanager.records.ExecutableFileRecord;
+import com.igeltech.nevercrypt.android.filemanager.records.FolderRecord;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.IOException;
 import java.util.ArrayList;

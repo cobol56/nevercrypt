@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="add_container">Dodaj istniejący kontener</string>
   <string name="ok">OK</string>
-    <string name="select">Wybierz</string>
+  <string name="select">Wybierz</string>
   <string name="enter_new_folder_name">Podaj nową nazwę katalogu</string>
   <string name="new_file">Nowy plik</string>
   <string name="new_dir">Nowy katalog</string>
@@ -81,7 +81,7 @@
   <string name="show_previews">Pokaż podgląd w menedżerze plików</string>
   <string name="open_read_only">Otwórz w trybie tylko odczyt</string>
   <string name="disable_wide_screen_layouts">Wyłącz format szerokiego ekranu</string>
-  <string name="close_all_containers">Zamknij wszystkie kontenery EDS</string>
+  <string name="close_all_containers">Zamknij wszystkie kontenery <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="fill_free_space_with_random_data">Wypełnij wolną przestrzeń losowymi danymi</string>
   <string name="ascending">Rosnąco</string>
   <string name="descending">Malejąco</string>
@@ -130,7 +130,7 @@
   <string name="save_password_desc">Zapisz hasło w kontenerze. Zapisanie hasła nie jest bezpieczne.</string>
   <string name="enable_full_screen_mode">Włącz tryb pełnoekranowy</string>
   <string name="never_save_history">Nigdy nie zapisuj linków do kontenerów</string>
-  <string name="never_save_history_desc">Linki do kontenerów będą usunięte, po zamknięciu programu EDS</string>
+  <string name="never_save_history_desc">Linki do kontenerów będą usunięte, po zamknięciu programu <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="contact_support">Kontakt wsparcia technicznego</string>
   <string name="no_free_space_left">Brak wolnej przestrzeni</string>
   <string name="speed">Bieżaca prędkość: %1$.1f Mb/s</string>

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.navigdrawer;
+package com.igeltech.nevercrypt.android.navigdrawer;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -12,7 +12,7 @@ import android.widget.ListView;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.sovworks.eds.android.R;
+import com.igeltech.nevercrypt.android.R;
 
 import java.util.Collection;
 
@@ -192,7 +192,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     }
 
     public static boolean IS_ANIMATING = false;
-    private static final String STATE_EXPANDED_POSITION = "com.sovworks.eds.android.navigdrawer.DrawerSubMenuBase.EXPANDED_POSITION";
+    private static final String STATE_EXPANDED_POSITION = "com.igeltech.nevercrypt.android.navigdrawer.DrawerSubMenuBase.EXPANDED_POSITION";
     private boolean _isExpanded;
 
 

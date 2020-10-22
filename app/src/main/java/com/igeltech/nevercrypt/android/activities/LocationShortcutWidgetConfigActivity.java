@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.activities;
+package com.igeltech.nevercrypt.android.activities;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
@@ -9,19 +9,19 @@ import android.view.MenuItem;
 
 import androidx.fragment.app.Fragment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.fragments.PropertiesFragmentBase;
-import com.sovworks.eds.android.settings.PathPropertyEditor;
-import com.sovworks.eds.android.settings.PropertyEditor;
-import com.sovworks.eds.android.settings.TextPropertyEditor;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.android.widgets.LocationShortcutWidget;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.locations.Openable;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
+import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.settings.TextPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.android.widgets.LocationShortcutWidget;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.locations.Openable;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -12,22 +12,22 @@ import android.os.PowerManager;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.sovworks.eds.android.EdsApplication;
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.errors.InputOutputException;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.providers.MainContentProvider;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.fs.util.SrcDstCollection;
-import com.sovworks.eds.fs.util.StringPathUtil;
-import com.sovworks.eds.locations.DeviceBasedLocation;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.errors.InputOutputException;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.providers.MainContentProvider;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
+import com.igeltech.nevercrypt.fs.util.StringPathUtil;
+import com.igeltech.nevercrypt.locations.DeviceBasedLocation;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,11 +40,11 @@ import java.util.regex.Pattern;
 public abstract class FileOpsServiceBase extends IntentService
 {
     public static final String INTENT_PARAM_TASK_ID = "TASK_ID";
-	public static final String BROADCAST_FILE_OPERATION_COMPLETED = "com.sovworks.eds.android.FILE_OPERATION_COMPLETED";
-    public static final String ARG_NOTIFICATION_ID = "com.sovworks.eds.NOTIFICATION_ID";
+	public static final String BROADCAST_FILE_OPERATION_COMPLETED = "com.igeltech.nevercrypt.android.FILE_OPERATION_COMPLETED";
+    public static final String ARG_NOTIFICATION_ID = "com.igeltech.nevercrypt.NOTIFICATION_ID";
 
-    public static final String ARG_TASK_COMPLETED = "com.sovworks.eds.android.TASK_COMPLETED";
-    public static final String ARG_ORIG_INTENT = "com.sovworks.eds.android.ORIG_INTENT";
+    public static final String ARG_TASK_COMPLETED = "com.igeltech.nevercrypt.android.TASK_COMPLETED";
+    public static final String ARG_ORIG_INTENT = "com.igeltech.nevercrypt.android.ORIG_INTENT";
 
 	public static Location getSecTempFolderLocation(String workDir, Context context) throws IOException
 	{
@@ -119,7 +119,7 @@ public abstract class FileOpsServiceBase extends IntentService
 		return getMimeTypeFromExtension(context, path.getFile());
 	}
 
-	public static String getMimeTypeFromExtension(Context context, com.sovworks.eds.fs.File file) throws IOException
+	public static String getMimeTypeFromExtension(Context context, com.igeltech.nevercrypt.fs.File file) throws IOException
 	{
         return getMimeTypeFromExtension(context, new StringPathUtil(file.getName()).getFileExtension());
 	}

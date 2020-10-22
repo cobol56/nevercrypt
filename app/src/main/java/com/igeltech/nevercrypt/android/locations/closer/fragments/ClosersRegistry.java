@@ -1,8 +1,8 @@
-package com.sovworks.eds.android.locations.closer.fragments;
+package com.igeltech.nevercrypt.android.locations.closer.fragments;
 
 
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.Openable;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.Openable;
 
 public class ClosersRegistry
 {

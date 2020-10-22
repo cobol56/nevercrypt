@@ -1,11 +1,11 @@
-package com.sovworks.eds.crypto;
+package com.igeltech.nevercrypt.crypto;
 
 import android.util.SparseArray;
 
-import com.sovworks.eds.container.VolumeLayout;
-import com.sovworks.eds.fs.File.AccessMode;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.container.VolumeLayout;
+import com.igeltech.nevercrypt.fs.File.AccessMode;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings.program;
+package com.igeltech.nevercrypt.android.settings.program;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,26 +9,26 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.fragments.TaskFragment;
-import com.sovworks.eds.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.sovworks.eds.android.settings.ButtonPropertyEditor;
-import com.sovworks.eds.fs.Path;
-import com.sovworks.eds.fs.exfat.ExFat;
-import com.sovworks.eds.fs.std.StdFs;
-import com.sovworks.eds.fs.util.PathUtil;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.GlobalConfig;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.fragments.TaskFragment;
+import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
+import com.igeltech.nevercrypt.android.settings.ButtonPropertyEditor;
+import com.igeltech.nevercrypt.fs.Path;
+import com.igeltech.nevercrypt.fs.exfat.ExFat;
+import com.igeltech.nevercrypt.fs.std.StdFs;
+import com.igeltech.nevercrypt.fs.util.PathUtil;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.io.File;
 import java.io.IOException;
 
-import static com.sovworks.eds.locations.LocationsManagerBase.PARAM_LOCATION_URI;
+import static com.igeltech.nevercrypt.locations.LocationsManagerBase.PARAM_LOCATION_URI;
 
 public class InstallExFatModulePropertyEditor extends ButtonPropertyEditor
 {

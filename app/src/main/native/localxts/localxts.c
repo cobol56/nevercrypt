@@ -11,9 +11,9 @@
 #include <block_cipher.h>
 #include "../xts/xts.h"
 
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "EDS (native code localxts)", __VA_ARGS__);
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code localxts)", __VA_ARGS__);
 #ifdef DEBUG
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "EDS (native code localxts)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code localxts)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif
@@ -29,7 +29,7 @@ typedef struct
     int fd;
 } context_t;
 
-JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_initContext(
+JNIEXPORT jlong JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_initContext(
     JNIEnv *env, 
     jclass cls, 
     jstring pathString, 
@@ -144,7 +144,7 @@ static int flush_buffer(context_t *ctx)
     return write_buffer(ctx)<0 ? -1 : 0;
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_write(
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_write(
     JNIEnv *env, 
     jclass cls, 
     jlong context, 
@@ -183,7 +183,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_write(
     return res;
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_read(
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_read(
     JNIEnv *env, 
     jclass cls, 
     jlong context, 
@@ -227,7 +227,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_read(
     return length;
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_seek(
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_seek(
     JNIEnv *env, 
     jclass cls, 
     jlong context, 
@@ -247,7 +247,7 @@ JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_seek(
     ctx->current_position = position;
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_ftruncate(
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_ftruncate(
     JNIEnv *env, 
     jclass cls, 
     jlong context, 
@@ -257,7 +257,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_ftrunc
     return ftruncate (ctx->fd, newLength);
 }
 
-JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_getPosition(
+JNIEXPORT jlong JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_getPosition(
     JNIEnv *env, 
     jclass cls, 
     jlong context)
@@ -265,7 +265,7 @@ JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_getPo
     return ((context_t *)context)->current_position;
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_flush(
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_flush(
     JNIEnv *env, 
     jclass cls, 
     jlong context)
@@ -276,7 +276,7 @@ JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_flush(
     fsync(ctx->fd);
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_LocalEncryptedFileXTS_close(
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_LocalEncryptedFileXTS_close(
     JNIEnv *env, 
     jclass cls, 
     jlong context)

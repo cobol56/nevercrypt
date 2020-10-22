@@ -37,15 +37,15 @@ Part of this code is based on Brian Gladman's xts implementation.
 #include <android/log.h>
 #include "xts.h"
 
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "EDS (native code edsxts)", __VA_ARGS__);
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code edsxts)", __VA_ARGS__);
 #ifdef DEBUG
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "EDS (native code edsxts)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code edsxts)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif
 
 
-JNIEXPORT jlong JNICALL Java_com_sovworks_eds_crypto_modes_XTS_initContext(JNIEnv *env, jobject obj)
+JNIEXPORT jlong JNICALL Java_com_igeltech_nevercrypt_crypto_modes_XTS_initContext(JNIEnv *env, jobject obj)
 {
     xts_context *ctx = malloc(sizeof(xts_context));
     if(ctx == NULL)
@@ -303,13 +303,13 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved)
 }
 
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_modes_XTS_attachNativeCipher(JNIEnv *env, jobject obj, jlong context, jlong cipherAPtr, jlong cipherBPtr)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_modes_XTS_attachNativeCipher(JNIEnv *env, jobject obj, jlong context, jlong cipherAPtr, jlong cipherBPtr)
 {
 	xts_context *ctx = (xts_context *)context;
 	attach_ciphers_to_tail(ctx,(block_cipher_interface *)cipherAPtr,(block_cipher_interface *)cipherBPtr);
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_XTS_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jlong sector, jlong context)
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_modes_XTS_encrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jlong sector, jlong context)
 {
 	jbyte *raw_data = (*env)->GetPrimitiveArrayCritical(env,data,NULL);
 	if(raw_data == NULL)
@@ -319,7 +319,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_XTS_encrypt(JNIEnv *en
 	return 0;
 }
 
-JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_XTS_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jlong sector, jlong context)
+JNIEXPORT jint JNICALL Java_com_igeltech_nevercrypt_crypto_modes_XTS_decrypt(JNIEnv *env, jobject obj, jbyteArray data, jint offset, jint length, jlong sector, jlong context)
 {	
 	jbyte *raw_data = (*env)->GetPrimitiveArrayCritical(env,data,NULL);
 	if(raw_data == NULL)
@@ -329,7 +329,7 @@ JNIEXPORT jint JNICALL Java_com_sovworks_eds_crypto_modes_XTS_decrypt(JNIEnv *en
 	return 0;
 }
 
-JNIEXPORT void JNICALL Java_com_sovworks_eds_crypto_modes_XTS_closeContext(JNIEnv *env, jobject obj, jlong context)
+JNIEXPORT void JNICALL Java_com_igeltech_nevercrypt_crypto_modes_XTS_closeContext(JNIEnv *env, jobject obj, jlong context)
 {
 	if((void *)context!=NULL)
 	{

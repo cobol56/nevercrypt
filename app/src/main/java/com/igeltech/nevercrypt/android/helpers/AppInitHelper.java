@@ -1,11 +1,11 @@
-package com.sovworks.eds.android.helpers;
+package com.igeltech.nevercrypt.android.helpers;
 
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.MasterPasswordDialog;
-import com.sovworks.eds.android.errors.UserException;
-import com.sovworks.eds.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog;
+import com.igeltech.nevercrypt.android.errors.UserException;
+import com.igeltech.nevercrypt.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.concurrent.CancellationException;

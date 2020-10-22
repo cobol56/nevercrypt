@@ -1,7 +1,7 @@
-package com.sovworks.eds.fs.util;
+package com.igeltech.nevercrypt.fs.util;
 
 
-import com.sovworks.eds.fs.RandomAccessIO;
+import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,6 +1,6 @@
-package com.sovworks.eds.android.filemanager.comparators;
+package com.igeltech.nevercrypt.android.filemanager.comparators;
 
-import com.sovworks.eds.android.helpers.CachedPathInfo;
+import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
 
 import java.io.IOException;
 import java.util.Date;

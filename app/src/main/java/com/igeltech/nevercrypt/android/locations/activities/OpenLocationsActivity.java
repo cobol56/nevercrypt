@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.locations.activities;
+package com.igeltech.nevercrypt.android.locations.activities;
 
 import android.os.Bundle;
 
@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.helpers.AppInitHelper;
-import com.sovworks.eds.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.helpers.AppInitHelper;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class OpenLocationsActivity extends RxAppCompatActivity
 {
     public static class MainFragment extends Fragment implements LocationOpenerBaseFragment.LocationOpenerResultReceiver
     {
-        public static final String TAG = "com.sovworks.eds.android.locations.activities.OpenLocationsActivity.MainFragment";
+        public static final String TAG = "com.igeltech.nevercrypt.android.locations.activities.OpenLocationsActivity.MainFragment";
 
         @Override
         public void onCreate(Bundle state)

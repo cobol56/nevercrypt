@@ -1,16 +1,16 @@
-package com.sovworks.eds.android.settings.container;
+package com.igeltech.nevercrypt.android.settings.container;
 
 import android.os.Bundle;
 
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.dialogs.PasswordDialog;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragment;
-import com.sovworks.eds.android.locations.fragments.EDSLocationSettingsFragmentBase;
-import com.sovworks.eds.android.settings.ButtonPropertyEditor;
-import com.sovworks.eds.android.settings.PropertyEditor;
-import com.sovworks.eds.android.tasks.ChangeContainerPasswordTask;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.settings.ButtonPropertyEditor;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class ChangePasswordPropertyEditor extends ButtonPropertyEditor implements PasswordDialog.PasswordReceiver
 {

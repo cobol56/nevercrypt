@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.settings.dialogs;
+package com.igeltech.nevercrypt.android.settings.dialogs;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,11 +10,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.settings.PropertyEditor;
-import com.sovworks.eds.android.settings.PropertyEditor.Host;
-import com.sovworks.eds.android.settings.views.PropertiesView;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor;
+import com.igeltech.nevercrypt.android.settings.PropertyEditor.Host;
+import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 
 public class TextEditDialog extends AppCompatDialogFragment
 {
@@ -25,9 +25,9 @@ public class TextEditDialog extends AppCompatDialogFragment
 		void setResult(String text) throws Exception;
 	}
 
-	public static final String ARG_TEXT = "com.sovworks.eds.android.ARG_TEXT";
-	public static final String ARG_MESSAGE_ID = "com.sovworks.eds.android.ARG_MESSAGE_ID";
-	public static final String ARG_EDIT_TEXT_RES_ID = "com.sovworks.eds.android.EDIT_TEXT_RES_ID";
+	public static final String ARG_TEXT = "com.igeltech.nevercrypt.android.ARG_TEXT";
+	public static final String ARG_MESSAGE_ID = "com.igeltech.nevercrypt.android.ARG_MESSAGE_ID";
+	public static final String ARG_EDIT_TEXT_RES_ID = "com.igeltech.nevercrypt.android.EDIT_TEXT_RES_ID";
 
 	@NonNull
 	@Override

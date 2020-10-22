@@ -1,4 +1,4 @@
-package com.sovworks.eds.android.service;
+package com.igeltech.nevercrypt.android.service;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -15,18 +15,18 @@ import android.os.SystemClock;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.ServiceCompat;
 
-import com.sovworks.eds.android.Logger;
-import com.sovworks.eds.android.R;
-import com.sovworks.eds.android.filemanager.activities.FileManagerActivity;
-import com.sovworks.eds.android.helpers.CompatHelper;
-import com.sovworks.eds.android.helpers.TempFilesMonitor;
-import com.sovworks.eds.android.locations.activities.CloseLocationsActivity;
-import com.sovworks.eds.android.settings.UserSettings;
-import com.sovworks.eds.fs.util.Util;
-import com.sovworks.eds.locations.EDSLocation;
-import com.sovworks.eds.locations.Location;
-import com.sovworks.eds.locations.LocationsManager;
-import com.sovworks.eds.settings.Settings;
+import com.igeltech.nevercrypt.android.Logger;
+import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.helpers.CompatHelper;
+import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
+import com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity;
+import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.fs.util.Util;
+import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.Location;
+import com.igeltech.nevercrypt.locations.LocationsManager;
+import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ public class LocationsServiceBase extends Service
 		context.stopService(new Intent(context, LocationsService.class));
 	}
 
-	public static final String ACTION_CHECK_INACTIVE_LOCATION = "com.sovworks.eds.android.CHECK_INACTIVE_LOCATION";
+	public static final String ACTION_CHECK_INACTIVE_LOCATION = "com.igeltech.nevercrypt.android.CHECK_INACTIVE_LOCATION";
 
 	public static class InactivityCheckReceiver extends BroadcastReceiver
 	{

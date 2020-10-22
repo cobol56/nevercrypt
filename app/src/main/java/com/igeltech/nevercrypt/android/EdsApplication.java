@@ -1,4 +1,4 @@
-package com.sovworks.eds.android;
+package com.igeltech.nevercrypt.android;
 
 import android.content.Context;
 
