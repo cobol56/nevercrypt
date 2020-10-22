@@ -8,55 +8,62 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_main"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
-                android:contentDescription="@string/eds"/>
-            <TextView
-                android:id="@+id/about_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textStyle="bold"
-                android:inputType="none"
-                android:text="@string/eds"
-                android:textSize="20sp"
-                android:layout_marginTop="1dp"
-                android:layout_marginBottom="1dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_main"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:contentDescription="@string/eds"/>
 
-            <TextView
-                android:id="@+id/activationIdTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:text="@string/activation_id"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="4dp"
-                android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/about_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:inputType="none"
+                    android:text="@string/eds"
+                    android:textSize="20sp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp"/>
 
-            <Button
-                android:id="@+id/close_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/version_history"
-                android:layout_marginTop="1dp"/>
-            <Button
-                android:id="@+id/contact_support_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/contact_support"
-                android:layout_marginTop="4dp"/>
-            <Button
-                android:id="@+id/get_program_log"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/get_program_log"
-                android:layout_marginTop="4dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:inputType="none"
+                    android:text="@string/donation_notice" />
 
+                <Button
+                    android:id="@+id/donation_button"
+                    android:layout_width="match_parent"
+                    android:text="@string/make_a_donation"
+                    style="@style/Button" />
+                <Button
+                    android:id="@+id/homepage_button"
+                    android:layout_width="match_parent"
+                    android:text="@string/homepage"
+                    style="@style/Button" />
+                <Button
+                    android:id="@+id/check_source_code_button"
+                    android:layout_width="match_parent"
+                    android:text="@string/check_source_code"
+                    style="@style/Button" />
+
+                <Button
+                    android:id="@+id/get_program_log"
+                    android:layout_width="match_parent"
+                    android:text="@string/get_program_log"
+                    style="@style/Button" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+                <Button
+                    android:id="@+id/close_button"
+                    android:layout_width="match_parent"
+                    android:text="@string/close"
+                    style="@style/Button" />
         </LinearLayout>
 </ScrollView>

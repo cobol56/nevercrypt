@@ -126,5 +126,19 @@
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/close_all_containers_widget_info"/>
         </receiver>
+        <provider android:authorities="com.sovworks.eds.android.providers.main.lite"
+                  android:exported="true"
+                  android:name=".providers.MainContentProvider">
+            <grant-uri-permission android:path="selection" />
+        </provider>
+        <provider android:authorities="com.sovworks.eds.android.providers.documents.lite"
+                  android:exported="true"
+                  android:name=".providers.ContainersDocumentProvider"
+                  android:grantUriPermissions="true"
+                  android:permission="android.permission.MANAGE_DOCUMENTS">
+            <intent-filter>
+                <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
+            </intent-filter>
+        </provider>
     </application>
 </manifest> 

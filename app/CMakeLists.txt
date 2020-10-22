@@ -96,6 +96,3 @@ add_library( edsgost
        SHARED
              src/main/native/gost/edsgost.c
              src/main/native/gost/gost89.c )
-
-include(CMakeLists-full.txt)
-include(CMakeLists-fsm.txt)
