@@ -1,4 +1,4 @@
-#include "com_sovworks_eds_crypto_hash_RIPEMD160.h"
+#include "com_igeltech_nevercrypt_crypto_hash_RIPEMD160.h"
 
 #include <stdlib.h>
 

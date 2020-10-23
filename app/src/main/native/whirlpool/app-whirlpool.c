@@ -1,4 +1,4 @@
-#include "com_sovworks_eds_crypto_hash_Whirlpool.h"
+#include "com_igeltech_nevercrypt_crypto_hash_Whirlpool.h"
 
 #include <memory.h>
 #include "whirlpool.h"

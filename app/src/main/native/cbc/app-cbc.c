@@ -3,7 +3,7 @@
 #pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
 #pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
 
-#include "com_sovworks_eds_crypto_modes_CBC.h"
+#include "com_igeltech_nevercrypt_crypto_modes_CBC.h"
 #include <stdlib.h>
 #include <android/log.h>
 #include "cbc.h"
