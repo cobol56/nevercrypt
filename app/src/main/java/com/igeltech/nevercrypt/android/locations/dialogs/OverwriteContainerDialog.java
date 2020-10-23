@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 
 public class OverwriteContainerDialog extends DialogFragment
 {
@@ -63,7 +63,7 @@ public class OverwriteContainerDialog extends DialogFragment
 	
 	protected void doOverwrite()
     {
-        CreateEDSLocationFragment f = (CreateEDSLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        CreateLocationFragment f = (CreateLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         if (f != null)
         {
             f.setOverwrite(true);

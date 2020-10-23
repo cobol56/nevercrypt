@@ -13,7 +13,7 @@ import com.igeltech.nevercrypt.android.service.LocationsService;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.fs.util.SrcDstRec;
 import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.locations.Openable;
@@ -70,7 +70,7 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
         LocationsManager lm = LocationsManager.getLocationsManager(context);
         LocationsManager.broadcastLocationChanged(context, loc);
         lm.unregOpenedLocation(loc);
-        if(loc instanceof EDSLocation)
+        if(loc instanceof CryptoLocation)
             ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(context);
 
         if(!lm.hasOpenLocations())

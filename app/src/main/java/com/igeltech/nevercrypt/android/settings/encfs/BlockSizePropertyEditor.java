@@ -1,13 +1,13 @@
 package com.igeltech.nevercrypt.android.settings.encfs;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateEncFsTaskFragment;
 import com.igeltech.nevercrypt.android.settings.IntPropertyEditor;
 
 public class BlockSizePropertyEditor extends IntPropertyEditor
 {
-    public BlockSizePropertyEditor(CreateEDSLocationFragment hostFragment)
+    public BlockSizePropertyEditor(CreateLocationFragment hostFragment)
     {
         super(
                 hostFragment,
@@ -35,8 +35,8 @@ public class BlockSizePropertyEditor extends IntPropertyEditor
     }
 
 
-    protected CreateEDSLocationFragment getHostFragment()
+    protected CreateLocationFragment getHostFragment()
     {
-        return (CreateEDSLocationFragment) getHost();
+        return (CreateLocationFragment) getHost();
     }
 }

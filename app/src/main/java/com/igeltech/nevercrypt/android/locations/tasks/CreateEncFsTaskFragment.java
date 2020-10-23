@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.errors.UserException;
-import com.igeltech.nevercrypt.container.EDSLocationFormatter;
+import com.igeltech.nevercrypt.container.LocationFormatter;
 import com.igeltech.nevercrypt.container.EncFsFormatter;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.fs.Path;
@@ -13,7 +13,7 @@ import com.igeltech.nevercrypt.fs.util.PathUtil;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.Openable;
 
-public class CreateEncFsTaskFragment extends CreateEDSLocationTaskFragment
+public class CreateEncFsTaskFragment extends CreateLocationTaskFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.CreateEncFsTaskFragment";
 
@@ -28,13 +28,13 @@ public class CreateEncFsTaskFragment extends CreateEDSLocationTaskFragment
     public static final String ARG_ALLOW_EMPTY_BLOCKS = "com.igeltech.nevercrypt.android.ALLOW_EMPTY_BLOCKS";
 
     @Override
-    protected EDSLocationFormatter createFormatter()
+    protected LocationFormatter createFormatter()
     {
         return new EncFsFormatter();
     }
 
     @Override
-    protected void initFormatter(TaskState state, EDSLocationFormatter formatter, SecureBuffer password) throws Exception
+    protected void initFormatter(TaskState state, LocationFormatter formatter, SecureBuffer password) throws Exception
     {
         super.initFormatter(state, formatter, password);
         Bundle args = getArguments();

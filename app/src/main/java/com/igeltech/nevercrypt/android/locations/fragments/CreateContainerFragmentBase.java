@@ -34,13 +34,13 @@ import com.igeltech.nevercrypt.android.settings.encfs.NumKDFIterationsPropertyEd
 import com.igeltech.nevercrypt.android.settings.encfs.RandBytesPerBlockPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.encfs.UniqueIVPropertyEditor;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
-import com.igeltech.nevercrypt.container.EDSLocationFormatter;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.LocationFormatter;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.container.VolumeLayout;
 
 import java.io.File;
 
-public abstract class CreateContainerFragmentBase extends CreateEDSLocationFragment implements PasswordDialogBase.PasswordReceiver
+public abstract class CreateContainerFragmentBase extends CreateLocationFragment implements PasswordDialogBase.PasswordReceiver
 {
     public void changeUniqueIVDependentOptions()
     {
@@ -51,7 +51,7 @@ public abstract class CreateContainerFragmentBase extends CreateEDSLocationFragm
 
     public boolean isEncFsFormat()
     {
-        return EDSLocationFormatter.FORMAT_ENCFS.equals(_state.getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT));
+        return LocationFormatter.FORMAT_ENCFS.equals(_state.getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT));
     }
 
     public VolumeLayout getSelectedVolumeLayout()
@@ -123,7 +123,7 @@ public abstract class CreateContainerFragmentBase extends CreateEDSLocationFragm
     {
         super.createProperties();
         if(!_state.containsKey(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT))
-            _state.putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, EdsContainer.getSupportedFormats().get(0).getFormatName());
+            _state.putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, Container.getSupportedFormats().get(0).getFormatName());
     }
 
     @Override
@@ -138,7 +138,7 @@ public abstract class CreateContainerFragmentBase extends CreateEDSLocationFragm
 
     protected ContainerFormatInfo getCurrentContainerFormatInfo()
     {
-        return EdsContainer.findFormatByName(_state.getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT));
+        return Container.findFormatByName(_state.getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT));
     }
 
     protected void createContainerProperties()

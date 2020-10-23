@@ -18,7 +18,7 @@ import com.igeltech.nevercrypt.fs.RandomAccessIO;
 import com.igeltech.nevercrypt.fs.fat.FATInfo;
 import com.igeltech.nevercrypt.fs.fat.FatFS;
 import com.igeltech.nevercrypt.locations.ContainerLocation;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.settings.Settings;
 import com.igeltech.nevercrypt.truecrypt.StdLayout;
@@ -27,12 +27,12 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 
-public abstract class ContainerFormatterBase extends EDSLocationFormatter
+public abstract class ContainerFormatterBase extends LocationFormatter
 {
 	public static ContainerLocation createBaseContainerLocationFromFormatInfo(
 			String formatName,
 			Location containerLocation,
-			EdsContainer cont,
+			Container cont,
 			Context context,
 			Settings settings)
 	{
@@ -146,7 +146,7 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 	protected int _numKDFIterations;
 
 	@Override
-	protected EDSLocation createLocation(Location location) throws IOException, ApplicationException, UserException
+	protected CryptoLocation createLocation(Location location) throws IOException, ApplicationException, UserException
 	{
 		if(_containerFormat == null)
 			throw new IllegalStateException("Container format is not specified");
@@ -193,7 +193,7 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 
 	protected ContainerLocation createContainerBasedLocation(Location containerLocation, VolumeLayout layout) throws IOException
 	{
-		EdsContainer cont = getEdsContainer(containerLocation.getCurrentPath(), layout);
+		Container cont = getEdsContainer(containerLocation.getCurrentPath(), layout);
 		return createBaseContainerLocationFromFormatInfo(
 				containerLocation,
 				cont,
@@ -203,7 +203,7 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 	}
 
 	protected ContainerLocation createBaseContainerLocationFromFormatInfo(Location containerLocation,
-																		  EdsContainer cont,
+																		  Container cont,
 																		  Context context,
 																		  Settings settings)
 	{
@@ -216,9 +216,9 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 		);
 	}
 
-	protected EdsContainer getEdsContainer(Path pathToContainer, VolumeLayout layout)
+	protected Container getEdsContainer(Path pathToContainer, VolumeLayout layout)
 	{
-		return new EdsContainer(pathToContainer, _containerFormat, layout);
+		return new Container(pathToContainer, _containerFormat, layout);
 	}
 	
 	protected void format(RandomAccessIO io, VolumeLayout layout) throws IOException, ApplicationException, UserException
@@ -267,7 +267,7 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 		if(_password != null)
 		{
 			byte[] pass = _password.getDataArray();
-			layout.setPassword(EdsContainerBase.cutPassword(
+			layout.setPassword(ContainerBase.cutPassword(
 					pass, _containerFormat.getMaxPasswordLength()
 			));
 			SecureBuffer.eraseData(pass);
@@ -285,7 +285,7 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 			cont.getExternalSettings().setHashFuncName(_hashFunc.getAlgorithm());
 	}
 
-	protected void setExternalContainerSettings(EDSLocation loc) throws ApplicationException, IOException
+	protected void setExternalContainerSettings(CryptoLocation loc) throws ApplicationException, IOException
 	{
 		setHints((ContainerLocation)loc);
 		super.setExternalContainerSettings(loc);
@@ -344,7 +344,7 @@ public abstract class ContainerFormatterBase extends EDSLocationFormatter
 
 	private ContainerFormatInfo getContainerFormatByName(String name)
 	{
-		for (ContainerFormatInfo ci : EdsContainer.getSupportedFormats())
+		for (ContainerFormatInfo ci : Container.getSupportedFormats())
 			if (ci.getFormatName().equals(name))
 				return ci;
 		return null;

@@ -7,19 +7,19 @@ import com.igeltech.nevercrypt.android.errors.UserException;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.ContainerFormatter;
 import com.igeltech.nevercrypt.container.ContainerFormatterBase;
-import com.igeltech.nevercrypt.container.EDSLocationFormatter;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.LocationFormatter;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.fs.FileSystemInfo;
 import com.igeltech.nevercrypt.fs.Path;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.Openable;
 
-public abstract class CreateContainerTaskFragmentBase extends CreateEDSLocationTaskFragment
+public abstract class CreateContainerTaskFragmentBase extends CreateLocationTaskFragment
 {
     public static ContainerFormatInfo getContainerFormatByName(String name)
     {
-        for (ContainerFormatInfo ci : EdsContainer.getSupportedFormats())
+        for (ContainerFormatInfo ci : Container.getSupportedFormats())
             if (ci.getFormatName().equals(name))
                 return ci;
         return null;
@@ -33,13 +33,13 @@ public abstract class CreateContainerTaskFragmentBase extends CreateEDSLocationT
     public static final String ARG_FILE_SYSTEM_TYPE = "com.igeltech.nevercrypt.android.FILE_SYSTEM_TYPE";
 
     @Override
-    protected EDSLocationFormatter createFormatter()
+    protected LocationFormatter createFormatter()
     {
         return new ContainerFormatter();
     }
 
     @Override
-    protected void initFormatter(TaskState state, EDSLocationFormatter formatter, SecureBuffer password) throws Exception
+    protected void initFormatter(TaskState state, LocationFormatter formatter, SecureBuffer password) throws Exception
     {
         super.initFormatter(state, formatter, password);
         Bundle args = getArguments();

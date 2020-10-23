@@ -23,7 +23,7 @@ import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
 import com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.fs.util.Util;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.settings.Settings;
@@ -59,7 +59,7 @@ public class LocationsServiceBase extends Service
 				Uri uri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
 				if(uri!=null)
 				{
-					EDSLocation loc = (EDSLocation) lm.getLocation(uri);
+					CryptoLocation loc = (CryptoLocation) lm.getLocation(uri);
 					closeIfInactive(context, loc);
 				}
 
@@ -70,7 +70,7 @@ public class LocationsServiceBase extends Service
 			}
 		}
 
-		private void closeIfInactive(Context context, EDSLocation loc)
+		private void closeIfInactive(Context context, CryptoLocation loc)
 		{
 			int tm = loc.getExternalSettings().getAutoCloseTimeout();
 			Logger.debug("Checking if " + loc.getTitle() + " container is inactive");
@@ -94,7 +94,7 @@ public class LocationsServiceBase extends Service
 		}
 	}
 
-	public static void registerInactiveContainerCheck(Context context, EDSLocation loc)
+	public static void registerInactiveContainerCheck(Context context, CryptoLocation loc)
 	{
 
         long triggerTime = loc.getExternalSettings().getAutoCloseTimeout();

@@ -28,7 +28,7 @@ import com.igeltech.nevercrypt.android.settings.container.SavePasswordPropertyEd
 import com.igeltech.nevercrypt.android.settings.container.UseExternalFileManagerPropertyEditor;
 import com.igeltech.nevercrypt.android.tasks.LoadLocationInfoTask;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.locations.Openable;
@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public abstract class EDSLocationSettingsFragmentBase extends PropertiesFragmentBase implements LocationOpenerBaseFragment.LocationOpenerResultReceiver, PropertiesHostWithLocation, PasswordDialog.PasswordReceiver
+public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBase implements LocationOpenerBaseFragment.LocationOpenerResultReceiver, PropertiesHostWithLocation, PasswordDialog.PasswordReceiver
 {
     public static class LocationInfo
     {
@@ -46,12 +46,12 @@ public abstract class EDSLocationSettingsFragmentBase extends PropertiesFragment
         public long freeSpace;
     }
 
-    public EDSLocation getLocation()
+    public CryptoLocation getLocation()
     {
         return _location;
     }
 
-    public void setLocation(EDSLocation container)
+    public void setLocation(CryptoLocation container)
     {
         _location = container;
     }
@@ -63,7 +63,7 @@ public abstract class EDSLocationSettingsFragmentBase extends PropertiesFragment
 
     public void onTargetLocationOpened(Bundle openerArgs, Location location)
     {
-        onIntSettingsAvailable((EDSLocation)location);
+        onIntSettingsAvailable((CryptoLocation)location);
     }
 
     public void onTargetLocationNotOpened(Bundle openerArgs)
@@ -181,7 +181,7 @@ public abstract class EDSLocationSettingsFragmentBase extends PropertiesFragment
     }
 
     protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
-    protected EDSLocation _location;
+    protected CryptoLocation _location;
     protected LocationInfo _locationInfo;
 
     protected abstract LocationOpenerBaseFragment getLocationOpener();
@@ -202,7 +202,7 @@ public abstract class EDSLocationSettingsFragmentBase extends PropertiesFragment
                 commitAllowingStateLoss();
     }
 
-    protected void onIntSettingsAvailable(EDSLocation loc)
+    protected void onIntSettingsAvailable(CryptoLocation loc)
     {
         setLocation(loc);
         showInternalSettings();
@@ -213,7 +213,7 @@ public abstract class EDSLocationSettingsFragmentBase extends PropertiesFragment
     @Override
     protected void createProperties()
     {
-        _location = (EDSLocation) LocationsManager.
+        _location = (CryptoLocation) LocationsManager.
                 getLocationsManager(getActivity()).
                 getFromIntent(getActivity().getIntent(), null);
         if(_location == null)

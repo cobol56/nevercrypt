@@ -16,7 +16,7 @@ import com.igeltech.nevercrypt.settings.Settings;
 import java.io.IOException;
 import java.util.Arrays;
 
-public abstract class EncFsLocationBase extends EDSLocationBase
+public abstract class EncFsLocationBase extends CryptoLocationBase
 {
     public static String getLocationId(LocationsManagerBase lm, Uri locationUri) throws Exception
     {
@@ -112,7 +112,7 @@ public abstract class EncFsLocationBase extends EDSLocationBase
 		return !_globalSettings.dontUseContentProvider() ? MainContentProvider.getContentUriFromLocation(this, path) : null;
 
 	}
-	protected static class SharedData extends EDSLocationBase.SharedData
+	protected static class SharedData extends CryptoLocationBase.SharedData
 	{
 
         public SharedData(String id, InternalSettings settings, Location location, Context ctx)

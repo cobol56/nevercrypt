@@ -1,7 +1,7 @@
 package com.igeltech.nevercrypt.android.settings.encfs;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateEncFsTaskFragment;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class KeySizePropertyEditor extends ChoiceDialogPropertyEditor
 {
-    public KeySizePropertyEditor(CreateEDSLocationFragment hostFragment)
+    public KeySizePropertyEditor(CreateLocationFragment hostFragment)
     {
         super(hostFragment, R.string.key_size, R.string.key_size_descr, hostFragment.getTag());
     }
@@ -36,8 +36,8 @@ public class KeySizePropertyEditor extends ChoiceDialogPropertyEditor
         return res;
     }
 
-    protected CreateEDSLocationFragment getHostFragment()
+    protected CreateLocationFragment getHostFragment()
     {
-        return (CreateEDSLocationFragment) getHost();
+        return (CreateLocationFragment) getHost();
     }
 }

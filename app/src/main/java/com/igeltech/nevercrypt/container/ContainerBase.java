@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class EdsContainerBase implements Closeable
+public abstract class ContainerBase implements Closeable
 {
 
 	public static ContainerFormatInfo findFormatByName(List<ContainerFormatInfo> supportedFormats, String name)
@@ -77,7 +77,7 @@ public abstract class EdsContainerBase implements Closeable
 	}
 
 
-	public EdsContainerBase(Path path, ContainerFormatInfo containerFormat, VolumeLayout layout)
+	public ContainerBase(Path path, ContainerFormatInfo containerFormat, VolumeLayout layout)
 	{			
 		_pathToContainer = path;
 		_layout = layout;

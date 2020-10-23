@@ -5,15 +5,15 @@ import android.os.Bundle;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment;
 import com.igeltech.nevercrypt.android.providers.ContainersDocumentProviderBase;
 import com.igeltech.nevercrypt.android.service.LocationsService;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.locations.Openable;
 
-public class EDSLocationOpenerFragment extends LocationOpenerFragment implements LocationOpenerBaseFragment.LocationOpenerResultReceiver
+public class LocationOpenerFragment extends LocationOpenerFragmentCommon implements LocationOpenerBaseFragment.LocationOpenerResultReceiver
 {
 
-    public static class OpenLocationTaskFragment extends LocationOpenerFragment.OpenLocationTaskFragment
+    public static class OpenLocationTaskFragment extends LocationOpenerFragmentCommon.OpenLocationTaskFragment
     {
 		@Override
         protected void openLocation(Openable location, Bundle param) throws Exception
@@ -21,9 +21,9 @@ public class EDSLocationOpenerFragment extends LocationOpenerFragment implements
             if(!location.isOpen())
             {
                 super.openLocation(location, param);
-                if(location instanceof EDSLocation)
+                if(location instanceof CryptoLocation)
                 {
-                    LocationsService.registerInactiveContainerCheck(_context, (EDSLocation) location);
+                    LocationsService.registerInactiveContainerCheck(_context, (CryptoLocation) location);
                     ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(_context);
                 }
             }
@@ -45,7 +45,7 @@ public class EDSLocationOpenerFragment extends LocationOpenerFragment implements
     @Override
     protected void openLocation()
     {
-        EDSLocation cbl = getTargetLocation();
+        CryptoLocation cbl = getTargetLocation();
         Location baseLocation = cbl.getLocation();
         if(baseLocation instanceof Openable && !((Openable)baseLocation).isOpen())
         {
@@ -61,9 +61,9 @@ public class EDSLocationOpenerFragment extends LocationOpenerFragment implements
     }
 
     @Override
-    protected EDSLocation getTargetLocation()
+    protected CryptoLocation getTargetLocation()
     {
-        return (EDSLocation)super.getTargetLocation();
+        return (CryptoLocation)super.getTargetLocation();
     }
 
     @Override

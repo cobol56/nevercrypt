@@ -3,7 +3,7 @@ package com.igeltech.nevercrypt.android.service;
 import android.content.Context;
 import android.content.Intent;
 
-import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.CryptoApplication;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
@@ -99,7 +99,7 @@ public class ClearTempFolderTask extends WipeFilesTask
 			{
 				removeNotification();
 				result.getResult();
-				EdsApplication.stopProgram(_context, true);
+				CryptoApplication.stopProgram(_context, true);
 			}
 			catch(CancellationException ignored)
 			{
@@ -107,7 +107,7 @@ public class ClearTempFolderTask extends WipeFilesTask
 			catch (Throwable e)
 			{
 				reportError(e);
-				EdsApplication.stopProgram(_context, false);
+				CryptoApplication.stopProgram(_context, false);
 			}
 
 		}

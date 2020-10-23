@@ -12,7 +12,7 @@ import com.igeltech.nevercrypt.fs.Path;
 import com.igeltech.nevercrypt.fs.util.ActivityTrackingFSWrapper;
 import com.igeltech.nevercrypt.fs.util.ContainerFSWrapper;
 import com.igeltech.nevercrypt.fs.util.StringPathUtil;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.locations.LocationsManagerBase;
@@ -27,12 +27,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public abstract class EDSLocationBase extends OMLocationBase implements Cloneable, EDSLocation
+public abstract class CryptoLocationBase extends OMLocationBase implements Cloneable, CryptoLocation
 {
 
 	public static final String INTERNAL_SETTINGS_FILE_NAME = ".eds-settings";
 
-	public static class ExternalSettings extends OMLocationBase.ExternalSettings implements EDSLocation.ExternalSettings
+	public static class ExternalSettings extends OMLocationBase.ExternalSettings implements CryptoLocation.ExternalSettings
 	{
 		public ExternalSettings()
 		{
@@ -90,7 +90,7 @@ public abstract class EDSLocationBase extends OMLocationBase implements Cloneabl
 	}
 
 
-	public static class InternalSettings implements EDSLocation.InternalSettings
+	public static class InternalSettings implements CryptoLocation.InternalSettings
 	{
 		public InternalSettings()
 		{
@@ -150,12 +150,12 @@ public abstract class EDSLocationBase extends OMLocationBase implements Cloneabl
 		return lm.getLocation(Uri.parse(uriString));
 	}
 
-	protected EDSLocationBase(EDSLocationBase sibling)
+	protected CryptoLocationBase(CryptoLocationBase sibling)
 	{
 		super(sibling);
 	}
 
-	protected EDSLocationBase(Settings settings, SharedData sharedData)
+	protected CryptoLocationBase(Settings settings, SharedData sharedData)
 	{
 		super(settings, sharedData);
 	}

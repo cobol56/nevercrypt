@@ -10,7 +10,7 @@ import com.igeltech.nevercrypt.android.settings.container.OpenInReadOnlyModeProp
 import com.igeltech.nevercrypt.android.settings.container.PIMPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.container.UseExternalFileManagerPropertyEditor;
 import com.igeltech.nevercrypt.locations.ContainerLocation;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.locations.Openable;
@@ -52,7 +52,7 @@ public abstract class OpeningOptionsFragmentBase extends PropertiesFragmentBase 
         if(extras!=null)
             _state.putAll(extras);
         createOpenableProperties();
-        if(_location instanceof EDSLocation)
+        if(_location instanceof CryptoLocation)
             createEDSLocationProperties();
         if(_location instanceof ContainerLocation)
             createContainerProperties();

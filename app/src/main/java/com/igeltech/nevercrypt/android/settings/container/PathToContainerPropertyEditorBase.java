@@ -7,7 +7,7 @@ import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragment;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
 import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
 
@@ -41,7 +41,7 @@ public abstract class PathToContainerPropertyEditorBase extends PathPropertyEdit
     @Override
     protected Intent getSelectPathIntent() throws IOException
     {
-        boolean addExisting = getHostFragment().getState().getBoolean(CreateEDSLocationFragment.ARG_ADD_EXISTING_LOCATION);
+        boolean addExisting = getHostFragment().getState().getBoolean(CreateLocationFragment.ARG_ADD_EXISTING_LOCATION);
         boolean isEncFs = getHostFragment().isEncFsFormat();
         Intent i = FileManagerActivity.getSelectPathIntent(
                 getHost().getContext(),

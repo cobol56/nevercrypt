@@ -6,7 +6,7 @@ import android.content.res.Configuration;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.CryptoApplication;
 import com.igeltech.nevercrypt.android.helpers.Util;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.crypto.SimpleCrypto;
@@ -478,7 +478,7 @@ public abstract class UserSettingsCommon implements SettingsCommon
 
 	private byte[] getUserSettingsPassword()
 	{
-		SecureBuffer mp = EdsApplication.getMasterPassword();
+		SecureBuffer mp = CryptoApplication.getMasterPassword();
 		if(mp != null)
 		{
 			byte[] mpd = mp.getDataArray();

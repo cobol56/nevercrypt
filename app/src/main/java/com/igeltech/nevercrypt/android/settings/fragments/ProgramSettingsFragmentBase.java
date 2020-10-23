@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.CryptoApplication;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog;
@@ -74,7 +74,7 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
         if(data != null && data.length == 0)
             data = null;
 
-        EdsApplication.setMasterPassword(data == null ? null : new SecureBuffer(data));
+        CryptoApplication.setMasterPassword(data == null ? null : new SecureBuffer(data));
         try
         {
             _settings.saveSettingsProtectionKey();

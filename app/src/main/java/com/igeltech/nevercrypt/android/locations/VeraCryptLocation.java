@@ -5,7 +5,7 @@ import android.net.Uri;
 
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManagerBase;
 import com.igeltech.nevercrypt.settings.Settings;
@@ -29,7 +29,7 @@ public class VeraCryptLocation extends ContainerBasedLocation
 		this(location, null, context, UserSettings.getSettings(context));
 	}
 
-	public VeraCryptLocation(Location containerLocation, EdsContainer cont, Context context, Settings settings)
+	public VeraCryptLocation(Location containerLocation, Container cont, Context context, Settings settings)
 	{
 		super(containerLocation, cont, context, settings);
 	}

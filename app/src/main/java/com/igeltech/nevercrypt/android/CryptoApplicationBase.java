@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 import static com.igeltech.nevercrypt.android.settings.UserSettings.getSettings;
 
-public class EdsApplicationBase extends Application
+public class CryptoApplicationBase extends Application
 {
 	public static final String BROADCAST_EXIT = "com.igeltech.nevercrypt.android.BROADCAST_EXIT";
 

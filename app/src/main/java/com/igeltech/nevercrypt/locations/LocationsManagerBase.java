@@ -536,17 +536,17 @@ public abstract class LocationsManagerBase
 		}
 	}
 
-	public List<EDSLocation> getLoadedEDSLocations(final boolean onlyVisible)
+	public List<CryptoLocation> getLoadedEDSLocations(final boolean onlyVisible)
 	{
 		synchronized (_currentLocations)
 		{
 			return new ArrayList<>(
-				new FilteredList<EDSLocation>()
+				new FilteredList<CryptoLocation>()
 				{
 					@Override
 					protected boolean isValid(Location l)
 					{
-						return l instanceof EDSLocation && (!onlyVisible || l.getExternalSettings().isVisibleToUser());
+						return l instanceof CryptoLocation && (!onlyVisible || l.getExternalSettings().isVisibleToUser());
 					}
 				}
 			);

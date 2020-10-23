@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManagerBase;
 import com.igeltech.nevercrypt.luks.FormatInfo;
@@ -22,7 +22,7 @@ abstract class LUKSLocationBase extends ContainerBasedLocation
         super(uri, lm, context, settings);
     }
 
-	LUKSLocationBase(Location containerLocation, EdsContainer cont, Context context, Settings settings)
+	LUKSLocationBase(Location containerLocation, Container cont, Context context, Settings settings)
 	{
 		super(containerLocation, cont, context, settings);
 	}

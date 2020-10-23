@@ -10,12 +10,12 @@ import com.igeltech.nevercrypt.fs.encfs.Config;
 import com.igeltech.nevercrypt.fs.encfs.DataCodecInfo;
 import com.igeltech.nevercrypt.fs.encfs.FS;
 import com.igeltech.nevercrypt.fs.encfs.NameCodecInfo;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 
 import java.io.IOException;
 
-public class EncFsFormatter extends EDSLocationFormatter
+public class EncFsFormatter extends LocationFormatter
 {
 	public static AlgInfo findInfoByName(Config config, Iterable<? extends AlgInfo> supportedAlgs, String name)
 	{
@@ -51,7 +51,7 @@ public class EncFsFormatter extends EDSLocationFormatter
 	protected final Config _config = new Config();
 
 	@Override
-	protected EDSLocation createLocation(Location location) throws IOException, ApplicationException
+	protected CryptoLocation createLocation(Location location) throws IOException, ApplicationException
 	{
 		Path targetPath = location.getCurrentPath();
 		if(targetPath.isFile())

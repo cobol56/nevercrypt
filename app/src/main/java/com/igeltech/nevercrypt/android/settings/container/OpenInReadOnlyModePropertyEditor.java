@@ -3,7 +3,7 @@ package com.igeltech.nevercrypt.android.settings.container;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.settings.PropertiesHostWithLocation;
 import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 
 public class OpenInReadOnlyModePropertyEditor extends SwitchPropertyEditor
 {
@@ -32,8 +32,8 @@ public class OpenInReadOnlyModePropertyEditor extends SwitchPropertyEditor
         return getLocation().getExternalSettings().shouldOpenReadOnly();
     }
 
-    private EDSLocation getLocation()
+    private CryptoLocation getLocation()
     {
-        return (EDSLocation) getHost().getTargetLocation();
+        return (CryptoLocation) getHost().getTargetLocation();
     }
 }

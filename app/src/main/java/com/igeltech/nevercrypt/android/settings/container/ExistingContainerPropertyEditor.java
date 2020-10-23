@@ -4,13 +4,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragmentBase;
 import com.igeltech.nevercrypt.android.settings.PropertyEditorBase;
 
 public class ExistingContainerPropertyEditor extends PropertyEditorBase
 {
-    public ExistingContainerPropertyEditor(CreateEDSLocationFragmentBase createEDSLocationFragment)
+    public ExistingContainerPropertyEditor(CreateLocationFragmentBase createEDSLocationFragment)
     {
         super(
                 createEDSLocationFragment,
@@ -44,8 +44,8 @@ public class ExistingContainerPropertyEditor extends PropertyEditorBase
         return view;
     }
 
-    protected CreateEDSLocationFragment getHostFragment()
+    protected CreateLocationFragment getHostFragment()
     {
-        return (CreateEDSLocationFragment) getHost();
+        return (CreateLocationFragment) getHost();
     }
 }

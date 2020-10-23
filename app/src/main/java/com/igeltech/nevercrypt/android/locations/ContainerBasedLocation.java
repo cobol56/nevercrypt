@@ -9,7 +9,7 @@ import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerExcepti
 import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.container.VolumeLayout;
 import com.igeltech.nevercrypt.container.VolumeLayoutBase;
 import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class ContainerBasedLocation extends EDSLocationBase implements ContainerLocation
+public class ContainerBasedLocation extends CryptoLocationBase implements ContainerLocation
 {
 	public static final String URI_SCHEME = "eds-container";
 
@@ -45,7 +45,7 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 		return SimpleCrypto.calcStringMD5(containerLocation.getLocationUri().toString());
 	}
 
-    public static class ExternalSettings extends EDSLocationBase.ExternalSettings implements ContainerLocation.ExternalSettings
+    public static class ExternalSettings extends CryptoLocationBase.ExternalSettings implements ContainerLocation.ExternalSettings
     {
         public ExternalSettings()
         {
@@ -129,7 +129,7 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 		this(containerLocation, null, context, UserSettings.getSettings(context));
 	}
 	
-	public ContainerBasedLocation(Location containerLocation, EdsContainer cont, Context context, Settings settings)
+	public ContainerBasedLocation(Location containerLocation, Container cont, Context context, Settings settings)
 	{
 		super(settings, new SharedData(
 				getLocationId(containerLocation),
@@ -152,7 +152,7 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 	{
 		if(isOpenOrMounted())
 			return;
-		EdsContainer cnt = getEdsContainer();
+		Container cnt = getEdsContainer();
 		cnt.setContainerFormat(null);
 		cnt.setEncryptionEngineHint(null);
 		cnt.setHashFuncHint(null);
@@ -254,9 +254,9 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 	}
 
 	@Override
-	public synchronized EdsContainer getEdsContainer() throws IOException
+	public synchronized Container getEdsContainer() throws IOException
 	{
-		EdsContainer cnt = getSharedData().container;
+		Container cnt = getSharedData().container;
 		if(cnt == null)
 		{
 			cnt = initEdsContainer();
@@ -268,17 +268,17 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 	@Override
 	public List<ContainerFormatInfo> getSupportedFormats()
 	{
-		return EdsContainer.getSupportedFormats();
+		return Container.getSupportedFormats();
 	}
 
-	protected static class SharedData extends EDSLocationBase.SharedData
+	protected static class SharedData extends CryptoLocationBase.SharedData
 	{
-		public SharedData(String id, EDSLocationBase.InternalSettings settings, Location location, Context context)
+		public SharedData(String id, CryptoLocationBase.InternalSettings settings, Location location, Context context)
 		{
 			super(id, settings, location, context);
 		}
 
-		public EdsContainer container;
+		public Container container;
 	}
 
 	public static final int MAX_PASSWORD_LENGTH = 64;
@@ -289,15 +289,15 @@ public class ContainerBasedLocation extends EDSLocationBase implements Container
 		return (SharedData)super.getSharedData();
 	}
 
-	protected EdsContainer initEdsContainer() throws IOException
+	protected Container initEdsContainer() throws IOException
 	{
-		return new EdsContainer(getLocation().getCurrentPath());
+		return new Container(getLocation().getCurrentPath());
 	}
 
 	protected ContainerFormatInfo getContainerFormatInfo()
 	{
 		String name = getExternalSettings().getContainerFormatName();
-		return name != null ? EdsContainer.findFormatByName(name) : null;
+		return name != null ? Container.findFormatByName(name) : null;
 	}
 
 	@Override

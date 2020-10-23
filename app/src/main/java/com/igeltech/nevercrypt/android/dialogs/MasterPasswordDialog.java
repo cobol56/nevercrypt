@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.CryptoApplication;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
@@ -32,14 +32,14 @@ public class MasterPasswordDialog extends PasswordDialog
     {
         UserSettings s = UserSettings.getSettings(activity);
         long curTime = SystemClock.elapsedRealtime();
-        long lastActTime = EdsApplication.getLastActivityTime();
+        long lastActTime = CryptoApplication.getLastActivityTime();
         if(curTime - lastActTime > GlobalConfig.CLEAR_MASTER_PASS_INACTIVITY_TIMEOUT)
         {
             Logger.debug("Clearing settings protection key");
-            EdsApplication.clearMasterPassword();
+            CryptoApplication.clearMasterPassword();
             s.clearSettingsProtectionKey();
         }
-        EdsApplication.updateLastActivityTime();
+        CryptoApplication.updateLastActivityTime();
         try
         {
             s.getSettingsProtectionKey();
@@ -75,7 +75,7 @@ public class MasterPasswordDialog extends PasswordDialog
             String check = settings.getProtectedString(SETTINGS_PROTECTION_KEY_CHECK);
             if(check == null)
                 settings.saveSettingsProtectionKey();
-            EdsApplication.updateLastActivityTime();
+            CryptoApplication.updateLastActivityTime();
             return true;
         }
         catch (Settings.InvalidSettingsPassword ignored)
@@ -90,14 +90,14 @@ public class MasterPasswordDialog extends PasswordDialog
     {
         UserSettings s = UserSettings.getSettings(context);
         long curTime = SystemClock.elapsedRealtime();
-        long lastActTime = EdsApplication.getLastActivityTime();
+        long lastActTime = CryptoApplication.getLastActivityTime();
         if(curTime - lastActTime > GlobalConfig.CLEAR_MASTER_PASS_INACTIVITY_TIMEOUT)
         {
             Logger.debug("Clearing settings protection key");
-            EdsApplication.clearMasterPassword();
+            CryptoApplication.clearMasterPassword();
             s.clearSettingsProtectionKey();
         }
-        EdsApplication.updateLastActivityTime();
+        CryptoApplication.updateLastActivityTime();
         try
         {
             s.getSettingsProtectionKey();
@@ -132,14 +132,14 @@ public class MasterPasswordDialog extends PasswordDialog
     @Override
     public void onCancel(DialogInterface dialog)
     {
-        EdsApplication.clearMasterPassword();
+        CryptoApplication.clearMasterPassword();
         super.onCancel(dialog);
     }
 
     @Override
     protected void onPasswordEntered()
     {
-        EdsApplication.setMasterPassword(new SecureBuffer(getPassword()));
+        CryptoApplication.setMasterPassword(new SecureBuffer(getPassword()));
         if(checkSettingsKey(getActivity()))
         {
             Bundle args = getArguments();

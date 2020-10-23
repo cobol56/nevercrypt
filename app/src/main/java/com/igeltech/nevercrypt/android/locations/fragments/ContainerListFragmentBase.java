@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class ContainerListFragmentBase extends LocationListBaseFragment
@@ -13,7 +13,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     protected void loadLocations()
     {
         _locationsList.clear();
-		for(EDSLocation loc: LocationsManager.getLocationsManager(getActivity()).getLoadedEDSLocations(true))
+		for(CryptoLocation loc: LocationsManager.getLocationsManager(getActivity()).getLoadedEDSLocations(true))
                 _locationsList.add(new ContainerInfo(loc));
     }
 
@@ -25,7 +25,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
 
     private class ContainerInfo extends LocationInfo
     {
-        public ContainerInfo(EDSLocation ci)
+        public ContainerInfo(CryptoLocation ci)
         {
             location = ci;
         }
@@ -36,7 +36,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
         @Override
         public Drawable getIcon()
         {
-            return ((EDSLocation)location).isOpenOrMounted() ? getOpenedContainerIcon() : getClosedContainerIcon();
+            return ((CryptoLocation)location).isOpenOrMounted() ? getOpenedContainerIcon() : getClosedContainerIcon();
         }
     }
 

@@ -11,7 +11,7 @@ import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.exceptions.ApplicationException;
 import com.igeltech.nevercrypt.fs.FileSystem;
 import com.igeltech.nevercrypt.fs.util.StringPathUtil;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.settings.DefaultSettings;
@@ -20,16 +20,16 @@ import com.igeltech.nevercrypt.settings.Settings;
 import java.io.IOException;
 import java.util.Collections;
 
-public abstract class EDSLocationFormatterBase
+public abstract class LocationFormatterBase
 {
 	public static final String FORMAT_ENCFS = "EncFs";
 
-	public EDSLocationFormatterBase()
+	public LocationFormatterBase()
 	{
 
 	}
 
-	protected EDSLocationFormatterBase(Parcel in)
+	protected LocationFormatterBase(Parcel in)
 	{
 		_disableDefaultSettings = in.readByte() != 0;
 		_password = in.readParcelable(ClassLoader.getSystemClassLoader());
@@ -41,7 +41,7 @@ public abstract class EDSLocationFormatterBase
 		dest.writeParcelable(_password, 0);
 	}
 
-	public static String makeTitle(EDSLocation cont, LocationsManager lm)
+	public static String makeTitle(CryptoLocation cont, LocationsManager lm)
 	{
 		String startTitle;
 		try
@@ -55,7 +55,7 @@ public abstract class EDSLocationFormatterBase
 		return makeTitle(startTitle, lm, cont);
 	}
 
-	public static String makeTitle(String startTitle, LocationsManager lm, EDSLocation ignore)
+	public static String makeTitle(String startTitle, LocationsManager lm, CryptoLocation ignore)
 	{
 		String title = startTitle;
 		int i = 1;
@@ -100,9 +100,9 @@ public abstract class EDSLocationFormatterBase
 		_progressReporter = reporter;
 	}
 	
-	public EDSLocation format(Location location) throws Exception
+	public CryptoLocation format(Location location) throws Exception
 	{
-		EDSLocation loc = createLocation(location);
+		CryptoLocation loc = createLocation(location);
 		if(!_dontReg)
 			addLocationToList(loc);
 		loc.getFS();
@@ -123,14 +123,14 @@ public abstract class EDSLocationFormatterBase
 	protected ProgressReporter _progressReporter;
 	protected Context _context;
 
-	protected abstract EDSLocation createLocation(Location location) throws IOException, ApplicationException, UserException;
+	protected abstract CryptoLocation createLocation(Location location) throws IOException, ApplicationException, UserException;
 
-	protected void addLocationToList(EDSLocation loc) throws Exception
+	protected void addLocationToList(CryptoLocation loc) throws Exception
 	{
 		addLocationToList(loc, !UserSettings.getSettings(_context).neverSaveHistory());
 	}
 
-	protected void addLocationToList(EDSLocation loc, boolean store) throws Exception
+	protected void addLocationToList(CryptoLocation loc, boolean store) throws Exception
 	{
 		LocationsManager lm = LocationsManager.getLocationsManager(_context, true);
 		if(lm!=null)
@@ -144,20 +144,20 @@ public abstract class EDSLocationFormatterBase
 
 	}
 	
-	protected void notifyLocationCreated(EDSLocation loc)
+	protected void notifyLocationCreated(CryptoLocation loc)
 	{
 		if(_context!=null)
 			LocationsManager.broadcastLocationAdded(_context, loc);
 	}
 	
-	protected void initLocationSettings(EDSLocation loc) throws IOException, ApplicationException
+	protected void initLocationSettings(CryptoLocation loc) throws IOException, ApplicationException
 	{
 		writeInternalContainerSettings(loc);
 		if(!_dontReg)
 			setExternalContainerSettings(loc);
 	}
 	
-	protected void setExternalContainerSettings(EDSLocation loc) throws ApplicationException, IOException
+	protected void setExternalContainerSettings(CryptoLocation loc) throws ApplicationException, IOException
 	{
 		LocationsManager lm = LocationsManager.getLocationsManager(_context, true);
 		String title = makeTitle(loc, lm);
@@ -169,7 +169,7 @@ public abstract class EDSLocationFormatterBase
 
 	}
 	
-	protected void writeInternalContainerSettings(EDSLocation loc) throws IOException
+	protected void writeInternalContainerSettings(CryptoLocation loc) throws IOException
 	{
 		if(_disableDefaultSettings)
 			return;
@@ -184,10 +184,10 @@ public abstract class EDSLocationFormatterBase
 		return _progressReporter == null || _progressReporter.report(prc);
 	}
 
-	private static boolean checkExistingTitle(String title, LocationsManager lm, EDSLocation ignore)
+	private static boolean checkExistingTitle(String title, LocationsManager lm, CryptoLocation ignore)
 	{
 		Uri igUri = ignore.getLocation().getLocationUri();
-		for(EDSLocation cnt: lm.getLoadedEDSLocations(true))
+		for(CryptoLocation cnt: lm.getLoadedEDSLocations(true))
 			if(cnt!=ignore && !cnt.getLocation().getLocationUri().equals(igUri) && cnt.getTitle().equals(title))
 				return true;
 		return false;

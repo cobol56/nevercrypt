@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class CloseAllContainersWidget extends AppWidgetProvider
@@ -76,7 +76,7 @@ public class CloseAllContainersWidget extends AppWidgetProvider
 		LocationsManager lm = LocationsManager.getLocationsManager(context);
 		if(lm != null)
 		{
-			for(EDSLocation cbl: lm.getLoadedEDSLocations(false))
+			for(CryptoLocation cbl: lm.getLoadedEDSLocations(false))
 				if(cbl.isOpenOrMounted())
 					return true;
 		}

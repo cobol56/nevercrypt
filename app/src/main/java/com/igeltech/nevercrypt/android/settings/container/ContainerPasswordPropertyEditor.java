@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.settings.ButtonPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.PropertyEditor;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
@@ -12,7 +12,7 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 public class ContainerPasswordPropertyEditor extends ButtonPropertyEditor implements PasswordDialog.PasswordReceiver
 {
-    public ContainerPasswordPropertyEditor(CreateEDSLocationFragment createEDSLocationFragment)
+    public ContainerPasswordPropertyEditor(CreateLocationFragment createEDSLocationFragment)
     {
         super(createEDSLocationFragment,
                 R.string.container_password,
@@ -43,8 +43,8 @@ public class ContainerPasswordPropertyEditor extends ButtonPropertyEditor implem
         pd.show(getHost().getFragmentManager(), PasswordDialog.TAG);
     }
 
-    CreateEDSLocationFragment getHostFragment()
+    CreateLocationFragment getHostFragment()
     {
-        return (CreateEDSLocationFragment)getHost();
+        return (CreateLocationFragment)getHost();
     }
 }

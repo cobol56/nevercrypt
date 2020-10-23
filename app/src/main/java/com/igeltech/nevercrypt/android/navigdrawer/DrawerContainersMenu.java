@@ -3,7 +3,7 @@ package com.igeltech.nevercrypt.android.navigdrawer;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
 import com.igeltech.nevercrypt.locations.ContainerLocation;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class DrawerContainersMenu extends DrawerSubMenuBase
     {
         LocationsManager lm = LocationsManager.getLocationsManager(getContext());
         ArrayList<DrawerMenuItemBase> res = new ArrayList<>();
-        for(EDSLocation loc: lm.getLoadedEDSLocations(true))
+        for(CryptoLocation loc: lm.getLoadedEDSLocations(true))
         {
             if(loc instanceof ContainerLocation)
                 res.add(new DrawerContainerMenuItem(loc, getDrawerController()));

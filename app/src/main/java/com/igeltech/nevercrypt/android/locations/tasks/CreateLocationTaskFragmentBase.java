@@ -11,9 +11,9 @@ import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
 import com.igeltech.nevercrypt.android.errors.InputOutputException;
 import com.igeltech.nevercrypt.android.errors.UserException;
 import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerException;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.container.ContainerFormatterBase;
-import com.igeltech.nevercrypt.container.EDSLocationFormatter;
+import com.igeltech.nevercrypt.container.LocationFormatter;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.fs.errors.WrongImageFormatException;
 import com.igeltech.nevercrypt.locations.Location;
@@ -22,7 +22,7 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 
-public abstract class CreateEDSLocationTaskFragmentBase extends
+public abstract class CreateLocationTaskFragmentBase extends
         com.igeltech.nevercrypt.android.fragments.TaskFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.CreateEDSLocationTaskFragment";
@@ -46,7 +46,7 @@ public abstract class CreateEDSLocationTaskFragmentBase extends
     @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        CreateEDSLocationFragment f = (CreateEDSLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        CreateLocationFragment f = (CreateLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         return f == null ? null : f.getCreateLocationTaskCallbacks();
     }
 
@@ -77,7 +77,7 @@ public abstract class CreateEDSLocationTaskFragmentBase extends
 
     protected void createEDSLocation(TaskState state, Location locationLocation) throws Exception
     {
-        EDSLocationFormatter f = createFormatter();
+        LocationFormatter f = createFormatter();
         SecureBuffer password = getArguments().getParcelable(Openable.PARAM_PASSWORD);
         try
         {
@@ -102,9 +102,9 @@ public abstract class CreateEDSLocationTaskFragmentBase extends
         }
     }
 
-    protected abstract EDSLocationFormatter createFormatter();
+    protected abstract LocationFormatter createFormatter();
 
-    protected void initFormatter(final TaskState state, final EDSLocationFormatter formatter, SecureBuffer password) throws Exception
+    protected void initFormatter(final TaskState state, final LocationFormatter formatter, SecureBuffer password) throws Exception
     {
         formatter.setContext(_context);
         formatter.setPassword(password);

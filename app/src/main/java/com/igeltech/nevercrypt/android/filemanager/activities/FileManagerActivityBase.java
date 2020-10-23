@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.CryptoApplication;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.AskOverwriteDialog;
@@ -319,7 +319,7 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
             if (panel != null)
                 panel.setVisibility(View.GONE);
         }
-	    LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(_exitBroadcastReceiver, new IntentFilter(EdsApplication.BROADCAST_EXIT));
+	    LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(_exitBroadcastReceiver, new IntentFilter(CryptoApplication.BROADCAST_EXIT));
         registerReceiver(_locationAddedOrRemovedReceiver, LocationsManager.getLocationAddedIntentFilter());
         registerReceiver(_locationAddedOrRemovedReceiver, LocationsManager.getLocationRemovedIntentFilter());
         registerReceiver(_locationChangedReceiver, new IntentFilter(LocationsManager.BROADCAST_LOCATION_CHANGED));

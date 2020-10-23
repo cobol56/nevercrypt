@@ -2,14 +2,14 @@ package com.igeltech.nevercrypt.container;
 
 import android.os.Parcel;
 
-public abstract class EDSLocationFormatter extends EDSLocationFormatterBase
+public abstract class LocationFormatter extends LocationFormatterBase
 {
-	public EDSLocationFormatter()
+	public LocationFormatter()
 	{
 
 	}
 
-	protected EDSLocationFormatter(Parcel in)
+	protected LocationFormatter(Parcel in)
 	{
 		super(in);
 	}

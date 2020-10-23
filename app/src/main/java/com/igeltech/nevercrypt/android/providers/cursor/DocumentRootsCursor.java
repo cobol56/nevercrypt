@@ -9,7 +9,7 @@ import android.text.format.Formatter;
 import com.drew.lang.annotations.NotNull;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
@@ -108,7 +108,7 @@ public class DocumentRootsCursor extends AbstractCursor
     private final LocationsManager _lm;
     private final String[] _projection;
     private final Context _context;
-    private final List<EDSLocation> _locations = new ArrayList<>();
+    private final List<CryptoLocation> _locations = new ArrayList<>();
 
     private static class LocationInfo
     {
@@ -124,12 +124,12 @@ public class DocumentRootsCursor extends AbstractCursor
     private void fillList()
     {
         _locations.clear();
-        for(EDSLocation l: _lm.getLoadedEDSLocations(true))
+        for(CryptoLocation l: _lm.getLoadedEDSLocations(true))
             if(l.isOpen())
                 _locations.add(l);
     }
 
-    private Single<LocationInfo> getObservable(EDSLocation loc)
+    private Single<LocationInfo> getObservable(CryptoLocation loc)
     {
         synchronized (this)
         {
@@ -146,7 +146,7 @@ public class DocumentRootsCursor extends AbstractCursor
         }
     }
 
-    private Single<LocationInfo> createObservable(EDSLocation loc) throws Exception
+    private Single<LocationInfo> createObservable(CryptoLocation loc) throws Exception
     {
         return Single.create(em -> {
             LocationInfo res = new LocationInfo();

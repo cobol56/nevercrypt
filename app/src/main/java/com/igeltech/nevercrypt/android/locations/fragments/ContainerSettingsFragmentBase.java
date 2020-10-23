@@ -11,7 +11,7 @@ import com.igeltech.nevercrypt.android.settings.container.EncEngineHintPropertyE
 import com.igeltech.nevercrypt.android.settings.container.HashAlgHintPropertyEditor;
 import com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.locations.ContainerLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
@@ -20,7 +20,7 @@ import com.igeltech.nevercrypt.locations.Openable;
 import java.util.Collection;
 import java.util.List;
 
-public class ContainerSettingsFragmentBase extends EDSLocationSettingsFragment
+public class ContainerSettingsFragmentBase extends LocationSettingsFragment
 {
     @Override
     public ContainerLocation getLocation()
@@ -33,7 +33,7 @@ public class ContainerSettingsFragmentBase extends EDSLocationSettingsFragment
         List<ContainerFormatInfo> supportedFormats = getLocation().getSupportedFormats();
         return supportedFormats.size() == 1 ?
                 supportedFormats.get(0) :
-                EdsContainer.findFormatByName(
+                Container.findFormatByName(
                         supportedFormats,
                         getLocation().getExternalSettings().getContainerFormatName()
                 );

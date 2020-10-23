@@ -1,7 +1,7 @@
 -dontobfuscate
 -optimizations !code/allocation/variable,!code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
 
--keep public class com.igeltech.nevercrypt.android.EdsApplication { public *; }
+-keep public class com.igeltech.nevercrypt.android.CryptoApplication { public *; }
 
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;

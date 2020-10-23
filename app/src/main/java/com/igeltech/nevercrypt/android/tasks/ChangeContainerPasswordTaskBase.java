@@ -14,7 +14,7 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 
-public abstract class ChangeContainerPasswordTaskBase extends ChangeEDSLocationPasswordTask
+public abstract class ChangeContainerPasswordTaskBase extends ChangeLocationPasswordTask
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask";
     //public static final String ARG_FIN_ACTIVITY = "fin_activity";

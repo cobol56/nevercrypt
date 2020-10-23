@@ -1,14 +1,14 @@
 package com.igeltech.nevercrypt.locations;
 
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.Container;
 
 import java.io.IOException;
 import java.util.List;
 
-public interface ContainerLocation extends EDSLocation
+public interface ContainerLocation extends CryptoLocation
 {
-    interface ExternalSettings extends EDSLocation.ExternalSettings
+    interface ExternalSettings extends CryptoLocation.ExternalSettings
     {
         void setContainerFormatName(String containerFormatName);
         void setEncEngineName(String encEngineName);
@@ -19,6 +19,6 @@ public interface ContainerLocation extends EDSLocation
     }
     @Override
     ExternalSettings getExternalSettings();
-    EdsContainer getEdsContainer() throws IOException;
+    Container getEdsContainer() throws IOException;
     List<ContainerFormatInfo> getSupportedFormats();
 }

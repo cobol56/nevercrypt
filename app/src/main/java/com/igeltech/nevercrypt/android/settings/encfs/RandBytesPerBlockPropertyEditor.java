@@ -1,7 +1,7 @@
 package com.igeltech.nevercrypt.android.settings.encfs;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateEncFsTaskFragment;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RandBytesPerBlockPropertyEditor extends ChoiceDialogPropertyEditor
 {
-    public RandBytesPerBlockPropertyEditor(CreateEDSLocationFragment hostFragment)
+    public RandBytesPerBlockPropertyEditor(CreateLocationFragment hostFragment)
     {
         super(hostFragment, R.string.add_rand_bytes, R.string.add_rand_bytes_descr, hostFragment.getTag());
     }
@@ -38,8 +38,8 @@ public class RandBytesPerBlockPropertyEditor extends ChoiceDialogPropertyEditor
     }
 
 
-    protected CreateEDSLocationFragment getHostFragment()
+    protected CreateLocationFragment getHostFragment()
     {
-        return (CreateEDSLocationFragment) getHost();
+        return (CreateLocationFragment) getHost();
     }
 }

@@ -11,7 +11,7 @@ import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloser
 import com.igeltech.nevercrypt.android.locations.closer.fragments.OMLocationCloserFragment;
 import com.igeltech.nevercrypt.android.locations.opener.fragments.ContainerOpenerFragment;
 import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 
 public class DrawerContainerMenuItem extends DrawerLocationMenuItem
@@ -44,12 +44,12 @@ public class DrawerContainerMenuItem extends DrawerLocationMenuItem
     }
 
     @Override
-    public EDSLocation getLocation()
+    public CryptoLocation getLocation()
     {
-        return (EDSLocation) super.getLocation();
+        return (CryptoLocation) super.getLocation();
     }
 
-    protected DrawerContainerMenuItem(EDSLocation container, DrawerControllerBase drawerController)
+    protected DrawerContainerMenuItem(CryptoLocation container, DrawerControllerBase drawerController)
     {
         super(container, drawerController);
     }

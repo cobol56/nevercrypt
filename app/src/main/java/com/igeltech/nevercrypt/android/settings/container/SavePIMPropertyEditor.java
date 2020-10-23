@@ -5,30 +5,30 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragmentBase;
 import com.igeltech.nevercrypt.android.settings.PropertyEditor;
 import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.dialogs.TextEditDialog;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 
 public class SavePIMPropertyEditor extends SwitchPropertyEditor implements TextEditDialog.TextResultReceiver
 {
-    public SavePIMPropertyEditor(EDSLocationSettingsFragmentBase settingsFragment)
+    public SavePIMPropertyEditor(LocationSettingsFragmentBase settingsFragment)
     {
         super(settingsFragment, R.string.remember_kdf_iterations_multiplier, 0);
     }
 
 	@Override
-	public EDSLocationSettingsFragment getHost()
+	public LocationSettingsFragment getHost()
 	{
-		return (EDSLocationSettingsFragment) super.getHost();
+		return (LocationSettingsFragment) super.getHost();
 	}
 
     @Override
     protected boolean loadValue()
     {
-        EDSLocation loc = getHost().getLocation();
+        CryptoLocation loc = getHost().getLocation();
         return !loc.requireCustomKDFIterations();
     }
 

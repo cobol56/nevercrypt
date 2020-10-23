@@ -1,6 +1,6 @@
 package com.igeltech.nevercrypt.android.settings.encfs;
 
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.fs.encfs.AlgInfo;
 import com.igeltech.nevercrypt.util.RefVal;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public abstract class CodecInfoPropertyEditor extends ChoiceDialogPropertyEditor
 {
-    public CodecInfoPropertyEditor(CreateEDSLocationFragment hostFragment, int titleId, int descrId)
+    public CodecInfoPropertyEditor(CreateLocationFragment hostFragment, int titleId, int descrId)
     {
         super(hostFragment, titleId, descrId, hostFragment.getTag());
     }
@@ -65,9 +65,9 @@ public abstract class CodecInfoPropertyEditor extends ChoiceDialogPropertyEditor
         return res;
     }
 
-    protected CreateEDSLocationFragment getHostFragment()
+    protected CreateLocationFragment getHostFragment()
     {
-        return (CreateEDSLocationFragment) getHost();
+        return (CreateLocationFragment) getHost();
     }
 
 }

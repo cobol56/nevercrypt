@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
 
@@ -16,7 +16,7 @@ public class LoadLocationInfoTask extends TaskFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.tasks.LoadLocationInfoTask";
 
-	public static LoadLocationInfoTask newInstance(EDSLocation location)
+	public static LoadLocationInfoTask newInstance(CryptoLocation location)
     {
         Bundle args = new Bundle();
         LocationsManager.storePathsInBundle(args, location, null);
@@ -35,8 +35,8 @@ public class LoadLocationInfoTask extends TaskFragment
     @Override
     protected void doWork(TaskState state) throws Exception
     {
-        EDSLocation cont = (EDSLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
-        EDSLocationSettingsFragment.LocationInfo info = initParams();
+        CryptoLocation cont = (CryptoLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
+        LocationSettingsFragment.LocationInfo info = initParams();
         fillInfo(cont, info);
 		state.setResult(info);
 	}
@@ -44,16 +44,16 @@ public class LoadLocationInfoTask extends TaskFragment
 	@Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        final EDSLocationSettingsFragment f = (EDSLocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        final LocationSettingsFragment f = (LocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         return f != null ? f.getLoadLocationInfoTaskCallbacks() : null;
     }
 
-    protected EDSLocationSettingsFragment.LocationInfo initParams()
+    protected LocationSettingsFragment.LocationInfo initParams()
     {
-        return new EDSLocationSettingsFragment.LocationInfo();
+        return new LocationSettingsFragment.LocationInfo();
     }
 
-    protected void fillInfo(EDSLocation location, EDSLocationSettingsFragment.LocationInfo info) throws Exception
+    protected void fillInfo(CryptoLocation location, LocationSettingsFragment.LocationInfo info) throws Exception
     {
         info.pathToLocation = location.getLocation().toString();
         if(location.isOpenOrMounted())

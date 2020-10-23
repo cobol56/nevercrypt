@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name="com.igeltech.nevercrypt.android.EdsApplication"
+        android:name="com.igeltech.nevercrypt.android.CryptoApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backupscheme"
         android:icon="@drawable/ic_launcher_eds"

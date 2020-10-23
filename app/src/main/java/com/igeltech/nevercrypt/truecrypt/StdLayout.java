@@ -2,7 +2,7 @@ package com.igeltech.nevercrypt.truecrypt;
 
 
 import com.igeltech.nevercrypt.android.Logger;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.container.VolumeLayoutBase;
 import com.igeltech.nevercrypt.crypto.EncryptionEngine;
 import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
@@ -374,7 +374,7 @@ public class StdLayout extends VolumeLayoutBase
 	
 	protected short getMinCompatibleProgramVersion()
 	{
-		return EdsContainer.COMPATIBLE_TC_VERSION;
+		return Container.COMPATIBLE_TC_VERSION;
 	}
 	
 	protected byte[] encodeHeader() throws EncryptionEngineException
@@ -450,7 +450,7 @@ public class StdLayout extends VolumeLayoutBase
 
 		//offset 70
 		int programVer = bb.getShort();
-		if(programVer > EdsContainer.COMPATIBLE_TC_VERSION)
+		if(programVer > Container.COMPATIBLE_TC_VERSION)
 			throw new WrongContainerVersionException();
 		
 		//offset 72

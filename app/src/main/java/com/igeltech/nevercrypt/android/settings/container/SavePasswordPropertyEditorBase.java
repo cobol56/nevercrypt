@@ -4,31 +4,31 @@ import android.os.Bundle;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragmentBase;
 import com.igeltech.nevercrypt.android.settings.PropertyEditor;
 import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Openable;
 
 public class SavePasswordPropertyEditorBase extends SwitchPropertyEditor implements PasswordDialog.PasswordReceiver
 {
-    public SavePasswordPropertyEditorBase(EDSLocationSettingsFragmentBase settingsFragment)
+    public SavePasswordPropertyEditorBase(LocationSettingsFragmentBase settingsFragment)
     {
         super(settingsFragment, R.string.save_password, R.string.save_password_desc);
     }
 
 	@Override
-	public EDSLocationSettingsFragment getHost()
+	public LocationSettingsFragment getHost()
 	{
-		return (EDSLocationSettingsFragment) super.getHost();
+		return (LocationSettingsFragment) super.getHost();
 	}
 
     @Override
     protected boolean loadValue()
     {
-        EDSLocation loc = getHost().getLocation();
+        CryptoLocation loc = getHost().getLocation();
         return !loc.requirePassword();
     }
 
@@ -41,7 +41,7 @@ public class SavePasswordPropertyEditorBase extends SwitchPropertyEditor impleme
     @Override
     public void onPasswordEntered(PasswordDialog dlg)
     {
-        EDSLocation.ExternalSettings settings = getHost().getLocation().getExternalSettings();
+        CryptoLocation.ExternalSettings settings = getHost().getLocation().getExternalSettings();
         SecureBuffer sb = new SecureBuffer(dlg.getPassword());
         byte[] data = sb.getDataArray();
         settings.setPassword(data);

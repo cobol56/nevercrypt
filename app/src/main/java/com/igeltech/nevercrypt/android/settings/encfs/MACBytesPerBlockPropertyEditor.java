@@ -1,13 +1,13 @@
 package com.igeltech.nevercrypt.android.settings.encfs;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateEncFsTaskFragment;
 import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 
 public class MACBytesPerBlockPropertyEditor extends SwitchPropertyEditor
 {
-    public MACBytesPerBlockPropertyEditor(CreateEDSLocationFragment hostFragment)
+    public MACBytesPerBlockPropertyEditor(CreateLocationFragment hostFragment)
     {
         super(hostFragment, R.string.mac_bytes_per_block, R.string.mac_bytes_per_block_descr);
     }
@@ -28,8 +28,8 @@ public class MACBytesPerBlockPropertyEditor extends SwitchPropertyEditor
     }
 
 
-    protected CreateEDSLocationFragment getHostFragment()
+    protected CreateLocationFragment getHostFragment()
     {
-        return (CreateEDSLocationFragment) getHost();
+        return (CreateLocationFragment) getHost();
     }
 }

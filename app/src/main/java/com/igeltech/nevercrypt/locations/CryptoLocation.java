@@ -5,7 +5,7 @@ import com.igeltech.nevercrypt.fs.util.ContainerFSWrapper;
 
 import java.io.IOException;
 
-public interface EDSLocation extends OMLocation
+public interface CryptoLocation extends OMLocation
 {
     interface ExternalSettings extends OMLocation.ExternalSettings
     {
@@ -30,5 +30,5 @@ public interface EDSLocation extends OMLocation
     @Override
     ContainerFSWrapper getFS() throws IOException;
     @Override
-    EDSLocation copy();
+    CryptoLocation copy();
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EdsContainer extends EdsContainerBase
+public class Container extends ContainerBase
 {
 	public static List<ContainerFormatInfo> getSupportedFormats()
 	{
@@ -27,12 +27,12 @@ public class EdsContainer extends EdsContainerBase
 		return findFormatByName(getSupportedFormats(), name);
 	}
 	
-	public EdsContainer(Path path)
+	public Container(Path path)
 	{			
 		this(path, null, null);							
 	}
 	
-	public EdsContainer(Path path, ContainerFormatInfo containerFormat,VolumeLayout layout)
+	public Container(Path path, ContainerFormatInfo containerFormat, VolumeLayout layout)
 	{
 		super(path, containerFormat, layout);
 	}

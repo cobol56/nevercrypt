@@ -9,18 +9,18 @@ import com.igeltech.nevercrypt.container.ContainerFormatter;
 import com.igeltech.nevercrypt.fs.Path;
 import com.igeltech.nevercrypt.fs.encfs.Config;
 import com.igeltech.nevercrypt.locations.ContainerLocation;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 
-public abstract class AddExistingContainerTaskFragmentBase extends AddExistingEDSLocationTaskFragment
+public abstract class AddExistingContainerTaskFragmentBase extends AddExistingCryptoLocationTaskFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment";
 
     @Override
-    protected EDSLocation createEDSLocation(Location locationLocation) throws Exception
+    protected CryptoLocation createEDSLocation(Location locationLocation) throws Exception
     {
         Logger.debug("Adding location at " + locationLocation.getLocationUri());
         Path cp = locationLocation.getCurrentPath();

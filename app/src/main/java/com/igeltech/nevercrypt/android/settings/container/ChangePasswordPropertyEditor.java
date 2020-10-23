@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragmentBase;
 import com.igeltech.nevercrypt.android.settings.ButtonPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.PropertyEditor;
 import com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask;
@@ -14,15 +14,15 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class ChangePasswordPropertyEditor extends ButtonPropertyEditor implements PasswordDialog.PasswordReceiver
 {
-    public ChangePasswordPropertyEditor(EDSLocationSettingsFragmentBase settingsFragment)
+    public ChangePasswordPropertyEditor(LocationSettingsFragmentBase settingsFragment)
     {
         super(settingsFragment, R.string.change_container_password, 0, R.string.enter_new_password);
     }
 
 	@Override
-	public EDSLocationSettingsFragment getHost()
+	public LocationSettingsFragment getHost()
 	{
-		return (EDSLocationSettingsFragment) super.getHost();
+		return (LocationSettingsFragment) super.getHost();
 	}
 
     @Override

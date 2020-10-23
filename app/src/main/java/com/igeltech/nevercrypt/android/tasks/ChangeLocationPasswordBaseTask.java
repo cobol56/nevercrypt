@@ -10,23 +10,23 @@ import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment;
 import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
 import com.igeltech.nevercrypt.exceptions.ApplicationException;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
 import java.io.IOException;
 
-public abstract class ChangeEDSLocationPasswordBaseTask extends TaskFragment
+public abstract class ChangeLocationPasswordBaseTask extends TaskFragment
 {
     @Override
     public void initTask(FragmentActivity activity)
     {
         _context = activity.getApplicationContext();
-        _location = (EDSLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
+        _location = (CryptoLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
     }
 
-    protected EDSLocation _location;
+    protected CryptoLocation _location;
     protected Context _context;
 
     @Override
@@ -38,7 +38,7 @@ public abstract class ChangeEDSLocationPasswordBaseTask extends TaskFragment
 	@Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        final EDSLocationSettingsFragment f = (EDSLocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        final LocationSettingsFragment f = (LocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         if(f == null)
             return null;
         return new ProgressDialogTaskFragmentCallbacks(activity, R.string.changing_password)

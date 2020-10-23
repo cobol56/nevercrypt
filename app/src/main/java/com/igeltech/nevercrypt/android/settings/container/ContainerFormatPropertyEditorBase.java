@@ -3,14 +3,14 @@ package com.igeltech.nevercrypt.android.settings.container;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragment;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.encfs.DataCodecPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
-import com.igeltech.nevercrypt.container.EDSLocationFormatter;
-import com.igeltech.nevercrypt.container.EdsContainer;
+import com.igeltech.nevercrypt.container.LocationFormatter;
+import com.igeltech.nevercrypt.container.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +30,9 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
     protected List<String> getEntries()
     {
         ArrayList<String> res = new ArrayList<>();
-        for (ContainerFormatInfo i : EdsContainer.getSupportedFormats())
+        for (ContainerFormatInfo i : Container.getSupportedFormats())
             res.add(i.getFormatName());
-        res.add(EDSLocationFormatter.FORMAT_ENCFS);
+        res.add(LocationFormatter.FORMAT_ENCFS);
         return res;
     }
 
@@ -40,7 +40,7 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
     protected int loadValue()
     {
         int formatId = getFormatIdFromName(getHostFragment().getState().getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT));
-        boolean addExisting = getHostFragment().getState().getBoolean(CreateEDSLocationFragment.ARG_ADD_EXISTING_LOCATION);
+        boolean addExisting = getHostFragment().getState().getBoolean(CreateLocationFragment.ARG_ADD_EXISTING_LOCATION);
         boolean isEncFs = isEncFs(formatId);
         getHostFragment().getPropertiesView().beginUpdate();
         try
@@ -61,13 +61,13 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
     @Override
     protected void saveValue(int value)
     {
-        boolean addExisting = getHostFragment().getState().getBoolean(CreateEDSLocationFragment.ARG_ADD_EXISTING_LOCATION);
+        boolean addExisting = getHostFragment().getState().getBoolean(CreateLocationFragment.ARG_ADD_EXISTING_LOCATION);
         getHostFragment().getPropertiesView().beginUpdate();
         try
         {
             if (isEncFs(value))
             {
-                getHostFragment().getState().putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, EDSLocationFormatter.FORMAT_ENCFS);
+                getHostFragment().getState().putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, LocationFormatter.FORMAT_ENCFS);
                 updateContainerFormatProperties(false, null);
                 updateEncFsProperties(!addExisting);
             } else
@@ -89,7 +89,7 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
 
     private boolean isEncFs(int formatId)
     {
-        return formatId == EdsContainer.getSupportedFormats().size();
+        return formatId == Container.getSupportedFormats().size();
     }
 
     protected CreateContainerFragmentBase getHostFragment()
@@ -101,8 +101,8 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
     {
         if (formatName == null)
             return 0;
-        List<ContainerFormatInfo> supportedFormats = EdsContainer.getSupportedFormats();
-        if(EDSLocationFormatter.FORMAT_ENCFS.equals(formatName))
+        List<ContainerFormatInfo> supportedFormats = Container.getSupportedFormats();
+        if(LocationFormatter.FORMAT_ENCFS.equals(formatName))
             return supportedFormats.size();
         for (int i = 0; i < supportedFormats.size(); i++)
         {
@@ -115,7 +115,7 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
 
     protected ContainerFormatInfo getSelectedContainerFormatInfo(int formatId)
     {
-        List<ContainerFormatInfo> fmts = EdsContainer.getSupportedFormats();
+        List<ContainerFormatInfo> fmts = Container.getSupportedFormats();
         return formatId >= fmts.size() ? null : fmts.get(formatId);
     }
 

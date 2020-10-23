@@ -10,8 +10,8 @@ import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment;
 import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
-import com.igeltech.nevercrypt.android.locations.fragments.EDSLocationSettingsFragment;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class WriteSettingsTask extends TaskFragment
@@ -19,7 +19,7 @@ public class WriteSettingsTask extends TaskFragment
     public static final String TAG = "com.igeltech.nevercrypt.android.tasks.WriteSettingsTask";
     public static final String ARG_FIN_ACTIVITY = "com.igeltech.nevercrypt.android.FIN_ACTIVITY";
 
-	public static WriteSettingsTask newInstance(EDSLocation cont, boolean finActivity)
+	public static WriteSettingsTask newInstance(CryptoLocation cont, boolean finActivity)
     {
         Bundle args = new Bundle();
         args.putBoolean(ARG_FIN_ACTIVITY, finActivity);
@@ -41,7 +41,7 @@ public class WriteSettingsTask extends TaskFragment
     @Override
     protected void doWork(TaskState state) throws Exception
     {
-        EDSLocation cont = (EDSLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
+        CryptoLocation cont = (CryptoLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
 		cont.applyInternalSettings();
         cont.writeInternalSettings();
 	}
@@ -49,7 +49,7 @@ public class WriteSettingsTask extends TaskFragment
     @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        EDSLocationSettingsFragment f = (EDSLocationSettingsFragment)
+        LocationSettingsFragment f = (LocationSettingsFragment)
                 getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         if(f == null)
             return null;

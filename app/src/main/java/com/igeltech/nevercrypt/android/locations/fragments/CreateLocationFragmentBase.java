@@ -21,7 +21,7 @@ import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbac
 import com.igeltech.nevercrypt.android.locations.dialogs.OverwriteContainerDialog;
 import com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
-import com.igeltech.nevercrypt.android.locations.tasks.CreateEDSLocationTaskFragment;
+import com.igeltech.nevercrypt.android.locations.tasks.CreateLocationTaskFragment;
 import com.igeltech.nevercrypt.android.settings.PropertiesHostWithStateBundle;
 import com.igeltech.nevercrypt.android.settings.container.ExistingContainerPropertyEditor;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
@@ -31,7 +31,7 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 import java.util.concurrent.CancellationException;
 
-public abstract class CreateEDSLocationFragmentBase extends PropertiesFragmentBase implements PropertiesHostWithStateBundle
+public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase implements PropertiesHostWithStateBundle
 {
     public static final String ARG_ADD_EXISTING_LOCATION = "com.igeltech.nevercrypt.android.ADD_EXISTING_CONTAINER";
 
@@ -141,7 +141,7 @@ public abstract class CreateEDSLocationFragmentBase extends PropertiesFragmentBa
             _propertiesView.saveProperties();
             TaskFragment task = createCreateLocationTask();
             task.setArguments(_state);
-            getFragmentManager().beginTransaction().add(task, CreateEDSLocationTaskFragment.TAG).commit();
+            getFragmentManager().beginTransaction().add(task, CreateLocationTaskFragment.TAG).commit();
         }
         catch (Exception e)
         {
@@ -244,7 +244,7 @@ public abstract class CreateEDSLocationFragmentBase extends PropertiesFragmentBa
                 @Override
                 public void onCancel(DialogInterface dialog)
                 {
-                    CreateEDSLocationTaskFragment f = (CreateEDSLocationTaskFragment) getFragmentManager()
+                    CreateLocationTaskFragment f = (CreateLocationTaskFragment) getFragmentManager()
                             .findFragmentByTag(CreateContainerTaskFragmentBase.TAG);
                     if (f != null) f.cancel();
                 }

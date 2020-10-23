@@ -12,7 +12,7 @@ import android.os.PowerManager;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.igeltech.nevercrypt.android.EdsApplication;
+import com.igeltech.nevercrypt.android.CryptoApplication;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.errors.InputOutputException;
@@ -24,7 +24,7 @@ import com.igeltech.nevercrypt.fs.util.PathUtil;
 import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
 import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 import com.igeltech.nevercrypt.locations.DeviceBasedLocation;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.settings.GlobalConfig;
@@ -146,7 +146,7 @@ public abstract class FileOpsServiceBase extends IntentService
 			}
 
 		}
-		mime = EdsApplication.getMimeTypesMap(context).get(filenameExtension); //MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
+		mime = CryptoApplication.getMimeTypesMap(context).get(filenameExtension); //MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext);
 		return mime == null ? "application/octet-stream" : mime;
 	}
 
@@ -256,7 +256,7 @@ public abstract class FileOpsServiceBase extends IntentService
 		context.startService(i);
 	}
 
-	public static void closeContainer(Context context, EDSLocation container)
+	public static void closeContainer(Context context, CryptoLocation container)
 	{
 		Intent i = new Intent(context, FileOpsService.class);
 		i.setAction(ACTION_CLOSE_CONTAINER);

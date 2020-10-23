@@ -6,13 +6,13 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.igeltech.nevercrypt.android.activities.SettingsBaseActivity;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.CreateEDSLocationFragment;
+import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
 import com.igeltech.nevercrypt.container.ContainerFormatterBase;
-import com.igeltech.nevercrypt.locations.EDSLocation;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
-public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
+public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
 {
 
 	@Override
@@ -35,14 +35,14 @@ public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
 	@Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        CreateEDSLocationFragment f = (CreateEDSLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        CreateLocationFragment f = (CreateLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         return f == null ? null : f.getAddExistingEDSLocationTaskCallbacks();
     }
 
-    protected EDSLocation findOrCreateLocation(LocationsManager lm, Location locationLocation, boolean storeLink) throws Exception
+    protected CryptoLocation findOrCreateLocation(LocationsManager lm, Location locationLocation, boolean storeLink) throws Exception
     {
-        EDSLocation loc = createEDSLocation(locationLocation);
-        EDSLocation exCont = (EDSLocation) lm.findExistingLocation(loc);
+        CryptoLocation loc = createEDSLocation(locationLocation);
+        CryptoLocation exCont = (CryptoLocation) lm.findExistingLocation(loc);
         if(exCont != null)
         {
             if (lm.isStoredLocation(exCont.getId()) && exCont.getClass().equals(loc.getClass()))
@@ -60,7 +60,7 @@ public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
         return loc;
     }
 
-    protected void setLocationSettings(EDSLocation loc, boolean storeLink)
+    protected void setLocationSettings(CryptoLocation loc, boolean storeLink)
     {
         loc.getExternalSettings().setTitle(ContainerFormatterBase.makeTitle(loc, LocationsManager.getLocationsManager(_context)));
         loc.getExternalSettings().setVisibleToUser(true);
@@ -68,10 +68,10 @@ public abstract class AddExistingEDSLocationTaskFragment extends TaskFragment
             loc.saveExternalSettings();
     }
 
-	protected void addEDSLocation(LocationsManager lm, EDSLocation loc, boolean storeLink) throws Exception
+	protected void addEDSLocation(LocationsManager lm, CryptoLocation loc, boolean storeLink) throws Exception
     {
         lm.replaceLocation(loc, loc, storeLink);
 	}
 
-	protected abstract EDSLocation createEDSLocation(Location locationLocation) throws Exception;
+	protected abstract CryptoLocation createEDSLocation(Location locationLocation) throws Exception;
 }
