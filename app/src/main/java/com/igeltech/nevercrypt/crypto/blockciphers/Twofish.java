@@ -60,7 +60,7 @@ public class Twofish implements BlockCipherNative
 	
 	static
 	{
-		System.loadLibrary("edstwofish");
+		System.loadLibrary("crypttwofish");
 	}
 	
 	private long _contextPtr;

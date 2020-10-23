@@ -4,8 +4,8 @@ import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragme
 
 public class PathToContainerPropertyEditor extends PathToContainerPropertyEditorBase
 {
-    public PathToContainerPropertyEditor(CreateContainerFragmentBase createEDSLocationFragment)
+    public PathToContainerPropertyEditor(CreateContainerFragmentBase createLocationFragment)
     {
-        super(createEDSLocationFragment);
+        super(createLocationFragment);
     }
 }

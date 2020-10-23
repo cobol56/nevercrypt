@@ -143,7 +143,7 @@ public abstract class CBC implements FileEncryptionEngine
 
 	static
 	{
-		System.loadLibrary("edscbc");
+		System.loadLibrary("cryptcbc");
 	}
 	
 	protected byte[] _iv;

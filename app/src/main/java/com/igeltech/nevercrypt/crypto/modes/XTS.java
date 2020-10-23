@@ -157,7 +157,7 @@ public abstract class XTS implements FileEncryptionEngine
 	
 	static
 	{
-		System.loadLibrary("edsxts");
+		System.loadLibrary("cryptxts");
 	}
 	
 	protected static class CipherPair

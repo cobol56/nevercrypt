@@ -61,7 +61,7 @@ public class Whirlpool extends MessageDigest
 	
 	static
 	{
-		System.loadLibrary("edswhirlpool");
+		System.loadLibrary("cryptwhirlpool");
 	}
 	
 	private static final int DIGEST_LENGTH = 64;

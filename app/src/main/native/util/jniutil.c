@@ -5,7 +5,7 @@
 
 #ifdef DEBUG
 #include <android/log.h>
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code fuseeds)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code fuse)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif

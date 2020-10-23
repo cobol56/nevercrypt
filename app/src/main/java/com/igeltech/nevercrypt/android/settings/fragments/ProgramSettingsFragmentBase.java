@@ -340,7 +340,7 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
                 editSettings().putBoolean(DISABLE_MODIFIED_FILES_BACKUP, value).commit();
             }
         }));
-        commonPropertiesIds.add(getPropertiesView().addProperty(new SwitchPropertyEditor(this, R.string.hide_eds_screen_from_other_apps, 0)
+        commonPropertiesIds.add(getPropertiesView().addProperty(new SwitchPropertyEditor(this, R.string.hide_app_screen_from_other_apps, 0)
         {
             @Override
             protected boolean loadValue()

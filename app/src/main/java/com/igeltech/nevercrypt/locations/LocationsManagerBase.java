@@ -536,7 +536,7 @@ public abstract class LocationsManagerBase
 		}
 	}
 
-	public List<CryptoLocation> getLoadedEDSLocations(final boolean onlyVisible)
+	public List<CryptoLocation> getLoadedCryptoLocations(final boolean onlyVisible)
 	{
 		synchronized (_currentLocations)
 		{

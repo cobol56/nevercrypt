@@ -61,7 +61,7 @@ public class RIPEMD160 extends MessageDigest
 	
 	static
 	{
-		System.loadLibrary("edsripemd160");
+		System.loadLibrary("cryptripemd160");
 	}
 	
 	private static final int DIGEST_LENGTH = 20;

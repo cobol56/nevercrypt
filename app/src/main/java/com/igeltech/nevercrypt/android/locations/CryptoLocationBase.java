@@ -30,7 +30,7 @@ import java.util.Collection;
 public abstract class CryptoLocationBase extends OMLocationBase implements Cloneable, CryptoLocation
 {
 
-	public static final String INTERNAL_SETTINGS_FILE_NAME = ".eds-settings";
+	public static final String INTERNAL_SETTINGS_FILE_NAME = ".settings";
 
 	public static class ExternalSettings extends OMLocationBase.ExternalSettings implements CryptoLocation.ExternalSettings
 	{

@@ -379,7 +379,7 @@ public class FatFS implements FileSystem
 									|| ofi.accessMode == AccessMode.ReadWrite
 									|| ofi.accessMode == AccessMode.Write))
 					{
-						Log.i("EDS", String.format("%s is busy waiting %d", path.getPathString(), timeLeft));
+						Log.i("NeverCrypt", String.format("%s is busy waiting %d", path.getPathString(), timeLeft));
 						long curTime = System.currentTimeMillis();
 						try
 						{
@@ -1402,7 +1402,7 @@ public class FatFS implements FileSystem
 				{
 					////DEBUG
 					//DirEntry de = _dirEntriesCache.get(path);
-					//Log.d("EDS", String.format("DirEntry %s found in cache for %s . ",de,path.getPathString()));
+					//Log.d("NeverCrypt", String.format("DirEntry %s found in cache for %s . ",de,path.getPathString()));
 					//return de;
 					return _dirEntriesCache.get(path);
 				}
@@ -1413,7 +1413,7 @@ public class FatFS implements FileSystem
 			logReleased(li);
 		}
 		DirEntry res = getDirEntry(path, opTag);
-		//Log.d("EDS", String.format("DirEntry %s not found in cache for %s and was created. ",res,path.getPathString()));
+		//Log.d("NeverCrypt", String.format("DirEntry %s not found in cache for %s and was created. ",res,path.getPathString()));
 		cacheDirEntry(path, res);
 		return res;
     }
@@ -1782,7 +1782,7 @@ public class FatFS implements FileSystem
 				}
 				_currentStreamPosition += read;
 				//if(LOG_MORE)
-				//Log.d("EDS ClusterChainIO",String.format("ClusterChainIO read: file=%s read %d bytes",_path.getPathString(),avail));
+				//Log.d("NeverCrypt ClusterChainIO",String.format("ClusterChainIO read: file=%s read %d bytes",_path.getPathString(),avail));
 				return read;
 			}
 		}

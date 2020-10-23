@@ -91,7 +91,7 @@ class SaveTempFileChangesTask extends CopyFilesTask
 		};
 	}
 	
-	private static final String BAK_EXTENSION = ".edsbak";
-	private static final String TMP_EXTENSION = ".edstmp";
+	private static final String BAK_EXTENSION = ".cryptbak";
+	private static final String TMP_EXTENSION = ".crypttmp";
 
 }

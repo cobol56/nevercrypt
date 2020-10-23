@@ -37,9 +37,9 @@ Part of this code is based on Brian Gladman's xts implementation.
 #include <android/log.h>
 #include "xts.h"
 
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code edsxts)", __VA_ARGS__);
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code xts)", __VA_ARGS__);
 #ifdef DEBUG
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code edsxts)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code xts)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif

@@ -124,7 +124,7 @@ public class DocumentRootsCursor extends AbstractCursor
     private void fillList()
     {
         _locations.clear();
-        for(CryptoLocation l: _lm.getLoadedEDSLocations(true))
+        for(CryptoLocation l: _lm.getLoadedCryptoLocations(true))
             if(l.isOpen())
                 _locations.add(l);
     }

@@ -14,11 +14,11 @@
         android:allowBackup="true"
         android:fullBackupContent="@xml/backupscheme"
         android:icon="@drawable/ic_launcher_eds"
-        android:label="@string/eds"
-        android:theme="@style/Theme.NeverCrypt">
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Default">
         <activity
             android:name=".filemanager.activities.FileManagerActivity"
-            android:label="@string/eds">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -75,7 +75,7 @@
         <activity
             android:name=".activities.CancelTaskActivity"
             android:excludeFromRecents="true"
-            android:label="@string/eds">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.igeltech.nevercrypt.android.ACTION_CANCEL_TASK"/>
             </intent-filter>
@@ -101,7 +101,7 @@
         <service android:name=".service.FileOpsService"/>
         <service android:name=".service.LocationsService"/>
         <receiver android:name=".widgets.LocationShortcutWidget"
-                  android:label="@string/eds_shortcut">
+                  android:label="@string/app_shortcut">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>

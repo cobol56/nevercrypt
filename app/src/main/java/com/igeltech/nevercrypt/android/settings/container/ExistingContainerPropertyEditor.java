@@ -10,10 +10,10 @@ import com.igeltech.nevercrypt.android.settings.PropertyEditorBase;
 
 public class ExistingContainerPropertyEditor extends PropertyEditorBase
 {
-    public ExistingContainerPropertyEditor(CreateLocationFragmentBase createEDSLocationFragment)
+    public ExistingContainerPropertyEditor(CreateLocationFragmentBase createLocationFragment)
     {
         super(
-                createEDSLocationFragment,
+                createLocationFragment,
                 R.layout.settings_create_new_or_existing_container,
                 R.string.create_new_container_or_add_existing_container,
                 0);

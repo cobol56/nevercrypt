@@ -184,7 +184,7 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         _propertiesView.setPropertiesState(false);
     }
 
-    public TaskFragment.TaskCallbacks getAddExistingEDSLocationTaskCallbacks()
+    public TaskFragment.TaskCallbacks getAddExistingCryptoLocationTaskCallbacks()
     {
         return new ProgressDialogTaskFragmentCallbacks(getActivity(), R.string.loading)
         {

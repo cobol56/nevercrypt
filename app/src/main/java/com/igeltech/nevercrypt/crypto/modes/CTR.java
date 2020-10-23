@@ -128,7 +128,7 @@ public abstract class CTR implements EncryptionEngine
 
 	static
 	{
-		System.loadLibrary("edsctr");
+		System.loadLibrary("cryptctr");
 	}
 
 	protected byte[] _iv;

@@ -8,9 +8,9 @@
 #include <android/log.h>
 #include "cbc.h"
 
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code edscbc)", __VA_ARGS__);
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "NeverCrypt (native code cbc)", __VA_ARGS__);
 #ifdef DEBUG
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code edscbc)", __VA_ARGS__);
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "NeverCrypt (native code cbc)", __VA_ARGS__);
 #else
 #define LOGD(...)
 #endif

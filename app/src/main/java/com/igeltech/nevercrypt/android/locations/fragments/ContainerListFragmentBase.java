@@ -13,7 +13,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     protected void loadLocations()
     {
         _locationsList.clear();
-		for(CryptoLocation loc: LocationsManager.getLocationsManager(getActivity()).getLoadedEDSLocations(true))
+		for(CryptoLocation loc: LocationsManager.getLocationsManager(getActivity()).getLoadedCryptoLocations(true))
                 _locationsList.add(new ContainerInfo(loc));
     }
 

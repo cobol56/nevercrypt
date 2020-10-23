@@ -13,7 +13,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 public class Logger implements UncaughtExceptionHandler
 {
-	public static final String TAG = "EDS";
+	public static final String TAG = "NeverCrypt";
 
 	public static void disableLog(boolean val)
 	{

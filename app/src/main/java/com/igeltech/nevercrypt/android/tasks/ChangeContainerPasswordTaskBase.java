@@ -27,7 +27,7 @@ public abstract class ChangeContainerPasswordTaskBase extends ChangeLocationPass
         RandomAccessIO io = cont.getLocation().getCurrentPath().getFile().getRandomAccessIO(File.AccessMode.ReadWrite);
         try
         {
-            VolumeLayout vl = cont.getEdsContainer().getVolumeLayout();
+            VolumeLayout vl = cont.getCryptoContainer().getVolumeLayout();
             vl.writeHeader(io);
         }
         finally
@@ -38,7 +38,7 @@ public abstract class ChangeContainerPasswordTaskBase extends ChangeLocationPass
 
 	protected void setContainerPassword(ContainerLocation container) throws IOException
     {
-        VolumeLayout vl = container.getEdsContainer().getVolumeLayout();
+        VolumeLayout vl = container.getCryptoContainer().getVolumeLayout();
         Bundle args  = getArguments();
         SecureBuffer sb = Util.getPassword(args, LocationsManager.getLocationsManager(_context));
         vl.setPassword(sb.getDataArray());

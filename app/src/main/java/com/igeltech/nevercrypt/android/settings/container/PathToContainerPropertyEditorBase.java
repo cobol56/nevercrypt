@@ -17,12 +17,12 @@ import java.io.IOException;
 public abstract class PathToContainerPropertyEditorBase extends PathPropertyEditor
 {
 
-    public PathToContainerPropertyEditorBase(CreateContainerFragmentBase createEDSLocationFragment)
+    public PathToContainerPropertyEditorBase(CreateContainerFragmentBase createLocationFragment)
     {
-        super(createEDSLocationFragment,
+        super(createLocationFragment,
                 R.string.path_to_container,
                 0,
-                createEDSLocationFragment.getTag());
+                createLocationFragment.getTag());
     }
 
     @Override

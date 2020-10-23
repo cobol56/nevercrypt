@@ -65,7 +65,7 @@ public class GOST implements BlockCipherNative
 	
 	static
 	{
-		System.loadLibrary("edsgost");
+		System.loadLibrary("cryptgost");
 	}
 	
 	private long _contextPtr;

@@ -19,7 +19,7 @@
   <string name="settings">Ajustes</string>
   <string name="bad_container_file_or_wrong_password">Fichero de contenedor erróneo o contraseña incorrecta</string>
   <string name="main_settings">Ajustes principales</string>
-  <string name="eds_shortcut">Atajo <xliff:g id="program_name">NeverCrypt</xliff:g></string>
+  <string name="app_shortcut">Atajo <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="enter_widget_title">Introduzca el título del widget</string>
   <string name="select_path">Seleccionar ruta</string>
   <string name="container_size">Tamaño del contenedor</string>
@@ -39,7 +39,7 @@
   <string name="free_space">Espacio libre</string>
     <string name="saving_changes">Guardando cambios</string>
   <string name="preparing_file">Preparando ficheros</string>
-  <string name="eds_service_is_running">El servicio <xliff:g id="program_name">NeverCrypt</xliff:g> se está ejecutando</string>
+  <string name="app_service_is_running">El servicio <xliff:g id="program_name">NeverCrypt</xliff:g> se está ejecutando</string>
   <string name="stop_service_and_exit">Detener el servicio y salir</string>
   <string name="send_files_to">Enviar ficheros a</string>
   <string name="send">Enviar</string>
@@ -175,7 +175,7 @@
   <string name="hidden">Oculto</string>
     <string name="overwrite_and_delete">Sobrescribir y borrar</string>
   <string name="list_is_empty">La lista está vacía </string>
-  <string name="hide_eds_screen_from_other_apps">Ocultar la pantalla de <xliff:g id="program_name">NeverCrypt</xliff:g> a otras aplicaciones</string>
+  <string name="hide_app_screen_from_other_apps">Ocultar la pantalla de <xliff:g id="program_name">NeverCrypt</xliff:g> a otras aplicaciones</string>
   <string name="toggle_auto_zoom">Cambiar el zoom automático</string>
   <string name="change">Cambiar</string>
   <string name="do_you_really_want_to_remove_from_the_list">¿Realmente desea borrar \"%1$s\" de la lista?</string>

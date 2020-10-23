@@ -53,7 +53,7 @@ public abstract class OpeningOptionsFragmentBase extends PropertiesFragmentBase 
             _state.putAll(extras);
         createOpenableProperties();
         if(_location instanceof CryptoLocation)
-            createEDSLocationProperties();
+            createLocationProperties();
         if(_location instanceof ContainerLocation)
             createContainerProperties();
     }
@@ -61,7 +61,7 @@ public abstract class OpeningOptionsFragmentBase extends PropertiesFragmentBase 
     protected Openable _location;
     protected Settings _settings;
 
-    protected void createEDSLocationProperties()
+    protected void createLocationProperties()
     {
         _propertiesView.addProperty(new OpenInReadOnlyModePropertyEditor(this));
     }

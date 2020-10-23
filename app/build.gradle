@@ -24,7 +24,7 @@ android {
 		
         externalNativeBuild {
             cmake {
-                targets "edsxts", "edsctr", "edsaes", "edsserpent", "edstwofish", "edsripemd160", "edswhirlpool", "fdraio", "localxts", "edscfb", "edscbc", "edsctr", "edsgost"
+                targets "cryptxts", "cryptctr", "cryptaes", "cryptserpent", "crypttwofish", "cryptripemd160", "cryptwhirlpool", "fdraio", "localxts", "cryptcfb", "cryptcbc", "cryptctr", "cryptgost"
             }
         }
     }

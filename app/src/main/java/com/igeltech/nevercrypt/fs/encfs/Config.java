@@ -484,8 +484,6 @@ public class Config
 
     private String makeCreatorString(Context context)
     {
-        if(context == null)
-            return "EDS";
         String verName = "";
         try
         {
@@ -497,7 +495,7 @@ public class Config
         }
         return String.format(
                 "%s v%s",
-                context.getString(R.string.eds),
+                context.getString(R.string.app_name),
                 verName
         );
     }

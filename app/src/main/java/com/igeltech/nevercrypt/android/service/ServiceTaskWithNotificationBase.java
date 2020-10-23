@@ -106,7 +106,7 @@ public abstract class ServiceTaskWithNotificationBase implements Task
     protected NotificationCompat.Builder initNotification()
     {
         NotificationCompat.Builder nb = new NotificationCompat.Builder(_context, CompatHelper.getFileOperationsNotificationsChannelId(_context))
-				.setContentTitle(_context.getString(R.string.eds))
+				.setContentTitle(_context.getString(R.string.app_name))
                 .setSmallIcon(R.drawable.ic_notification_new)
                 .setOngoing(true)
                 .setAutoCancel(false)

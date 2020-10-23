@@ -57,8 +57,8 @@ public class RenameFileDialog extends DialogFragment
 		return alert.create();
 	}
 	
-	private static final String ARG_CURRENT_PATH = "com.sovoworks.eds.android.PATH";
-    private static final String ARG_FILENAME = "com.sovoworks.eds.android.FILENAME";
+	private static final String ARG_CURRENT_PATH = "com.igeltech.nevercrypt.android.PATH";
+    private static final String ARG_FILENAME = "com.igeltech.nevercrypt.android.FILENAME";
 	
 	private void renameFile(String newName)
 	{

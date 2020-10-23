@@ -12,9 +12,9 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 public class ContainerPasswordPropertyEditor extends ButtonPropertyEditor implements PasswordDialog.PasswordReceiver
 {
-    public ContainerPasswordPropertyEditor(CreateLocationFragment createEDSLocationFragment)
+    public ContainerPasswordPropertyEditor(CreateLocationFragment createLocationFragment)
     {
-        super(createEDSLocationFragment,
+        super(createLocationFragment,
                 R.string.container_password,
                 0,
                 R.string.change

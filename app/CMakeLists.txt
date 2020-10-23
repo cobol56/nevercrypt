@@ -6,49 +6,49 @@ include_directories(src/main/native/crypto)
 find_library( log-lib
               log )
 
-add_library( edsxts
+add_library( cryptxts
 			 SHARED
              src/main/native/xts/app-xts.c )
 
-target_link_libraries( edsxts                       
+target_link_libraries( cryptxts
                        ${log-lib} )
 
-add_library( edsaes
+add_library( cryptaes
 			 SHARED
              src/main/native/aes/app-aes.c 
              src/main/native/aes/aescrypt.c 
              src/main/native/aes/aeskey.c 
              src/main/native/aes/aestab.c )
 
-target_link_libraries( edsaes
+target_link_libraries( cryptaes
                        ${log-lib} )
 
-add_library( edsserpent
+add_library( cryptserpent
 			 SHARED
              src/main/native/serpent/app-serpent.c
              src/main/native/serpent/serpent.c )
 
-target_link_libraries( edsserpent
+target_link_libraries( cryptserpent
                        ${log-lib} )
 
-add_library( edstwofish
+add_library( crypttwofish
 			 SHARED
              src/main/native/twofish/app-twofish.c
              src/main/native/twofish/twofish.c )
 
-add_library( edsripemd160
+add_library( cryptripemd160
 			 SHARED
              src/main/native/ripemd160/app-ripemd160.c )
 
-target_link_libraries( edsripemd160
+target_link_libraries( cryptripemd160
                        ${log-lib} )
 
-add_library( edswhirlpool
+add_library( cryptwhirlpool
 			 SHARED
              src/main/native/whirlpool/app-whirlpool.c
              src/main/native/whirlpool/whirlpool.c )
 
-target_link_libraries( edswhirlpool
+target_link_libraries( cryptwhirlpool
                        ${log-lib} )
 
 add_library( fdraio
@@ -69,30 +69,30 @@ target_compile_definitions( localxts
         					PRIVATE _FILE_OFFSET_BITS=64 )
 
 target_link_libraries( localxts
-                       edsxts
+                       cryptxts
                        ${log-lib} )
 
-add_library( edsctr
+add_library( cryptctr
        SHARED
              src/main/native/ctr/app-ctr.c )
 
-target_link_libraries( edsctr
+target_link_libraries( cryptctr
                        ${log-lib} )
 
-add_library( edscbc
+add_library( cryptcbc
        SHARED
              src/main/native/cbc/app-cbc.c )
 
-target_link_libraries( edscbc
+target_link_libraries( cryptcbc
                        ${log-lib} )
 
-add_library( edscfb
+add_library( cryptcfb
        SHARED
              src/main/native/cfb/app-cfb.c )
 
-target_link_libraries( edscfb
+target_link_libraries( cryptcfb
                        ${log-lib} )
-add_library( edsgost
+add_library( cryptgost
        SHARED
              src/main/native/gost/app-gost.c
              src/main/native/gost/gost89.c )

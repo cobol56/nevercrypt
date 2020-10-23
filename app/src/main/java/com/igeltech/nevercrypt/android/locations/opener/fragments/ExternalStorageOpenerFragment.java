@@ -58,7 +58,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         {
             try
             {
-                File res = File.createTempFile("eds", null, new File(loc.getRootPath()));
+                File res = File.createTempFile("crypto", null, new File(loc.getRootPath()));
                 res.delete();
                 return true;
             }

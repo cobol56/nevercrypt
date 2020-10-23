@@ -27,7 +27,7 @@ public class DrawerContainersMenu extends DrawerSubMenuBase
     {
         LocationsManager lm = LocationsManager.getLocationsManager(getContext());
         ArrayList<DrawerMenuItemBase> res = new ArrayList<>();
-        for(CryptoLocation loc: lm.getLoadedEDSLocations(true))
+        for(CryptoLocation loc: lm.getLoadedCryptoLocations(true))
         {
             if(loc instanceof ContainerLocation)
                 res.add(new DrawerContainerMenuItem(loc, getDrawerController()));

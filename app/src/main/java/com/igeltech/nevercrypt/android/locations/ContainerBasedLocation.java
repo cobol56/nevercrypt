@@ -32,7 +32,7 @@ import java.util.List;
 
 public class ContainerBasedLocation extends CryptoLocationBase implements ContainerLocation
 {
-	public static final String URI_SCHEME = "eds-container";
+	public static final String URI_SCHEME = "crypto-container";
 
 	public static String getLocationId(LocationsManagerBase lm, Uri locationUri) throws Exception
 	{
@@ -152,7 +152,7 @@ public class ContainerBasedLocation extends CryptoLocationBase implements Contai
 	{
 		if(isOpenOrMounted())
 			return;
-		Container cnt = getEdsContainer();
+		Container cnt = getCryptoContainer();
 		cnt.setContainerFormat(null);
 		cnt.setEncryptionEngineHint(null);
 		cnt.setHashFuncHint(null);
@@ -254,7 +254,7 @@ public class ContainerBasedLocation extends CryptoLocationBase implements Contai
 	}
 
 	@Override
-	public synchronized Container getEdsContainer() throws IOException
+	public synchronized Container getCryptoContainer() throws IOException
 	{
 		Container cnt = getSharedData().container;
 		if(cnt == null)

@@ -193,7 +193,7 @@ public abstract class ContainerFormatterBase extends LocationFormatter
 
 	protected ContainerLocation createContainerBasedLocation(Location containerLocation, VolumeLayout layout) throws IOException
 	{
-		Container cont = getEdsContainer(containerLocation.getCurrentPath(), layout);
+		Container cont = getCryptoContainer(containerLocation.getCurrentPath(), layout);
 		return createBaseContainerLocationFromFormatInfo(
 				containerLocation,
 				cont,
@@ -216,7 +216,7 @@ public abstract class ContainerFormatterBase extends LocationFormatter
 		);
 	}
 
-	protected Container getEdsContainer(Path pathToContainer, VolumeLayout layout)
+	protected Container getCryptoContainer(Path pathToContainer, VolumeLayout layout)
 	{
 		return new Container(pathToContainer, _containerFormat, layout);
 	}

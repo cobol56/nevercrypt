@@ -19,7 +19,7 @@
   <string name="settings">Ustawienia</string>
   <string name="bad_container_file_or_wrong_password">Złe hasło lub nieprawidłowy format kontenera</string>
   <string name="main_settings">Ustawienia główne</string>
-  <string name="eds_shortcut">Skrót do Eds</string>
+  <string name="app_shortcut">Skrót do <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="enter_widget_title">Podaj nazwę widżetu</string>
   <string name="select_path">Wybór ścieżki</string>
   <string name="container_size">Rozmiar kontenera</string>
@@ -38,7 +38,7 @@
   <string name="free_space">Wolna przestrzeń</string>
     <string name="saving_changes">Zapisz zmiany</string>
   <string name="preparing_file">Przygotowanie plików</string>
-  <string name="eds_service_is_running">Usługa Eds jest uruchomiona</string>
+  <string name="app_service_is_running">Usługa <xliff:g id="program_name">NeverCrypt</xliff:g> jest uruchomiona</string>
   <string name="stop_service_and_exit">Zatrzymaj usługę i wyjdź</string>
   <string name="send_files_to">Wyślij pliki do</string>
   <string name="send">Wyślij</string>

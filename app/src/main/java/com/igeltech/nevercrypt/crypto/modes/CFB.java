@@ -127,7 +127,7 @@ public abstract class CFB implements EncryptionEngine
 
 	static
 	{
-		System.loadLibrary("edscfb");
+		System.loadLibrary("cryptcfb");
 	}
 
 	protected byte[] _iv;

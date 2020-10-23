@@ -19,6 +19,6 @@ public interface ContainerLocation extends CryptoLocation
     }
     @Override
     ExternalSettings getExternalSettings();
-    Container getEdsContainer() throws IOException;
+    Container getCryptoContainer() throws IOException;
     List<ContainerFormatInfo> getSupportedFormats();
 }

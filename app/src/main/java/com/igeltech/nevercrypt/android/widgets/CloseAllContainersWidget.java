@@ -76,7 +76,7 @@ public class CloseAllContainersWidget extends AppWidgetProvider
 		LocationsManager lm = LocationsManager.getLocationsManager(context);
 		if(lm != null)
 		{
-			for(CryptoLocation cbl: lm.getLoadedEDSLocations(false))
+			for(CryptoLocation cbl: lm.getLoadedCryptoLocations(false))
 				if(cbl.isOpenOrMounted())
 					return true;
 		}

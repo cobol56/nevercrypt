@@ -225,7 +225,7 @@ public class LocationsServiceBase extends Service
         Intent i = new Intent(this, FileManagerActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CompatHelper.getServiceRunningNotificationsChannelId(this))
-                .setContentTitle(getString(R.string.eds_service_is_running))
+                .setContentTitle(getString(R.string.app_service_is_running))
                 .setSmallIcon(R.drawable.ic_notification_new)
                 .setContentText("")
                 .setContentIntent(PendingIntent.getActivity(this, 0, i, 0))

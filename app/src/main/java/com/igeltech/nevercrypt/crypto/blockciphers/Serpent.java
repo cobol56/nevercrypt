@@ -60,7 +60,7 @@ public class Serpent implements BlockCipherNative
 	
 	static
 	{
-		System.loadLibrary("edsserpent");
+		System.loadLibrary("cryptserpent");
 	}
 	
 	private long _contextPtr;

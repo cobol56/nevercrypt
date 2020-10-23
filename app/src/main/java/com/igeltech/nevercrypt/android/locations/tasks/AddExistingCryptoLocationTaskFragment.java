@@ -36,12 +36,12 @@ public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         CreateLocationFragment f = (CreateLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
-        return f == null ? null : f.getAddExistingEDSLocationTaskCallbacks();
+        return f == null ? null : f.getAddExistingCryptoLocationTaskCallbacks();
     }
 
     protected CryptoLocation findOrCreateLocation(LocationsManager lm, Location locationLocation, boolean storeLink) throws Exception
     {
-        CryptoLocation loc = createEDSLocation(locationLocation);
+        CryptoLocation loc = createCryptoLocation(locationLocation);
         CryptoLocation exCont = (CryptoLocation) lm.findExistingLocation(loc);
         if(exCont != null)
         {
@@ -55,7 +55,7 @@ public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
             else
                 lm.removeLocation(exCont);
         }
-        addEDSLocation(lm, loc, storeLink);
+        addCryptoLocation(lm, loc, storeLink);
         setLocationSettings(loc, storeLink);
         return loc;
     }
@@ -68,10 +68,10 @@ public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
             loc.saveExternalSettings();
     }
 
-	protected void addEDSLocation(LocationsManager lm, CryptoLocation loc, boolean storeLink) throws Exception
+	protected void addCryptoLocation(LocationsManager lm, CryptoLocation loc, boolean storeLink) throws Exception
     {
         lm.replaceLocation(loc, loc, storeLink);
 	}
 
-	protected abstract CryptoLocation createEDSLocation(Location locationLocation) throws Exception;
+	protected abstract CryptoLocation createCryptoLocation(Location locationLocation) throws Exception;
 }

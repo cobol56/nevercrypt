@@ -72,7 +72,7 @@ public class AES implements BlockCipherNative
 	
 	static
 	{
-		System.loadLibrary("edsaes");
+		System.loadLibrary("cryptaes");
 	}
 	
 	private long _contextPtr;

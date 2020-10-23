@@ -62,7 +62,7 @@ public abstract class AboutDialogBase extends DialogFragment
 		String verName = getVersionName(getActivity());
     	String aboutMessage = String.format(
     			"%s v%s\n%s",
-    			getResources().getString(R.string.eds),
+    			getResources().getString(R.string.app_name),
     			verName,
     			getResources().getString(R.string.about_message)
     		);
@@ -157,7 +157,7 @@ public abstract class AboutDialogBase extends DialogFragment
 				new StringPathUtil(out.getPath()).combine(
 						String.format(
 								Locale.US,
-								"eds-log-%1$tY%1$tm%1$td%1$tH%1$tM%1$tS.txt",
+								"log-%1$tY%1$tm%1$td%1$tH%1$tM%1$tS.txt",
 								new Date()
 						)
 				).toString()

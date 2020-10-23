@@ -20,7 +20,7 @@ public abstract class AddExistingContainerTaskFragmentBase extends AddExistingCr
     public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment";
 
     @Override
-    protected CryptoLocation createEDSLocation(Location locationLocation) throws Exception
+    protected CryptoLocation createCryptoLocation(Location locationLocation) throws Exception
     {
         Logger.debug("Adding location at " + locationLocation.getLocationUri());
         Path cp = locationLocation.getCurrentPath();

@@ -13,7 +13,7 @@ import java.util.Collection;
 
 public class DirectorySettings
 {
-	public static final String FILE_NAME = ".eds";
+	public static final String FILE_NAME = ".crypto";
 	
 	public static final String PARAM_HIDDEN_FILES = "hidden_files_masks";
 

@@ -17,7 +17,7 @@
   <string name="settings">Réglages</string>
   <string name="bad_container_file_or_wrong_password">Mauvais fichier container ou mauvais mot de passe</string>
   <string name="main_settings">Réglages généraux</string>
-  <string name="eds_shortcut">Raccourci <xliff:g id="program_name">NeverCrypt</xliff:g></string>
+  <string name="app_shortcut">Raccourci <xliff:g id="program_name">NeverCrypt</xliff:g></string>
   <string name="enter_widget_title">Entrez le titre du widget</string>
   <string name="select_path">Choix du chemin</string>
   <string name="container_size">Taille du container</string>
@@ -35,7 +35,7 @@
   <string name="free_space">Espace libre</string>
     <string name="saving_changes">Sauvegarde des changements</string>
   <string name="preparing_file">Préparation des fichiers</string>
-  <string name="eds_service_is_running">Le service Eds est en cours</string>
+  <string name="app_service_is_running">Le service <xliff:g id="program_name">NeverCrypt</xliff:g> est en cours</string>
   <string name="stop_service_and_exit">Arrêter le service et quitter</string>
   <string name="send_files_to">Envoyer les fichiers à</string>
   <string name="send">Envoyer</string>

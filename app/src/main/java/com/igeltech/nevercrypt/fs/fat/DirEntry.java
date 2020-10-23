@@ -241,7 +241,7 @@ class DirEntry
 				entry.fileSize = Util.unsignedIntToLongLE(buf, 0x1C);
 				entry.startCluster = (Util.unsignedShortToIntLE(buf, 0x14) << 16) | Util.unsignedShortToIntLE(buf, 0x1A);
 				//DEBUG
-				//Log.d("EDS", String.format("Read entry %s at %d. lfns=%d", entry.name,entry.offset,lfns));
+				//Log.d("NeverCrypt", String.format("Read entry %s at %d. lfns=%d", entry.name,entry.offset,lfns));
 				return entry;
 				
 			}
@@ -269,7 +269,7 @@ class DirEntry
 			try
 			{
 				//DEBUG 
-				//Log.d("EDS", String.format("Writing dir entry %s at offset %d",name,offset));
+				//Log.d("NeverCrypt", String.format("Writing dir entry %s at offset %d",name,offset));
 				os.seek(offset);
 				writeEntry(fn,os);
 				if (isLast)			
@@ -300,7 +300,7 @@ class DirEntry
 		if (fn.isLFN)
 		{
 			//DEBUG
-			//Log.d("EDS", "Entry is lfn");
+			//Log.d("NeverCrypt", "Entry is lfn");
 			writeLFNRecords(output, calcChecksum(record, 0));
 		}
 		record[0x0b] = attributes;
@@ -506,7 +506,7 @@ class DirEntry
 				charIdx++;
 			}
 			//DEBUG
-			//Log.d("EDS", String.format("Writing lfn seq=%d",seq));
+			//Log.d("NeverCrypt", String.format("Writing lfn seq=%d",seq));
 			output.write(recData,0,recData.length);
 		}
 		numLFNRecords = numRecords;

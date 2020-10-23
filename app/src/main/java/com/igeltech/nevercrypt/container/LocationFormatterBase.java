@@ -174,7 +174,7 @@ public abstract class LocationFormatterBase
 		if(_disableDefaultSettings)
 			return;
 		DirectorySettings ds = new DirectorySettings();
-		ds.setHiddenFilesMasks(Collections.singletonList("(?iu)\\.eds.*"));
+		ds.setHiddenFilesMasks(Collections.singletonList("(?iu)\\.crypt.*"));
 		FileSystem fs = loc.getFS();
 		ds.saveToDir(fs.getRootPath().getDirectory());
 	}
@@ -187,7 +187,7 @@ public abstract class LocationFormatterBase
 	private static boolean checkExistingTitle(String title, LocationsManager lm, CryptoLocation ignore)
 	{
 		Uri igUri = ignore.getLocation().getLocationUri();
-		for(CryptoLocation cnt: lm.getLoadedEDSLocations(true))
+		for(CryptoLocation cnt: lm.getLoadedCryptoLocations(true))
 			if(cnt!=ignore && !cnt.getLocation().getLocationUri().equals(igUri) && cnt.getTitle().equals(title))
 				return true;
 		return false;
