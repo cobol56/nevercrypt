@@ -30,16 +30,9 @@ public abstract class TextPropertyEditor extends PropertyEditorBase implements T
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_selectedValueTextView = (AppCompatTextView) view.findViewById(android.R.id.text1);
-		AppCompatButton selectButton = (AppCompatButton) view.findViewById(android.R.id.button1);
-		selectButton.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				startChangeValueDialog();
-			}
-		});
+		_selectedValueTextView = view.findViewById(android.R.id.text1);
+		AppCompatButton selectButton = view.findViewById(android.R.id.button1);
+		selectButton.setOnClickListener(view1 -> startChangeValueDialog());
 		return view;
 	}
 

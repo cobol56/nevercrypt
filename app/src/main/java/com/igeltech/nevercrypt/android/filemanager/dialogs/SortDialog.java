@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.filemanager.dialogs;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -65,25 +64,17 @@ public class SortDialog extends DialogFragment
         alert.setTitle(R.string.sort)
                 .setView(v)
                 .setPositiveButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int whichButton)
-                        {
+                        (dialog, whichButton) -> {
                             int pos = listView.getCheckedItemPosition();
                             if (pos == ListView.INVALID_POSITION)
                                 pos = -1;
                             applySort(pos, sortDirection.getCheckedRadioButtonId() == R.id.sort_asc);
                             dialog.dismiss();
                         }
-                    }
                 )
                 .setNegativeButton(android.R.string.cancel,
-                        new DialogInterface.OnClickListener()
-                        {
-                            public void onClick(DialogInterface dialog, int whichButton)
-                            {
-                                // Canceled.
-                            }
+                        (dialog, whichButton) -> {
+                            // Canceled.
                         }
                 );
 		return alert.create();

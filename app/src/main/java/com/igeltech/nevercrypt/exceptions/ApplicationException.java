@@ -2,9 +2,6 @@ package com.igeltech.nevercrypt.exceptions;
 
 public class ApplicationException extends Exception
 {	
-	public static final int CODE_CONTAINER_IS_SYNCING = 1;
-	public static final int CODE_CONTAINER_MOUNT_FAILED = 2;
-
 	public ApplicationException()
 	{		
 

@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.settings.dialogs;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -44,24 +43,20 @@ public class TextEditDialog extends AppCompatDialogFragment
 		alert.setView(_input);
 
 		alert.setPositiveButton(getString(android.R.string.ok),
-				new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
+				(dialog, whichButton) -> {
+Host host = PropertiesView.getHost(TextEditDialog.this);
+					if(host!=null)
 					{
-                        Host host = PropertiesView.getHost(TextEditDialog.this);
-						if(host!=null)
-						{
-							PropertyEditor pe = host.getPropertiesView().getPropertyById(getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID));
-							if(pe!=null)
-								try
-								{
-									((TextResultReceiver)pe).setResult(_input.getText().toString());
-								}
-								catch (Exception e)
-								{
-									Logger.showAndLog(getActivity(), e);
-								}
-						}
+						PropertyEditor pe = host.getPropertiesView().getPropertyById(getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID));
+						if(pe!=null)
+							try
+							{
+								((TextResultReceiver)pe).setResult(_input.getText().toString());
+							}
+							catch (Exception e)
+							{
+								Logger.showAndLog(getActivity(), e);
+							}
 					}
 				});
 

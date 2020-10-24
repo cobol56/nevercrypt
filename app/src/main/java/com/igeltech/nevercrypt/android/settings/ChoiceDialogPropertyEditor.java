@@ -33,16 +33,9 @@ public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_selectedItems = (AppCompatTextView) view.findViewById(android.R.id.text1);
-		_selectButton = (AppCompatButton) view.findViewById(android.R.id.button1);
-        _selectButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                startChoiceDialog();
-            }
-        });
+		_selectedItems = view.findViewById(android.R.id.text1);
+		_selectButton = view.findViewById(android.R.id.button1);
+        _selectButton.setOnClickListener(view1 -> startChoiceDialog());
 		return view;
 	}
 

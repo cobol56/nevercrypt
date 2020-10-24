@@ -155,14 +155,13 @@ public abstract class PasswordDialogBase extends RxDialogFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        switch(requestCode)
+        if (requestCode == REQUEST_OPTIONS)
         {
-            case REQUEST_OPTIONS:
-                if (resultCode == AppCompatActivity.RESULT_OK)
-                    _options = data.getExtras();
-                break;
-            default:
-                super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == AppCompatActivity.RESULT_OK)
+                _options = data.getExtras();
+        } else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

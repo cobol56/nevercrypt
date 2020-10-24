@@ -13,7 +13,7 @@ public class EncryptionEnginesRegistry
 {
     public static List<FileEncryptionEngine> getSupportedEncryptionEngines()
     {
-        return Arrays.<FileEncryptionEngine>asList(
+        return Arrays.asList(
                 new AESXTS(),
                 new SerpentXTS(),
                 new TwofishXTS()

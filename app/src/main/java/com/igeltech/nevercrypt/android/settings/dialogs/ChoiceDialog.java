@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.settings.dialogs;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -47,13 +46,9 @@ public class ChoiceDialog extends DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
             .setTitle(getArguments().getString(ARG_TITLE))
             .setSingleChoiceItems(strings, pe.getSelectedEntry(),
-                    new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int item)
-                        {
-                            pe.setSelectedEntry(item);
-                            dialog.dismiss();
-                        }
+                    (dialog, item) -> {
+                        pe.setSelectedEntry(item);
+                        dialog.dismiss();
                     }
             );
         return builder.create();

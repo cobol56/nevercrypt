@@ -165,15 +165,10 @@ class MoveFilesTask extends CopyFilesTask
 
 	private boolean deleteEmptyDir(Directory startDir) throws IOException
 	{
-		Directory.Contents dc = startDir.list();
-		try
+		try (Directory.Contents dc = startDir.list())
 		{
-			if(dc.iterator().hasNext())
+			if (dc.iterator().hasNext())
 				return false;
-		}
-		finally
-		{
-			dc.close();
 		}
 		startDir.delete();
 		return true;
@@ -204,5 +199,5 @@ class MoveFilesTask extends CopyFilesTask
 	}
 */
 	private boolean _wipe;
-	private List<Directory> _foldersToDelete = new ArrayList<>();
+	private final List<Directory> _foldersToDelete = new ArrayList<>();
 }

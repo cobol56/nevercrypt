@@ -78,13 +78,7 @@ public class GestureImageViewWithFullScreenMode extends GestureImageView// imple
 	}
 
 	private boolean _isFullScreenMode;
-	private final Runnable _navHider = new Runnable()
-	{
-        @Override public void run() 
-        {
-            setNavVisibility(false);
-        }
-    };
+	private final Runnable _navHider = () -> setNavVisibility(false);
     
 
     @Override 

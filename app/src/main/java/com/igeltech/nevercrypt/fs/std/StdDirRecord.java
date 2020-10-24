@@ -87,5 +87,5 @@ class StdDirRecord extends StdFsRecord implements Directory
 		};
 	}
 	
-	private StdFs _stdFs;
+	private final StdFs _stdFs;
 }

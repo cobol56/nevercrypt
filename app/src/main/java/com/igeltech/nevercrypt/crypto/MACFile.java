@@ -176,7 +176,7 @@ public class MACFile extends TransRandomAccessIO
                 _random);
     }
 
-    private byte[] _transBuffer;
+    private final byte[] _transBuffer;
     private final MACCalculator _macCalc;
     private final int _macBytes, _randBytes, _overhead;
     private final boolean _forceDecode;

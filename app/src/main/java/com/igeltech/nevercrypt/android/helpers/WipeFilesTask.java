@@ -28,26 +28,21 @@ public class WipeFilesTask
     	try
     	{
 			byte[] buf = new byte[4*1024];    			
-			long l = file.getSize();    	
-	    	OutputStream s = file.getOutputStream();
-	    	try
-	    	{    	    		
-    	    	for(long i=0;i<l;i+=buf.length)
-    	    	{
-    	    		if(task!=null && task.cancel())
-    	    			return;
-    	    		rg.nextBytes(buf);
-    	    		s.write(buf);
-    	    		long tmp = l - i - buf.length;
-    	    		updStatus(task, tmp < 0 ? buf.length + tmp : buf.length);
-    	    		
-    	    	}
-    	    	s.flush();
-	    	}
-	    	finally
-	    	{
-	    		s.close();
-	    	}    			    	
+			long l = file.getSize();
+            try (OutputStream s = file.getOutputStream())
+            {
+                for (long i = 0; i < l; i += buf.length)
+                {
+                    if (task != null && task.cancel())
+                        return;
+                    rg.nextBytes(buf);
+                    s.write(buf);
+                    long tmp = l - i - buf.length;
+                    updStatus(task, tmp < 0 ? buf.length + tmp : buf.length);
+
+                }
+                s.flush();
+            }
     	}
 	    finally
 	    {
@@ -72,11 +67,11 @@ public class WipeFilesTask
 						{
 							synchronized (syncer)
 							{
-								wipeFile(p.getFile(),wipe,task);								
-							}							
+								wipeFile(p.getFile(),wipe,task);
+							}
 						}
 						else
-							wipeFile(p.getFile(),wipe,task);							
+							wipeFile(p.getFile(),wipe,task);
 					}
 					else if(p.isDirectory())
 						p.getDirectory().delete();
@@ -110,7 +105,6 @@ public class WipeFilesTask
 		task.progress((int)sizeInc);	
 	}
 	
-	protected Object _syncer;
 	protected final boolean _wipe;
 	
 	protected ITask getITask()
@@ -133,6 +127,6 @@ public class WipeFilesTask
 	
 	protected void doWork(SrcDstCollection... records) throws Exception
 	{
-		wipeFilesRnd(getITask(), _syncer, _wipe, records);
+		wipeFilesRnd(getITask(), null, _wipe, records);
 	}	
 }

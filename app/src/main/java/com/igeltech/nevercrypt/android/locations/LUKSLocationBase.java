@@ -3,8 +3,8 @@ package com.igeltech.nevercrypt.android.locations;
 import android.content.Context;
 import android.net.Uri;
 
-import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.Container;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManagerBase;
 import com.igeltech.nevercrypt.luks.FormatInfo;

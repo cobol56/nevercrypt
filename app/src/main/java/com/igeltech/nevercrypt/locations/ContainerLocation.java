@@ -1,7 +1,7 @@
 package com.igeltech.nevercrypt.locations;
 
-import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.Container;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 
 import java.io.IOException;
 import java.util.List;

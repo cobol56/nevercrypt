@@ -8,9 +8,9 @@ import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragme
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.encfs.DataCodecPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.LocationFormatter;
-import com.igeltech.nevercrypt.container.Container;
 
 import java.util.ArrayList;
 import java.util.List;

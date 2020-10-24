@@ -1,7 +1,6 @@
 package com.igeltech.nevercrypt.android.locations.fragments;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
@@ -78,17 +77,15 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
     @Override
 	public boolean onOptionsItemSelected(MenuItem menuItem)
     {
-        switch (menuItem.getItemId())
+        if (menuItem.getItemId() == R.id.confirm)
         {
-            case R.id.confirm:
-                if(_state.getBoolean(ARG_ADD_EXISTING_LOCATION))
-                    startAddLocationTask();
-                else
-                    startCreateLocationTask();
-                return true;
-            default:
-                return super.onOptionsItemSelected(menuItem);
+            if (_state.getBoolean(ARG_ADD_EXISTING_LOCATION))
+                startAddLocationTask();
+            else
+                startCreateLocationTask();
+            return true;
         }
+        return super.onOptionsItemSelected(menuItem);
     }
 
     @Override
@@ -239,15 +236,10 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
             _dialog.setMessage(getText(R.string.creating_container));
             _dialog.setIndeterminate(true);
             _dialog.setCancelable(true);
-            _dialog.setOnCancelListener(new DialogInterface.OnCancelListener()
-            {
-                @Override
-                public void onCancel(DialogInterface dialog)
-                {
-                    CreateLocationTaskFragment f = (CreateLocationTaskFragment) getFragmentManager()
-                            .findFragmentByTag(CreateContainerTaskFragmentBase.TAG);
-                    if (f != null) f.cancel();
-                }
+            _dialog.setOnCancelListener(dialog -> {
+                CreateLocationTaskFragment f = (CreateLocationTaskFragment) getFragmentManager()
+                        .findFragmentByTag(CreateContainerTaskFragmentBase.TAG);
+                if (f != null) f.cancel();
             });
             _dialog.show();
         }

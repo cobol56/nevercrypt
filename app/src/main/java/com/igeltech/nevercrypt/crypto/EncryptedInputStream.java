@@ -15,7 +15,6 @@ public class EncryptedInputStream extends TransInputStream
 	{
 		super(base, layout.getEngine().getFileBlockSize());
 		_layout = layout;
-		_engine = layout.getEngine();
 	}
 
 	public synchronized void close(boolean closeBase) throws IOException
@@ -37,7 +36,6 @@ public class EncryptedInputStream extends TransInputStream
     }
 
 	protected final EncryptedFileLayout _layout;
-	protected final FileEncryptionEngine _engine;
 	protected boolean _allowEmptyParts = true;
 
 

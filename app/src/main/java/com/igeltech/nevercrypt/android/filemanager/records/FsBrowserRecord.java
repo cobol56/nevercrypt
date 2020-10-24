@@ -169,13 +169,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         });
 
         iv = view.findViewById(android.R.id.icon1);
-        if(_miniIcon == null)
-            iv.setVisibility(View.INVISIBLE);
-        else
-        {
-            iv.setImageDrawable(_miniIcon);
-            iv.setVisibility(View.VISIBLE);
-        }
+        iv.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -230,7 +224,6 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     public void init(Location location, Path path) throws IOException
     {
         init(path);
-        _locationId = location == null ? "" : location.getId();
     }
 
     public FsBrowserRecord(Context context)
@@ -239,9 +232,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 	}
 
 	protected final Context _context;
-	protected String _locationId;
 	protected FileManagerActivity _host;
-    protected Drawable _miniIcon;
 
 	protected abstract Drawable getDefaultIcon();
 

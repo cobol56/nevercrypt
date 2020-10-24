@@ -100,7 +100,6 @@
   <string name="rotate_right">Obrót w prawo</string>
   <string name="encryption_algorithm">Algorytm szyfrowania</string>
   <string name="hash_algorithm">Algorytm mieszania</string>
-  <string name="version_history">Historia wersji</string>
   <string name="containers">Kontenery</string>
   <string name="close">Zamknij</string>
   <string name="target_path">Ścieżka docelowa</string>
@@ -131,7 +130,6 @@
   <string name="enable_full_screen_mode">Włącz tryb pełnoekranowy</string>
   <string name="never_save_history">Nigdy nie zapisuj linków do kontenerów</string>
   <string name="never_save_history_desc">Linki do kontenerów będą usunięte, po zamknięciu programu <xliff:g id="program_name">NeverCrypt</xliff:g></string>
-  <string name="contact_support">Kontakt wsparcia technicznego</string>
   <string name="no_free_space_left">Brak wolnej przestrzeni</string>
   <string name="speed">Bieżaca prędkość: %1$.1f Mb/s</string>
   <string name="container_format">Format kontenera</string>

@@ -32,16 +32,11 @@ public class TempFilesMonitor
 			return;
 		if(path.isDirectory())
 		{
-			Directory.Contents dc = path.getDirectory().list(); 
-			try
-			{
-				for(Path rec: dc)
-					deleteRecWithWiping(rec, wipe);
-			}
-			finally
-			{
-				dc.close();
-			}
+            try (Directory.Contents dc = path.getDirectory().list())
+            {
+                for (Path rec : dc)
+                    deleteRecWithWiping(rec, wipe);
+            }
 			path.getDirectory().delete();
 		}
 		else if(path.isFile())

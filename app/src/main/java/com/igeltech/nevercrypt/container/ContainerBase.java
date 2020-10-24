@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public abstract class ContainerBase implements Closeable
@@ -89,23 +88,17 @@ public abstract class ContainerBase implements Closeable
 	public synchronized void open(byte[] password) throws IOException, ApplicationException
 	{
 		Logger.debug("Opening container at " + _pathToContainer.getPathString());
-		RandomAccessIO t = openFile();
-		try
+		try (RandomAccessIO t = openFile())
 		{
-			if(_containerFormat == null)
+			if (_containerFormat == null)
 			{
-				if(tryLayout(t, password, false) || tryLayout(t, password, true))
+				if (tryLayout(t, password, false) || tryLayout(t, password, true))
+					return;
+			} else
+			{
+				if (tryLayout(_containerFormat, t, password, false) || tryLayout(_containerFormat, t, password, true))
 					return;
 			}
-			else
-			{
-				if(tryLayout(_containerFormat, t, password, false) || tryLayout(_containerFormat, t, password, true))
-					return;
-			}
-		}
-		finally
-		{
-			t.close();
 		}
 
 		throw new WrongFileFormatException();
@@ -227,15 +220,7 @@ public abstract class ContainerBase implements Closeable
 	{
 		List<ContainerFormatInfo> cfs = getFormats();
 		if(cfs.size()>1)
-			Collections.sort(cfs, new Comparator<ContainerFormatInfo>()
-			{
-				@Override
-				public int compare(ContainerFormatInfo lhs, ContainerFormatInfo rhs)
-				{
-					return Integer.valueOf(lhs.getOpeningPriority()).compareTo(rhs.getOpeningPriority());
-				}
-
-			});
+			Collections.sort(cfs, (lhs, rhs) -> Integer.valueOf(lhs.getOpeningPriority()).compareTo(rhs.getOpeningPriority()));
 		
 		for(ContainerFormatInfo cf: cfs)
 		{

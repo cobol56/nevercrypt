@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 
@@ -68,44 +67,27 @@ public abstract class AboutDialogBase extends DialogFragment
     		);
 		((AppCompatTextView)v.findViewById(R.id.about_text_view)).setText(aboutMessage);
 
-		v.findViewById(R.id.homepage_button).setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
+		v.findViewById(R.id.homepage_button).setOnClickListener(v12 -> {
+			try
 			{
-				try
-				{
-					openWebPage(GlobalConfig.HOMEPAGE_URL);
-				}
-				catch (Throwable e)
-				{
-					Logger.showAndLog(getActivity(), e);
-				}
+				openWebPage(GlobalConfig.HOMEPAGE_URL);
+			}
+			catch (Throwable e)
+			{
+				Logger.showAndLog(getActivity(), e);
 			}
 		});
-		v.findViewById(R.id.get_program_log).setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
+		v.findViewById(R.id.get_program_log).setOnClickListener(view -> {
+			try
 			{
-				try
-				{
-					saveDebugLog();
-				}
-				catch (Throwable e)
-				{
-					Logger.showAndLog(getActivity(), e);
-				}
+				saveDebugLog();
+			}
+			catch (Throwable e)
+			{
+				Logger.showAndLog(getActivity(), e);
 			}
 		});
-		v.findViewById(R.id.close_button).setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				getDialog().cancel();
-			}
-		});
+		v.findViewById(R.id.close_button).setOnClickListener(v1 -> getDialog().cancel());
 		return v;
 	}
 

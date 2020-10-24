@@ -81,6 +81,6 @@ public class EncEngineHintPropertyEditor extends ChoiceDialogPropertyEditor
         return cfi != null ?
                 cfi.getVolumeLayout().getSupportedEncryptionEngines()
                 :
-                Collections.<EncryptionEngine>emptyList();
+                Collections.emptyList();
     }
 }

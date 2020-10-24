@@ -237,26 +237,17 @@ class CopyFilesTask extends FileOperationTaskBase
 	protected boolean copyFile(File srcFile, File dstFile) throws IOException
 	{
 		Date srcDate = srcFile.getLastModified();
-		InputStream fin = null;
-		OutputStream fout = null;
-		final byte[] buffer = new byte[8*1024];
+        final byte[] buffer = new byte[8*1024];
 		int bytesRead;
-		try
-		{
-			fin = srcFile.getInputStream();
-			fout = dstFile.getOutputStream();
-			while ((bytesRead = fin.read(buffer)) >= 0)
-			{
-				if (isCancelled()) throw new CancellationException();
-				fout.write(buffer, 0, bytesRead);
-				incProcessedSize(bytesRead);
-			}
-		}
-		finally
-		{
-			if (fin != null) fin.close();
-			if (fout != null) fout.close();
-		}
+        try (InputStream fin = srcFile.getInputStream(); OutputStream fout = dstFile.getOutputStream())
+        {
+            while ((bytesRead = fin.read(buffer)) >= 0)
+            {
+                if (isCancelled()) throw new CancellationException();
+                fout.write(buffer, 0, bytesRead);
+                incProcessedSize(bytesRead);
+            }
+        }
 		try
 		{
 			dstFile.setLastModified(srcDate);

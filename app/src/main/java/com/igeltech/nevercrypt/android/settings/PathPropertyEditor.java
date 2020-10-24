@@ -3,7 +3,6 @@ package com.igeltech.nevercrypt.android.settings;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,21 +26,16 @@ public abstract class PathPropertyEditor extends TextPropertyEditor
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		AppCompatButton b = (AppCompatButton)view.findViewById(android.R.id.button2);
+		AppCompatButton b = view.findViewById(android.R.id.button2);
 		if(b!=null)
-			b.setOnClickListener(new OnClickListener()
-			{				
-				@Override
-				public void onClick(View v)
+			b.setOnClickListener(v -> {
+				try
 				{
-					try
-					{
-						requestActivity(getSelectPathIntent(), SELECT_PATH_REQ_CODE);
-					}
-					catch(Exception e)
-					{
-						Logger.showAndLog(getHost().getContext(), e);
-					}
+					requestActivity(getSelectPathIntent(), SELECT_PATH_REQ_CODE);
+				}
+				catch(Exception e)
+				{
+					Logger.showAndLog(getHost().getContext(), e);
 				}
 			});
 		return view;

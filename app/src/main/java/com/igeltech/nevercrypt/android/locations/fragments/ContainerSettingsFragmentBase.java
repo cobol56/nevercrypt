@@ -10,8 +10,8 @@ import com.igeltech.nevercrypt.android.settings.container.ContainerFormatHintPro
 import com.igeltech.nevercrypt.android.settings.container.EncEngineHintPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.container.HashAlgHintPropertyEditor;
 import com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask;
-import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.Container;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.locations.ContainerLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;

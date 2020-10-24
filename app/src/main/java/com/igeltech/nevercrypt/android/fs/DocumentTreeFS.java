@@ -568,7 +568,7 @@ public class DocumentTreeFS implements FileSystem
             return _documentUri.compareTo(((DocumentPath)another)._documentUri);
         }
 
-        private Uri _documentUri;
+        private final Uri _documentUri;
 
         private class ChildUriReceiver implements ResultReceiver
         {
@@ -726,24 +726,19 @@ public class DocumentTreeFS implements FileSystem
     {
         if(!startSearchPath.isDirectory())
             return null;
-        com.igeltech.nevercrypt.fs.Directory.Contents dc = startSearchPath.getDirectory().list();
-        try
+        try (com.igeltech.nevercrypt.fs.Directory.Contents dc = startSearchPath.getDirectory().list())
         {
-            for(Path p: dc)
+            for (Path p : dc)
             {
-                if(p.equals(targetPath))
+                if (p.equals(targetPath))
                     return startSearchPath;
-                if(p.isDirectory())
+                if (p.isDirectory())
                 {
                     Path res = findParentPath(p, targetPath);
-                    if(res!=null)
+                    if (res != null)
                         return res;
                 }
             }
-        }
-        finally
-        {
-            dc.close();
         }
         return null;
     }

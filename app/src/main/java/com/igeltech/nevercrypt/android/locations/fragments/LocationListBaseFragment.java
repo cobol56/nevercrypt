@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -55,7 +54,6 @@ public abstract class LocationListBaseFragment extends ListFragment
         ListViewAdapter(Context context, List<LocationInfo> backingList)
         {
             super(context, R.layout.locations_list_row, backingList);
-            TypedValue typedValue = new TypedValue();
         }
 
         @NonNull
@@ -74,9 +72,9 @@ public abstract class LocationListBaseFragment extends ListFragment
             if (item == null)
                 return v;
 
-            AppCompatTextView tv = ((AppCompatTextView) v.findViewById(android.R.id.text1));
+            AppCompatTextView tv = v.findViewById(android.R.id.text1);
             tv.setText(item.location.getTitle());
-            AppCompatImageView iv = (AppCompatImageView) v.findViewById(android.R.id.icon);
+            AppCompatImageView iv = v.findViewById(android.R.id.icon);
             if (iv != null)
                 iv.setImageDrawable(item.getIcon());
             return v;
@@ -403,32 +401,22 @@ public abstract class LocationListBaseFragment extends ListFragment
         lv.setChoiceMode(ListView.CHOICE_MODE_NONE);
         lv.setItemsCanFocus(true);
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-        {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long itemId)
-            {
-                LocationInfo rec = (LocationInfo) adapterView.getItemAtPosition(pos);
-                if (rec != null)
-                    selectLocation(rec);
-                return true;
-            }
+        lv.setOnItemLongClickListener((adapterView, view, pos, itemId) -> {
+            LocationInfo rec = (LocationInfo) adapterView.getItemAtPosition(pos);
+            if (rec != null)
+                selectLocation(rec);
+            return true;
         });
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l)
+        lv.setOnItemClickListener((adapterView, view, pos, l) -> {
+            LocationInfo rec = (LocationInfo) adapterView.getItemAtPosition(pos);
+            if (rec != null)
             {
-                LocationInfo rec = (LocationInfo) adapterView.getItemAtPosition(pos);
-                if (rec != null)
-                {
-                    if (rec.isSelected && !isSingleSelectionMode())
-                        unselectLocation(rec);
-                    else if (haveSelectedLocations())
-                        selectLocation(rec);
-                    else
-                        onLocationClicked(rec);
-                }
+                if (rec.isSelected && !isSingleSelectionMode())
+                    unselectLocation(rec);
+                else if (haveSelectedLocations())
+                    selectLocation(rec);
+                else
+                    onLocationClicked(rec);
             }
         });
         lv.setAdapter(_locationsList);

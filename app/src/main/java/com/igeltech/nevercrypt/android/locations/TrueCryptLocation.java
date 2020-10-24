@@ -4,8 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.igeltech.nevercrypt.android.settings.UserSettings;
-import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.Container;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManagerBase;
 import com.igeltech.nevercrypt.settings.Settings;

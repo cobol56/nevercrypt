@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.locations.dialogs;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -42,22 +41,12 @@ public class OverwriteContainerDialog extends DialogFragment
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setMessage(resId)
 				.setPositiveButton(R.string.yes,
-						new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int id)
-							{
-								dialog.dismiss();
-								doOverwrite();
-							}
+						(dialog, id) -> {
+							dialog.dismiss();
+							doOverwrite();
 						})
 				.setNegativeButton(R.string.no,
-						new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int id)
-							{
-								dialog.cancel();
-							}
-						});
+						(dialog, id) -> dialog.cancel());
 		return builder.create();		
 	}
 	

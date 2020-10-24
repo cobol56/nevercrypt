@@ -195,37 +195,33 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
 
         Directory directory = startPath.getDirectory();
         String directoryName = directory.getName();
-		com.igeltech.nevercrypt.fs.Directory.Contents dc = directory.list();
-		try
-		{
-			for(Path subPath: dc)
-			{
-				Location subSrcLocation = srcLocation.copy();
-				subSrcLocation.setCurrentPath(subPath);
-				SrcDstCollection.SrcDst subSrcDst = new SrcDstCollection.SrcDst()
-				{
-					@Override
-					public Location getSrcLocation() throws IOException
-					{
-						return subSrcLocation;
-					}
+        try (Directory.Contents dc = directory.list())
+        {
+            for (Path subPath : dc)
+            {
+                Location subSrcLocation = srcLocation.copy();
+                subSrcLocation.setCurrentPath(subPath);
+                SrcDst subSrcDst = new SrcDst()
+                {
+                    @Override
+                    public Location getSrcLocation() throws IOException
+                    {
+                        return subSrcLocation;
+                    }
 
-					@Override
-					public Location getDstLocation() throws IOException
-					{
-						if(_dstLocationCache == null)
-							_dstLocationCache = calcSubDestLocation(_topElement, directoryName);
-						return _dstLocationCache;
-					}
-					private Location _dstLocationCache;
-				};
-				res.add(new SrcDstRec(subSrcDst));
-			}
-		}
-		finally
-		{
-			dc.close();
-		}
+                    @Override
+                    public Location getDstLocation() throws IOException
+                    {
+                        if (_dstLocationCache == null)
+                            _dstLocationCache = calcSubDestLocation(_topElement, directoryName);
+                        return _dstLocationCache;
+                    }
+
+                    private Location _dstLocationCache;
+                };
+                res.add(new SrcDstRec(subSrcDst));
+            }
+        }
 		return res;
 	}
 

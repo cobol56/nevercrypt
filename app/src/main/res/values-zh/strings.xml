@@ -103,7 +103,6 @@
 	<string name="rotate_right">向右旋转</string>
 	<string name="encryption_algorithm">加密算法</string>
 	<string name="hash_algorithm">Hash算法</string>
-	<string name="version_history">版本历史</string>
 	<string name="containers">容器</string>
 	<string name="close">关闭</string>
 	<string name="target_path">目标路径</string>
@@ -135,7 +134,6 @@
 	<string name="enable_full_screen_mode">启用全屏模式</string>
 	<string name="never_save_history">不要保存容器的链接</string>
 	<string name="never_save_history_desc">关闭 <xliff:g id="program_name">NeverCrypt</xliff:g>之后，新容器链接将被移除.</string>
-	<string name="contact_support">联系支持</string>
 	<string name="no_free_space_left">没有可用空间</string>
 	<string name="speed">当前速度: <xliff:g id="current_speed">%1$.1f</xliff:g> Mb/s</string>
 	<string name="container_format">容器格式</string>

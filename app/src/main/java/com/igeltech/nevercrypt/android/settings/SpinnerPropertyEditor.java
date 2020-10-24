@@ -3,7 +3,6 @@ package com.igeltech.nevercrypt.android.settings;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -21,16 +20,11 @@ public abstract class SpinnerPropertyEditor extends PropertyEditorBase
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_spinner = (Spinner) view.findViewById(R.id.spinner);
+		_spinner = view.findViewById(R.id.spinner);
 		reloadElements();
-		_spinner.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-			{
-				if(_host.getPropertiesView().isInstantSave())
-					save();
-			}
+		_spinner.setOnItemClickListener((adapterView, view1, i, l) -> {
+			if(_host.getPropertiesView().isInstantSave())
+				save();
 		});
 		return view;
 	}

@@ -76,7 +76,7 @@ public class AES implements BlockCipherNative
 	}
 	
 	private long _contextPtr;
-	private int _keySize;
+	private final int _keySize;
 	
 	private native long initContext(byte[] key);	
 	private native void closeContext(long contextPtr);

@@ -7,6 +7,7 @@ import android.util.SparseArray;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
@@ -68,7 +69,7 @@ public class SecureBuffer implements Parcelable, CharSequence
 
     public SecureBuffer(byte[] data)
     {
-        this(data!=null ? data : null, 0, data!=null ? data.length : 0);
+        this(data, 0, data!=null ? data.length : 0);
     }
 
     public SecureBuffer(byte[] data, int offset, int count)
@@ -80,7 +81,7 @@ public class SecureBuffer implements Parcelable, CharSequence
 
     public SecureBuffer(char[] data)
     {
-        this(data!=null ? data : null, 0, data!=null ? data.length : 0);
+        this(data, 0, data!=null ? data.length : 0);
     }
 
     public SecureBuffer(char[] data, int offset, int count)
@@ -374,7 +375,7 @@ public class SecureBuffer implements Parcelable, CharSequence
     protected static final SecureRandom _secureRandom = new SecureRandom();
     private static final SparseArray<Buffer> _data = new SparseArray<>();
     private static int _counter;
-    private static final Charset _charset = Charset.forName("UTF-8");
+    private static final Charset _charset = StandardCharsets.UTF_8;
 
     private final int _id;
 }

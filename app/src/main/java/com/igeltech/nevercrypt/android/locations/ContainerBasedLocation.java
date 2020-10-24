@@ -8,8 +8,8 @@ import com.igeltech.nevercrypt.android.errors.UserException;
 import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerException;
 import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
-import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.Container;
+import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.VolumeLayout;
 import com.igeltech.nevercrypt.container.VolumeLayoutBase;
 import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
@@ -318,19 +318,14 @@ public class ContainerBasedLocation extends CryptoLocationBase implements Contai
     protected ExternalSettings loadExternalSettings()
     {
         ExternalSettings res = new ExternalSettings();
-		res.setProtectionKeyProvider(new ProtectionKeyProvider()
-		{
-			@Override
-			public SecureBuffer getProtectionKey()
+		res.setProtectionKeyProvider(() -> {
+			try
 			{
-				try
-				{
-					return UserSettings.getSettings(getContext()).getSettingsProtectionKey();
-				}
-				catch (SettingsCommon.InvalidSettingsPassword invalidSettingsPassword)
-				{
-					return null;
-				}
+				return UserSettings.getSettings(getContext()).getSettingsProtectionKey();
+			}
+			catch (SettingsCommon.InvalidSettingsPassword invalidSettingsPassword)
+			{
+				return null;
 			}
 		});
         res.load(_globalSettings,getId());

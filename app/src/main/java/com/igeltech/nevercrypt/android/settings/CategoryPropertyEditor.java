@@ -76,14 +76,12 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
 		super(host, R.layout.settings_category, titleResId, descResId);
 	}
 
-	public static boolean IS_ANIMATING = false;
 	private AppCompatImageView _indicatorIcon;
 	private boolean _isExpanded = true;
 
 
     private void rotateIconAndChangeState()
     {
-		IS_ANIMATING = true;
         _indicatorIcon.clearAnimation();
         ObjectAnimator anim = ObjectAnimator.ofFloat(_indicatorIcon, View.ROTATION, _isExpanded ? 0 : 180);
         anim.setDuration(200);
@@ -98,7 +96,6 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
                 else
                     expand();
                 _indicatorIcon.setHasTransientState(false);
-				IS_ANIMATING = false;
 
             }
         });

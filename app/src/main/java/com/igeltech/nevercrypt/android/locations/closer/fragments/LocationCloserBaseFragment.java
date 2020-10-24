@@ -2,7 +2,6 @@ package com.igeltech.nevercrypt.android.locations.closer.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -160,15 +159,10 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
             _dialog.setMessage (activity.getText(R.string.closing));
             _dialog.setIndeterminate(true);
             _dialog.setCancelable(false);
-            _dialog.setOnCancelListener(new DialogInterface.OnCancelListener()
-            {
-                @Override
-                public void onCancel(DialogInterface dialog)
-                {
-                    CloseLocationTaskFragment f = (CloseLocationTaskFragment) getFragmentManager().findFragmentByTag(CloseLocationTaskFragment.TAG);
-                    if(f!=null)
-                        f.cancel();
-                }
+            _dialog.setOnCancelListener(dialog -> {
+                CloseLocationTaskFragment f = (CloseLocationTaskFragment) getFragmentManager().findFragmentByTag(CloseLocationTaskFragment.TAG);
+                if(f!=null)
+                    f.cancel();
             });
             _dialog.show();
 		}

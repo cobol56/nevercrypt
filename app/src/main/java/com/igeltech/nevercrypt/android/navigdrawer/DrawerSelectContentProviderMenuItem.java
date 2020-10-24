@@ -49,7 +49,7 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
     public void updateView(View view, int position)
     {
         super.updateView(view, position);
-        AppCompatImageView iv = (AppCompatImageView) view.findViewById(R.id.close);
+        AppCompatImageView iv = view.findViewById(R.id.close);
         if(iv!=null)
             iv.setVisibility(View.INVISIBLE);
     }

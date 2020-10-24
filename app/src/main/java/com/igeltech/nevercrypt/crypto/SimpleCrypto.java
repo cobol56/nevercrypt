@@ -5,7 +5,7 @@ import com.igeltech.nevercrypt.crypto.kdf.HMACSHA512KDF;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -34,7 +34,7 @@ public class SimpleCrypto
 	public static byte[] charsToBytes(char[] chars) 
 	{
 	    CharBuffer charBuffer = CharBuffer.wrap(chars);
-	    ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
+	    ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(charBuffer);
 	    byte[] bytes = new byte[byteBuffer.limit() - byteBuffer.position()];
 	    System.arraycopy(byteBuffer.array(), byteBuffer.position(), bytes, 0, bytes.length);
 	    Arrays.fill(charBuffer.array(), '\u0000'); // clear sensitive data

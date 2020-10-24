@@ -482,8 +482,7 @@ public abstract class UserSettingsCommon implements SettingsCommon
 		if(mp != null)
 		{
 			byte[] mpd = mp.getDataArray();
-			if(mpd!=null)
-				return mpd;
+            return mpd;
 		}
 		return null;
 	}

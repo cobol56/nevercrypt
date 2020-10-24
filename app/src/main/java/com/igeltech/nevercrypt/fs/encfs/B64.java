@@ -146,7 +146,7 @@ public class B64
         return res;
     }
 
-    private static final char Ascii2B64Table[] =
+    private static final char[] Ascii2B64Table =
         "                                            01  23456789:;       ".toCharArray();
     public static byte[] StringToB64(String s)
     {

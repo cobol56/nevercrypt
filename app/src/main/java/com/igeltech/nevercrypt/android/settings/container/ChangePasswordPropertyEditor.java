@@ -43,19 +43,12 @@ public class ChangePasswordPropertyEditor extends ButtonPropertyEditor implement
     @Override
     public void onPasswordEntered(final PasswordDialog dlg)
     {
-        getHost().getResHandler().addResult(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                getHost().getFragmentManager().
-                        beginTransaction().
-                        add(
-                                getHost().getChangePasswordTask(dlg),
-                                ChangeContainerPasswordTask.TAG).
-                        commit();
-            }
-        });
+        getHost().getResHandler().addResult(() -> getHost().getFragmentManager().
+                beginTransaction().
+                add(
+                        getHost().getChangePasswordTask(dlg),
+                        ChangeContainerPasswordTask.TAG).
+                commit());
 
     }
 

@@ -101,7 +101,6 @@
   <string name="rotate_right">Повернуть вправо</string>
   <string name="encryption_algorithm">Алгоритм шифрования</string>
   <string name="hash_algorithm">Алгоритм хэширования</string>
-  <string name="version_history">История изменений</string>
   <string name="containers">Контейнеры</string>
   <string name="close">Закрыть</string>
   <string name="target_path">Целевой путь</string>
@@ -133,7 +132,6 @@
   <string name="enable_full_screen_mode">Включить полноэкранный режим</string>
   <string name="never_save_history">Не сохранять ссылки на контейнеры</string>
   <string name="never_save_history_desc">Ссылки на новые контейнеры не будут сохраняься после закрытия программы</string>
-  <string name="contact_support">Связаться с тех. поддержкой</string>
   <string name="no_free_space_left">Не осталось свободного места</string>
   <string formatted="false" name="speed">Скорость: %1$.1f Мб/с</string>
   <string name="container_format">Формат контейнера</string>

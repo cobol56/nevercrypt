@@ -56,14 +56,9 @@ public class Config
 
     public void read(File configFile) throws IOException, ApplicationException
     {
-        InputStream inp = configFile.getInputStream();
-        try
+        try (InputStream inp = configFile.getInputStream())
         {
             read(inp);
-        }
-        finally
-        {
-            inp.close();
         }
     }
 
@@ -99,14 +94,9 @@ public class Config
 
     public void write(File configFile) throws IOException, ApplicationException
     {
-        OutputStream out = configFile.getOutputStream();
-        try
+        try (OutputStream out = configFile.getOutputStream())
         {
             write(out);
-        }
-        finally
-        {
-            out.close();
         }
     }
 

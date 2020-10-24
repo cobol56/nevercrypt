@@ -107,7 +107,7 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
         }
     }
 
-    private static int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
+    private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
 
     private static Drawable _icon;
 

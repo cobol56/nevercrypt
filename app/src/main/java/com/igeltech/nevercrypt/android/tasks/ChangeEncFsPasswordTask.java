@@ -12,9 +12,6 @@ import java.io.IOException;
 
 public class ChangeEncFsPasswordTask extends ChangeLocationPasswordTask
 {
-    public static final String TAG = "com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask";
-    //public static final String ARG_FIN_ACTIVITY = "fin_activity";
-
 	public static ChangeEncFsPasswordTask newInstance(EncFsLocationBase container, Bundle passwordDialogResult)
     {
         Bundle args = new Bundle();

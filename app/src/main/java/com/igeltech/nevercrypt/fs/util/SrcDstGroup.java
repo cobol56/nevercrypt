@@ -22,7 +22,7 @@ public class SrcDstGroup implements SrcDstCollection
                     ArrayList<SrcDstCollection> cols = new ArrayList<>();
                     int size = in.readInt();
                     for(int i=0;i<size;i++)
-						cols.add((SrcDstCollection) in.readParcelable(getClass().getClassLoader()));
+						cols.add(in.readParcelable(getClass().getClassLoader()));
 					return new SrcDstGroup(cols);
 				}
 				catch(Exception e)

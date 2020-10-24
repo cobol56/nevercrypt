@@ -275,14 +275,7 @@ public class PropertiesView extends LinearLayout
 	private final Map<Integer, PropertyInfo> _properties = new HashMap<>();
 	private final List<PropertyEditor> _propertiesToLoad = new ArrayList<>();
 
-	private final Comparator<PropertyEditor> _comparator = new Comparator<PropertyEditor>()
-	{
-		@Override
-		public int compare(PropertyEditor lhs, PropertyEditor rhs)
-		{
-			return Integer.valueOf(lhs.getStartPosition()).compareTo(rhs.getStartPosition());
-		}
-	};
+	private final Comparator<PropertyEditor> _comparator = (lhs, rhs) -> Integer.valueOf(lhs.getStartPosition()).compareTo(rhs.getStartPosition());
 
 	private void setPropertyState(PropertyInfo pi, boolean enabled)
 	{
@@ -336,14 +329,7 @@ public class PropertiesView extends LinearLayout
 			pos = -pos - 1;
 		View v = pe.getView(this);
 		v.setTag(pe);
-		v.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				pe.onClick();
-			}
-		});
+		v.setOnClickListener(v1 -> pe.onClick());
 		addView(v, pos);
 	}
 

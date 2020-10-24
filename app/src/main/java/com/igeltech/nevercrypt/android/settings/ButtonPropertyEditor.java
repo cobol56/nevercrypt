@@ -2,7 +2,6 @@ package com.igeltech.nevercrypt.android.settings;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -21,14 +20,7 @@ public abstract class ButtonPropertyEditor extends PropertyEditorBase
 			_button.setText(_buttonTextId);
 		else if(_buttonText != null)
 			_button.setText(_buttonText);
-		_button.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				onButtonClick();				
-			}
-		});
+		_button.setOnClickListener(v -> onButtonClick());
 		
 		return view;
 	}

@@ -23,7 +23,7 @@ public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEdit
     public View createView(ViewGroup parent)
     {
         View view = super.createView(parent);
-        _titleTextView = (AppCompatTextView) view.findViewById(R.id.title_edit);
+        _titleTextView = view.findViewById(R.id.title_edit);
         return view;
     }
 

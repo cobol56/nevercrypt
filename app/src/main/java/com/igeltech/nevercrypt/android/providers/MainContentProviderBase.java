@@ -243,8 +243,7 @@ public abstract class MainContentProviderBase extends ContentProvider
     {
         final ParcelFileDescriptor[] pfds = ParcelFileDescriptor.createPipe();
         Completable.create(s -> {
-            FileInputStream fin = new FileInputStream(pfds[0].getFileDescriptor());
-            try
+            try (FileInputStream fin = new FileInputStream(pfds[0].getFileDescriptor()))
             {
                 Util.CancellableProgressInfo pi = new Util.CancellableProgressInfo();
                 s.setCancellable(pi);
@@ -255,10 +254,6 @@ public abstract class MainContentProviderBase extends ContentProvider
                         opts.getLong(OPTION_NUM_BYTES, -1),
                         pi
                 );
-            }
-            finally
-            {
-                fin.close();
             }
             pfds[0].close();
             s.onComplete();
@@ -273,8 +268,7 @@ public abstract class MainContentProviderBase extends ContentProvider
         final ParcelFileDescriptor[] pfds = ParcelFileDescriptor.createPipe();
         Completable.create(s ->
         {
-            FileOutputStream fout = new FileOutputStream(pfds[1].getFileDescriptor());
-            try
+            try (FileOutputStream fout = new FileOutputStream(pfds[1].getFileDescriptor()))
             {
                 Util.CancellableProgressInfo pi = new Util.CancellableProgressInfo();
                 s.setCancellable(pi);
@@ -286,42 +280,12 @@ public abstract class MainContentProviderBase extends ContentProvider
                         pi
                 );
             }
-            finally
-            {
-                fout.close();
-            }
             pfds[1].close();
             s.onComplete();
         }).
                 subscribeOn(Schedulers.newThread()).
                 subscribe(() ->{}, Logger::log);
         return pfds[0];
-    }
-
-
-    static class SelectionBuilder
-    {
-        void addCondition(String filterName, String arg)
-        {
-            if(_selectionBuilder.length() > 0)
-                _selectionBuilder.append(' ');
-            _selectionBuilder.append(filterName);
-            _selectionArgs.add(arg);
-        }
-
-        String getSelectionString()
-        {
-            return _selectionBuilder.toString();
-        }
-
-        String[] getSelectionArgs()
-        {
-            String[] res = new String[_selectionArgs.size()];
-            return _selectionArgs.toArray(res);
-        }
-
-        private final StringBuilder _selectionBuilder = new StringBuilder();
-        private final ArrayList<String> _selectionArgs = new ArrayList<>();
     }
 
     /*

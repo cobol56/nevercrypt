@@ -260,6 +260,6 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         AskExtStorageWritePermissionDialog.showDialog(getFragmentManager(), getTag());
     }
 
-    private static int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
+    private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
 
 }

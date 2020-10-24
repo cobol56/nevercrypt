@@ -82,30 +82,20 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 	{
 		BitmapFactory.Options options = new BitmapFactory.Options();			
 	    options.inSampleSize = sampleSize;
-	    InputStream data = path.getFile().getInputStream();
-		try
-		{
-			return BitmapFactory.decodeStream(data, null, options);
-		}
-		finally
-		{
-			data.close();
-		}
+        try (InputStream data = path.getFile().getInputStream())
+        {
+            return BitmapFactory.decodeStream(data, null, options);
+        }
 	}
 	
 	public static BitmapFactory.Options loadImageParams(Path path) throws IOException
 	{
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		InputStream data = path.getFile().getInputStream();
-		try
-		{
-			BitmapFactory.decodeStream(data, null, options);
-		}
-		finally
-		{
-			data.close();
-		}
+        try (InputStream data = path.getFile().getInputStream())
+        {
+            BitmapFactory.decodeStream(data, null, options);
+        }
 		return options;
 	}
 	

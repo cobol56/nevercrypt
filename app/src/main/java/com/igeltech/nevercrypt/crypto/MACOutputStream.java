@@ -41,7 +41,7 @@ public class MACOutputStream extends TransOutputStream
 		}
 	}
 
-	private byte[] _transBuffer;
+	private final byte[] _transBuffer;
 	private final MACCalculator _macCalc;
 	private final int _macBytes, _randBytes, _overhead;
 	protected final SecureRandom _random;

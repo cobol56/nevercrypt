@@ -644,7 +644,7 @@ public abstract class LocationsManagerBase
 	{		
 		while(true)
 		{
-            String locId = SimpleCrypto.calcStringMD5(String.valueOf(new Date().getTime()) + String.valueOf(new Random().nextLong()));
+            String locId = SimpleCrypto.calcStringMD5(String.valueOf(new Date().getTime()) + new Random().nextLong());
 			if(findExistingLocation(locId) == null)
 				return locId;
 		}

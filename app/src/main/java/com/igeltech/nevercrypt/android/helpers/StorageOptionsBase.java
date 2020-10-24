@@ -37,8 +37,11 @@ public abstract class StorageOptionsBase
 
     public static class StorageInfo
     {
-        public String label, path, dev, type, flags[];
-        public boolean isExternal, isReadOnly;
+        public String label;
+        public String path;
+        public String dev;
+        public String type;
+        public boolean isExternal;
     }
 
     public static synchronized List<StorageInfo> getStoragesList(Context context)
@@ -144,14 +147,9 @@ public abstract class StorageOptionsBase
     {
         Logger.debug("StorageOptions: trying to get mounts using std fs.");
         FileInputStream finp = new FileInputStream("/proc/mounts");
-        InputStream inp = new BufferedInputStream(finp);
-        try
+        try (InputStream inp = new BufferedInputStream(finp))
         {
             return com.igeltech.nevercrypt.fs.util.Util.readFromFile(inp);
-        }
-        finally
-        {
-            inp.close();
         }
     }
 
@@ -202,14 +200,11 @@ public abstract class StorageOptionsBase
             String dev = m.group(1);
             String mountPath = m.group(2);
             String type = m.group(3);
-            String[] flags = m.group(4).split(",");
             StorageInfo si = new StorageInfo();
             si.path = mountPath;
             si.dev = dev;
             si.type = type;
-            si.flags = flags;
             si.isExternal = true;
-            si.isReadOnly = Arrays.asList(flags).contains("ro");
             res.add(si);
         }
         return res;

@@ -205,14 +205,9 @@ public class File extends FileWrapper
         if(_externalIV!=null || getPath().getNamingCodecInfo().useChainedNamingIV())
         {
             com.igeltech.nevercrypt.fs.File newFile = getPath().getParentPath().getDirectory().createFile(newName);
-            OutputStream out = newFile.getOutputStream();
-            try
+            try (OutputStream out = newFile.getOutputStream())
             {
                 copyToOutputStream(out, 0, 0, null);
-            }
-            finally
-            {
-                out.close();
             }
             delete();
             setPath(newFile.getPath());
@@ -227,14 +222,9 @@ public class File extends FileWrapper
         if(_externalIV!=null || getPath().getNamingCodecInfo().useChainedNamingIV())
         {
             com.igeltech.nevercrypt.fs.File newFile = newParent.createFile(getName());
-            OutputStream out = newFile.getOutputStream();
-            try
+            try (OutputStream out = newFile.getOutputStream())
             {
                 copyToOutputStream(out, 0, 0, null);
-            }
-            finally
-            {
-                out.close();
             }
             delete();
             setPath(newFile.getPath());

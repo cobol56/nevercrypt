@@ -33,9 +33,9 @@ import com.igeltech.nevercrypt.android.settings.encfs.NameCodecPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.encfs.NumKDFIterationsPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.encfs.RandBytesPerBlockPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.encfs.UniqueIVPropertyEditor;
+import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.LocationFormatter;
-import com.igeltech.nevercrypt.container.Container;
 import com.igeltech.nevercrypt.container.VolumeLayout;
 
 import java.io.File;
@@ -64,7 +64,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     protected TaskFragment createAddExistingLocationTask()
     {
         return AddExistingContainerTaskFragment.newInstance(
-                (Uri) _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION),
+                _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION),
                 !UserSettings.getSettings(getActivity()).neverSaveHistory(),
                 _state.getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT)
         );

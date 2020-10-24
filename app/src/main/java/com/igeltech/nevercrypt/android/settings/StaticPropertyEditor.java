@@ -26,7 +26,7 @@ public class StaticPropertyEditor extends PropertyEditorBase
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_descTextView = (AppCompatTextView) view.findViewById(R.id.desc);
+		_descTextView = view.findViewById(R.id.desc);
 		return view;
 	}
 	

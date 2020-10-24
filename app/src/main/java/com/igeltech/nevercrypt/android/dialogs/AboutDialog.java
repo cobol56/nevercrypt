@@ -16,23 +16,9 @@ public class AboutDialog extends AboutDialogBase
         View v = super.onCreateView(inflater, container, savedInstanceState);
         if(v == null)
             return null;
-        v.findViewById(R.id.donation_button).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                openWebPage(GlobalConfig.DONATIONS_URL);
-            }
-        });
+        v.findViewById(R.id.donation_button).setOnClickListener(view -> openWebPage(GlobalConfig.DONATIONS_URL));
 
-        v.findViewById(R.id.check_source_code_button).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                openWebPage(GlobalConfig.SOURCE_CODE_URL);
-            }
-        });
+        v.findViewById(R.id.check_source_code_button).setOnClickListener(view -> openWebPage(GlobalConfig.SOURCE_CODE_URL));
 
         return v;
     }

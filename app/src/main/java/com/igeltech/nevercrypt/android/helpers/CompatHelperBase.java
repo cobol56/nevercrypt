@@ -43,23 +43,17 @@ public class CompatHelperBase
 	{
 		BitmapFactory.Options options = new BitmapFactory.Options();
 	    options.inSampleSize = sampleSize;
-	    InputStream data = path.getFile().getInputStream();
-		try
-		{
-			BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(data, true);
-			try
-			{
-				return decoder.decodeRegion(regionRect, options);
-			}
-			finally
-			{
-				decoder.recycle();
-			}
-		}
-		finally
-		{
-			data.close();
-		}
+        try (InputStream data = path.getFile().getInputStream())
+        {
+            BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(data, true);
+            try
+            {
+                return decoder.decodeRegion(regionRect, options);
+            } finally
+            {
+                decoder.recycle();
+            }
+        }
 	}
 
 	private static String serviceRunningNotificationsChannelId;

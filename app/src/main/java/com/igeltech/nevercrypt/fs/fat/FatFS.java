@@ -160,16 +160,11 @@ public class FatFS implements FileSystem
 			fat.writeFatBackup();
 			fat.init();
 
-			DirWriter os = fat.getDirWriter((FatPath) fat.getRootPath(), new Object());
-			try
+			try (DirWriter os = fat.getDirWriter((FatPath) fat.getRootPath(), new Object()))
 			{
-				int clusterSize = fat._bpb.bytesPerSector*fat._bpb.sectorsPerCluster; 
-				for(int i=0;i<clusterSize;i++)
+				int clusterSize = fat._bpb.bytesPerSector * fat._bpb.sectorsPerCluster;
+				for (int i = 0; i < clusterSize; i++)
 					os.write(0);
-			}
-			finally
-			{
-				os.close();
 			}
 		}
 
@@ -778,15 +773,11 @@ public class FatFS implements FileSystem
 				if (entry == null) return;
 				if (!entry.isDir()) throw new IOException("Specified path is not a directory: " + _path.getPathString());
 
-				Directory.Contents dc = list(tag);
-				try
+				try (Contents dc = list(tag))
 				{
 					for (Path rec : dc)
-						if (!((FatPath)rec).getPathUtil().isSpecial()) throw new DirectoryIsNotEmptyException(_path.getPathString(),"Directory is not empty: " + _path.getPathString());
-				}
-				finally
-				{
-					dc.close();
+						if (!((FatPath) rec).getPathUtil().isSpecial())
+							throw new DirectoryIsNotEmptyException(_path.getPathString(), "Directory is not empty: " + _path.getPathString());
 				}
 				deleteEntry(entry, (FatPath)_path.getParentPath(),tag);
 				cacheDirEntry(_path, null);				
@@ -1302,30 +1293,25 @@ public class FatFS implements FileSystem
 		FatPath newPath = (FatPath) parentPath.combine(name);
 		cacheDirEntry(newPath, entry);
 
-		DirWriter s = getDirWriter(newPath,opTag);
-		try
+		try (DirWriter s = getDirWriter(newPath, opTag))
 		{
 			DirEntry dotEntry = new DirEntry(0);
 			dotEntry.name = ".";
 			dotEntry.setDir(true);
 			dotEntry.startCluster = entry.startCluster;
-			dotEntry.writeEntry(new FileName("."),s);
-	
+			dotEntry.writeEntry(new FileName("."), s);
+
 			dotEntry = new DirEntry(DirEntry.RECORD_SIZE);
 			dotEntry.name = "..";
 			dotEntry.setDir(true);
 			if (!parentPath.isRootDirectory())
 			{
 				DirEntry parentEntry = getCachedDirEntry(parentPath, opTag);
-				if(parentEntry!=null)
+				if (parentEntry != null)
 					dotEntry.startCluster = parentEntry.startCluster;
 			}
-			dotEntry.writeEntry(new FileName(".."),s);
+			dotEntry.writeEntry(new FileName(".."), s);
 			s.write(0);
-		}
-		finally
-		{
-			s.close();
 		}
 		return entry;
 	}
@@ -1599,9 +1585,9 @@ public class FatFS implements FileSystem
 		}
 
 		private int bytesRead;
-		private int length;
-		private byte[] buffer;
-		private long _startPosition;
+		private final int length;
+		private final byte[] buffer;
+		private final long _startPosition;
 		private int bufferOffset;
 		private int bytesAvail;
 
@@ -2005,12 +1991,12 @@ public class FatFS implements FileSystem
 			_startPosition = startPosition;			
 		}
 
-		private byte[] _buffer;
+		private final byte[] _buffer;
 		private int _bufferOffset;
 		private int _bytesAvail;
 		private int _bytesWritten;
-		private int _length;
-		private long _startPosition;
+		private final int _length;
+		private final long _startPosition;
 
 		private void writeBuffer() throws IOException
 		{
@@ -2032,7 +2018,7 @@ public class FatFS implements FileSystem
 	}
 
 	
-	private static byte[] FAT_START = new byte[] {(byte)0xeb,0x3c,(byte)0x90,(byte)0x4D ,(byte)0x53 ,(byte)0x44 ,(byte)0x4F ,(byte)0x53 ,(byte)0x35 ,(byte)0x2E,(byte)0x30 ,(byte)0x00 ,(byte)0x02 ,(byte)0x01};
+	private static final byte[] FAT_START = new byte[] {(byte)0xeb,0x3c,(byte)0x90,(byte)0x4D ,(byte)0x53 ,(byte)0x44 ,(byte)0x4F ,(byte)0x53 ,(byte)0x35 ,(byte)0x2E,(byte)0x30 ,(byte)0x00 ,(byte)0x02 ,(byte)0x01};
 	
 	private final static int PATH_LOCK_TIMEOUT = 5000;	
 

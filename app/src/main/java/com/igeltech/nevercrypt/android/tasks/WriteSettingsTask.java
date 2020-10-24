@@ -16,7 +16,6 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class WriteSettingsTask extends TaskFragment
 {
-    public static final String TAG = "com.igeltech.nevercrypt.android.tasks.WriteSettingsTask";
     public static final String ARG_FIN_ACTIVITY = "com.igeltech.nevercrypt.android.FIN_ACTIVITY";
 
 	public static WriteSettingsTask newInstance(CryptoLocation cont, boolean finActivity)

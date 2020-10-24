@@ -158,13 +158,12 @@ public class LoadedImage
     {
         try
         {
-            InputStream s = imagePath.getFile().getInputStream();
-            try
+            try (InputStream s = imagePath.getFile().getInputStream())
             {
                 Metadata m = ImageMetadataReader.readMetadata(s);
 
-                for(Directory directory: m.getDirectories())
-                    if(directory.containsTag(ExifSubIFDDirectory.TAG_ORIENTATION))
+                for (Directory directory : m.getDirectories())
+                    if (directory.containsTag(ExifSubIFDDirectory.TAG_ORIENTATION))
                     {
                         int orientation = directory.getInt(ExifSubIFDDirectory.TAG_ORIENTATION);
                         switch (orientation)
@@ -196,10 +195,6 @@ public class LoadedImage
                         }
                         break;
                     }
-            }
-            finally
-            {
-                s.close();
             }
         }
         catch (Exception e)

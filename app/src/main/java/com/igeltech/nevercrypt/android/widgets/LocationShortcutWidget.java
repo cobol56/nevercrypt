@@ -60,7 +60,7 @@ public class LocationShortcutWidget extends AppWidgetProvider
 	{
 		super.onReceive(context, intent);
 		if (LocationsManager.BROADCAST_LOCATION_CHANGED.equals(intent.getAction()))
-            setWidgetsState(context, (Uri) intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI));
+            setWidgetsState(context, intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI));
 	}
 
 	private void setWidgetsState(Context context,Uri locationUri)

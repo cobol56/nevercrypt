@@ -125,19 +125,14 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 				}
 				else if (rec.isDirectory())
 				{
-					Directory.Contents dc = rec.getDirectory().list();
-					try
-					{
-						for(Path p: dc)
-						{
-							if (state.isTaskCancelled()) break;
-							calcPath(state,info,p);
-						}
-					}
-					finally
-					{
-						dc.close();
-					}					
+                    try (Directory.Contents dc = rec.getDirectory().list())
+                    {
+                        for (Path p : dc)
+                        {
+                            if (state.isTaskCancelled()) break;
+                            calcPath(state, info, p);
+                        }
+                    }
 				}
 			}
 			catch (IOException ignored)
@@ -184,12 +179,12 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 	{
 		View view = inflater.inflate(R.layout.file_properties_fragments,
 				container, false);
-		_sizeTextView = (AppCompatTextView) view
+		_sizeTextView = view
 				.findViewById(R.id.selectionPropertiesSizeTextView);
-		_numberOfFilesTextView = (AppCompatTextView) view
+		_numberOfFilesTextView = view
 				.findViewById(R.id.selectionPropertiesNumberOfFilesTextView);
-		_fullPathTextView = (AppCompatTextView) view.findViewById(R.id.fullPathTextView);
-		_modDateTextView = (AppCompatTextView) view
+		_fullPathTextView = view.findViewById(R.id.fullPathTextView);
+		_modDateTextView = view
 				.findViewById(R.id.lastModifiedTextView);				
 		if(_lastInfo!=null)
 			updateUI(_lastInfo, true);

@@ -44,6 +44,6 @@ class FSInfo
 		Util.writeDoubleWordLE(output, 0xAA550000);		
 	}
 
-	private BPB32 _bpb;
+	private final BPB32 _bpb;
 
 }

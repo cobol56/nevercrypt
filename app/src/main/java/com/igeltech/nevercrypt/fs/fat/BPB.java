@@ -36,8 +36,8 @@ class BPB
 	byte[] volumeLabel = new byte[12];
 	byte[] fileSystemLabel = new byte[8];
 
-	void read(RandomAccessIO input) throws IOException, WrongImageFormatException
-	{
+	void read(RandomAccessIO input) throws IOException
+    {
 		input.seek(0xB);
 		bytesPerSector = Util.readWordLE(input);
 		sectorsPerCluster = Util.readUnsignedByte(input);
@@ -115,7 +115,7 @@ class BPB
 		output.write(fileSystemLabel,0,fileSystemLabel.length);
 	}
 
-	protected void checkEndingSignature(RandomAccessIO input) throws WrongImageFormatException, IOException
+	protected void checkEndingSignature(RandomAccessIO input) throws IOException
 	{
 		input.seek(0x1FE);
 		if (Util.readWordLE(input) != 0xAA55) throw new WrongImageFormatException("Invalid bpb sector signature");
@@ -134,8 +134,8 @@ class BPB16 extends BPB
 {
 
 	@Override
-	void read(RandomAccessIO input) throws IOException, WrongImageFormatException
-	{
+	void read(RandomAccessIO input) throws IOException
+    {
 		super.read(input);
 		readCommonPart(input);
 		checkEndingSignature(input);
@@ -170,8 +170,8 @@ class BPB32 extends BPB
 	int bootSectorReservedCopySector;
 
 	@Override
-	void read(RandomAccessIO input) throws IOException, WrongImageFormatException
-	{
+	void read(RandomAccessIO input) throws IOException
+    {
 		super.read(input);
 		sectorsPerFat32 = Util.readDoubleWordLE(input);
 		updateMode = Util.readWordLE(input);
@@ -192,7 +192,7 @@ class BPB32 extends BPB
 		Util.writeDoubleWordLE(output, (int) sectorsPerFat32);
 		Util.writeWordLE(output, (short) updateMode);
 		Util.writeWordLE(output, (short) versionNumber);
-		Util.writeDoubleWordLE(output, (int) rootClusterNumber);
+		Util.writeDoubleWordLE(output, rootClusterNumber);
 		Util.writeWordLE(output, (short) FSInfoSector);
 		Util.writeWordLE(output, (short) bootSectorReservedCopySector);
 		for(int i=0;i<12;i++)

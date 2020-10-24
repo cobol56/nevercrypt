@@ -58,12 +58,12 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     public void updateView(View view, int position)
     {
         super.updateView(view, position);
-        AppCompatTextView tv = (AppCompatTextView)view.findViewById(android.R.id.text1);
+        AppCompatTextView tv = view.findViewById(android.R.id.text1);
         tv.setPressed(_isExpanded);
         Drawable drawable = view.getBackground();
         if(drawable!=null)
             drawable.setState(_isExpanded ? new int[] {android.R.attr.state_expanded} : new int[0]);
-        AppCompatImageView iv = (AppCompatImageView) view.findViewById(android.R.id.icon);
+        AppCompatImageView iv = view.findViewById(android.R.id.icon);
         if(iv != null && !iv.hasTransientState())
         {
             iv.setVisibility(View.VISIBLE);
@@ -73,7 +73,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
 
     public void rotateIcon(View view)
     {
-        final AppCompatImageView icon = (AppCompatImageView) view.findViewById(android.R.id.icon); //getIconImageView();
+        final AppCompatImageView icon = view.findViewById(android.R.id.icon); //getIconImageView();
         if(icon!=null)
         {
             icon.clearAnimation();
@@ -96,10 +96,9 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     {
         if(!isExpanded())
             rotateExpandedIcons();
-        final AppCompatImageView icon = (AppCompatImageView) view.findViewById(android.R.id.icon); //getIconImageView();
+        final AppCompatImageView icon = view.findViewById(android.R.id.icon); //getIconImageView();
         if(icon!=null)
         {
-            IS_ANIMATING = true;
             icon.clearAnimation();
             ObjectAnimator anim = ObjectAnimator.ofFloat(icon, View.ROTATION, isExpanded() ? 0 : 180);
             anim.setDuration(200);
@@ -118,8 +117,6 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
                     }
                     getAdapter().notifyDataSetChanged();
                     icon.setHasTransientState(false);
-                    IS_ANIMATING = false;
-
                 }
             });
             anim.start();
@@ -191,7 +188,6 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
         }
     }
 
-    public static boolean IS_ANIMATING = false;
     private static final String STATE_EXPANDED_POSITION = "com.igeltech.nevercrypt.android.navigdrawer.DrawerSubMenuBase.EXPANDED_POSITION";
     private boolean _isExpanded;
 

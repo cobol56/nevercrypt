@@ -3,8 +3,6 @@ package com.igeltech.nevercrypt.android.settings;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 
@@ -22,15 +20,10 @@ public abstract class CheckBoxPropertyEditor extends PropertyEditorBase
 	public View createView(ViewGroup parent)
 	{
 		View view = super.createView(parent);
-		_checkBox = (AppCompatCheckBox) view.findViewById(android.R.id.checkbox);
-		_checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-			{
-				if(!_loadingValue)
-					onChecked(isChecked);
-			}
+		_checkBox = view.findViewById(android.R.id.checkbox);
+		_checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+			if(!_loadingValue)
+				onChecked(isChecked);
 		});
 		return view;
 	}

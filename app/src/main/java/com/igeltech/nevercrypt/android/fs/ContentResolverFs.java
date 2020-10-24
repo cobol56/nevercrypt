@@ -81,7 +81,7 @@ public class ContentResolverFs implements FileSystem
 		if(extras.containsKey(Intent.EXTRA_STREAM))
 		{
 			if(Intent.ACTION_SEND.equals(intent.getAction()))		
-				paths.add(fs.new Path( (Uri)extras.getParcelable(Intent.EXTRA_STREAM)));
+				paths.add(fs.new Path(extras.getParcelable(Intent.EXTRA_STREAM)));
 			else if(Intent.ACTION_SEND_MULTIPLE.equals(intent.getAction()))
 			{
 				ArrayList<Parcelable> s = extras.getParcelableArrayList(Intent.EXTRA_STREAM);

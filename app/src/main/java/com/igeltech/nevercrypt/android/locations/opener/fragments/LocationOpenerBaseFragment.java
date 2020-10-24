@@ -1,7 +1,6 @@
 package com.igeltech.nevercrypt.android.locations.opener.fragments;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -301,16 +300,11 @@ public class LocationOpenerBaseFragment extends Fragment
 		{
 			_dialog = ProgressDialog.showDialog(getFragmentManager(), getString(R.string.opening_container));
 			_dialog.setCancelable(true);
-			_dialog.setOnCancelListener(new DialogInterface.OnCancelListener()
-			{
-				@Override
-				public void onCancel(DialogInterface dialog)
-				{
-					OpenLocationTaskFragment f = (OpenLocationTaskFragment) getFragmentManager().findFragmentByTag(getOpenLocationTaskTag());
-					if(f!=null)
-						f.cancel();
-				}
-			});
+			_dialog.setOnCancelListener(dialog -> {
+                OpenLocationTaskFragment f = (OpenLocationTaskFragment) getFragmentManager().findFragmentByTag(getOpenLocationTaskTag());
+                if(f!=null)
+                    f.cancel();
+            });
 		}
 
 		@Override

@@ -173,14 +173,9 @@ public abstract class ContainerFormatterBase extends LocationFormatter
 					parentPath.getDirectory().createFile(fn);
 			}
 		}*/
-		RandomAccessIO io = getIO(location);
-		try
+		try (RandomAccessIO io = getIO(location))
 		{
 			format(io, layout);
-		}
-		finally
-		{
-			io.close();
 		}
 		return createContainerBasedLocation(location, layout);
 

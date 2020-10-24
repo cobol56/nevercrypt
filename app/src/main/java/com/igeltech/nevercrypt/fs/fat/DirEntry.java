@@ -14,11 +14,10 @@ import com.igeltech.nevercrypt.fs.util.Util;
 import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -36,8 +35,6 @@ class DirEntry
 	}
 
 	public static final byte[] ALLOWED_SYMBOLS = { '!', '#', '$', '%', '&', '(', ')', '-', '@', '^', '_', '`', '{', '}', '~', '\'' };
-	public static final byte[] RESTRICTED_SYMBOLS = { '+', ',', '.', ';', '=', '[', ']' };
-	public static final byte[] SYSTEM_SYMBOLS = { '*', '?', '<', ':', '>', '/', '\\', '|' };
 
 	public String name;
 	public String dosName;
@@ -167,7 +164,7 @@ class DirEntry
 				}
 				else
 					expectedChecksum = buf[0x0d];
-				lfnSb.insert(0, new String(buf, 1, 10, "UTF-16LE") + new String(buf, 0x0E, 12, "UTF-16LE") + new String(buf, 0x1C, 4, "UTF-16LE"));
+				lfnSb.insert(0, new String(buf, 1, 10, StandardCharsets.UTF_16LE) + new String(buf, 0x0E, 12, StandardCharsets.UTF_16LE) + new String(buf, 0x1C, 4, StandardCharsets.UTF_16LE));
 				lfns++;
 			}
 			else
@@ -198,7 +195,7 @@ class DirEntry
 				}
 
 									
-				entry.dosName = new String(buf, 0, 11, "ASCII");
+				entry.dosName = new String(buf, 0, 11, StandardCharsets.US_ASCII);
 				if(lfn == null)
 				{
 					String tmp = entry.dosName.substring(0, 8).trim();
@@ -264,23 +261,18 @@ class DirEntry
 			}
 			if (offset < 0)
 				isLast = getFreeDirEntryOffset(fat, basePath, fn.isLFN ? (getNumLFNRecords() + 1) : 1,opTag);
-			
-			DirWriter os = fat.getDirWriter(basePath,opTag);
-			try
+
+			try (DirWriter os = fat.getDirWriter(basePath, opTag))
 			{
-				//DEBUG 
+				//DEBUG
 				//Log.d("NeverCrypt", String.format("Writing dir entry %s at offset %d",name,offset));
 				os.seek(offset);
-				writeEntry(fn,os);
-				if (isLast)			
+				writeEntry(fn, os);
+				if (isLast)
 					os.write(0);
-					//zeroRemainingClusterSpace(fat, os, ((IFSStream) os).getPosition());
-				
+				//zeroRemainingClusterSpace(fat, os, ((IFSStream) os).getPosition());
+
 			}
-			finally
-			{
-				os.close();
-			}		
 		}
 		finally
 		{
@@ -318,14 +310,9 @@ class DirEntry
 
 	public void deleteEntry(FatFS fat, FatPath basePath,Object opTag) throws IOException
 	{
-		DirWriter s = fat.getDirWriter(basePath,opTag);
-		try
+		try (DirWriter s = fat.getDirWriter(basePath, opTag))
 		{
 			deleteEntry(s);
-		}
-		finally
-		{
-			s.close();
 		}
 	}
 
@@ -354,14 +341,7 @@ class DirEntry
 				 dosName = fn.getDosName(counter++);
 			}
 			while(
-					Collections.binarySearch(dosNames, dosName,new Comparator<String>()
-					{
-						@Override
-						public int compare(String lhs, String rhs)
-						{
-							return lhs.compareTo(rhs);
-						}						
-					}
+					Collections.binarySearch(dosNames, dosName, (lhs, rhs) -> lhs.compareTo(rhs)
 					)>=0
 			);
 		}
@@ -376,18 +356,13 @@ class DirEntry
 		int numDeletedEntries = 0;
 		int res = 0;
 		byte[] buf = new byte[DirEntry.RECORD_SIZE];
-		DirReader dirStream = fat.getDirReader(parentDirPath,opTag);
-		try
+		try (DirReader dirStream = fat.getDirReader(parentDirPath, opTag))
 		{
-			while (numDeletedEntries < numEntries && (r = (Util.readBytes(dirStream, buf)==DirEntry.RECORD_SIZE)) && buf[0] != 0)
+			while (numDeletedEntries < numEntries && (r = (Util.readBytes(dirStream, buf) == DirEntry.RECORD_SIZE)) && buf[0] != 0)
 			{
 				numDeletedEntries = Util.unsignedByteToInt(buf[0]) == 0xE5 ? numDeletedEntries + 1 : 0;
 				res += DirEntry.RECORD_SIZE;
 			}
-		}
-		finally
-		{
-			dirStream.close();
 		}
 		if (!r) throw new EOFException("getFreeDirEntryOffset error: no more free space");
 		offset = res - numDeletedEntries * DirEntry.RECORD_SIZE;
@@ -442,22 +417,17 @@ class DirEntry
 	private ArrayList<String> readDosNames(FatFS fs, FatPath path, Object opTag) throws IOException
 	{
 		ArrayList<String> res = new ArrayList<>();
-		DirReader stream = fs.getDirReader(path,opTag);
-		try
+		try (DirReader stream = fs.getDirReader(path, opTag))
 		{
 			DirEntry entry;
-			while(true)
+			while (true)
 			{
 				entry = DirEntry.readEntry(stream);
-				if(entry!=null)
+				if (entry != null)
 					res.add(entry.dosName.toUpperCase());
 				else
 					break;
-			}			
-		}
-		finally
-		{
-			stream.close();
+			}
 		}
 		return res;
 		
@@ -473,15 +443,8 @@ class DirEntry
 	{
 		final int[] nameCharPos = new int[] { 1, 3, 5, 7, 9, 14, 16, 18, 20, 22, 24, 28, 30 };
 		byte[] bytes;
-		try
-		{
-			bytes = name.getBytes("UTF-16LE");
-		}
-		catch (UnsupportedEncodingException e)
-		{
-			return;
-		}
-		int numChars = name.length();
+        bytes = name.getBytes(StandardCharsets.UTF_16LE);
+        int numChars = name.length();
 		int numRecords = numChars / 13;
 		int lastChar = numChars % 13;
 		if (lastChar != 0) numRecords++;

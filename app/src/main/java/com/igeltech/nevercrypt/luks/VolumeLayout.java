@@ -59,7 +59,7 @@ public class VolumeLayout extends VolumeLayoutBase
 			_keySlots.add(ks);
 		}
 		
-		if(_payloadOffsetSector == 0 && !_isDetachedHeader)
+		if(_payloadOffsetSector == 0)
 		{
 			KeySlot ks = new KeySlot();
 			ks.init(NUM_KEY_SLOTS);
@@ -387,7 +387,6 @@ public class VolumeLayout extends VolumeLayoutBase
 
 	protected UUID _uuid;
 	protected int _payloadOffsetSector, _activeKeyslotIndex;
-	protected boolean _isDetachedHeader;
 	protected final List<KeySlot> _keySlots = new ArrayList<>();
 	protected long _volumeSize; 
 	

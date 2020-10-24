@@ -24,15 +24,10 @@ public abstract class ChangeContainerPasswordTaskBase extends ChangeLocationPass
     {
         ContainerLocation cont = (ContainerLocation)_location;
         setContainerPassword(cont);
-        RandomAccessIO io = cont.getLocation().getCurrentPath().getFile().getRandomAccessIO(File.AccessMode.ReadWrite);
-        try
+        try (RandomAccessIO io = cont.getLocation().getCurrentPath().getFile().getRandomAccessIO(File.AccessMode.ReadWrite))
         {
             VolumeLayout vl = cont.getCryptoContainer().getVolumeLayout();
             vl.writeHeader(io);
-        }
-        finally
-        {
-            io.close();
         }
 	}
 

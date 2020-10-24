@@ -4,8 +4,8 @@ import android.os.Bundle;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.errors.UserException;
-import com.igeltech.nevercrypt.container.LocationFormatter;
 import com.igeltech.nevercrypt.container.EncFsFormatter;
+import com.igeltech.nevercrypt.container.LocationFormatter;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.fs.Path;
 import com.igeltech.nevercrypt.fs.encfs.Config;
@@ -15,8 +15,6 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 public class CreateEncFsTaskFragment extends CreateLocationTaskFragment
 {
-    public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.CreateEncFsTaskFragment";
-
     public static final String ARG_NAME_CIPHER_NAME = "com.igeltech.nevercrypt.android.NAME_CIPHER_NAME";
     public static final String ARG_KEY_SIZE = "com.igeltech.nevercrypt.android.KEY_SIZE";
     public static final String ARG_BLOCK_SIZE = "com.igeltech.nevercrypt.android.BLOCK_SIZE";

@@ -2,8 +2,8 @@ package com.igeltech.nevercrypt.fs.fat;
 
 import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 
-import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 class FileName
@@ -162,7 +162,7 @@ class FileName
 		return name;		
 	}
 
-	static private CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder(); // or
+	static private final CharsetEncoder asciiEncoder = StandardCharsets.US_ASCII.newEncoder(); // or
 																							// "ISO-8859-1"
 																							// for
 																							// ISO

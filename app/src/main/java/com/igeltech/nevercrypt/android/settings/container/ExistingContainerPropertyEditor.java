@@ -23,23 +23,13 @@ public class ExistingContainerPropertyEditor extends PropertyEditorBase
     protected View createView(ViewGroup parent)
     {
         View view = super.createView(parent);
-        view.findViewById(R.id.create_new_container_button).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                getHostFragment().showCreateNewLocationProperties();
-                getHostFragment().getPropertiesView().loadProperties();
-            }
+        view.findViewById(R.id.create_new_container_button).setOnClickListener(view12 -> {
+            getHostFragment().showCreateNewLocationProperties();
+            getHostFragment().getPropertiesView().loadProperties();
         });
-        view.findViewById(R.id.add_existing_container_button).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                getHostFragment().showAddExistingLocationProperties();
-                getHost().getPropertiesView().loadProperties();
-            }
+        view.findViewById(R.id.add_existing_container_button).setOnClickListener(view1 -> {
+            getHostFragment().showAddExistingLocationProperties();
+            getHost().getPropertiesView().loadProperties();
         });
         return view;
     }

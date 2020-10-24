@@ -180,32 +180,27 @@ public class CryptoApplicationBase extends Application
 	private static Map<String, String> loadMimeTypes(Context context) throws IOException
     {
         Pattern p = Pattern.compile("^([^\\s/]+/[^\\s/]+)\\s+(.+)$");
-        BufferedReader reader = new BufferedReader(
+        try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
                         context.getResources().getAssets().open(MIME_TYPES_PATH)
                 )
-        );
-        try
+        ))
         {
             HashMap<String, String> map = new HashMap<>();
             String line;
-            while((line = reader.readLine())!=null)
+            while ((line = reader.readLine()) != null)
             {
                 Matcher m = p.matcher(line);
-                if(m.matches())
-				{
-					String mimeType = m.group(1);
-					String extsString = m.group(2);
-					String[] exts = extsString.split("\\s");
-					for(String s: exts)
-						map.put(s, mimeType);
-				}
+                if (m.matches())
+                {
+                    String mimeType = m.group(1);
+                    String extsString = m.group(2);
+                    String[] exts = extsString.split("\\s");
+                    for (String s : exts)
+                        map.put(s, mimeType);
+                }
             }
             return map;
-        }
-        finally
-        {
-            reader.close();
         }
 	}
 }

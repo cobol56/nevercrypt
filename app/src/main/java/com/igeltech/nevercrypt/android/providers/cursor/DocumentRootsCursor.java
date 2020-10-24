@@ -216,10 +216,9 @@ public class DocumentRootsCursor extends AbstractCursor
 
     private Object getMoreColumns(LocationInfo li, String columnName)
     {
-        switch (columnName)
+        if (DocumentsContract.Root.COLUMN_CAPACITY_BYTES.equals(columnName))
         {
-            case DocumentsContract.Root.COLUMN_CAPACITY_BYTES:
-                return li.totalSpace;
+            return li.totalSpace;
         }
         return null;
     }

@@ -250,7 +250,8 @@ class FileRecord extends FsBrowserRecord
     private String _infoString;
     private Drawable _mainIcon;
 
-    private boolean _animateIcon, _loadPreviews;
+    private boolean _animateIcon;
+    private final boolean _loadPreviews;
 
     private Drawable getDefaultAppIcon(String mime)
     {

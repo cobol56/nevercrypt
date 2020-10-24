@@ -101,14 +101,12 @@ public abstract class LocationShortcutWidgetConfigActivityBase extends SettingsB
         @Override
         public boolean onOptionsItemSelected(MenuItem menuItem)
         {
-            switch (menuItem.getItemId())
+            if (menuItem.getItemId() == R.id.confirm)
             {
-                case R.id.confirm:
-                    createWidget();
-                    return true;
-                default:
-                    return super.onOptionsItemSelected(menuItem);
+                createWidget();
+                return true;
             }
+            return super.onOptionsItemSelected(menuItem);
         }
 
         private static final String ARG_TITLE = "title";

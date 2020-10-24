@@ -232,15 +232,10 @@ public class Util
 	public static List<Path> listDir(Directory dir) throws IOException
 	{
 		ArrayList<Path> res = new ArrayList<>();
-		Directory.Contents dc = dir.list();
-		try
+		try (Directory.Contents dc = dir.list())
 		{
-			for(Path p: dc)
+			for (Path p : dc)
 				res.add(p);
-		}
-		finally
-		{
-			dc.close();
 		}
 		return res;
 	}
@@ -252,16 +247,11 @@ public class Util
 	
 	public static void procDir(Directory dir,DirProcessor dirProc) throws IOException
 	{
-		Directory.Contents dc = dir.list();
-		try
+		try (Directory.Contents dc = dir.list())
 		{
-			for(Path p: dc)
-				if(!dirProc.procPath(p))
+			for (Path p : dc)
+				if (!dirProc.procPath(p))
 					break;
-		}
-		finally
-		{
-			dc.close();
 		}
 	}
 	
@@ -323,14 +313,9 @@ public class Util
 
 	public static void copyFile(com.igeltech.nevercrypt.fs.File src, com.igeltech.nevercrypt.fs.File dst) throws IOException
 	{
-		OutputStream out = dst.getOutputStream();
-		try
+		try (OutputStream out = dst.getOutputStream())
 		{
 			src.copyToOutputStream(out, 0, 0, null);
-		}
-		finally
-		{
-			out.close();
 		}
 	}
 
@@ -367,15 +352,10 @@ public class Util
 		if (src.isDirectory())
 		{
 			Directory newDir = dest.createDirectory(src.getDirectory().getName());
-			Directory.Contents dc = src.getDirectory().list();
-			try
+			try (Directory.Contents dc = src.getDirectory().list())
 			{
-				for(Path p: dc)							
+				for (Path p : dc)
 					copyFiles(p, newDir);
-			}
-			finally
-			{
-				dc.close();
 			}
 			return newDir.getPath();
 		}
@@ -418,7 +398,7 @@ public class Util
 							"copyFiles: Could not create direcotry: "
 									+ dest.getAbsolutePath() + ".");
 			// get a listing of files...
-			final String list[] = src.list();
+			final String[] list = src.list();
 			// copy all the files in the list.
 			for (final String element : list)
 			{
@@ -430,35 +410,24 @@ public class Util
 		else
 		{
 			// This was not a directory, so lets just copy the file
-			FileInputStream fin = null;
-			FileOutputStream fout = null;
 			final byte[] buffer = new byte[4096]; // Buffer 4K at a time (you
 													// can change this).
 			int bytesRead;
-			try
+			try (FileInputStream fin = new FileInputStream(src); FileOutputStream fout = new FileOutputStream(dest))
 			{
 				// open the files for input and output
-				fin = new FileInputStream(src);
-				fout = new FileOutputStream(dest);
 				// while bytesRead indicates a successful read, lets write...
 				while ((bytesRead = fin.read(buffer)) >= 0)
 					fout.write(buffer, 0, bytesRead);
-			}
-			catch (final IOException e)
+			} catch (final IOException e)
 			{ // Error copying file...
 				final IOException wrapper = new IOException(
 						"copyFiles: Unable to copy file: "
 								+ src.getAbsolutePath() + "to"
-								+ dest.getAbsolutePath() + ".");
-				wrapper.initCause(e);
+								+ dest.getAbsolutePath() + ".", e);
 				wrapper.setStackTrace(e.getStackTrace());
 				throw wrapper;
-			}
-			finally
-			{ // Ensure that the files are closed (if they were open).
-				if (fin != null) fin.close();
-				if (fout != null) fout.close();
-			}
+			} // Ensure that the files are closed (if they were open).
 		}
 	}
 	
@@ -484,7 +453,7 @@ public class Util
 		if (src.isDirectory())
 		{			
 			// get a listing of files...
-			final String list[] = src.list();
+			final String[] list = src.list();
 			// copy all the files in the list.
 			for (final String element : list)
 			{				
@@ -546,27 +515,17 @@ public class Util
 
 	public static void writeToFile(com.igeltech.nevercrypt.fs.File dst, CharSequence content) throws IOException
 	{
-		OutputStreamWriter w = new OutputStreamWriter(dst.getOutputStream());
-		try
+		try (OutputStreamWriter w = new OutputStreamWriter(dst.getOutputStream()))
 		{
 			w.append(content);
-		}
-		finally
-		{
-			w.close();
 		}
 	}
 
 	public static void writeToFile(String path, CharSequence content) throws IOException
 	{
-		OutputStreamWriter w = new OutputStreamWriter(new FileOutputStream(path));
-		try
+		try (OutputStreamWriter w = new OutputStreamWriter(new FileOutputStream(path)))
 		{
 			w.append(content);
-		}
-		finally
-		{
-			w.close();
 		}
 	}
 	
@@ -608,19 +567,14 @@ public class Util
 	 */
 	public static String readFromFile(InputStream input) throws IOException
 	{
-		StringBuilder sb = new StringBuilder();		
-		InputStreamReader r = new InputStreamReader(input);
-		try
-		{		
-			char[] buf = new char[1024];
-			int b;		
-			while((b = r.read(buf))>=0)
-				sb.append(buf, 0, b);
-			return sb.toString();		
-		}
-		finally
+		StringBuilder sb = new StringBuilder();
+		try (InputStreamReader r = new InputStreamReader(input))
 		{
-			r.close();
+			char[] buf = new char[1024];
+			int b;
+			while ((b = r.read(buf)) >= 0)
+				sb.append(buf, 0, b);
+			return sb.toString();
 		}
 	}
 	

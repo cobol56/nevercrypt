@@ -236,7 +236,7 @@ public class FS extends FileSystemWrapper
     private final Map<com.igeltech.nevercrypt.fs.Path, com.igeltech.nevercrypt.fs.encfs.Path> _cache = new HashMap<>();
     private final RootPath _rootPath;
     private byte[] _encryptionKey;
-    private Config _config;
+    private final Config _config;
     private ContainerOpeningProgressReporter _progressReporter;
 
     private byte[] deriveKey(byte[] password) throws EncryptionEngineException, DigestException

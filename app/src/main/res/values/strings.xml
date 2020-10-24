@@ -107,7 +107,6 @@
 	<string name="rotate_right">Rotate right</string>
 	<string name="encryption_algorithm">Encryption algorithm</string>
 	<string name="hash_algorithm">Hash algorithm</string>
-	<string name="version_history">Version history</string>
 	<string name="containers">Containers</string>
 	<string name="close">Close</string>
 	<string name="target_path">Target path</string>
@@ -139,7 +138,6 @@
 	<string name="enable_full_screen_mode">Enable full screen mode</string>
 	<string name="never_save_history">Never save links to containers</string>
 	<string name="never_save_history_desc">A link to the new container will be removed after you close <xliff:g id="program_name">NeverCrypt</xliff:g></string>
-	<string name="contact_support">Contact support</string>
 	<string name="no_free_space_left">No free space left</string>
 	<string name="speed">Current speed: <xliff:g id="current_speed">%1$.1f</xliff:g> Mb/s</string>
 	<string name="container_format">Container format</string>

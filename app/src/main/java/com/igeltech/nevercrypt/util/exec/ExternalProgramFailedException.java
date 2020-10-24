@@ -35,7 +35,7 @@ public class ExternalProgramFailedException extends ApplicationException
 	
 	private static String getMsg(int exitCode,String output,String... command)
 	{
-		String tmp = new String();
+		String tmp = "";
 		for(Object s: command)
 			tmp += s.toString() + ' ';
 		return String.format("External program failed.\nCommand: %s\nExit code: %d\nOutput: %s",tmp,exitCode,output);

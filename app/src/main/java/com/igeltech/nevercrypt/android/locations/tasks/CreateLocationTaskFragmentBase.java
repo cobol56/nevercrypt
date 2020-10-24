@@ -12,7 +12,6 @@ import com.igeltech.nevercrypt.android.errors.InputOutputException;
 import com.igeltech.nevercrypt.android.errors.UserException;
 import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerException;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
-import com.igeltech.nevercrypt.container.ContainerFormatterBase;
 import com.igeltech.nevercrypt.container.LocationFormatter;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.fs.errors.WrongImageFormatException;
@@ -56,7 +55,7 @@ public abstract class CreateLocationTaskFragmentBase extends
         state.setResult(0);
         Location location = _locationsManager
                 .getLocation(
-                        (Uri) getArguments().getParcelable(ARG_LOCATION));
+                        getArguments().getParcelable(ARG_LOCATION));
 
         if(!checkParams(state, location))
             return;
@@ -108,14 +107,9 @@ public abstract class CreateLocationTaskFragmentBase extends
     {
         formatter.setContext(_context);
         formatter.setPassword(password);
-        formatter.setProgressReporter(new ContainerFormatterBase.ProgressReporter()
-        {
-            @Override
-            public boolean report(byte prc)
-            {
-                state.updateUI(prc);
-                return !state.isTaskCancelled();
-            }
+        formatter.setProgressReporter(prc -> {
+            state.updateUI(prc);
+            return !state.isTaskCancelled();
         });
 
     }
