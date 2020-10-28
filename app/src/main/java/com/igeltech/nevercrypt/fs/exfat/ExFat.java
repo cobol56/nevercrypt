@@ -1,15 +1,11 @@
 package com.igeltech.nevercrypt.fs.exfat;
 
-import com.igeltech.nevercrypt.android.Logger;
-import com.igeltech.nevercrypt.android.settings.SystemConfig;
 import com.igeltech.nevercrypt.fs.FileSystem;
 import com.igeltech.nevercrypt.fs.Path;
 import com.igeltech.nevercrypt.fs.RandomAccessIO;
 import com.igeltech.nevercrypt.fs.util.FileStat;
 import com.igeltech.nevercrypt.fs.util.Util;
-import com.igeltech.nevercrypt.settings.GlobalConfig;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -89,77 +85,9 @@ public class ExFat implements FileSystem
 
     }
 
-
-    private static final String MODULE_NAME = "edsexfat";
-    private static final String LIB_NAME = "lib" + MODULE_NAME + ".so";
-
-    private enum ModuleState
-    {
-        Unknown,
-        Absent,
-        Incompatible,
-        Installed
-    }
-
-    public static boolean isModuleInstalled()
-    {
-        return _nativeModuleState == ModuleState.Installed;
-    }
-
-    public static boolean isModuleIncompatible()
-    {
-        return _nativeModuleState == ModuleState.Incompatible;
-    }
-
-    public static void loadNativeLibrary()
-    {
-        if(_nativeModuleState == ModuleState.Absent || _nativeModuleState == ModuleState.Unknown)
-        {
-            System.load(getModulePath().getAbsolutePath());
-            _nativeModuleState = ModuleState.Incompatible;
-            if (getVersion() < MIN_COMPATIBLE_NATIVE_MODULE_VERSION)
-                throw new RuntimeException("Incompatible native exfat module version");
-            Logger.debug("External exFAT module has been loaded.");
-            _nativeModuleState = ModuleState.Installed;
-        }
-    }
-
-    public static File getModulePath()
-    {
-        return new File(SystemConfig.getInstance().getFSMFolderPath(), LIB_NAME);
-    }
-
-    private static ModuleState _nativeModuleState = ModuleState.Unknown;
     static
     {
-        if(_nativeModuleState == ModuleState.Unknown)
-        {
-            if(getModulePath().exists())
-            {
-                Logger.debug("Module file exists");
-                try
-                {
-                    loadNativeLibrary();
-                }
-                catch (Throwable e)
-                {
-                    Logger.debug("Failed loading external exFAT module");
-                    if(GlobalConfig.isDebug())
-                        Logger.log(e);
-                }
-            }
-            else
-            try
-            {
-                System.loadLibrary(MODULE_NAME);
-                Logger.debug("Built-in exFAT module has been loaded.");
-                _nativeModuleState = ModuleState.Installed;
-            }
-            catch (Throwable e)
-            {
-                _nativeModuleState = ModuleState.Absent;
-            }
-        }
+        System.loadLibrary("fsexfat");
     }
 
     private long _exfatPtr;

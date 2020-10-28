@@ -71,7 +71,6 @@
 	<string name="err_failed_saving_changes">Failed to save changes. Try saving the file again or copy the file manually. See the program log file for details.</string>
 	<string name="help">Help</string>
 	<string name="select_file">Select file</string>
-	<string name="file_not_found">Specified path doesn\'t exist</string>
 	<string name="select_all">Select all</string>
 	<string name="apply_to_all">Apply to all</string>		
 	<string name="closing">Closing</string>
@@ -216,17 +215,10 @@
 	<string name="add_rand_bytes_descr">This adds a performance penalty, but ensures that blocks have different authentication codes.  Note that you can have the same benefits by enabling per-file initialization vectors, which does not come with as great of performance penalty. Select a number of bytes, from 1 to 8.</string>
 	<string name="number_of_kdf_iterations">Number of <xliff:g id="key_derivation_function">KDF</xliff:g> iterations</string>
 	<string name="number_of_kdf_iterations_descr">Enter the number of iterations for the key derivation function. The greater value you choose the longer it will take to open the container.</string>
-    <string name="install_exfat_module">Install <xliff:g id="exfat">ExFAT</xliff:g> module</string>
-    <string name="install_exfat_module_desc">In order to open an <xliff:g id="exfat">ExFAT</xliff:g> formatted container, you can install an additional <xliff:g id="exfat">ExFAT</xliff:g> file system module. The open source module can be downloaded from <xliff:g id="exfat_module_link">%s</xliff:g>.</string>
-	<string name="module_has_been_installed">The module has been installed</string>
-    <string name="file_system_type">File system type</string>
-	<string name="file_system_type_desc">You can download an additional open source <xliff:g id="exfat">ExFAT</xliff:g> file system module from the following page: <xliff:g id="exfat_module_link">%s</xliff:g>.</string>
-    <string name="get_program_log">Debug log</string>
+	<string name="file_system_type">File system type</string>
+	<string name="get_program_log">Debug log</string>
 	<string name="save_log_file_to">Save the log file to…</string>
-    <string name="update_exfat_module">Please update the <xliff:g id="exfat">exFAT</xliff:g> module</string>
-	<string name="exfat_module_required">Please install the <xliff:g id="exfat">exFAT</xliff:g> module</string>
-    <string name="restart_application">Please restart NeverCrypt</string>
-    <string name="force_temp_files">Force temp files</string>
+	<string name="force_temp_files">Force temp files</string>
 	<string name="force_temp_files_desc">Use temp files instead of \"pipes\" even for read-only requests. Some apps can\'t work with \"pipes\".</string>
 	<string name="wrong_path">Wrong path</string>
 	<string name="encfs_config_file_not_found">EncFs config file not found</string>

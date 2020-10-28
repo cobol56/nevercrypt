@@ -62,11 +62,7 @@ public abstract class ContainerBase implements Closeable
 	{
 		if(ExFat.isExFATImage(io))
 		{
-			if(ExFat.isModuleInstalled())
-				return new ExFat(io, isReadOnly);
-			if(ExFat.isModuleIncompatible())
-				throw new UserException("Please update the exFAT module.", R.string.update_exfat_module);
-			throw new UserException("Please install the exFAT module", R.string.exfat_module_required);
+			return new ExFat(io, isReadOnly);
 		}
 
 		FatFS fs = FatFS.getFat(io);

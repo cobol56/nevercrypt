@@ -17,8 +17,7 @@ public class FileSystemTypePropertyEditor extends ChoiceDialogPropertyEditor
     {
         super(createContainerFragment,
                 R.string.file_system_type,
-                createContainerFragment.getString(R.string.file_system_type),
-                createContainerFragment.getString(R.string.file_system_type_desc, GlobalConfig.EXFAT_MODULE_URL),
+                0,
                 createContainerFragment.getTag());
     }
 

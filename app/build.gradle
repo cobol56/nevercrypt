@@ -24,7 +24,8 @@ android {
 		
         externalNativeBuild {
             cmake {
-                targets "cryptxts", "cryptctr", "cryptaes", "cryptserpent", "crypttwofish", "cryptripemd160", "cryptwhirlpool", "fdraio", "localxts", "cryptcfb", "cryptcbc", "cryptctr", "cryptgost"
+                targets "cryptxts", "cryptctr", "cryptaes", "cryptserpent", "crypttwofish", "cryptripemd160", "cryptwhirlpool", "fdraio", "localxts", "cryptcfb", "cryptcbc", "cryptctr", "cryptgost",
+                "fsexfat"
             }
         }
     }

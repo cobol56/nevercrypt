@@ -14,5 +14,4 @@ class GlobalConfigCommon
     public static final int FB_PREVIEW_HEIGHT = 40;
     public static final int CLEAR_MASTER_PASS_INACTIVITY_TIMEOUT = 20*60*1000;
     public static final String HELP_URL = "https://www.igel-tech.com";
-    public static final String EXFAT_MODULE_URL = "https://github.com/sovworks/edsexfat";
 }

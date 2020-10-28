@@ -21,7 +21,6 @@ import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.android.settings.program.ExtFileManagerPropertyEditor;
-import com.igeltech.nevercrypt.android.settings.program.InstallExFatModulePropertyEditor;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
 import com.igeltech.nevercrypt.fs.util.PathUtil;
 import com.igeltech.nevercrypt.locations.Location;
@@ -402,7 +401,6 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
                 editSettings().putBoolean(FORCE_TEMP_FILES, value).commit();
             }
         }));
-        commonPropertiesIds.add(getPropertiesView().addProperty(new InstallExFatModulePropertyEditor(this)));
     }
 
     protected void enableProperties(Iterable<Integer> propIds, boolean enable)

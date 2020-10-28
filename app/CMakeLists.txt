@@ -92,7 +92,43 @@ add_library( cryptcfb
 
 target_link_libraries( cryptcfb
                        ${log-lib} )
+
 add_library( cryptgost
        SHARED
              src/main/native/gost/app-gost.c
              src/main/native/gost/gost89.c )
+
+target_link_libraries( cryptgost
+                       ${log-lib} )
+
+add_library( fsexfat
+       SHARED
+             src/main/native/util/jniutil.c
+             src/main/native/fsexfat/raio.c
+             src/main/native/fsexfat/fsexfat.c
+             src/main/native/fsexfat/libexfat/cluster.c
+             src/main/native/fsexfat/libexfat/io.c
+             src/main/native/fsexfat/libexfat/log.c
+             src/main/native/fsexfat/libexfat/lookup.c
+             src/main/native/fsexfat/libexfat/mount.c
+             src/main/native/fsexfat/libexfat/node.c
+             src/main/native/fsexfat/libexfat/time.c
+             src/main/native/fsexfat/libexfat/utf.c
+             src/main/native/fsexfat/libexfat/utils.c
+             src/main/native/fsexfat/mkfs/cbm.c
+             src/main/native/fsexfat/mkfs/fat.c
+             src/main/native/fsexfat/mkfs/main.c
+             src/main/native/fsexfat/mkfs/mkexfat.c
+             src/main/native/fsexfat/mkfs/rootdir.c
+             src/main/native/fsexfat/mkfs/uct.c
+             src/main/native/fsexfat/mkfs/uctc.c
+             src/main/native/fsexfat/mkfs/vbr.c)
+
+target_compile_definitions( fsexfat
+                  PRIVATE _FILE_OFFSET_BITS=64)
+
+target_include_directories( fsexfat
+              PRIVATE src/main/native/fsexfat/libexfat/ )
+
+target_link_libraries( fsexfat
+                       ${log-lib} )

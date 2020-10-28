@@ -61,8 +61,7 @@
   <string name="err_failed_saving_changes">Échec de la sauvegarde des changements. Essayez de sauvegarder de nouveau ou bien copiez manuellement le fichier. Voir le log pour plus de détails.</string>
   <string name="help">Aide</string>
   <string name="select_file">Sélectionner un fichier</string>
-  <string name="file_not_found">Le chemin d\'accès spécifié n\'existe pas</string>
-  <string name="select_all">Sélectionner tout</string>
+    <string name="select_all">Sélectionner tout</string>
   <string name="apply_to_all">Appliquer à tous</string>
   <string name="closing">Fermeture du container</string>
   <string-array name="image_viewer_use_mode">

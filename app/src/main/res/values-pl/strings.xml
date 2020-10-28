@@ -64,8 +64,7 @@
   <string name="err_failed_saving_changes">Niepowodzenie zapisu zmian. Spróbuj zapisać plik ponownie lub skopiuj plik ręcznie. Zobacz detale w logach programu.</string>
   <string name="help">Pomoc</string>
   <string name="select_file">Wybierz plik</string>
-  <string name="file_not_found">Określona ścieżka nie istnieje</string>
-  <string name="select_all">Wybór wszystkiego</string>
+    <string name="select_all">Wybór wszystkiego</string>
   <string name="apply_to_all">Zastosuj do wszystkiego</string>
   <string name="closing">Zamykanie kontenera</string>
   <string-array name="image_viewer_use_mode">

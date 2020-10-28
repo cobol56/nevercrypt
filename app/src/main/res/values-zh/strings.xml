@@ -67,8 +67,7 @@
 	<string name="err_failed_saving_changes">保存更改失败.尝试再次保存或手动复制文件.详细信息请查看程序日志文件.</string>
 	<string name="help">帮助</string>
 	<string name="select_file">选取文件</string>
-	<string name="file_not_found">指定路径不存在</string>
-	<string name="select_all">选取全部</string>
+    <string name="select_all">选取全部</string>
 	<string name="apply_to_all">应用到全部</string>		
 	<string name="closing">关闭</string>
 	<string-array name="image_viewer_use_mode">
@@ -212,16 +211,9 @@
 	<string name="add_rand_bytes_descr">这增加了性能损失, 但能确保区块拥有不同的鉴别代码.请注意，您可以通过启用每个文件初始化向量来获得相同的好处，这并不会带来很大的性能损失. 从1到8选择一个字节.</string>
 	<string name="number_of_kdf_iterations"><xliff:g id="key_derivation_function">KDF</xliff:g> 迭代次数</string>
 	<string name="number_of_kdf_iterations_descr">输入密钥导出功能的迭代次数. 你选择的值越大，打开容器的时间越长。</string>
-    <string name="install_exfat_module">安装 <xliff:g id="exfat">ExFAT</xliff:g> 模块</string>
-    <string name="install_exfat_module_desc">为了打开 <xliff:g id="exfat">ExFAT</xliff:g> 格式的容器, 你可以安装额外的 <xliff:g id="exfat">ExFAT</xliff:g> 文件系统模块. 该开源模块可以从 <xliff:g id="exfat_module_link">%s</xliff:g>下载.</string>
-	<string name="module_has_been_installed">该模块已安装</string>
     <string name="file_system_type">文件系统类型</string>
-	<string name="file_system_type_desc">你可以从以下地址下载额外的开源<xliff:g id="exfat">ExFAT</xliff:g> 文件系统模块: <xliff:g id="exfat_module_link">%s</xliff:g>.</string>
     <string name="get_program_log">调试日志</string>
 	<string name="save_log_file_to">日志文件保存到…</string>
-    <string name="update_exfat_module">请更新 <xliff:g id="exfat">exFAT</xliff:g> 模块</string>
-	<string name="exfat_module_required">请安装 <xliff:g id="exfat">exFAT</xliff:g> 模块</string>
-    <string name="restart_application">请重启 <xliff:g id="program_name">NeverCrypt</xliff:g></string>
     <string name="force_temp_files">强制临时文件</string>
 	<string name="force_temp_files_desc">使用临时文件代替 \"pipes\" 即使针对只读请求. 某些apps无法使用 \"pipes\".</string>
 	<string name="wrong_path">路径错误</string>

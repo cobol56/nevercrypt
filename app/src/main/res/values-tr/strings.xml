@@ -61,8 +61,7 @@
   <string name="err_failed_saving_changes">Değişiklikler kaydedilemedi. Tekrar kaydetmeyi deneyin veya dosyayı manuel olarak kopyalayın. Detaylar için log dosyasına bakın.</string>
   <string name="help">Yardım</string>
   <string name="select_file">Dosya Seç</string>
-  <string name="file_not_found">Belirtilen yol bulunamıyor!</string>
-  <string name="select_all">Tümünü Seç</string>
+    <string name="select_all">Tümünü Seç</string>
   <string name="apply_to_all">Tümüne Uygula</string>
   <string name="closing">Konteyner kapatılıyor..</string>
   <string name="temp_data_path">Geçici dosyaların tutulacağı yer (uygulamanın kendi yolunu kullanmak için boş bırakın)</string>
