@@ -18,20 +18,20 @@ public class KeySizePropertyEditor extends ChoiceDialogPropertyEditor
     @Override
     protected int loadValue()
     {
-        return (getHostFragment().getState().getInt(CreateEncFsTaskFragment.ARG_KEY_SIZE, 16)*8 - 128)/64;
+        return (getHostFragment().getState().getInt(CreateEncFsTaskFragment.ARG_KEY_SIZE, 16) * 8 - 128) / 64;
     }
 
     @Override
     protected void saveValue(int value)
     {
-        getHostFragment().getState().putInt(CreateEncFsTaskFragment.ARG_KEY_SIZE, (128 + value*64)/8);
+        getHostFragment().getState().putInt(CreateEncFsTaskFragment.ARG_KEY_SIZE, (128 + value * 64) / 8);
     }
 
     @Override
     protected List<String> getEntries()
     {
         ArrayList<String> res = new ArrayList<>();
-        for(int i=128;i<=256;i+=64)
+        for (int i = 128; i <= 256; i += 64)
             res.add(String.valueOf(i));
         return res;
     }

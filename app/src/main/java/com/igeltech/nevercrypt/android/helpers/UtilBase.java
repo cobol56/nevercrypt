@@ -17,89 +17,69 @@ import java.util.List;
 
 public class UtilBase
 {
-	public static String getSystemInfoString()
-	{
-		return String.format("Build.BOARD: %s\n", Build.BOARD) +
-				String.format("Build.BOOTLOADER: %s\n", Build.BOOTLOADER) +
-				String.format("Build.BRAND: %s\n", Build.BRAND) +
-				String.format("Build.CPU_ABI: %s\n", Build.CPU_ABI) +
-				String.format("Build.CPU_ABI2: %s\n", Build.CPU_ABI2) +
-				String.format("Build.DEVICE: %s\n", Build.DEVICE) +
-				String.format("Build.DISPLAY: %s\n", Build.DISPLAY) +
-				String.format("Build.HARDWARE: %s\n", Build.HARDWARE) +
-				String.format("Build.ID: %s\n", Build.ID) +
-				String.format("Build.MODEL: %s\n", Build.MODEL) +
-				String.format("Build.MANUFACTURER: %s\n", Build.MANUFACTURER) +
-				String.format("Build.PRODUCT: %s\n", Build.PRODUCT) +
-				String.format("Build.TAGS: %s\n", Build.TAGS) +
-				String.format("Build.TYPE: %s\n", Build.TYPE) +
-				String.format("Build.VERSION.RELEASE: %s\n", Build.VERSION.RELEASE) +
-				String.format("os.name: %s\n", System.getProperty("os.name")) +
-				String.format("os.arch: %s\n", System.getProperty("os.arch")) +
-				String.format("os.version: %s\n", System.getProperty("os.version"));
-	}
-
-	public static String storeElementsToString(Collection<?> elements)
-	{
-		JSONArray ja = new JSONArray(elements);
-		return ja.toString();
+    public static String getSystemInfoString()
+    {
+        return String.format("Build.BOARD: %s\n", Build.BOARD) + String.format("Build.BOOTLOADER: %s\n", Build.BOOTLOADER) + String.format("Build.BRAND: %s\n", Build.BRAND) + String.format("Build.CPU_ABI: %s\n", Build.CPU_ABI) + String.format("Build.CPU_ABI2: %s\n", Build.CPU_ABI2) + String.format("Build.DEVICE: %s\n", Build.DEVICE) + String.format("Build.DISPLAY: %s\n", Build.DISPLAY) + String.format("Build.HARDWARE: %s\n", Build.HARDWARE) + String.format("Build.ID: %s\n", Build.ID) + String.format("Build.MODEL: %s\n", Build.MODEL) + String.format("Build.MANUFACTURER: %s\n", Build.MANUFACTURER) + String.format("Build.PRODUCT: %s\n", Build.PRODUCT) + String.format("Build.TAGS: %s\n", Build.TAGS) + String.format("Build.TYPE: %s\n", Build.TYPE) + String.format("Build.VERSION.RELEASE: %s\n", Build.VERSION.RELEASE) + String.format("os.name: %s\n", System.getProperty("os.name")) + String.format("os.arch: %s\n", System.getProperty("os.arch")) + String.format("os.version: %s\n", System.getProperty("os.version"));
     }
 
-	public static List<String> loadStringArrayFromString(String s) throws JSONException
-	{
-		ArrayList<String> res = new ArrayList<>();
-		if(s!=null && s.length()>0)
-		{
-			JSONArray ja = new JSONArray(s);
-			for(int i=0;i<ja.length();i++)
-				res.add(ja.getString(i));
-		}
-		return res;
-	}
+    public static String storeElementsToString(Collection<?> elements)
+    {
+        JSONArray ja = new JSONArray(elements);
+        return ja.toString();
+    }
 
-  public static Bitmap loadDownsampledImage(Path path,int reqWidth,int reqHeight) throws IOException
-	{
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BufferedInputStream data = new BufferedInputStream(path.getFile().getInputStream());
-		try
-		{
-			BitmapFactory.decodeStream(data, null, options);
-		}
-		finally
-		{
-			data.close();
-		}
-		// Calculate inSampleSize
-	    options.inSampleSize = calculateInSampleSize(options,reqWidth,reqHeight);
-	    // Decode bitmap with inSampleSize set
-	    options.inJustDecodeBounds = false;
-	    data = new BufferedInputStream(path.getFile().getInputStream());
-		try
-		{
-			return BitmapFactory.decodeStream(data, null, options);
-		}
-		finally
-		{
-			data.close();
-		}
-	}
+    public static List<String> loadStringArrayFromString(String s) throws JSONException
+    {
+        ArrayList<String> res = new ArrayList<>();
+        if (s != null && s.length() > 0)
+        {
+            JSONArray ja = new JSONArray(s);
+            for (int i = 0; i < ja.length(); i++)
+                res.add(ja.getString(i));
+        }
+        return res;
+    }
 
-	private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
-	{
-	    // Raw height and width of image
-	    final int height = options.outHeight;
-	    final int width = options.outWidth;
-	    int inSampleSize = 1;
+    public static Bitmap loadDownsampledImage(Path path, int reqWidth, int reqHeight) throws IOException
+    {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BufferedInputStream data = new BufferedInputStream(path.getFile().getInputStream());
+        try
+        {
+            BitmapFactory.decodeStream(data, null, options);
+        }
+        finally
+        {
+            data.close();
+        }
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        data = new BufferedInputStream(path.getFile().getInputStream());
+        try
+        {
+            return BitmapFactory.decodeStream(data, null, options);
+        }
+        finally
+        {
+            data.close();
+        }
+    }
 
-	    if (height > reqHeight || width > reqWidth)
-	    {
-	        inSampleSize = Math.max(
-		        				Math.round((float)height / (float)reqHeight),
-		        				Math.round((float)width / (float)reqWidth)
-	        				);
-	    }
-	    return inSampleSize;
-	}
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
+    {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth)
+        {
+            inSampleSize = Math.max(Math.round((float) height / (float) reqHeight), Math.round((float) width / (float) reqWidth));
+        }
+        return inSampleSize;
+    }
 }
 

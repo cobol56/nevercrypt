@@ -36,19 +36,12 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Uri getUriFromLocation(Location location)
     {
-        return DocumentsContract.buildTreeDocumentUri(
-                ContainersDocumentProvider.AUTHORITY,
-                getDocumentIdFromLocation(location)
-        );
+        return DocumentsContract.buildTreeDocumentUri(ContainersDocumentProvider.AUTHORITY, getDocumentIdFromLocation(location));
     }
 
     public static void notifyOpenedLocationsListChanged(Context context)
     {
-        context.getContentResolver().notifyChange(
-                DocumentsContract.buildRootsUri(ContainersDocumentProvider.AUTHORITY),
-                null,
-                false
-        );
+        context.getContentResolver().notifyChange(DocumentsContract.buildRootsUri(ContainersDocumentProvider.AUTHORITY), null, false);
     }
 
     public static String getDocumentIdFromLocationUri(Uri uri)
@@ -70,11 +63,7 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
     @Override
     public Cursor queryRoots(String[] projection) throws FileNotFoundException
     {
-        return new DocumentRootsCursor(
-                getContext(),
-                getLocationsManager(),
-                projection == null ? ALL_ROOT_COLUMNS : projection
-        );
+        return new DocumentRootsCursor(getContext(), getLocationsManager(), projection == null ? ALL_ROOT_COLUMNS : projection);
     }
 
     @Override
@@ -83,14 +72,7 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
         try
         {
             Location loc = getLocationsManager().getLocation(getLocationUriFromDocumentId(documentId));
-            return new FSCursor(
-                    getContext(),
-                    loc,
-                    projection == null ? ALL_DOCUMENT_COLUMNS : projection,
-                    null,
-                    null,
-                    false
-            );
+            return new FSCursor(getContext(), loc, projection == null ? ALL_DOCUMENT_COLUMNS : projection, null, null, false);
         }
         catch (Exception e)
         {
@@ -105,12 +87,7 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
         try
         {
             Location loc = getLocationsManager().getLocation(getLocationUriFromDocumentId(documentId));
-            return LoadPathInfoObservable.create(loc).map(cpi -> cpi.isFile() ?
-                    FileOpsService.getMimeTypeFromExtension(
-                            getContext(),
-                            new StringPathUtil(cpi.getName()).getFileExtension()
-                    ) : DocumentsContract.Document.MIME_TYPE_DIR
-            ).
+            return LoadPathInfoObservable.create(loc).map(cpi -> cpi.isFile() ? FileOpsService.getMimeTypeFromExtension(getContext(), new StringPathUtil(cpi.getName()).getFileExtension()) : DocumentsContract.Document.MIME_TYPE_DIR).
                     subscribeOn(Schedulers.io()).
                     blockingGet();
         }
@@ -127,14 +104,7 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
         try
         {
             Location loc = getLocationsManager().getLocation(getLocationUriFromDocumentId(parentDocumentId));
-            return new FSCursor(
-                    getContext(),
-                    loc,
-                    projection == null ? ALL_DOCUMENT_COLUMNS : projection,
-                    null,
-                    null,
-                    true
-            );
+            return new FSCursor(getContext(), loc, projection == null ? ALL_DOCUMENT_COLUMNS : projection, null, null, true);
         }
         catch (Exception e)
         {
@@ -156,9 +126,8 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
         catch (Exception e)
         {
             Logger.log(e);
-            throw new IllegalArgumentException( "Wrong document uri", e);
+            throw new IllegalArgumentException("Wrong document uri", e);
         }
-
     }
 
     @Override
@@ -183,12 +152,12 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                         getCurrentPath().
                         getDirectory();
                 Location res = dstLocation.copy();
-                if(srcPath.isDirectory())
+                if (srcPath.isDirectory())
                     res.setCurrentPath(dest.createDirectory(srcPath.getDirectory().getName()).getPath());
-                else if(srcPath.isFile())
+                else if (srcPath.isFile())
                     res.setCurrentPath(Util.copyFile(srcPath.getFile(), dest).getPath());
                 Context context = getContext();
-                if(context!=null)
+                if (context != null)
                     context.getContentResolver().notifyChange(getUriFromLocation(res), null);
 
                 em.onSuccess(getDocumentIdFromLocation(res));
@@ -219,20 +188,20 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                         getCurrentPath().
                         getDirectory();
                 Location res = dstLocation.copy();
-                if(srcPath.isDirectory())
+                if (srcPath.isDirectory())
                 {
                     String name = srcPath.getDirectory().getName();
                     srcPath.getDirectory().moveTo(dest);
                     res.setCurrentPath(dest.getPath().combine(name));
                 }
-                else if(srcPath.isFile())
+                else if (srcPath.isFile())
                 {
                     String name = srcPath.getFile().getName();
                     srcPath.getFile().moveTo(dest);
                     res.setCurrentPath(dest.getPath().combine(name));
                 }
                 Context context = getContext();
-                if(context!=null)
+                if (context != null)
                 {
                     context.getContentResolver().notifyChange(getUriFromLocation(srcLocation), null);
                     context.getContentResolver().notifyChange(getUriFromLocation(res), null);
@@ -242,7 +211,6 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
             }).
                     subscribeOn(Schedulers.io()).
                     blockingGet();
-
         }
         catch (Exception e)
         {
@@ -260,12 +228,12 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                 Location loc = getLocationsManager().
                         getLocation(getLocationUriFromDocumentId(documentId));
                 Path srcPath = loc.getCurrentPath();
-                if(srcPath.isFile())
+                if (srcPath.isFile())
                     srcPath.getFile().delete();
-                else if(srcPath.isDirectory())
+                else if (srcPath.isDirectory())
                     srcPath.getDirectory().delete();
                 Context context = getContext();
-                if(context!=null)
+                if (context != null)
                     context.getContentResolver().notifyChange(getUriFromLocation(loc), null);
                 em.onComplete();
             }).
@@ -287,15 +255,15 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
             return Single.<String>create(em -> {
                 Location loc = getLocationsManager().getLocation(getLocationUriFromDocumentId(documentId)).copy();
                 Path srcPath = loc.getCurrentPath();
-                if(srcPath.isDirectory())
+                if (srcPath.isDirectory())
                     srcPath.getDirectory().rename(displayName);
-                else if(srcPath.isFile())
+                else if (srcPath.isFile())
                     srcPath.getFile().rename(displayName);
                 Context context = getContext();
-                if(context!=null)
+                if (context != null)
                     context.getContentResolver().notifyChange(getUriFromLocation(loc), null);
                 loc.setCurrentPath(srcPath);
-                if(context!=null)
+                if (context != null)
                     context.getContentResolver().notifyChange(getUriFromLocation(loc), null);
                 em.onSuccess(getDocumentIdFromLocation(loc));
             }).
@@ -318,12 +286,12 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                 Location res = getLocationsManager().
                         getLocation(getLocationUriFromDocumentId(parentDocumentId)).copy();
                 Directory dest = res.getCurrentPath().getDirectory();
-                if(DocumentsContract.Document.MIME_TYPE_DIR.equals(mimeType))
+                if (DocumentsContract.Document.MIME_TYPE_DIR.equals(mimeType))
                     res.setCurrentPath(dest.createDirectory(displayName).getPath());
                 else
                     res.setCurrentPath(dest.createFile(displayName).getPath());
                 Context context = getContext();
-                if(context!=null)
+                if (context != null)
                     context.getContentResolver().notifyChange(getUriFromLocation(res), null);
                 em.onSuccess(getDocumentIdFromLocation(res));
             }).
@@ -349,7 +317,7 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                 Path testPath = getLocationsManager().
                         getLocation(getLocationUriFromDocumentId(documentId)).getCurrentPath();
                 int maxParents = 0;
-                while(testPath != null && !testPath.equals(parentPath) && maxParents++ < 1000)
+                while (testPath != null && !testPath.equals(parentPath) && maxParents++ < 1000)
                     testPath = testPath.getParentPath();
 
                 em.onSuccess(testPath != null && maxParents < 1000);
@@ -364,27 +332,8 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
         }
     }
 
-    private static final String[] ALL_ROOT_COLUMNS = {
-            DocumentsContract.Root.COLUMN_AVAILABLE_BYTES,
-            DocumentsContract.Root.COLUMN_DOCUMENT_ID,
-            DocumentsContract.Root.COLUMN_FLAGS,
-            DocumentsContract.Root.COLUMN_ICON,
-            DocumentsContract.Root.COLUMN_MIME_TYPES,
-            DocumentsContract.Root.COLUMN_ROOT_ID,
-            DocumentsContract.Root.COLUMN_SUMMARY,
-            DocumentsContract.Root.COLUMN_TITLE
-    };
-
-    private static final String[] ALL_DOCUMENT_COLUMNS = {
-            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
-            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
-            DocumentsContract.Document.COLUMN_FLAGS,
-            DocumentsContract.Document.COLUMN_ICON,
-            DocumentsContract.Document.COLUMN_LAST_MODIFIED,
-            DocumentsContract.Document.COLUMN_MIME_TYPE,
-            DocumentsContract.Document.COLUMN_SIZE,
-            DocumentsContract.Document.COLUMN_SUMMARY
-    };
+    private static final String[] ALL_ROOT_COLUMNS = {DocumentsContract.Root.COLUMN_AVAILABLE_BYTES, DocumentsContract.Root.COLUMN_DOCUMENT_ID, DocumentsContract.Root.COLUMN_FLAGS, DocumentsContract.Root.COLUMN_ICON, DocumentsContract.Root.COLUMN_MIME_TYPES, DocumentsContract.Root.COLUMN_ROOT_ID, DocumentsContract.Root.COLUMN_SUMMARY, DocumentsContract.Root.COLUMN_TITLE};
+    private static final String[] ALL_DOCUMENT_COLUMNS = {DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_FLAGS, DocumentsContract.Document.COLUMN_ICON, DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_MIME_TYPE, DocumentsContract.Document.COLUMN_SIZE, DocumentsContract.Document.COLUMN_SUMMARY};
 
     protected LocationsManager getLocationsManager()
     {

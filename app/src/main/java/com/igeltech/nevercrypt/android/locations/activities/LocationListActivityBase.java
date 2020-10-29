@@ -18,17 +18,17 @@ public abstract class LocationListActivityBase extends AppCompatActivity
     public static final String EXTRA_LOCATION_TYPE = "com.igeltech.nevercrypt.android.LOCATION_TYPE";
 
     @Override
-	public void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(UserSettings.getSettings(this).isFlagSecureEnabled())
+        if (UserSettings.getSettings(this).isFlagSecureEnabled())
             CompatHelper.setWindowFlagSecure(this);
-        if(savedInstanceState == null)
+        if (savedInstanceState == null)
             getSupportFragmentManager().
-                beginTransaction().
-                add(android.R.id.content, getCreateLocationFragment(), LocationListBaseFragment.TAG).
-                commit();
+                    beginTransaction().
+                    add(android.R.id.content, getCreateLocationFragment(), LocationListBaseFragment.TAG).
+                    commit();
     }
 
     @Override
@@ -50,5 +50,4 @@ public abstract class LocationListActivityBase extends AppCompatActivity
                 throw new RuntimeException("Unknown location type");
         }
     }
-
 }

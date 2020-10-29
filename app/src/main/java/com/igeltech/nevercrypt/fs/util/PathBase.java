@@ -9,80 +9,80 @@ import java.io.IOException;
 
 public abstract class PathBase implements Path
 {
-	@Override
-	public FileSystem getFileSystem()
-	{
-		return _fs;
-	}
-
-	@Override
-	public String getPathDesc()
-	{
-		return getPathString();
-	}
-
-	@Override
-    public boolean isRootDirectory() throws IOException
+    @Override
+    public FileSystem getFileSystem()
     {
-    	return isDirectory() && getParentPath() == null;
-    }
-
-	@Override
-    public PathBase combine(String part) throws IOException
-    {
-    	return (PathBase) _fs.getPath(getPathUtil().combine(part).toString());
+        return _fs;
     }
 
     @Override
-	public boolean equals(Object o)
-	{
-    	StringPathUtil pu = getPathUtil();
-		if(o instanceof PathBase)
-		{
-			StringPathUtil opu = ((PathBase)o).getPathUtil();
-			return /*((Path)o).getFileSystem().equals(getFileSystem()) && */((pu==null && opu==null) || (pu != null && pu.equals(opu)));
-		}
+    public String getPathDesc()
+    {
+        return getPathString();
+    }
 
-		if(o instanceof String || o instanceof StringPathUtil)
-			return pu.equals(o);
+    @Override
+    public boolean isRootDirectory() throws IOException
+    {
+        return isDirectory() && getParentPath() == null;
+    }
 
-		return super.equals(o);
-	}
+    @Override
+    public PathBase combine(String part) throws IOException
+    {
+        return (PathBase) _fs.getPath(getPathUtil().combine(part).toString());
+    }
 
-	@Override
-	public int hashCode()
-	{
-		StringPathUtil pu = getPathUtil();
-		return pu==null ? 0 : pu.hashCode();
-	}
+    @Override
+    public boolean equals(Object o)
+    {
+        StringPathUtil pu = getPathUtil();
+        if (o instanceof PathBase)
+        {
+            StringPathUtil opu = ((PathBase) o).getPathUtil();
+            return /*((Path)o).getFileSystem().equals(getFileSystem()) && */((pu == null && opu == null) || (pu != null && pu.equals(opu)));
+        }
 
-	@Override
-	public Path getParentPath() throws IOException
-	{
-		StringPathUtil pu = getPathUtil();
-		return pu==null || pu.isEmpty() ? null : _fs.getPath(pu.getParentPath().toString());
-	}
+        if (o instanceof String || o instanceof StringPathUtil)
+            return pu.equals(o);
 
-	@Override
-	public String toString()
-	{
-		return getPathString();
-	}
+        return super.equals(o);
+    }
 
-	@Override
-	public int compareTo(@NonNull Path other)
-	{
-		return getPathUtil().compareTo(new StringPathUtil(other.getPathString()));
-	}
+    @Override
+    public int hashCode()
+    {
+        StringPathUtil pu = getPathUtil();
+        return pu == null ? 0 : pu.hashCode();
+    }
 
-	public StringPathUtil getPathUtil()
-	{
-		return new StringPathUtil(getPathString());
-	}
+    @Override
+    public Path getParentPath() throws IOException
+    {
+        StringPathUtil pu = getPathUtil();
+        return pu == null || pu.isEmpty() ? null : _fs.getPath(pu.getParentPath().toString());
+    }
+
+    @Override
+    public String toString()
+    {
+        return getPathString();
+    }
+
+    @Override
+    public int compareTo(@NonNull Path other)
+    {
+        return getPathUtil().compareTo(new StringPathUtil(other.getPathString()));
+    }
+
+    public StringPathUtil getPathUtil()
+    {
+        return new StringPathUtil(getPathString());
+    }
 
     protected PathBase(FileSystem fs)
     {
-    	_fs = fs;
+        _fs = fs;
     }
 
     private final FileSystem _fs;

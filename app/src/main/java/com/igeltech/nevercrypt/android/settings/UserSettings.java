@@ -9,7 +9,7 @@ public class UserSettings extends UserSettingsCommon implements Settings
 {
     public static synchronized UserSettings getSettings(Context context)
     {
-        if(_instance == null)
+        if (_instance == null)
             _instance = new UserSettings(context);
 
         return _instance;
@@ -17,7 +17,7 @@ public class UserSettings extends UserSettingsCommon implements Settings
 
     public synchronized static void closeSettings()
     {
-        if(_instance!=null)
+        if (_instance != null)
             _instance.clearSettingsProtectionKey();
         _instance = null;
     }
@@ -28,6 +28,5 @@ public class UserSettings extends UserSettingsCommon implements Settings
     }
 
     private static final Settings _defaultSettings = new DefaultSettings();
-
     private static UserSettings _instance;
 }

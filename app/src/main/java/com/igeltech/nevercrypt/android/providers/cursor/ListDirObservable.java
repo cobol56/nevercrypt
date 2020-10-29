@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.providers.cursor;
 
-
 import android.net.Uri;
 
 import com.igeltech.nevercrypt.android.Logger;
@@ -20,14 +19,13 @@ import io.reactivex.disposables.Disposables;
 
 public class ListDirObservable
 {
-
     public static Observable<CachedPathInfo> create(LocationsManager lm, Uri locUri)
     {
         return Observable.create(observableEmitter -> {
             Location loc = lm.getLocation(locUri);
-            if(loc.getCurrentPath().isDirectory())
+            if (loc.getCurrentPath().isDirectory())
                 emitListDir(loc.getCurrentPath().getDirectory(), observableEmitter);
-            else if(loc.getCurrentPath().isFile())
+            else if (loc.getCurrentPath().isFile())
                 emitFile(loc.getCurrentPath().getFile(), observableEmitter);
             else
                 observableEmitter.onComplete();
@@ -37,14 +35,14 @@ public class ListDirObservable
     public static Observable<CachedPathInfo> create(Location loc, boolean listDir)
     {
         return Observable.create(observableEmitter -> {
-            if(loc.getCurrentPath().isDirectory())
+            if (loc.getCurrentPath().isDirectory())
             {
-                if(listDir)
+                if (listDir)
                     emitListDir(loc.getCurrentPath().getDirectory(), observableEmitter);
                 else
                     emitFile(loc.getCurrentPath().getDirectory(), observableEmitter);
             }
-            else if(loc.getCurrentPath().isFile())
+            else if (loc.getCurrentPath().isFile())
                 emitFile(loc.getCurrentPath().getFile(), observableEmitter);
             else
                 observableEmitter.onComplete();
@@ -62,8 +60,7 @@ public class ListDirObservable
     private static void emitListDir(Directory dir, ObservableEmitter<CachedPathInfo> observableEmitter) throws IOException
     {
         Directory.Contents contents = dir.list();
-        observableEmitter.setDisposable(Disposables.fromRunnable(() ->
-        {
+        observableEmitter.setDisposable(Disposables.fromRunnable(() -> {
             try
             {
                 contents.close();
@@ -73,7 +70,7 @@ public class ListDirObservable
                 Logger.log(e);
             }
         }));
-        for(Path p: contents)
+        for (Path p : contents)
         {
             CachedPathInfo cpi = new CachedPathInfoBase();
             try

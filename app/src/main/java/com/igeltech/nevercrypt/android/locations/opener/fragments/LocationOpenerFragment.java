@@ -12,16 +12,15 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 public class LocationOpenerFragment extends LocationOpenerFragmentCommon implements LocationOpenerBaseFragment.LocationOpenerResultReceiver
 {
-
     public static class OpenLocationTaskFragment extends LocationOpenerFragmentCommon.OpenLocationTaskFragment
     {
-		@Override
+        @Override
         protected void openLocation(Openable location, Bundle param) throws Exception
         {
-            if(!location.isOpen())
+            if (!location.isOpen())
             {
                 super.openLocation(location, param);
-                if(location instanceof CryptoLocation)
+                if (location instanceof CryptoLocation)
                 {
                     LocationsService.registerInactiveContainerCheck(_context, (CryptoLocation) location);
                     ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(_context);
@@ -47,7 +46,7 @@ public class LocationOpenerFragment extends LocationOpenerFragmentCommon impleme
     {
         CryptoLocation cbl = getTargetLocation();
         Location baseLocation = cbl.getLocation();
-        if(baseLocation instanceof Openable && !((Openable)baseLocation).isOpen())
+        if (baseLocation instanceof Openable && !((Openable) baseLocation).isOpen())
         {
             LocationOpenerBaseFragment f = getDefaultOpenerForLocation(baseLocation);
             Bundle b = new Bundle();
@@ -63,12 +62,12 @@ public class LocationOpenerFragment extends LocationOpenerFragmentCommon impleme
     @Override
     protected CryptoLocation getTargetLocation()
     {
-        return (CryptoLocation)super.getTargetLocation();
+        return (CryptoLocation) super.getTargetLocation();
     }
 
     @Override
-	protected TaskFragment getOpenLocationTask()
-	{
-		return new OpenLocationTaskFragment();
-	}
+    protected TaskFragment getOpenLocationTask()
+    {
+        return new OpenLocationTaskFragment();
+    }
 }

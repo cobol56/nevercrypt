@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ChangeEncFsPasswordTask extends ChangeLocationPasswordTask
 {
-	public static ChangeEncFsPasswordTask newInstance(EncFsLocationBase container, Bundle passwordDialogResult)
+    public static ChangeEncFsPasswordTask newInstance(EncFsLocationBase container, Bundle passwordDialogResult)
     {
         Bundle args = new Bundle();
         args.putAll(passwordDialogResult);
@@ -20,12 +20,12 @@ public class ChangeEncFsPasswordTask extends ChangeLocationPasswordTask
         ChangeEncFsPasswordTask f = new ChangeEncFsPasswordTask();
         f.setArguments(args);
         return f;
-	}
+    }
 
     @Override
-	protected void changeLocationPassword() throws IOException, ApplicationException
+    protected void changeLocationPassword() throws IOException, ApplicationException
     {
-        EncFsLocationBase loc = (EncFsLocationBase)_location;
+        EncFsLocationBase loc = (EncFsLocationBase) _location;
         SecureBuffer sb = Util.getPassword(getArguments(), LocationsManager.getLocationsManager(_context));
         byte[] pd = sb.getDataArray();
         try
@@ -38,5 +38,5 @@ public class ChangeEncFsPasswordTask extends ChangeLocationPasswordTask
             SecureBuffer.eraseData(pd);
             sb.close();
         }
-	}
+    }
 }

@@ -5,20 +5,15 @@ import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragme
 import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.fs.FileSystemInfo;
-import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileSystemTypePropertyEditor extends ChoiceDialogPropertyEditor
 {
-
     public FileSystemTypePropertyEditor(CreateContainerFragmentBase createContainerFragment)
     {
-        super(createContainerFragment,
-                R.string.file_system_type,
-                0,
-                createContainerFragment.getTag());
+        super(createContainerFragment, R.string.file_system_type, 0, createContainerFragment.getTag());
     }
 
     @Override
@@ -53,7 +48,7 @@ public class FileSystemTypePropertyEditor extends ChoiceDialogPropertyEditor
         List<FileSystemInfo> supportedFS = FileSystemInfo.getSupportedFileSystems();
         if (supportedFS != null)
         {
-            for (FileSystemInfo fsInfo: supportedFS)
+            for (FileSystemInfo fsInfo : supportedFS)
                 res.add(fsInfo.getFileSystemName());
         }
         return res;

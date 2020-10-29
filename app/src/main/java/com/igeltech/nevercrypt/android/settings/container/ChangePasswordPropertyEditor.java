@@ -19,11 +19,11 @@ public class ChangePasswordPropertyEditor extends ButtonPropertyEditor implement
         super(settingsFragment, R.string.change_container_password, 0, R.string.enter_new_password);
     }
 
-	@Override
-	public LocationSettingsFragment getHost()
-	{
-		return (LocationSettingsFragment) super.getHost();
-	}
+    @Override
+    public LocationSettingsFragment getHost()
+    {
+        return (LocationSettingsFragment) super.getHost();
+    }
 
     @Override
     protected void onButtonClick()
@@ -45,14 +45,12 @@ public class ChangePasswordPropertyEditor extends ButtonPropertyEditor implement
     {
         getHost().getResHandler().addResult(() -> getHost().getFragmentManager().
                 beginTransaction().
-                add(
-                        getHost().getChangePasswordTask(dlg),
-                        ChangeContainerPasswordTask.TAG).
+                add(getHost().getChangePasswordTask(dlg), ChangeContainerPasswordTask.TAG).
                 commit());
-
     }
 
     @Override
-    public void onPasswordNotEntered(PasswordDialog dlg){}
-
+    public void onPasswordNotEntered(PasswordDialog dlg)
+    {
+    }
 }

@@ -19,26 +19,26 @@ public abstract class ChangeContainerPasswordTaskBase extends ChangeLocationPass
     public static final String TAG = "com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask";
     //public static final String ARG_FIN_ACTIVITY = "fin_activity";
 
-	@Override
-	protected void changeLocationPassword() throws IOException, ApplicationException
+    @Override
+    protected void changeLocationPassword() throws IOException, ApplicationException
     {
-        ContainerLocation cont = (ContainerLocation)_location;
+        ContainerLocation cont = (ContainerLocation) _location;
         setContainerPassword(cont);
         try (RandomAccessIO io = cont.getLocation().getCurrentPath().getFile().getRandomAccessIO(File.AccessMode.ReadWrite))
         {
             VolumeLayout vl = cont.getCryptoContainer().getVolumeLayout();
             vl.writeHeader(io);
         }
-	}
+    }
 
-	protected void setContainerPassword(ContainerLocation container) throws IOException
+    protected void setContainerPassword(ContainerLocation container) throws IOException
     {
         VolumeLayout vl = container.getCryptoContainer().getVolumeLayout();
-        Bundle args  = getArguments();
+        Bundle args = getArguments();
         SecureBuffer sb = Util.getPassword(args, LocationsManager.getLocationsManager(_context));
         vl.setPassword(sb.getDataArray());
         sb.close();
-        if(args.containsKey(Openable.PARAM_KDF_ITERATIONS))
+        if (args.containsKey(Openable.PARAM_KDF_ITERATIONS))
             vl.setNumKDFIterations(args.getInt(Openable.PARAM_KDF_ITERATIONS));
     }
 }

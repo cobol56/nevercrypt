@@ -5,10 +5,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class HMACSHA1 extends HMAC
 {
-	public static final int SHA1_BLOCK_SIZE = 64;
+    public static final int SHA1_BLOCK_SIZE = 64;
 
-	public HMACSHA1(byte[] key) throws NoSuchAlgorithmException
-	{
-		super(key, MessageDigest.getInstance("SHA1"),SHA1_BLOCK_SIZE);
-	}
+    public HMACSHA1(byte[] key) throws NoSuchAlgorithmException
+    {
+        super(key, MessageDigest.getInstance("SHA1"), SHA1_BLOCK_SIZE);
+    }
 }

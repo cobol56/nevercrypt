@@ -33,105 +33,105 @@ import static com.igeltech.nevercrypt.android.settings.UserSettings.getSettings;
 
 public class CryptoApplicationBase extends Application
 {
-	public static final String BROADCAST_EXIT = "com.igeltech.nevercrypt.android.BROADCAST_EXIT";
+    public static final String BROADCAST_EXIT = "com.igeltech.nevercrypt.android.BROADCAST_EXIT";
 
-	public static void stopProgramBase(Context context, boolean removeNotifications)
-	{
-		LocalBroadcastManager.getInstance(context).sendBroadcastSync(new Intent(BROADCAST_EXIT));
-		if(removeNotifications)
-			NotificationManagerCompat.from(context).cancelAll();
-		setMasterPassword(null);
-		LocationsManager.setGlobalLocationsManager(null);
-		UserSettings.closeSettings();
-		try
-		{
-			ExtendedFileInfoLoader.closeInstance();
-		}
-		catch (Throwable e)
-		{
-			Logger.log(e);
-		}
+    public static void stopProgramBase(Context context, boolean removeNotifications)
+    {
+        LocalBroadcastManager.getInstance(context).sendBroadcastSync(new Intent(BROADCAST_EXIT));
+        if (removeNotifications)
+            NotificationManagerCompat.from(context).cancelAll();
+        setMasterPassword(null);
+        LocationsManager.setGlobalLocationsManager(null);
+        UserSettings.closeSettings();
+        try
+        {
+            ExtendedFileInfoLoader.closeInstance();
+        }
+        catch (Throwable e)
+        {
+            Logger.log(e);
+        }
 
-		try
-		{
-			ClipboardManager cm = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-			if (MainContentProvider.hasSelectionInClipboard(cm))
-				cm.setPrimaryClip(ClipData.newPlainText("Empty", ""));
-		}
-		catch (Throwable e)
-		{
-			Logger.log(e);
-		}
-	}
+        try
+        {
+            ClipboardManager cm = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+            if (MainContentProvider.hasSelectionInClipboard(cm))
+                cm.setPrimaryClip(ClipData.newPlainText("Empty", ""));
+        }
+        catch (Throwable e)
+        {
+            Logger.log(e);
+        }
+    }
 
-	public static void exitProcess()
-	{
-		Timer t = new Timer();
-		t.schedule(new TimerTask()
-		{
-			@Override
-			public void run()
-			{
-				try
-				{
-					System.exit(0);
-				}
-				catch (Throwable e)
-				{
-					Logger.log(e);
-				}
-			}
-		}, 4000);
-	}
+    public static void exitProcess()
+    {
+        Timer t = new Timer();
+        t.schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    System.exit(0);
+                }
+                catch (Throwable e)
+                {
+                    Logger.log(e);
+                }
+            }
+        }, 4000);
+    }
 
     public void onCreate()
-	{
-		super.onCreate();
+    {
+        super.onCreate();
 
-		SystemConfig.setInstance(new com.igeltech.nevercrypt.android.settings.SystemConfig(getApplicationContext()));
+        SystemConfig.setInstance(new com.igeltech.nevercrypt.android.settings.SystemConfig(getApplicationContext()));
 
-		UserSettings us;
-		try
-		{
-			us = getSettings(getApplicationContext());
-		}
-		catch (Throwable e)
-		{
-			e.printStackTrace();
-			Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
-			return;
-		}
-		init(us);
-		Logger.debug("Android sdk version is " + Build.VERSION.SDK_INT);
-	}
+        UserSettings us;
+        try
+        {
+            us = getSettings(getApplicationContext());
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+            Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
+            return;
+        }
+        init(us);
+        Logger.debug("Android sdk version is " + Build.VERSION.SDK_INT);
+    }
 
-	public synchronized static SecureBuffer getMasterPassword()
-	{
-		return _masterPass;
-	}
+    public synchronized static SecureBuffer getMasterPassword()
+    {
+        return _masterPass;
+    }
 
     public synchronized static void setMasterPassword(SecureBuffer pass)
     {
-		if(_masterPass != null)
-		{
-			_masterPass.close();
-			_masterPass = null;
-		}
+        if (_masterPass != null)
+        {
+            _masterPass.close();
+            _masterPass = null;
+        }
         _masterPass = pass;
     }
 
-	public synchronized static void clearMasterPassword()
-	{
-		if(_masterPass!=null)
-		{
-			_masterPass.close();
-			_masterPass = null;
-		}
-	}
+    public synchronized static void clearMasterPassword()
+    {
+        if (_masterPass != null)
+        {
+            _masterPass.close();
+            _masterPass = null;
+        }
+    }
 
-	public static synchronized Map<String, String> getMimeTypesMap(Context context)
-	{
-		if(_mimeTypes == null)
+    public static synchronized Map<String, String> getMimeTypesMap(Context context)
+    {
+        if (_mimeTypes == null)
         {
             try
             {
@@ -142,49 +142,44 @@ public class CryptoApplicationBase extends Application
                 throw new RuntimeException("Failed loading mime types database", e);
             }
         }
-		return _mimeTypes;
-	}
+        return _mimeTypes;
+    }
 
-	public static synchronized long getLastActivityTime()
-	{
-		return _lastActivityTime;
-	}
+    public static synchronized long getLastActivityTime()
+    {
+        return _lastActivityTime;
+    }
 
-	public static synchronized void updateLastActivityTime()
-	{
-		_lastActivityTime = SystemClock.elapsedRealtime();
-	}
+    public static synchronized void updateLastActivityTime()
+    {
+        _lastActivityTime = SystemClock.elapsedRealtime();
+    }
 
-	protected void init(UserSettings settings)
-	{
-		try
-		{
-			if(settings.disableDebugLog())
-				Logger.disableLog(true);
-			else
-				Logger.initLogger();
-		}
-		catch (Throwable e)
-		{
-			e.printStackTrace();
-			Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
-		}
-	}
+    protected void init(UserSettings settings)
+    {
+        try
+        {
+            if (settings.disableDebugLog())
+                Logger.disableLog(true);
+            else
+                Logger.initLogger();
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+            Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
+        }
+    }
 
-	private static SecureBuffer _masterPass;
-	private static Map<String,String> _mimeTypes;
-	private static long _lastActivityTime;
+    private static SecureBuffer _masterPass;
+    private static Map<String, String> _mimeTypes;
+    private static long _lastActivityTime;
+    private static final String MIME_TYPES_PATH = "mime.types";
 
-	private static final String MIME_TYPES_PATH = "mime.types";
-
-	private static Map<String, String> loadMimeTypes(Context context) throws IOException
+    private static Map<String, String> loadMimeTypes(Context context) throws IOException
     {
         Pattern p = Pattern.compile("^([^\\s/]+/[^\\s/]+)\\s+(.+)$");
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        context.getResources().getAssets().open(MIME_TYPES_PATH)
-                )
-        ))
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(context.getResources().getAssets().open(MIME_TYPES_PATH))))
         {
             HashMap<String, String> map = new HashMap<>();
             String line;
@@ -202,5 +197,5 @@ public class CryptoApplicationBase extends Application
             }
             return map;
         }
-	}
+    }
 }

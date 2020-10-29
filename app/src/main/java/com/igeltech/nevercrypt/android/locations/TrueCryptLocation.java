@@ -17,50 +17,49 @@ import java.util.List;
 
 public class TrueCryptLocation extends ContainerBasedLocation
 {
-	public static final String URI_SCHEME = "tc";
+    public static final String URI_SCHEME = "tc";
 
     public TrueCryptLocation(Uri uri, LocationsManagerBase lm, Context context, Settings settings) throws Exception
     {
         super(uri, lm, context, settings);
     }
 
-	public TrueCryptLocation(Location location, Context context) throws IOException
-	{
-		this(location, null, context, UserSettings.getSettings(context));
-	}
+    public TrueCryptLocation(Location location, Context context) throws IOException
+    {
+        this(location, null, context, UserSettings.getSettings(context));
+    }
 
-	public TrueCryptLocation(Location containerLocation, Container cont, Context context, Settings settings)
-	{
-		super(containerLocation, cont, context, settings);
-	}
+    public TrueCryptLocation(Location containerLocation, Container cont, Context context, Settings settings)
+    {
+        super(containerLocation, cont, context, settings);
+    }
 
-	public TrueCryptLocation(TrueCryptLocation sibling)
-	{
-		super(sibling);
-	}
+    public TrueCryptLocation(TrueCryptLocation sibling)
+    {
+        super(sibling);
+    }
 
+    @Override
+    public Uri getLocationUri()
+    {
+        return makeUri(URI_SCHEME).build();
+    }
 
-	@Override
-	public Uri getLocationUri()
-	{
-		return makeUri(URI_SCHEME).build();
-	}
+    @Override
+    public TrueCryptLocation copy()
+    {
+        return new TrueCryptLocation(this);
+    }
 
-	@Override
-	public TrueCryptLocation copy()
-	{
-		return new TrueCryptLocation(this);
-	}
+    @Override
+    public List<ContainerFormatInfo> getSupportedFormats()
+    {
+        return Collections.singletonList(getContainerFormatInfo());
+    }
 
-	@Override
-	public List<ContainerFormatInfo> getSupportedFormats()
-	{
-		return Collections.singletonList(getContainerFormatInfo());
-	}
-
-	@Override
-	public ContainerFormatInfo getContainerFormatInfo()
-	{
-		return new FormatInfo();
-	}
+    @Override
+    public ContainerFormatInfo getContainerFormatInfo()
+    {
+        return new FormatInfo();
+    }
 }

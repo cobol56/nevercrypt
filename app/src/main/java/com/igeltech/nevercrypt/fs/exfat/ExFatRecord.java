@@ -7,7 +7,6 @@ import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 import java.io.IOException;
 import java.util.Date;
 
-
 abstract class ExFatRecord implements FSRecord
 {
     ExFatRecord(ExFat exFat, ExFatPath path)
@@ -34,7 +33,7 @@ abstract class ExFatRecord implements FSRecord
         StringPathUtil oldPath = getPath().getPathUtil();
         StringPathUtil newPath = oldPath.getParentPath().combine(newName);
         int res = _exFat.rename(oldPath.toString(), newPath.toString());
-        if(res != 0)
+        if (res != 0)
             throw new IOException("Rename failed. Error code = " + res);
         _path = new ExFatPath(_exFat, newPath.toString());
     }
@@ -42,7 +41,7 @@ abstract class ExFatRecord implements FSRecord
     @Override
     public Date getLastModified() throws IOException
     {
-        return new Date(_path.getAttr().modTime*1000);
+        return new Date(_path.getAttr().modTime * 1000);
     }
 
     @Override
@@ -55,9 +54,9 @@ abstract class ExFatRecord implements FSRecord
     public void moveTo(Directory newParent) throws IOException
     {
         StringPathUtil oldPath = getPath().getPathUtil();
-        StringPathUtil newPath = ((ExFatDirectory)newParent).getPath().getPathUtil().combine(oldPath.getFileName());
+        StringPathUtil newPath = ((ExFatDirectory) newParent).getPath().getPathUtil().combine(oldPath.getFileName());
         int res = _exFat.rename(oldPath.toString(), newPath.toString());
-        if(res != 0)
+        if (res != 0)
             throw new IOException("moveTo failed. Error code = " + res);
         _path = new ExFatPath(_exFat, newPath.toString());
     }

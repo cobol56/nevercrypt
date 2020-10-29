@@ -78,9 +78,6 @@ public class EncEngineHintPropertyEditor extends ChoiceDialogPropertyEditor
     private List<? extends EncryptionEngine> getSupportedEncEngines()
     {
         ContainerFormatInfo cfi = getHost().getCurrentContainerFormat();
-        return cfi != null ?
-                cfi.getVolumeLayout().getSupportedEncryptionEngines()
-                :
-                Collections.emptyList();
+        return cfi != null ? cfi.getVolumeLayout().getSupportedEncryptionEngines() : Collections.emptyList();
     }
 }

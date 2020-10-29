@@ -90,7 +90,7 @@ public class DocumentRootsCursor extends AbstractCursor
     public boolean onMove(int oldPosition, int newPosition)
     {
         _current = null;
-        if(newPosition >=0 && newPosition < _locations.size())
+        if (newPosition >= 0 && newPosition < _locations.size())
             _current = getObservable(_locations.get(newPosition)).
                     subscribeOn(Schedulers.io()).
                     blockingGet();
@@ -115,7 +115,6 @@ public class DocumentRootsCursor extends AbstractCursor
         Location location;
         long freeSpace, totalSpace;
         String title, documentId;
-
     }
 
     private Single<LocationInfo> _request;
@@ -124,8 +123,8 @@ public class DocumentRootsCursor extends AbstractCursor
     private void fillList()
     {
         _locations.clear();
-        for(CryptoLocation l: _lm.getLoadedCryptoLocations(true))
-            if(l.isOpen())
+        for (CryptoLocation l : _lm.getLoadedCryptoLocations(true))
+            if (l.isOpen())
                 _locations.add(l);
     }
 
@@ -133,7 +132,7 @@ public class DocumentRootsCursor extends AbstractCursor
     {
         synchronized (this)
         {
-            if(_request == null)
+            if (_request == null)
                 try
                 {
                     _request = createObservable(loc);
@@ -177,7 +176,7 @@ public class DocumentRootsCursor extends AbstractCursor
 
     private Object getValueFromCurrentLocation(int column)
     {
-        if(_current == null)
+        if (_current == null)
             return null;
         return getValueFromCachedPathInfo(_current, _projection[column]);
     }
@@ -189,11 +188,7 @@ public class DocumentRootsCursor extends AbstractCursor
             case DocumentsContract.Root.COLUMN_ROOT_ID:
                 return li.location.getId();
             case DocumentsContract.Root.COLUMN_SUMMARY:
-                return _context.getString(
-                        R.string.container_info_summary,
-                        Formatter.formatFileSize(_context, li.freeSpace),
-                        Formatter.formatFileSize(_context, li.totalSpace)
-                );
+                return _context.getString(R.string.container_info_summary, Formatter.formatFileSize(_context, li.freeSpace), Formatter.formatFileSize(_context, li.totalSpace));
             case DocumentsContract.Root.COLUMN_FLAGS:
                 return getFlags(li);
             case DocumentsContract.Root.COLUMN_TITLE:
@@ -207,9 +202,8 @@ public class DocumentRootsCursor extends AbstractCursor
             case DocumentsContract.Root.COLUMN_ICON:
                 return R.drawable.ic_lock_open;
             default:
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     return getMoreColumns(li, columnName);
-
         }
         return null;
     }
@@ -223,7 +217,6 @@ public class DocumentRootsCursor extends AbstractCursor
         return null;
     }
 
-
     private int getFlags(LocationInfo li)
     {
         // FLAG_SUPPORTS_CREATE means at least one directory under the root supports
@@ -232,7 +225,7 @@ public class DocumentRootsCursor extends AbstractCursor
         // FLAG_SUPPORTS_SEARCH allows users to search all documents the application
         // shares.
         int flags = DocumentsContract.Root.FLAG_SUPPORTS_SEARCH;
-        if(!li.location.isReadOnly())
+        if (!li.location.isReadOnly())
             flags |= DocumentsContract.Root.FLAG_SUPPORTS_CREATE;
         flags |= DocumentsContract.Root.FLAG_SUPPORTS_IS_CHILD;
         return flags;

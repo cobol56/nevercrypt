@@ -31,8 +31,8 @@ public class StreamNameCipher implements NameCodec
         ByteBuffer.wrap(res).order(ByteOrder.BIG_ENDIAN).putShort(mac);
         byte[] iv = new byte[_cipher.getIVSize()];
         ByteBuffer.wrap(iv).order(ByteOrder.BIG_ENDIAN).putLong(mac & 0xFFFFL);
-        if(_iv!=null)
-            for(int i=0;i<_iv.length;i++)
+        if (_iv != null)
+            for (int i = 0; i < _iv.length; i++)
                 iv[i] ^= _iv[i];
         _cipher.setIV(iv);
         try
@@ -56,8 +56,8 @@ public class StreamNameCipher implements NameCodec
         short mac = ByteBuffer.wrap(buf).order(ByteOrder.BIG_ENDIAN).getShort();
         byte[] iv = new byte[_cipher.getIVSize()];
         ByteBuffer.wrap(iv).order(ByteOrder.BIG_ENDIAN).putLong(mac & 0xFFFFL);
-        if(_iv!=null)
-            for(int i=0;i<_iv.length;i++)
+        if (_iv != null)
+            for (int i = 0; i < _iv.length; i++)
                 iv[i] ^= _iv[i];
         _cipher.setIV(iv);
         try
@@ -79,7 +79,7 @@ public class StreamNameCipher implements NameCodec
         }
         finally
         {
-            Arrays.fill(buf, (byte)0);
+            Arrays.fill(buf, (byte) 0);
         }
     }
 
@@ -114,7 +114,7 @@ public class StreamNameCipher implements NameCodec
     @Override
     public byte[] getChainedIV(String plaintextName)
     {
-        if(_chainedIV == null)
+        if (_chainedIV == null)
             _chainedIV = calcChainedIV(plaintextName);
         return _chainedIV;
     }
@@ -144,7 +144,6 @@ public class StreamNameCipher implements NameCodec
        // return calcEncodedLength(len);
     }*/
 
-
     private byte[] calcChainedIV(String plainTextName)
     {
         byte[] plain = plainTextName.getBytes();
@@ -156,7 +155,7 @@ public class StreamNameCipher implements NameCodec
         }
         finally
         {
-            Arrays.fill(plain, (byte)0);
+            Arrays.fill(plain, (byte) 0);
         }
     }
 }

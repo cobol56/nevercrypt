@@ -9,8 +9,6 @@ import com.igeltech.nevercrypt.fs.util.PathBase;
 
 import java.io.IOException;
 
-
-
 class ExFatPath extends PathBase implements Path
 {
     ExFatPath(ExFat fs, String pathString)
@@ -35,14 +33,14 @@ class ExFatPath extends PathBase implements Path
     public boolean isFile() throws IOException
     {
         FileStat attr = getAttr();
-        return attr!=null && !attr.isDir;
+        return attr != null && !attr.isDir;
     }
 
     @Override
     public boolean isDirectory() throws IOException
     {
         FileStat attr = getAttr();
-        return attr!=null && attr.isDir;
+        return attr != null && attr.isDir;
     }
 
     @Override

@@ -23,95 +23,93 @@ import static com.igeltech.nevercrypt.android.filemanager.tasks.CopyToClipboardT
 
 public class PrepareToSendTask extends TaskFragment
 {
-	public static final String TAG = "PrepareToSendTask";
+    public static final String TAG = "PrepareToSendTask";
 
-	public static PrepareToSendTask newInstance(Location loc, Collection<? extends Path> paths)
-	{
-		Bundle args = new Bundle();
-		LocationsManager.storePathsInBundle(args, loc, paths);
-		PrepareToSendTask f = new PrepareToSendTask();
-		f.setArguments(args);
-		return f;			
-	}
-	
-	@Override
-	public void initTask(FragmentActivity activity)
-	{
-		_context = activity.getApplicationContext();
-	}
+    public static PrepareToSendTask newInstance(Location loc, Collection<? extends Path> paths)
+    {
+        Bundle args = new Bundle();
+        LocationsManager.storePathsInBundle(args, loc, paths);
+        PrepareToSendTask f = new PrepareToSendTask();
+        f.setArguments(args);
+        return f;
+    }
 
-	protected Context _context;
+    @Override
+    public void initTask(FragmentActivity activity)
+    {
+        _context = activity.getApplicationContext();
+    }
 
-	@Override
-	protected void doWork(TaskState state) throws Exception
-	{
-		if(GlobalConfig.isDebug())
-			Logger.debug("PrepareToSendTask args: " + getArguments());
-		ArrayList<Path> paths = new ArrayList<>();
-		Location location = LocationsManager.
-				getLocationsManager(_context).
-				getFromBundle(
-						getArguments(),
-						paths
-				);
-		ArrayList<Uri> uris = new ArrayList<>();
-		ArrayList<Path> checkedPaths = new ArrayList<>();
-		String mime1 = null, mime2 = null;
-		for(Path p: paths)
-		{
-			if(p.isFile())
-			{
-				Uri uri = location.getDeviceAccessibleUri(p);
-				if(uri != null)
-					uris.add(uri);
-				checkedPaths.add(p);
-				String[] mimeType = FileOpsService.getMimeTypeFromExtension(_context, p).split("/", 2);
-				if(mime1 == null)
-				{
-					mime1 = mimeType[0];
-					mime2 = mimeType[1];
-				}
-				else if(!mime1.equals("*"))
-				{
-					if(!mime1.equals(mimeType[0]))
-					{
-						mime1 = "*";
-						mime2 = "*";
-					}
-					else if(!mime2.equals("*"))
-					{
-						if(!mime2.equals(mimeType[1]))
-							mime2 = "*";
-					}
-				}
-			}
-		}
+    protected Context _context;
 
-		PrepareSendResult result = new PrepareSendResult();
-		result.mimeType = mime1!=null && mime2!=null ? (mime1 + "/" + mime2) : null;
-		result.location = location;
-		if(!checkedPaths.isEmpty())
-		{
-			if(uris.size() == checkedPaths.size())
-			{
-				result.urisToSend = uris;
-				result.clipData = makeClipData(_context, location, checkedPaths);
-			}
-			else
-				result.tempFilesToPrepare = checkedPaths;
-		}
-		state.setResult(result);
-	}
+    @Override
+    protected void doWork(TaskState state) throws Exception
+    {
+        if (GlobalConfig.isDebug())
+            Logger.debug("PrepareToSendTask args: " + getArguments());
+        ArrayList<Path> paths = new ArrayList<>();
+        Location location = LocationsManager.
+                getLocationsManager(_context).
+                getFromBundle(getArguments(), paths);
+        ArrayList<Uri> uris = new ArrayList<>();
+        ArrayList<Path> checkedPaths = new ArrayList<>();
+        String mime1 = null, mime2 = null;
+        for (Path p : paths)
+        {
+            if (p.isFile())
+            {
+                Uri uri = location.getDeviceAccessibleUri(p);
+                if (uri != null)
+                    uris.add(uri);
+                checkedPaths.add(p);
+                String[] mimeType = FileOpsService.getMimeTypeFromExtension(_context, p).split("/", 2);
+                if (mime1 == null)
+                {
+                    mime1 = mimeType[0];
+                    mime2 = mimeType[1];
+                }
+                else if (!mime1.equals("*"))
+                {
+                    if (!mime1.equals(mimeType[0]))
+                    {
+                        mime1 = "*";
+                        mime2 = "*";
+                    }
+                    else if (!mime2.equals("*"))
+                    {
+                        if (!mime2.equals(mimeType[1]))
+                            mime2 = "*";
+                    }
+                }
+            }
+        }
 
-	@Override
-	protected TaskCallbacks getTaskCallbacks(final FragmentActivity activity)
-	{
-		return new TaskCallbacks()
+        PrepareSendResult result = new PrepareSendResult();
+        result.mimeType = mime1 != null && mime2 != null ? (mime1 + "/" + mime2) : null;
+        result.location = location;
+        if (!checkedPaths.isEmpty())
+        {
+            if (uris.size() == checkedPaths.size())
+            {
+                result.urisToSend = uris;
+                result.clipData = makeClipData(_context, location, checkedPaths);
+            }
+            else
+                result.tempFilesToPrepare = checkedPaths;
+        }
+        state.setResult(result);
+    }
+
+    @Override
+    protected TaskCallbacks getTaskCallbacks(final FragmentActivity activity)
+    {
+        return new TaskCallbacks()
         {
             @Override
             public void onUpdateUI(Object state)
             {
             }
+
             @Override
             public void onPrepare(Bundle args)
             {
@@ -132,27 +130,26 @@ public class PrepareToSendTask extends TaskFragment
             {
                 try
                 {
-					PrepareSendResult res = (PrepareSendResult) result.getResult();
-					if(res.urisToSend != null)
-						ActionSendTask.sendFiles(activity, res.urisToSend, res.mimeType, res.clipData);
-					else if(res.tempFilesToPrepare != null)
-						FileOpsService.sendFile(activity, res.mimeType, res.location, res.tempFilesToPrepare);
+                    PrepareSendResult res = (PrepareSendResult) result.getResult();
+                    if (res.urisToSend != null)
+                        ActionSendTask.sendFiles(activity, res.urisToSend, res.mimeType, res.clipData);
+                    else if (res.tempFilesToPrepare != null)
+                        FileOpsService.sendFile(activity, res.mimeType, res.location, res.tempFilesToPrepare);
                 }
-                catch(Throwable e)
+                catch (Throwable e)
                 {
                     Logger.showAndLog(activity, e);
                 }
             }
         };
+    }
 
-	}
-
-	private static class PrepareSendResult
-	{
-		ArrayList<Path> tempFilesToPrepare;
-		ArrayList<Uri> urisToSend;
-		ClipData clipData;
-		public String mimeType;
-		public Location location;
-	}
+    private static class PrepareSendResult
+    {
+        ArrayList<Path> tempFilesToPrepare;
+        ArrayList<Uri> urisToSend;
+        ClipData clipData;
+        public String mimeType;
+        public Location location;
+    }
 }

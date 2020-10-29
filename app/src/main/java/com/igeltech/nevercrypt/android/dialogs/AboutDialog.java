@@ -14,7 +14,7 @@ public class AboutDialog extends AboutDialogBase
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        if(v == null)
+        if (v == null)
             return null;
         v.findViewById(R.id.donation_button).setOnClickListener(view -> openWebPage(GlobalConfig.DONATIONS_URL));
 

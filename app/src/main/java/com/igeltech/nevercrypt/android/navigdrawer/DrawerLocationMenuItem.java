@@ -28,12 +28,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
         public void onLocationOpened(Location location)
         {
             Bundle args = getArguments();
-            FileManagerActivity.openFileManager(
-                    (FileManagerActivity)getActivity(),
-                    location, args != null ?
-                            args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0)
-                            : 0
-            );
+            FileManagerActivity.openFileManager((FileManagerActivity) getActivity(), location, args != null ? args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0) : 0);
         }
     }
 
@@ -65,9 +60,9 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     {
         super.updateView(view, position);
         AppCompatImageView iv = view.findViewById(R.id.close);
-        if(iv!=null)
+        if (iv != null)
         {
-            if(LocationsManager.isOpenableAndOpen(_location))
+            if (LocationsManager.isOpenableAndOpen(_location))
             {
                 iv.setVisibility(View.VISIBLE);
                 iv.setOnClickListener(_closeIconClickListener);
@@ -87,7 +82,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     @Override
     public boolean onLongClick(View view, int position)
     {
-        if(hasSettings())
+        if (hasSettings())
         {
             openLocationSettings();
             return true;
@@ -99,7 +94,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     {
         FragmentManager fm = getDrawerController().getMainActivity().getSupportFragmentManager();
         String openerTag = LocationOpenerBaseFragment.getOpenerTag(_location);
-        if(fm.findFragmentByTag(openerTag)==null)
+        if (fm.findFragmentByTag(openerTag) == null)
         {
             LocationOpenerBaseFragment opener = getOpener();
             opener.setArguments(getOpenerArgs());
@@ -110,8 +105,8 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     public void closeLocation()
     {
         FragmentManager fm = getDrawerController().getMainActivity().getSupportFragmentManager();
-        String closerTag = LocationCloserBaseFragment.getCloserTag( _location);
-        if(fm.findFragmentByTag(closerTag)==null)
+        String closerTag = LocationCloserBaseFragment.getCloserTag(_location);
+        if (fm.findFragmentByTag(closerTag) == null)
         {
             LocationCloserBaseFragment closer = getCloser();
             closer.setArguments(getCloserArgs());
@@ -139,8 +134,8 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     {
         Bundle b = new Bundle();
         FileListDataFragment.HistoryItem hi = findPrevLocation(_location);
-        if(hi == null)
-            LocationsManager.storePathsInBundle(b,_location, null);
+        if (hi == null)
+            LocationsManager.storePathsInBundle(b, _location, null);
         else
         {
             b.putParcelable(LocationsManager.PARAM_LOCATION_URI, hi.locationUri);
@@ -152,7 +147,7 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
     protected Bundle getCloserArgs()
     {
         Bundle b = new Bundle();
-        LocationsManager.storePathsInBundle(b,_location, null);
+        LocationsManager.storePathsInBundle(b, _location, null);
         return b;
     }
 
@@ -177,15 +172,15 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
                 getMainActivity().
                 getSupportFragmentManager().
                 findFragmentByTag(FileListDataFragment.TAG);
-        if(df!=null)
+        if (df != null)
         {
             Stack<FileListDataFragment.HistoryItem> hist = df.getNavigHistory();
             String locId = loc.getId();
-            if(locId != null)
-                for(int i = hist.size() - 1;i>=0;i--)
+            if (locId != null)
+                for (int i = hist.size() - 1; i >= 0; i--)
                 {
                     FileListDataFragment.HistoryItem hi = hist.get(i);
-                    if(locId.equals(hi.locationId))
+                    if (locId.equals(hi.locationId))
                         return hi;
                 }
         }

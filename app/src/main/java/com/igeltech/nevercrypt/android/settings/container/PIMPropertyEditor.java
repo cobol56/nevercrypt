@@ -11,10 +11,7 @@ public class PIMPropertyEditor extends IntPropertyEditor
 {
     public PIMPropertyEditor(PropertiesHostWithStateBundle hostFragment)
     {
-        super(hostFragment,
-                R.string.kdf_iterations_multiplier,
-                R.string.number_of_kdf_iterations_veracrypt_descr,
-                ((Fragment)hostFragment).getTag());
+        super(hostFragment, R.string.kdf_iterations_multiplier, R.string.number_of_kdf_iterations_veracrypt_descr, ((Fragment) hostFragment).getTag());
     }
 
     @Override
@@ -30,13 +27,12 @@ public class PIMPropertyEditor extends IntPropertyEditor
         return val < 0 ? 0 : val;
     }
 
-
     @Override
     protected void saveValue(int value)
     {
-        if(value < 0)
+        if (value < 0)
             value = 0;
-        else if(value > 100000)
+        else if (value > 100000)
             value = 100000;
         getHost().getState().putInt(Openable.PARAM_KDF_ITERATIONS, value);
     }

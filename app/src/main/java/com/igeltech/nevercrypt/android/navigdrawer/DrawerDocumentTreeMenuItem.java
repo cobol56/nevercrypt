@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.navigdrawer;
 
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
@@ -22,7 +21,7 @@ public class DrawerDocumentTreeMenuItem extends DrawerLocationMenuItem
 
     private synchronized static Drawable getIcon(Context context)
     {
-        if(_icon == null)
+        if (_icon == null)
         {
             _icon = context.getResources().getDrawable(R.drawable.ic_storage, context.getTheme());
         }

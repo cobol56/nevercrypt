@@ -19,11 +19,7 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
 {
     public ContainerFormatPropertyEditorBase(CreateContainerFragmentBase createContainerFragment, int descResId)
     {
-        super(
-                createContainerFragment,
-                R.string.container_format,
-                descResId,
-                createContainerFragment.getTag());
+        super(createContainerFragment, R.string.container_format, descResId, createContainerFragment.getTag());
     }
 
     @Override
@@ -57,7 +53,6 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
         return formatId;
     }
 
-
     @Override
     protected void saveValue(int value)
     {
@@ -70,7 +65,8 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
                 getHostFragment().getState().putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, LocationFormatter.FORMAT_ENCFS);
                 updateContainerFormatProperties(false, null);
                 updateEncFsProperties(!addExisting);
-            } else
+            }
+            else
             {
                 ContainerFormatInfo cfi = getSelectedContainerFormatInfo(value);
                 if (cfi != null)
@@ -102,7 +98,7 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
         if (formatName == null)
             return 0;
         List<ContainerFormatInfo> supportedFormats = Container.getSupportedFormats();
-        if(LocationFormatter.FORMAT_ENCFS.equals(formatName))
+        if (LocationFormatter.FORMAT_ENCFS.equals(formatName))
             return supportedFormats.size();
         for (int i = 0; i < supportedFormats.size(); i++)
         {
@@ -145,12 +141,10 @@ public abstract class ContainerFormatPropertyEditorBase extends ChoiceDialogProp
         pm.setPropertyState(R.string.add_rand_bytes, enable);
     }
 
-
     protected void updateCommonProperties(boolean addExisting)
     {
         PropertiesView pm = getHost().getPropertiesView();
         pm.setPropertyState(R.string.path_to_container, true);
         pm.setPropertyState(R.string.container_password, !addExisting);
     }
-
 }

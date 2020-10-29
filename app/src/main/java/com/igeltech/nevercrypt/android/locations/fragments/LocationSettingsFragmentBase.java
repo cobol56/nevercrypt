@@ -56,14 +56,14 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
         _location = container;
     }
 
-	public ActivityResultHandler getResHandler()
-	{
-		return _resHandler;
-	}
+    public ActivityResultHandler getResHandler()
+    {
+        return _resHandler;
+    }
 
     public void onTargetLocationOpened(Bundle openerArgs, Location location)
     {
-        onIntSettingsAvailable((CryptoLocation)location);
+        onIntSettingsAvailable((CryptoLocation) location);
     }
 
     public void onTargetLocationNotOpened(Bundle openerArgs)
@@ -86,7 +86,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
     }
 
     public void saveExternalSettings()
-	{
+    {
         _location.saveExternalSettings();
     }
 
@@ -131,7 +131,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
     {
         int propertyId = dlg.getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID);
         PasswordDialogBase.PasswordReceiver pr = (PasswordDialogBase.PasswordReceiver) getPropertiesView().getPropertyById(propertyId);
-        if(pr!=null)
+        if (pr != null)
             pr.onPasswordEntered(dlg);
     }
 
@@ -140,7 +140,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
     {
         int propertyId = dlg.getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID);
         PasswordDialogBase.PasswordReceiver pr = (PasswordDialogBase.PasswordReceiver) getPropertiesView().getPropertyById(propertyId);
-        if(pr!=null)
+        if (pr != null)
             pr.onPasswordNotEntered(dlg);
     }
 
@@ -160,18 +160,8 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
                 _locationInfo = (LocationInfo) result.getResult();
                 _propertiesView.setPropertyState(R.string.path_to_container, true);
                 _propertiesView.setPropertyState(R.string.uri_of_the_container, true);
-                _propertiesView.setPropertiesState(Arrays.asList(
-                        R.string.free_space, R.string.total_space
-                ), _location.isOpenOrMounted());
-                _propertiesView.loadProperties(Arrays.asList(
-                        R.string.path_to_container,
-                        R.string.uri_of_the_container,
-                        R.string.free_space,
-                        R.string.total_space
-                        ),
-                        null
-                );
-
+                _propertiesView.setPropertiesState(Arrays.asList(R.string.free_space, R.string.total_space), _location.isOpenOrMounted());
+                _propertiesView.loadProperties(Arrays.asList(R.string.path_to_container, R.string.uri_of_the_container, R.string.free_space, R.string.total_space), null);
             }
             catch (Throwable e)
             {
@@ -195,10 +185,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
     {
         getFragmentManager().
                 beginTransaction().
-                add(
-                        initLoadLocationInfoTask(),
-                        LoadLocationInfoTask.TAG
-                ).
+                add(initLoadLocationInfoTask(), LoadLocationInfoTask.TAG).
                 commitAllowingStateLoss();
     }
 
@@ -216,7 +203,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
         _location = (CryptoLocation) LocationsManager.
                 getLocationsManager(getActivity()).
                 getFromIntent(getActivity().getIntent(), null);
-        if(_location == null)
+        if (_location == null)
         {
             getActivity().finish();
             return;
@@ -233,11 +220,11 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
 
     protected void initPropertiesState()
     {
-        if(_location == null)
+        if (_location == null)
             _propertiesView.setPropertiesState(false);
         else
         {
-            if(_location.isOpenOrMounted())
+            if (_location.isOpenOrMounted())
                 showInternalSettings();
             else
                 hideInternalSettings();
@@ -245,10 +232,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
             _propertiesView.setPropertyState(R.string.path_to_container, false);
             _propertiesView.setPropertyState(R.string.save_password, _location.hasPassword());
             _propertiesView.setPropertyState(R.string.remember_kdf_iterations_multiplier, _location.hasCustomKDFIterations());
-            _propertiesView.setPropertyState(
-                    R.string.use_external_file_manager,
-                    UserSettings.getSettings(getActivity()).getExternalFileManagerInfo()!=null
-            );
+            _propertiesView.setPropertyState(R.string.use_external_file_manager, UserSettings.getSettings(getActivity()).getExternalFileManagerInfo() != null);
             startLoadLocationInfoTask();
         }
     }
@@ -332,12 +316,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
             }
         }));
         ids.add(_propertiesView.addProperty(new OpenInReadOnlyModePropertyEditor(this)));
-        ids.add(_propertiesView.addProperty(new ButtonPropertyEditor(
-                this,
-                R.string.internal_container_settings,
-                R.string.internal_container_settings_desc,
-                R.string.open
-        )
+        ids.add(_propertiesView.addProperty(new ButtonPropertyEditor(this, R.string.internal_container_settings, R.string.internal_container_settings_desc, R.string.open)
         {
             @Override
             protected void onButtonClick()
@@ -356,21 +335,21 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
         ids.add(_propertiesView.addProperty(new UseExternalFileManagerPropertyEditor(this)));
     }
 
-	protected void showInternalSettings()
-	{
-		setInternalPropertiesEnabled(true);
-	}
+    protected void showInternalSettings()
+    {
+        setInternalPropertiesEnabled(true);
+    }
 
     protected void hideInternalSettings()
-	{
-		setInternalPropertiesEnabled(false);
-	}
+    {
+        setInternalPropertiesEnabled(false);
+    }
 
     protected void setInternalPropertiesEnabled(boolean enabled)
-	{
-		_propertiesView.setPropertyState(R.string.free_space, enabled && _locationInfo!=null);
-		_propertiesView.setPropertyState(R.string.total_space, enabled && _locationInfo!=null);
-		_propertiesView.setPropertyState(R.string.change_container_password, enabled);
+    {
+        _propertiesView.setPropertyState(R.string.free_space, enabled && _locationInfo != null);
+        _propertiesView.setPropertyState(R.string.total_space, enabled && _locationInfo != null);
+        _propertiesView.setPropertyState(R.string.change_container_password, enabled);
         _propertiesView.setPropertyState(R.string.internal_container_settings, !enabled);
-	}
+    }
 }

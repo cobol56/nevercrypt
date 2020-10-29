@@ -17,7 +17,6 @@ import java.util.Iterator;
 
 public class DrawerExitMenuItem extends DrawerMenuItemBase
 {
-
     public static class ExitFragment extends Fragment implements LocationCloserBaseFragment.CloseLocationReceiver
     {
         public static final String TAG = "com.igeltech.nevercrypt.android.ExitFragment";
@@ -44,7 +43,7 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
         private void closeNextOrExit()
         {
             Iterator<Location> it = LocationsManager.getLocationsManager(getActivity()).getLocationsClosingOrder().iterator();
-            if(it.hasNext())
+            if (it.hasNext())
                 launchCloser(it.next());
             else
                 exit();
@@ -57,9 +56,7 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
             LocationsManager.storePathsInBundle(args, loc, null);
             Fragment closer = LocationCloserBaseFragment.getDefaultCloserForLocation(loc);
             closer.setArguments(args);
-            getFragmentManager().beginTransaction().add(
-                    closer,
-                    LocationCloserBaseFragment.getCloserTag(loc)).commit();
+            getFragmentManager().beginTransaction().add(closer, LocationCloserBaseFragment.getCloserTag(loc)).commit();
         }
 
         private void exit()
@@ -100,7 +97,7 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
 
     private synchronized static Drawable getIcon(Context context)
     {
-        if(_icon == null)
+        if (_icon == null)
         {
             _icon = context.getResources().getDrawable(R.drawable.ic_exit, context.getTheme());
         }
@@ -108,5 +105,4 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
     }
 
     private static Drawable _icon;
-
 }

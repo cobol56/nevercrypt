@@ -15,16 +15,17 @@ public abstract class CodecInfoPropertyEditor extends ChoiceDialogPropertyEditor
     }
 
     protected abstract Iterable<? extends AlgInfo> getCodecs();
+
     protected abstract String getParamName();
 
     protected int findCodec(String name, RefVal<AlgInfo> codec)
     {
         int i = 0;
-        for(AlgInfo ci: getCodecs())
+        for (AlgInfo ci : getCodecs())
         {
-            if(name.equals(ci.getName()))
+            if (name.equals(ci.getName()))
             {
-                if(codec!=null)
+                if (codec != null)
                     codec.value = ci;
                 return i;
             }
@@ -44,9 +45,9 @@ public abstract class CodecInfoPropertyEditor extends ChoiceDialogPropertyEditor
     protected void saveValue(int value)
     {
         int i = 0;
-        for(AlgInfo ci: getCodecs())
+        for (AlgInfo ci : getCodecs())
         {
-            if(i == value)
+            if (i == value)
             {
                 getHostFragment().getState().putString(getParamName(), ci.getName());
                 return;
@@ -60,7 +61,7 @@ public abstract class CodecInfoPropertyEditor extends ChoiceDialogPropertyEditor
     protected ArrayList<String> getEntries()
     {
         ArrayList<String> res = new ArrayList<>();
-        for(AlgInfo ci: getCodecs())
+        for (AlgInfo ci : getCodecs())
             res.add(ci.getDescr());
         return res;
     }
@@ -69,5 +70,4 @@ public abstract class CodecInfoPropertyEditor extends ChoiceDialogPropertyEditor
     {
         return (CreateLocationFragment) getHost();
     }
-
 }

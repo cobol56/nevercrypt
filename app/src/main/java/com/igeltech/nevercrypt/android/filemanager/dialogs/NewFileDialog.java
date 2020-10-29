@@ -14,62 +14,50 @@ import com.igeltech.nevercrypt.android.filemanager.tasks.CreateNewFile;
 
 public class NewFileDialog extends DialogFragment
 {
-	public interface Receiver
-	{
-		void makeNewFile(String name, int type);
-	}
+    public interface Receiver
+    {
+        void makeNewFile(String name, int type);
+    }
 
-	private static final String ARG_TYPE = "com.igeltech.nevercrypt.android.TYPE";
-	private static final String ARG_RECEIVER_TAG = "com.igeltech.nevercrypt.android.RECEIVER_TAG";
+    private static final String ARG_TYPE = "com.igeltech.nevercrypt.android.TYPE";
+    private static final String ARG_RECEIVER_TAG = "com.igeltech.nevercrypt.android.RECEIVER_TAG";
 
-	public static void showDialog(FragmentManager fm, int type, String receiverTag)
-	{
-		DialogFragment newFragment = new NewFileDialog();
-		Bundle b = new Bundle();
-		b.putInt(ARG_TYPE, type);
-		b.putString(ARG_RECEIVER_TAG, receiverTag);
-		newFragment.setArguments(b);
-	    newFragment.show(fm, "NewFileDialog");
-	}
+    public static void showDialog(FragmentManager fm, int type, String receiverTag)
+    {
+        DialogFragment newFragment = new NewFileDialog();
+        Bundle b = new Bundle();
+        b.putInt(ARG_TYPE, type);
+        b.putString(ARG_RECEIVER_TAG, receiverTag);
+        newFragment.setArguments(b);
+        newFragment.show(fm, "NewFileDialog");
+    }
 
-	@NonNull
+    @NonNull
     @Override
-	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
-	{
-		int ft = getArguments().getInt(ARG_TYPE);
+    public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
+    {
+        int ft = getArguments().getInt(ARG_TYPE);
 
-		AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-		//alert.setMessage(getString(R.string.enter_new_file_name));
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        //alert.setMessage(getString(R.string.enter_new_file_name));
 
-		// Set an EditText view to get user input
-		final AppCompatEditText input = new AppCompatEditText(getActivity());
-		input.setSingleLine();
-		input.setHint(getString(ft == CreateNewFile.FILE_TYPE_FOLDER ?
-                R.string.enter_new_folder_name
-                :
-                R.string.enter_new_file_name));
-		alert.setView(input);
+        // Set an EditText view to get user input
+        final AppCompatEditText input = new AppCompatEditText(getActivity());
+        input.setSingleLine();
+        input.setHint(getString(ft == CreateNewFile.FILE_TYPE_FOLDER ? R.string.enter_new_folder_name : R.string.enter_new_file_name));
+        alert.setView(input);
 
-		alert.setPositiveButton(getString(android.R.string.ok),
-				(dialog, whichButton) ->
-				{
-					Receiver r = (Receiver) getFragmentManager().findFragmentByTag(
-							getArguments().getString(ARG_RECEIVER_TAG)
-					);
-					if(r != null)
-						r.makeNewFile(
-								input.getText().toString(),
-								getArguments().getInt(ARG_TYPE)
-						);
-                    dialog.dismiss();
-                });
+        alert.setPositiveButton(getString(android.R.string.ok), (dialog, whichButton) -> {
+            Receiver r = (Receiver) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_RECEIVER_TAG));
+            if (r != null)
+                r.makeNewFile(input.getText().toString(), getArguments().getInt(ARG_TYPE));
+            dialog.dismiss();
+        });
 
-		alert.setNegativeButton(android.R.string.cancel,
-				(dialog, whichButton) ->
-				{
-                    // Canceled.
-                });
+        alert.setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
+            // Canceled.
+        });
 
-		return alert.create();
-	}
+        return alert.create();
+    }
 }

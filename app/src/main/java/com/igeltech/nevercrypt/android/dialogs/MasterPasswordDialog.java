@@ -33,7 +33,7 @@ public class MasterPasswordDialog extends PasswordDialog
         UserSettings s = UserSettings.getSettings(activity);
         long curTime = SystemClock.elapsedRealtime();
         long lastActTime = CryptoApplication.getLastActivityTime();
-        if(curTime - lastActTime > GlobalConfig.CLEAR_MASTER_PASS_INACTIVITY_TIMEOUT)
+        if (curTime - lastActTime > GlobalConfig.CLEAR_MASTER_PASS_INACTIVITY_TIMEOUT)
         {
             Logger.debug("Clearing settings protection key");
             CryptoApplication.clearMasterPassword();
@@ -44,11 +44,11 @@ public class MasterPasswordDialog extends PasswordDialog
         {
             s.getSettingsProtectionKey();
         }
-        catch(Settings.InvalidSettingsPassword e)
+        catch (Settings.InvalidSettingsPassword e)
         {
             FragmentManager fm = activity.getSupportFragmentManager();
             MasterPasswordDialog mpd = (MasterPasswordDialog) fm.findFragmentByTag(TAG);
-            if(mpd == null)
+            if (mpd == null)
             {
                 MasterPasswordDialog masterPasswordDialog = new MasterPasswordDialog();
                 Bundle args = new Bundle();
@@ -56,8 +56,7 @@ public class MasterPasswordDialog extends PasswordDialog
                 masterPasswordDialog.setArguments(args);
                 return masterPasswordDialog.
                         _passwordCheckSubject.
-                        doOnSubscribe(subscription ->
-                                masterPasswordDialog.show(fm, TAG)).
+                        doOnSubscribe(subscription -> masterPasswordDialog.show(fm, TAG)).
                         firstOrError();
             }
             return mpd.
@@ -73,7 +72,7 @@ public class MasterPasswordDialog extends PasswordDialog
         try
         {
             String check = settings.getProtectedString(SETTINGS_PROTECTION_KEY_CHECK);
-            if(check == null)
+            if (check == null)
                 settings.saveSettingsProtectionKey();
             CryptoApplication.updateLastActivityTime();
             return true;
@@ -91,7 +90,7 @@ public class MasterPasswordDialog extends PasswordDialog
         UserSettings s = UserSettings.getSettings(context);
         long curTime = SystemClock.elapsedRealtime();
         long lastActTime = CryptoApplication.getLastActivityTime();
-        if(curTime - lastActTime > GlobalConfig.CLEAR_MASTER_PASS_INACTIVITY_TIMEOUT)
+        if (curTime - lastActTime > GlobalConfig.CLEAR_MASTER_PASS_INACTIVITY_TIMEOUT)
         {
             Logger.debug("Clearing settings protection key");
             CryptoApplication.clearMasterPassword();
@@ -102,10 +101,10 @@ public class MasterPasswordDialog extends PasswordDialog
         {
             s.getSettingsProtectionKey();
         }
-        catch(Settings.InvalidSettingsPassword e)
+        catch (Settings.InvalidSettingsPassword e)
         {
             MasterPasswordDialog mpd = new MasterPasswordDialog();
-            if(receiverFragmentTag != null)
+            if (receiverFragmentTag != null)
             {
                 Bundle args = new Bundle();
                 args.putString(ARG_RECEIVER_FRAGMENT_TAG, receiverFragmentTag);
@@ -140,10 +139,10 @@ public class MasterPasswordDialog extends PasswordDialog
     protected void onPasswordEntered()
     {
         CryptoApplication.setMasterPassword(new SecureBuffer(getPassword()));
-        if(checkSettingsKey(getActivity()))
+        if (checkSettingsKey(getActivity()))
         {
             Bundle args = getArguments();
-            if(args!=null && args.getBoolean(ARG_IS_OBSERVABLE))
+            if (args != null && args.getBoolean(ARG_IS_OBSERVABLE))
                 _passwordCheckSubject.onNext(true);
             else
                 super.onPasswordEntered();
@@ -156,7 +155,7 @@ public class MasterPasswordDialog extends PasswordDialog
     protected void onPasswordNotEntered()
     {
         Bundle args = getArguments();
-        if(args!=null && args.getBoolean(ARG_IS_OBSERVABLE))
+        if (args != null && args.getBoolean(ARG_IS_OBSERVABLE))
             _passwordCheckSubject.onNext(false);
         else
             super.onPasswordNotEntered();

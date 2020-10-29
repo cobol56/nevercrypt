@@ -27,7 +27,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     @Override
     public void saveState(Bundle state)
     {
-        if(isExpanded())
+        if (isExpanded())
             state.putInt(STATE_EXPANDED_POSITION, getPositionInAdapter());
     }
 
@@ -35,7 +35,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     public void restoreState(Bundle state)
     {
         int expPos = state.getInt(STATE_EXPANDED_POSITION, -1);
-        if(expPos >= 0 && expPos == getPositionInAdapter())
+        if (expPos >= 0 && expPos == getPositionInAdapter())
             expand();
     }
 
@@ -46,7 +46,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
 
     public boolean onBackPressed()
     {
-        if(isExpanded())
+        if (isExpanded())
         {
             collapse();
             return true;
@@ -61,10 +61,10 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
         AppCompatTextView tv = view.findViewById(android.R.id.text1);
         tv.setPressed(_isExpanded);
         Drawable drawable = view.getBackground();
-        if(drawable!=null)
-            drawable.setState(_isExpanded ? new int[] {android.R.attr.state_expanded} : new int[0]);
+        if (drawable != null)
+            drawable.setState(_isExpanded ? new int[]{android.R.attr.state_expanded} : new int[0]);
         AppCompatImageView iv = view.findViewById(android.R.id.icon);
-        if(iv != null && !iv.hasTransientState())
+        if (iv != null && !iv.hasTransientState())
         {
             iv.setVisibility(View.VISIBLE);
             iv.setRotation(isExpanded() ? 180 : 0);
@@ -74,7 +74,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     public void rotateIcon(View view)
     {
         final AppCompatImageView icon = view.findViewById(android.R.id.icon); //getIconImageView();
-        if(icon!=null)
+        if (icon != null)
         {
             icon.clearAnimation();
             ObjectAnimator anim = ObjectAnimator.ofFloat(icon, View.ROTATION, isExpanded() ? 0 : 180);
@@ -94,10 +94,10 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
 
     public void rotateIconAndChangeState(View view)
     {
-        if(!isExpanded())
+        if (!isExpanded())
             rotateExpandedIcons();
         final AppCompatImageView icon = view.findViewById(android.R.id.icon); //getIconImageView();
-        if(icon!=null)
+        if (icon != null)
         {
             icon.clearAnimation();
             ObjectAnimator anim = ObjectAnimator.ofFloat(icon, View.ROTATION, isExpanded() ? 0 : 180);
@@ -123,7 +123,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
         }
         else
         {
-            if(isExpanded())
+            if (isExpanded())
                 collapse();
             else
                 expand();
@@ -151,7 +151,7 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
 
     public View findView(ListView list)
     {
-        for(int i = 0, n = list.getChildCount();i < n;i++)
+        for (int i = 0, n = list.getChildCount(); i < n; i++)
         {
             View v = list.getChildAt(i);
             if (v.getTag() == this)
@@ -163,11 +163,12 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
                 return list.getChildAt(i - start);*/
         return null;
     }
+
     protected void collapse()
     {
         _isExpanded = false;
         ArrayAdapter<DrawerMenuItemBase> adapter = getAdapter();
-        if(_subItems != null)
+        if (_subItems != null)
         {
             for (DrawerMenuItemBase sub : _subItems)
                 adapter.remove(sub);
@@ -179,10 +180,10 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
         _isExpanded = true;
         ArrayAdapter<DrawerMenuItemBase> adapter = getAdapter();
         _subItems = getSubItems();
-        if(_subItems!=null)
+        if (_subItems != null)
         {
             int pos = getPositionInAdapter();
-            if(pos >= 0)
+            if (pos >= 0)
                 for (DrawerMenuItemBase sub : _subItems)
                     adapter.insert(sub, ++pos);
         }
@@ -190,21 +191,18 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
 
     private static final String STATE_EXPANDED_POSITION = "com.igeltech.nevercrypt.android.navigdrawer.DrawerSubMenuBase.EXPANDED_POSITION";
     private boolean _isExpanded;
-
-
-
     private Collection<? extends DrawerMenuItemBase> _subItems;
 
     private void rotateExpandedIcons()
     {
         ListView lv = getDrawerController().getDrawerListView();
-        for(int i=0;i<lv.getCount();i++)
+        for (int i = 0; i < lv.getCount(); i++)
         {
             Object di = lv.getItemAtPosition(i);
-            if(di instanceof DrawerSubMenuBase && ((DrawerSubMenuBase)di).isExpanded())
+            if (di instanceof DrawerSubMenuBase && ((DrawerSubMenuBase) di).isExpanded())
             {
-                View v = ((DrawerSubMenuBase)di).findView(lv);
-                if(v!=null)
+                View v = ((DrawerSubMenuBase) di).findView(lv);
+                if (v != null)
                     ((DrawerSubMenuBase) di).rotateIcon(v);
             }
         }
@@ -213,12 +211,11 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
     private void collapseAll()
     {
         ListView lv = getDrawerController().getDrawerListView();
-        for(int i=0;i<lv.getCount();i++)
+        for (int i = 0; i < lv.getCount(); i++)
         {
             Object di = lv.getItemAtPosition(i);
-            if(di instanceof DrawerSubMenuBase && ((DrawerSubMenuBase)di).isExpanded())
+            if (di instanceof DrawerSubMenuBase && ((DrawerSubMenuBase) di).isExpanded())
                 ((DrawerSubMenuBase) di).collapse();
-
         }
     }
 
@@ -235,6 +232,4 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
             }
         return null;
     }*/
-
-
 }

@@ -14,11 +14,7 @@ public class ContainerPasswordPropertyEditor extends ButtonPropertyEditor implem
 {
     public ContainerPasswordPropertyEditor(CreateLocationFragment createLocationFragment)
     {
-        super(createLocationFragment,
-                R.string.container_password,
-                0,
-                R.string.change
-        );
+        super(createLocationFragment, R.string.container_password, 0, R.string.change);
     }
 
     @Override
@@ -28,7 +24,9 @@ public class ContainerPasswordPropertyEditor extends ButtonPropertyEditor implem
     }
 
     @Override
-    public void onPasswordNotEntered(PasswordDialog dlg){}
+    public void onPasswordNotEntered(PasswordDialog dlg)
+    {
+    }
 
     @Override
     protected void onButtonClick()
@@ -45,6 +43,6 @@ public class ContainerPasswordPropertyEditor extends ButtonPropertyEditor implem
 
     CreateLocationFragment getHostFragment()
     {
-        return (CreateLocationFragment)getHost();
+        return (CreateLocationFragment) getHost();
     }
 }

@@ -8,7 +8,6 @@ import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 
-
 public class ExFATInfo extends FileSystemInfo
 {
     public static final Creator<ExFATInfo> CREATOR = new Creator<ExFATInfo>()
@@ -25,7 +24,6 @@ public class ExFATInfo extends FileSystemInfo
             return new ExFATInfo[size];
         }
     };
-
     public static final String NAME = "ExFAT";
 
     @Override

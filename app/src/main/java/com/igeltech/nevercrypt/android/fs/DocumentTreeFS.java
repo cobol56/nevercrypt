@@ -40,12 +40,7 @@ public class DocumentTreeFS implements FileSystem
     public DocumentTreeFS(Context context, Uri rootUri)
     {
         _context = context;
-        _rootPath = new DocumentPath(
-                DocumentsContract.buildDocumentUriUsingTree(
-                        rootUri,
-                        DocumentsContract.getTreeDocumentId(rootUri)
-                )
-        );
+        _rootPath = new DocumentPath(DocumentsContract.buildDocumentUriUsingTree(rootUri, DocumentsContract.getTreeDocumentId(rootUri)));
     }
 
     @Override
@@ -147,7 +142,7 @@ public class DocumentTreeFS implements FileSystem
         public RandomAccessIO getRandomAccessIO(File.AccessMode accessMode) throws IOException
         {
             ParcelFileDescriptor pfd = getFileDescriptor(accessMode);
-            if(pfd == null)
+            if (pfd == null)
                 throw new UnsupportedOperationException();
             return new PFDRandomAccessIO(pfd);
         }
@@ -161,10 +156,7 @@ public class DocumentTreeFS implements FileSystem
         @Override
         public ParcelFileDescriptor getFileDescriptor(File.AccessMode accessMode) throws IOException
         {
-           return _context.getContentResolver().openFileDescriptor(
-                    _path.getDocumentUri(),
-                    Util.getStringModeFromAccessMode(accessMode)
-            );
+            return _context.getContentResolver().openFileDescriptor(_path.getDocumentUri(), Util.getStringModeFromAccessMode(accessMode));
         }
 
         @Override
@@ -192,7 +184,7 @@ public class DocumentTreeFS implements FileSystem
         @Override
         public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
         {
-            if(PathUtil.isParentDirectory(_path, newParent.getPath()))
+            if (PathUtil.isParentDirectory(_path, newParent.getPath()))
                 throw new IOException("Can't move the folder to its sub-folder");
             Path np = Util.copyFiles(_path, newParent);
             Util.deleteFiles(_path);
@@ -217,7 +209,6 @@ public class DocumentTreeFS implements FileSystem
             return _path.getFileName();
         }
 
-
         @Override
         public Date getLastModified() throws IOException
         {
@@ -236,17 +227,11 @@ public class DocumentTreeFS implements FileSystem
             _path.delete();
         }
 
-
         @Override
         public com.igeltech.nevercrypt.fs.Directory createDirectory(String name) throws IOException
         {
-            Uri uri = DocumentsContract.createDocument(
-                    _context.getContentResolver(),
-                    _path.getDocumentUri(),
-                    DocumentsContract.Document.MIME_TYPE_DIR,
-                    name
-            );
-            if(uri == null)
+            Uri uri = DocumentsContract.createDocument(_context.getContentResolver(), _path.getDocumentUri(), DocumentsContract.Document.MIME_TYPE_DIR, name);
+            if (uri == null)
                 throw new IOException("Failed creating folder");
             return new Directory(new DocumentPath(uri));
         }
@@ -255,11 +240,8 @@ public class DocumentTreeFS implements FileSystem
         public com.igeltech.nevercrypt.fs.File createFile(String name) throws IOException
         {
             String mimeType = FileOpsService.getMimeTypeFromExtension(_context, new StringPathUtil(name).getFileExtension());
-            Uri uri = DocumentsContract.createDocument(
-                    _context.getContentResolver(),
-                    _path.getDocumentUri(),
-                    mimeType, name);
-            if(uri == null)
+            Uri uri = DocumentsContract.createDocument(_context.getContentResolver(), _path.getDocumentUri(), mimeType, name);
+            if (uri == null)
                 throw new IOException("Failed creating file");
             return new File(new DocumentPath(uri));
         }
@@ -268,16 +250,9 @@ public class DocumentTreeFS implements FileSystem
         public com.igeltech.nevercrypt.fs.Directory.Contents list() throws IOException
         {
             final Uri uri = _path.getDocumentUri();
-            final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(uri,
-                    DocumentsContract.getDocumentId(uri));
+            final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(uri, DocumentsContract.getDocumentId(uri));
             final ContentResolver resolver = _context.getContentResolver();
-            final Cursor cursor = resolver.query(
-                    childrenUri,
-                    new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID},
-                    DocumentsContract.Document.COLUMN_DOCUMENT_ID + "!=?",
-                    new String[] { ".android_secure" },
-                    null
-            );
+            final Cursor cursor = resolver.query(childrenUri, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID}, DocumentsContract.Document.COLUMN_DOCUMENT_ID + "!=?", new String[]{".android_secure"}, null);
             return new com.igeltech.nevercrypt.fs.Directory.Contents()
             {
                 @Override
@@ -304,8 +279,7 @@ public class DocumentTreeFS implements FileSystem
                             if (cursor == null)
                                 throw new NoSuchElementException();
                             final String documentId = cursor.getString(0);
-                            final Uri documentUri = DocumentsContract.buildDocumentUriUsingTree(uri,
-                                    documentId);
+                            final Uri documentUri = DocumentsContract.buildDocumentUriUsingTree(uri, documentId);
                             _hasNext = cursor.moveToNext();
                             Path newPath = new DocumentPath(documentUri);
                             synchronized (_parentsCache)
@@ -325,7 +299,6 @@ public class DocumentTreeFS implements FileSystem
                     };
                 }
             };
-
         }
 
         @Override
@@ -398,14 +371,16 @@ public class DocumentTreeFS implements FileSystem
             try
             {
                 Path p = getParentPath();
-                if(p!=null)
+                if (p != null)
                 {
                     p = p.combine(newName);
-                    if(p.exists())
+                    if (p.exists())
                         p.getFile().delete();
                 }
             }
-            catch (IOException ignored) {}
+            catch (IOException ignored)
+            {
+            }
 
             final Uri newUri = DocumentsContract.renameDocument(_context.getContentResolver(), getDocumentUri(), newName);
             if (newUri == null)
@@ -439,13 +414,12 @@ public class DocumentTreeFS implements FileSystem
             Cursor c = null;
             try
             {
-                c = _context.getContentResolver().query(_documentUri, new String[]{
-                        DocumentsContract.Document.COLUMN_DOCUMENT_ID}, null, null, null);
+                c = _context.getContentResolver().query(_documentUri, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID}, null, null, null);
                 return c != null && c.getCount() > 0;
             }
             catch (Exception e)
             {
-                if(GlobalConfig.isDebug())
+                if (GlobalConfig.isDebug())
                     Logger.log(e);
             }
             finally
@@ -513,7 +487,7 @@ public class DocumentTreeFS implements FileSystem
             }
             catch (IOException e)
             {
-                if(GlobalConfig.isDebug())
+                if (GlobalConfig.isDebug())
                     Logger.log(e);
                 return getPathString();
             }
@@ -535,7 +509,7 @@ public class DocumentTreeFS implements FileSystem
         public Path combine(String part) throws IOException
         {
             Uri childUri = resolveDocumentUri(part);
-            if(childUri == null)
+            if (childUri == null)
                 throw new FileNotFoundException();
             Path newPath = new DocumentPath(childUri);
             synchronized (_parentsCache)
@@ -565,7 +539,7 @@ public class DocumentTreeFS implements FileSystem
         @Override
         public int compareTo(@NonNull Path another)
         {
-            return _documentUri.compareTo(((DocumentPath)another)._documentUri);
+            return _documentUri.compareTo(((DocumentPath) another)._documentUri);
         }
 
         private final Uri _documentUri;
@@ -583,8 +557,7 @@ public class DocumentTreeFS implements FileSystem
                 if (!c.isNull(1) && _childName.equals(c.getString(1)))
                 {
                     final String documentId = c.getString(0);
-                    _uri = DocumentsContract.buildDocumentUriUsingTree(_documentUri,
-                            documentId);
+                    _uri = DocumentsContract.buildDocumentUriUsingTree(_documentUri, documentId);
                     return false;
                 }
                 return true;
@@ -602,19 +575,14 @@ public class DocumentTreeFS implements FileSystem
         private synchronized Uri resolveDocumentUri(final String childName)
         {
             ChildUriReceiver rec = new ChildUriReceiver(childName);
-            listChildren(rec,
-                    _documentUri,
-                    DocumentsContract.Document.COLUMN_DOCUMENT_ID,
-                    DocumentsContract.Document.COLUMN_DISPLAY_NAME
-            );
+            listChildren(rec, _documentUri, DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME);
             return rec.getChildUri();
         }
 
         private void listChildren(ResultReceiver res, Uri uri, String... columns)
         {
             final ContentResolver resolver = _context.getContentResolver();
-            final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(uri,
-                    DocumentsContract.getDocumentId(uri));
+            final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(uri, DocumentsContract.getDocumentId(uri));
             Cursor c = null;
             try
             {
@@ -628,7 +596,7 @@ public class DocumentTreeFS implements FileSystem
             }
             catch (Exception e)
             {
-                if(GlobalConfig.isDebug())
+                if (GlobalConfig.isDebug())
                     Logger.log(e);
             }
             finally
@@ -656,7 +624,7 @@ public class DocumentTreeFS implements FileSystem
             }
             catch (Exception e)
             {
-                if(GlobalConfig.isDebug())
+                if (GlobalConfig.isDebug())
                     Logger.log(e);
                 return defaultValue;
             }
@@ -676,14 +644,15 @@ public class DocumentTreeFS implements FileSystem
                 if (c != null && c.moveToFirst() && !c.isNull(0))
                 {
                     return c.getString(0);
-                } else
+                }
+                else
                 {
                     return defaultValue;
                 }
             }
             catch (Exception e)
             {
-                if(GlobalConfig.isDebug())
+                if (GlobalConfig.isDebug())
                     Logger.log(e);
                 return defaultValue;
             }
@@ -692,7 +661,6 @@ public class DocumentTreeFS implements FileSystem
                 closeQuietly(c);
             }
         }
-
     }
 
     private interface ResultReceiver
@@ -706,15 +674,15 @@ public class DocumentTreeFS implements FileSystem
 
     private Path getParentPath(Path path) throws IOException
     {
-        if(path.isRootDirectory())
+        if (path.isRootDirectory())
             return null;
         synchronized (_parentsCache)
         {
             Path parentPath = _parentsCache.get(path);
-            if(parentPath == null)
+            if (parentPath == null)
             {
                 parentPath = findParentPath(_rootPath, path);
-                if(parentPath == null)
+                if (parentPath == null)
                     throw new IOException("Couldn't find parent path for " + path.getPathString());
                 _parentsCache.put(path, parentPath);
             }
@@ -724,7 +692,7 @@ public class DocumentTreeFS implements FileSystem
 
     private Path findParentPath(Path startSearchPath, Path targetPath) throws IOException
     {
-        if(!startSearchPath.isDirectory())
+        if (!startSearchPath.isDirectory())
             return null;
         try (com.igeltech.nevercrypt.fs.Directory.Contents dc = startSearchPath.getDirectory().list())
         {

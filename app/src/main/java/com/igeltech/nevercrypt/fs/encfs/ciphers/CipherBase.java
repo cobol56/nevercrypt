@@ -14,7 +14,7 @@ public class CipherBase implements EncryptionEngine
     private static byte[] getIVFromBuf(byte[] buf, int keySize)
     {
         byte[] res = new byte[buf.length - keySize];
-        System.arraycopy(buf, keySize, res, 0, res.length );
+        System.arraycopy(buf, keySize, res, 0, res.length);
         return res;
     }
 
@@ -61,7 +61,7 @@ public class CipherBase implements EncryptionEngine
     public void setIV(byte[] iv)
     {
         byte[] buf = Arrays.copyOf(_ivPart, _ivPart.length + 8);
-        for(int i=0;i<8;i++)
+        for (int i = 0; i < 8; i++)
             buf[_ivPart.length + i] = iv[7 - i];
         byte[] hmac = new byte[_hmac.getDigestLength()];
         try
@@ -75,7 +75,7 @@ public class CipherBase implements EncryptionEngine
         }
         finally
         {
-            Arrays.fill(buf, (byte)0);
+            Arrays.fill(buf, (byte) 0);
         }
     }
 
@@ -95,7 +95,7 @@ public class CipherBase implements EncryptionEngine
     public void setKey(byte[] key)
     {
         clearKey();
-        if(key!=null)
+        if (key != null)
         {
             _key = Arrays.copyOf(key, getKeySize());
             _keyPart = getKeyFromBuf();
@@ -152,7 +152,7 @@ public class CipherBase implements EncryptionEngine
 
     private void clearHMAC()
     {
-        if(_hmac!=null)
+        if (_hmac != null)
         {
             _hmac.close();
             _hmac = null;
@@ -161,11 +161,11 @@ public class CipherBase implements EncryptionEngine
 
     private void clearKey()
     {
-        if(_key!=null)
+        if (_key != null)
         {
             Arrays.fill(_key, (byte) 0);
-            Arrays.fill(_ivPart, (byte)0);
-            Arrays.fill(_keyPart, (byte)0);
+            Arrays.fill(_ivPart, (byte) 0);
+            Arrays.fill(_keyPart, (byte) 0);
             _key = _ivPart = _keyPart = null;
         }
     }
@@ -179,5 +179,4 @@ public class CipherBase implements EncryptionEngine
     {
         return getKeyFromBuf(_key, _base.getKeySize());
     }
-
 }

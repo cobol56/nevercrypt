@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.filemanager.tasks;
 
-
 import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
 import com.igeltech.nevercrypt.android.helpers.CachedPathInfoBase;
 import com.igeltech.nevercrypt.locations.Location;

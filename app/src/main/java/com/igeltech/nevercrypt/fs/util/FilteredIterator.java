@@ -18,7 +18,7 @@ public abstract class FilteredIterator<T> implements Iterator<T>
     @Override
     public synchronized boolean hasNext()
     {
-        if(!_hasNext)
+        if (!_hasNext)
             setNext();
         return _hasNext;
     }
@@ -33,7 +33,7 @@ public abstract class FilteredIterator<T> implements Iterator<T>
     @Override
     public synchronized T next()
     {
-        if(!hasNext())
+        if (!hasNext())
             throw new NoSuchElementException();
         _hasNext = false;
         return _nextItem;
@@ -52,7 +52,7 @@ public abstract class FilteredIterator<T> implements Iterator<T>
     @Override
     public synchronized void remove()
     {
-        if(!_hasNext)
+        if (!_hasNext)
             throw new IllegalStateException();
         _base.remove();
     }
@@ -71,10 +71,10 @@ public abstract class FilteredIterator<T> implements Iterator<T>
     private void setNext()
     {
         _hasNext = false;
-        while(_base.hasNext())
+        while (_base.hasNext())
         {
             T nextItem = _base.next();
-            if(isValidItem(nextItem))
+            if (isValidItem(nextItem))
             {
                 _nextItem = nextItem;
                 _hasNext = true;

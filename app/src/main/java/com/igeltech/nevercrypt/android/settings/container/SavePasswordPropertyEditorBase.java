@@ -19,11 +19,11 @@ public class SavePasswordPropertyEditorBase extends SwitchPropertyEditor impleme
         super(settingsFragment, R.string.save_password, R.string.save_password_desc);
     }
 
-	@Override
-	public LocationSettingsFragment getHost()
-	{
-		return (LocationSettingsFragment) super.getHost();
-	}
+    @Override
+    public LocationSettingsFragment getHost()
+    {
+        return (LocationSettingsFragment) super.getHost();
+    }
 
     @Override
     protected boolean loadValue()
@@ -69,13 +69,13 @@ public class SavePasswordPropertyEditorBase extends SwitchPropertyEditor impleme
             PasswordDialog pd = new PasswordDialog();
             pd.setArguments(args);
             pd.show(getHost().getFragmentManager(), PasswordDialog.TAG);
-			return true;
+            return true;
         }
         else
         {
             getHost().getLocation().getExternalSettings().setPassword(null);
             getHost().saveExternalSettings();
-			return true;
+            return true;
         }
     }
 }

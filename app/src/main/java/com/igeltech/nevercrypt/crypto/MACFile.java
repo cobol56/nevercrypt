@@ -19,30 +19,20 @@ public class MACFile extends TransRandomAccessIO
         return realPos - blockNum * overhead;
     }
 
-    public static int getMACCheckedBuffer(
-            byte[] baseBuffer,
-            int offset,
-            int count,
-            long bufferPosition,
-            byte[] dstBuffer,
-            MACCalculator macCalc,
-            int macBytes,
-            int randBytes,
-            boolean allowSkip,
-            boolean forceDecode) throws IOException
+    public static int getMACCheckedBuffer(byte[] baseBuffer, int offset, int count, long bufferPosition, byte[] dstBuffer, MACCalculator macCalc, int macBytes, int randBytes, boolean allowSkip, boolean forceDecode) throws IOException
     {
         int resCount = count - macBytes - randBytes;
         System.arraycopy(baseBuffer, offset + macBytes + randBytes, dstBuffer, offset, resCount);
-        if(macBytes == 0 || (allowSkip && count > macBytes && EncryptedFile.isBufferEmpty(baseBuffer, offset, count)))
+        if (macBytes == 0 || (allowSkip && count > macBytes && EncryptedFile.isBufferEmpty(baseBuffer, offset, count)))
             return resCount;
         byte fail = 0;
         byte[] mac = macCalc.calcChecksum(baseBuffer, offset + macBytes, count - macBytes);
-        for(int i=0;i<macBytes;i++)
+        for (int i = 0; i < macBytes; i++)
             fail |= mac[i] ^ baseBuffer[macBytes - i - 1];
-        if(fail != 0)
+        if (fail != 0)
         {
             String msg = "MAC comparison failure for the block at " + bufferPosition;
-            if(forceDecode)
+            if (forceDecode)
                 Logger.log(msg);
             else
                 throw new IOException(msg);
@@ -50,15 +40,7 @@ public class MACFile extends TransRandomAccessIO
         return resCount;
     }
 
-    public static void makeMACCheckedBuffer(
-            byte[] buf,
-            int offset,
-            int count,
-            byte[] baseBuffer,
-            MACCalculator macCalc,
-            int macBytes,
-            int randBytes,
-            SecureRandom random) throws IOException
+    public static void makeMACCheckedBuffer(byte[] buf, int offset, int count, byte[] baseBuffer, MACCalculator macCalc, int macBytes, int randBytes, SecureRandom random) throws IOException
     {
         System.arraycopy(buf, offset, baseBuffer, offset + macBytes + randBytes, count);
         if (randBytes > 0)
@@ -67,21 +49,15 @@ public class MACFile extends TransRandomAccessIO
             random.nextBytes(rb);
             System.arraycopy(rb, 0, baseBuffer, offset + macBytes, randBytes);
         }
-        if(macBytes > 0)
+        if (macBytes > 0)
         {
             byte[] mac = macCalc.calcChecksum(baseBuffer, offset + macBytes, count + randBytes);
-            for(int i=0;i<macBytes;i++)
+            for (int i = 0; i < macBytes; i++)
                 baseBuffer[offset + i] = mac[macBytes - i - 1];
         }
     }
 
-    public MACFile(
-            RandomAccessIO base,
-            MACCalculator macCalc,
-            int blockSize,
-            int macBytes,
-            int randBytes,
-            boolean forceDecode) throws FileNotFoundException
+    public MACFile(RandomAccessIO base, MACCalculator macCalc, int blockSize, int macBytes, int randBytes, boolean forceDecode) throws FileNotFoundException
     {
         super(base, blockSize - macBytes - randBytes);
         _macCalc = macCalc;
@@ -132,7 +108,7 @@ public class MACFile extends TransRandomAccessIO
     protected int readFromBaseAndTransformBuffer(byte[] buf, int offset, int count, long bufferPosition) throws IOException
     {
         int bc = readFromBase(_transBuffer, offset, count + _overhead, bufferPosition);
-        if(bc > 0)
+        if (bc > 0)
             return transformBufferFromBase(_transBuffer, offset, bc, bufferPosition, buf);
         else
             return 0;
@@ -141,18 +117,7 @@ public class MACFile extends TransRandomAccessIO
     @Override
     protected int transformBufferFromBase(byte[] baseBuffer, int offset, int count, long bufferPosition, byte[] dstBuffer) throws IOException
     {
-        return getMACCheckedBuffer(
-                baseBuffer,
-                offset,
-                count,
-                bufferPosition,
-                dstBuffer,
-                _macCalc,
-                _macBytes,
-                _randBytes,
-                _allowSkip,
-                _forceDecode
-        );
+        return getMACCheckedBuffer(baseBuffer, offset, count, bufferPosition, dstBuffer, _macCalc, _macBytes, _randBytes, _allowSkip, _forceDecode);
     }
 
     @Override
@@ -165,15 +130,7 @@ public class MACFile extends TransRandomAccessIO
     @Override
     protected void transformBufferToBase(byte[] buf, int offset, int count, long bufferPosition, byte[] baseBuffer) throws IOException
     {
-        makeMACCheckedBuffer(
-                buf,
-                offset,
-                count,
-                baseBuffer,
-                _macCalc,
-                _macBytes,
-                _randBytes,
-                _random);
+        makeMACCheckedBuffer(buf, offset, count, baseBuffer, _macCalc, _macBytes, _randBytes, _random);
     }
 
     private final byte[] _transBuffer;

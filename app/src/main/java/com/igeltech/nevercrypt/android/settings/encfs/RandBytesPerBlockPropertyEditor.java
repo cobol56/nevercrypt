@@ -32,11 +32,10 @@ public class RandBytesPerBlockPropertyEditor extends ChoiceDialogPropertyEditor
     {
         ArrayList<String> res = new ArrayList<>();
         res.add(getHost().getContext().getString(R.string.disable));
-        for(int i=1;i<=8;i++)
+        for (int i = 1; i <= 8; i++)
             res.add(String.valueOf(i));
         return res;
     }
-
 
     protected CreateLocationFragment getHostFragment()
     {

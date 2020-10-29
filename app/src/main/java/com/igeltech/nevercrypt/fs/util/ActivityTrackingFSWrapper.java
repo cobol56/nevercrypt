@@ -16,329 +16,327 @@ import java.io.OutputStream;
 
 public class ActivityTrackingFSWrapper extends FileSystemWrapper
 {
-	public interface ChangeListener
-	{
-		void beforeRemoval(com.igeltech.nevercrypt.fs.Path p) throws IOException;
-		void afterRemoval(com.igeltech.nevercrypt.fs.Path p);
-		void beforeModification(com.igeltech.nevercrypt.fs.Path p) throws IOException;
-		void afterModification(com.igeltech.nevercrypt.fs.Path p);
-	}
+    public interface ChangeListener
+    {
+        void beforeRemoval(com.igeltech.nevercrypt.fs.Path p) throws IOException;
 
-	public ActivityTrackingFSWrapper(FileSystem baseFs)
-	{
-		super(baseFs);
-		_lastActivityTime = SystemClock.elapsedRealtime();
-	}
+        void afterRemoval(com.igeltech.nevercrypt.fs.Path p);
 
-	@Override
-	public com.igeltech.nevercrypt.fs.Path getRootPath() throws IOException
-	{
-		return new Path(getBase().getRootPath());
-	}
+        void beforeModification(com.igeltech.nevercrypt.fs.Path p) throws IOException;
 
-	@Override
-	public com.igeltech.nevercrypt.fs.Path getPath(String pathString) throws IOException
-	{
-		return new Path(getBase().getPath(pathString));
-	}
+        void afterModification(com.igeltech.nevercrypt.fs.Path p);
+    }
 
-	public void setChangesListener(ChangeListener l)
-	{
-		_changesListener = l;
-	}
-	
-	public long getLastActivityTime()
-	{
-		return _lastActivityTime;
-	}		
+    public ActivityTrackingFSWrapper(FileSystem baseFs)
+    {
+        super(baseFs);
+        _lastActivityTime = SystemClock.elapsedRealtime();
+    }
 
-	protected class Path extends PathWrapper
-	{
+    @Override
+    public com.igeltech.nevercrypt.fs.Path getRootPath() throws IOException
+    {
+        return new Path(getBase().getRootPath());
+    }
 
-		public Path(com.igeltech.nevercrypt.fs.Path path)
-		{
-			super(ActivityTrackingFSWrapper.this, path);
-		}
+    @Override
+    public com.igeltech.nevercrypt.fs.Path getPath(String pathString) throws IOException
+    {
+        return new Path(getBase().getPath(pathString));
+    }
 
-		@Override
-		public com.igeltech.nevercrypt.fs.File getFile() throws IOException
-		{
-			return new File(this, getBase().getFile());
-		}
+    public void setChangesListener(ChangeListener l)
+    {
+        _changesListener = l;
+    }
 
-		@Override
-		public com.igeltech.nevercrypt.fs.Directory getDirectory() throws IOException
-		{
-			return new Directory(this, getBase().getDirectory());
-		}
+    public long getLastActivityTime()
+    {
+        return _lastActivityTime;
+    }
 
-		@Override
-		protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
-		{
-			return ActivityTrackingFSWrapper.this.getPathFromBasePath(basePath);
-		}
-	}
-	
-	protected class File extends FileWrapper
-	{
-		public File(Path path,com.igeltech.nevercrypt.fs.File base)
-		{
-			super(path,base);
-		}		
-		
-		@Override
-		public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
-		{
-			com.igeltech.nevercrypt.fs.Path srcPath = getPath();
-			beforeMove(this, newParent);
-			super.moveTo(newParent);
-			afterMove(srcPath, this);
-		}
+    protected class Path extends PathWrapper
+    {
+        public Path(com.igeltech.nevercrypt.fs.Path path)
+        {
+            super(ActivityTrackingFSWrapper.this, path);
+        }
 
-		@Override
-		protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
-		{
-			return ActivityTrackingFSWrapper.this.getPathFromBasePath(basePath);
-		}
+        @Override
+        public com.igeltech.nevercrypt.fs.File getFile() throws IOException
+        {
+            return new File(this, getBase().getFile());
+        }
 
-		@Override
-		public void delete() throws IOException
-		{
-			beforeDelete(this);
-			super.delete();
-			afterDelete(this);
-		}
-		
-		@Override
-		public InputStream getInputStream() throws IOException
-		{
-			final InputStream in = super.getInputStream();
-			return new FilterInputStream(in)		
-			{
-				@Override
-				public int read() throws IOException
-				{	
-					_lastActivityTime = SystemClock.elapsedRealtime();
-					return in.read();			
-				}
+        @Override
+        public com.igeltech.nevercrypt.fs.Directory getDirectory() throws IOException
+        {
+            return new Directory(this, getBase().getDirectory());
+        }
 
-				@Override
-				public int read(@NonNull byte[] b, int off, int len) throws IOException
-				{	
-					_lastActivityTime = SystemClock.elapsedRealtime();
-					return in.read(b, off, len);			
-				}
-			};
-		}
+        @Override
+        protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
+        {
+            return ActivityTrackingFSWrapper.this.getPathFromBasePath(basePath);
+        }
+    }
 
-		@Override
-		public OutputStream getOutputStream() throws IOException
-		{
-			final OutputStream out = super.getOutputStream();
-			return new FilterOutputStream(out)
-					{
-						@Override
-						public void write(int b) throws IOException
-						{
-                            _lastActivityTime = SystemClock.elapsedRealtime();
-                            if(!_isChanged && _changesListener!=null)
-                                _changesListener.beforeModification(getPath());
-							out.write(b);
-                            _isChanged = true;
-						}
-		
-						@Override
-						public void write(@NonNull byte[] b, int off, int len) throws IOException
-						{
-                            _lastActivityTime = SystemClock.elapsedRealtime();
-                            if(!_isChanged && _changesListener!=null)
-                                _changesListener.beforeModification(getPath());
-							out.write(b, off, len);
-							_isChanged = true;
-						}		
-						
-						public void close() throws IOException
-						{
-							super.close();
-							if(_changesListener!= null && _isChanged)
-								_changesListener.afterModification(getPath());
-						}
-						
-						private boolean _isChanged;
-					};
-		}
+    protected class File extends FileWrapper
+    {
+        public File(Path path, com.igeltech.nevercrypt.fs.File base)
+        {
+            super(path, base);
+        }
 
-		@Override
-		public RandomAccessIO getRandomAccessIO(AccessMode accessMode) throws IOException
-		{
-			return new ActivityTrackingFileIO(super.getRandomAccessIO(accessMode), getPath());
-		}
+        @Override
+        public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
+        {
+            com.igeltech.nevercrypt.fs.Path srcPath = getPath();
+            beforeMove(this, newParent);
+            super.moveTo(newParent);
+            afterMove(srcPath, this);
+        }
 
-	}
-	
-	protected class Directory extends DirectoryWrapper
-	{
+        @Override
+        protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
+        {
+            return ActivityTrackingFSWrapper.this.getPathFromBasePath(basePath);
+        }
 
-		public Directory(Path path,com.igeltech.nevercrypt.fs.Directory base)
-		{
-			super(path,base);			
-		}
+        @Override
+        public void delete() throws IOException
+        {
+            beforeDelete(this);
+            super.delete();
+            afterDelete(this);
+        }
 
-		@Override
-		public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
-		{
-			com.igeltech.nevercrypt.fs.Path srcPath = getPath();
-			beforeMove(this, newParent);
-			super.moveTo(newParent);
-			afterMove(srcPath, this);
-		}
+        @Override
+        public InputStream getInputStream() throws IOException
+        {
+            final InputStream in = super.getInputStream();
+            return new FilterInputStream(in)
+            {
+                @Override
+                public int read() throws IOException
+                {
+                    _lastActivityTime = SystemClock.elapsedRealtime();
+                    return in.read();
+                }
 
-		@Override
-		protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
-		{
-			return ActivityTrackingFSWrapper.this.getPathFromBasePath(basePath);
-		}
+                @Override
+                public int read(@NonNull byte[] b, int off, int len) throws IOException
+                {
+                    _lastActivityTime = SystemClock.elapsedRealtime();
+                    return in.read(b, off, len);
+                }
+            };
+        }
 
-		@Override
-		public void delete() throws IOException
-		{
-			beforeDelete(this);
-			super.delete();
-			afterDelete(this);
-		}
+        @Override
+        public OutputStream getOutputStream() throws IOException
+        {
+            final OutputStream out = super.getOutputStream();
+            return new FilterOutputStream(out)
+            {
+                @Override
+                public void write(int b) throws IOException
+                {
+                    _lastActivityTime = SystemClock.elapsedRealtime();
+                    if (!_isChanged && _changesListener != null)
+                        _changesListener.beforeModification(getPath());
+                    out.write(b);
+                    _isChanged = true;
+                }
 
-		@Override
-		public com.igeltech.nevercrypt.fs.File createFile(String name) throws IOException
-		{
-			_lastActivityTime = SystemClock.elapsedRealtime();
-			com.igeltech.nevercrypt.fs.File f = super.createFile(name);
-			if(_changesListener!= null)
-				_changesListener.afterModification(f.getPath());
-			return f;
-		}
+                @Override
+                public void write(@NonNull byte[] b, int off, int len) throws IOException
+                {
+                    _lastActivityTime = SystemClock.elapsedRealtime();
+                    if (!_isChanged && _changesListener != null)
+                        _changesListener.beforeModification(getPath());
+                    out.write(b, off, len);
+                    _isChanged = true;
+                }
 
-		@Override
-		public com.igeltech.nevercrypt.fs.Directory createDirectory(String name) throws IOException
-		{
-			_lastActivityTime = SystemClock.elapsedRealtime();
-			com.igeltech.nevercrypt.fs.Directory f = super.createDirectory(name);
-			if(_changesListener!= null)
-				_changesListener.afterModification(f.getPath());
-			return f;
-		}
+                public void close() throws IOException
+                {
+                    super.close();
+                    if (_changesListener != null && _isChanged)
+                        _changesListener.afterModification(getPath());
+                }
 
-		@Override
-		public Directory.Contents list() throws IOException
-		{
-			_lastActivityTime = SystemClock.elapsedRealtime();
-			return super.list();
-		}
-		
-	}
+                private boolean _isChanged;
+            };
+        }
 
-	protected class ActivityTrackingFileIO extends RandomAccessIOWrapper
-	{
-		public ActivityTrackingFileIO(RandomAccessIO base, com.igeltech.nevercrypt.fs.Path path) throws IOException
-		{
-			super(base);		
-			_path = path;
-		}		
-		
-		@Override
-		public int read() throws IOException
-		{	
-			_lastActivityTime = SystemClock.elapsedRealtime();
-			return super.read();			
-		}
+        @Override
+        public RandomAccessIO getRandomAccessIO(AccessMode accessMode) throws IOException
+        {
+            return new ActivityTrackingFileIO(super.getRandomAccessIO(accessMode), getPath());
+        }
+    }
 
-		@Override
-		public int read(byte[] b, int off, int len) throws IOException
-		{	
-			_lastActivityTime = SystemClock.elapsedRealtime();
-			return super.read(b, off, len);			
-		}
+    protected class Directory extends DirectoryWrapper
+    {
+        public Directory(Path path, com.igeltech.nevercrypt.fs.Directory base)
+        {
+            super(path, base);
+        }
 
-		@Override
-		public void write(int b) throws IOException
-		{
+        @Override
+        public void moveTo(com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
+        {
+            com.igeltech.nevercrypt.fs.Path srcPath = getPath();
+            beforeMove(this, newParent);
+            super.moveTo(newParent);
+            afterMove(srcPath, this);
+        }
+
+        @Override
+        protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
+        {
+            return ActivityTrackingFSWrapper.this.getPathFromBasePath(basePath);
+        }
+
+        @Override
+        public void delete() throws IOException
+        {
+            beforeDelete(this);
+            super.delete();
+            afterDelete(this);
+        }
+
+        @Override
+        public com.igeltech.nevercrypt.fs.File createFile(String name) throws IOException
+        {
             _lastActivityTime = SystemClock.elapsedRealtime();
-            if(!_isChanged && _changesListener!=null)
+            com.igeltech.nevercrypt.fs.File f = super.createFile(name);
+            if (_changesListener != null)
+                _changesListener.afterModification(f.getPath());
+            return f;
+        }
+
+        @Override
+        public com.igeltech.nevercrypt.fs.Directory createDirectory(String name) throws IOException
+        {
+            _lastActivityTime = SystemClock.elapsedRealtime();
+            com.igeltech.nevercrypt.fs.Directory f = super.createDirectory(name);
+            if (_changesListener != null)
+                _changesListener.afterModification(f.getPath());
+            return f;
+        }
+
+        @Override
+        public Directory.Contents list() throws IOException
+        {
+            _lastActivityTime = SystemClock.elapsedRealtime();
+            return super.list();
+        }
+    }
+
+    protected class ActivityTrackingFileIO extends RandomAccessIOWrapper
+    {
+        public ActivityTrackingFileIO(RandomAccessIO base, com.igeltech.nevercrypt.fs.Path path) throws IOException
+        {
+            super(base);
+            _path = path;
+        }
+
+        @Override
+        public int read() throws IOException
+        {
+            _lastActivityTime = SystemClock.elapsedRealtime();
+            return super.read();
+        }
+
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException
+        {
+            _lastActivityTime = SystemClock.elapsedRealtime();
+            return super.read(b, off, len);
+        }
+
+        @Override
+        public void write(int b) throws IOException
+        {
+            _lastActivityTime = SystemClock.elapsedRealtime();
+            if (!_isChanged && _changesListener != null)
                 _changesListener.beforeModification(_path);
             super.write(b);
             _isChanged = true;
-		}
+        }
 
-		@Override
-		public void write(byte[] b, int off, int len) throws IOException
-		{			
-			_lastActivityTime = SystemClock.elapsedRealtime();
-            if(!_isChanged && _changesListener!=null)
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException
+        {
+            _lastActivityTime = SystemClock.elapsedRealtime();
+            if (!_isChanged && _changesListener != null)
                 _changesListener.beforeModification(_path);
             super.write(b, off, len);
             _isChanged = true;
-		}			
-		
-		@Override
-		public void close() throws IOException
-		{
-			super.close();
-            if(_changesListener!= null && _isChanged)
+        }
+
+        @Override
+        public void close() throws IOException
+        {
+            super.close();
+            if (_changesListener != null && _isChanged)
                 _changesListener.afterModification(_path);
-		}
-	
-		private final com.igeltech.nevercrypt.fs.Path _path;
-		private boolean _isChanged;
-	}
-	
-	protected long _lastActivityTime;
+        }
 
-	protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
-	{
-		return basePath == null ? null : new Path(basePath);
-	}
-	
-	private ChangeListener _changesListener;
+        private final com.igeltech.nevercrypt.fs.Path _path;
+        private boolean _isChanged;
+    }
 
-	private void beforeMove(FSRecord srcRecord, com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
-	{
-		_lastActivityTime = SystemClock.elapsedRealtime();
-		if(_changesListener!=null)
-		{
-			_changesListener.beforeRemoval(srcRecord.getPath());
-			com.igeltech.nevercrypt.fs.Path dst;
-			try
-			{
-				dst = newParent.getPath().combine(srcRecord.getName());
-			}
-			catch (IOException e)
-			{
-				dst = null;
-			}
-			if(dst!=null)
-				_changesListener.beforeModification(dst);
-		}
-	}
+    protected long _lastActivityTime;
 
-	private void afterMove(com.igeltech.nevercrypt.fs.Path srcPath, FSRecordWrapper srcRecord) throws IOException
-	{
-		if(_changesListener!= null)
-		{
-			_changesListener.afterRemoval(srcPath);
-			_changesListener.afterModification(srcRecord.getPath());
-		}
-	}
+    protected com.igeltech.nevercrypt.fs.Path getPathFromBasePath(com.igeltech.nevercrypt.fs.Path basePath) throws IOException
+    {
+        return basePath == null ? null : new Path(basePath);
+    }
 
-	private void beforeDelete(FSRecord srcRecord) throws IOException
-	{
-		_lastActivityTime = SystemClock.elapsedRealtime();
-		if(_changesListener!=null)
-			_changesListener.beforeRemoval(srcRecord.getPath());
-	}
+    private ChangeListener _changesListener;
 
-	private void afterDelete(FSRecord srcRecord)
-	{
-		if(_changesListener!= null)
-			_changesListener.afterRemoval(srcRecord.getPath());
-	}
+    private void beforeMove(FSRecord srcRecord, com.igeltech.nevercrypt.fs.Directory newParent) throws IOException
+    {
+        _lastActivityTime = SystemClock.elapsedRealtime();
+        if (_changesListener != null)
+        {
+            _changesListener.beforeRemoval(srcRecord.getPath());
+            com.igeltech.nevercrypt.fs.Path dst;
+            try
+            {
+                dst = newParent.getPath().combine(srcRecord.getName());
+            }
+            catch (IOException e)
+            {
+                dst = null;
+            }
+            if (dst != null)
+                _changesListener.beforeModification(dst);
+        }
+    }
 
+    private void afterMove(com.igeltech.nevercrypt.fs.Path srcPath, FSRecordWrapper srcRecord) throws IOException
+    {
+        if (_changesListener != null)
+        {
+            _changesListener.afterRemoval(srcPath);
+            _changesListener.afterModification(srcRecord.getPath());
+        }
+    }
+
+    private void beforeDelete(FSRecord srcRecord) throws IOException
+    {
+        _lastActivityTime = SystemClock.elapsedRealtime();
+        if (_changesListener != null)
+            _changesListener.beforeRemoval(srcRecord.getPath());
+    }
+
+    private void afterDelete(FSRecord srcRecord)
+    {
+        if (_changesListener != null)
+            _changesListener.afterRemoval(srcRecord.getPath());
+    }
 }

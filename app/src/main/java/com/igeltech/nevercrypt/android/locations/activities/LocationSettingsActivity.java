@@ -15,7 +15,6 @@ import com.igeltech.nevercrypt.android.locations.fragments.EncFsSettingsFragment
 
 public class LocationSettingsActivity extends SettingsBaseActivity
 {
-
     @Override
     protected Fragment getSettingsFragment()
     {
@@ -25,7 +24,7 @@ public class LocationSettingsActivity extends SettingsBaseActivity
     private Fragment getCreateLocationFragment()
     {
         Uri uri = getIntent().getData();
-        if(uri == null || uri.getScheme() == null)
+        if (uri == null || uri.getScheme() == null)
             throw new RuntimeException("Location uri is not set");
         switch (uri.getScheme())
         {
@@ -40,5 +39,4 @@ public class LocationSettingsActivity extends SettingsBaseActivity
                 throw new RuntimeException("Unknown location type");
         }
     }
-
 }

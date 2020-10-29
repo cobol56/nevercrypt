@@ -15,7 +15,6 @@ class ExFatRAIO implements RandomAccessIO
         _mode = mode;
     }
 
-
     @Override
     public void seek(long position) throws IOException
     {
@@ -46,7 +45,7 @@ class ExFatRAIO implements RandomAccessIO
     @Override
     public void setLength(long newLength) throws IOException
     {
-        if(_mode == File.AccessMode.Read)
+        if (_mode == File.AccessMode.Read)
             throw new IOException("Read-only mode");
         synchronized (_exfat._sync)
         {
@@ -61,14 +60,14 @@ class ExFatRAIO implements RandomAccessIO
     @Override
     public synchronized void write(int b) throws IOException
     {
-        _obBuf[0] = (byte)(b & 0xFF);
-        write(_obBuf,0,1);
+        _obBuf[0] = (byte) (b & 0xFF);
+        write(_obBuf, 0, 1);
     }
 
     @Override
     public void write(byte[] b, int off, int len) throws IOException
     {
-        if(_mode == File.AccessMode.Read)
+        if (_mode == File.AccessMode.Read)
             throw new IOException("Read-only mode");
         synchronized (_exfat._sync)
         {
@@ -93,7 +92,7 @@ class ExFatRAIO implements RandomAccessIO
     @Override
     public synchronized int read() throws IOException
     {
-        int cnt = read(_obBuf,0,1);
+        int cnt = read(_obBuf, 0, 1);
         return cnt <= 0 ? -1 : (_obBuf[0] & 0xFF);
     }
 
@@ -117,7 +116,7 @@ class ExFatRAIO implements RandomAccessIO
     {
         synchronized (_exfat._sync)
         {
-            if(_fileHandle != 0)
+            if (_fileHandle != 0)
             {
                 int res = _exfat.closeFile(_fileHandle);
                 if (res != 0)
@@ -125,7 +124,6 @@ class ExFatRAIO implements RandomAccessIO
                 _fileHandle = 0;
             }
         }
-
     }
 
     private final byte[] _obBuf = new byte[1];

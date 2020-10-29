@@ -30,9 +30,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
     {
         enum ResultType
         {
-            OK,
-            AskPermission,
-            DontAskPermission
+            OK, AskPermission, DontAskPermission
         }
 
         public static final String TAG = "CheckLocationWritableTaskFragment";
@@ -48,7 +46,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         {
             ExternalStorageLocation loc = getTargetLocation();
             DocumentTreeLocation docTreeLocation = getDocTreeLocation(_lm, loc);
-            if(docTreeLocation != null && docTreeLocation.getFS().getRootPath().exists())
+            if (docTreeLocation != null && docTreeLocation.getFS().getRootPath().exists())
                 state.setResult(ResultType.OK);
             else
                 state.setResult(isWritable(loc) ? ResultType.DontAskPermission : ResultType.AskPermission);
@@ -66,8 +64,8 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
             {
             }
             return false;
-
         }
+
         @Override
         protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
         {
@@ -103,9 +101,9 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
                 {
                     try
                     {
-                        if(result.getResult() == ResultType.OK)
+                        if (result.getResult() == ResultType.OK)
                             f.openLocation();
-                        else if(result.getResult() == ResultType.AskPermission)
+                        else if (result.getResult() == ResultType.AskPermission)
                         {
                             f.askWritePermission();
                             return;
@@ -159,17 +157,16 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == REQUEST_CODE_ADD_LOCATION)
+        if (requestCode == REQUEST_CODE_ADD_LOCATION)
         {
-            if(resultCode == AppCompatActivity.RESULT_OK)
+            if (resultCode == AppCompatActivity.RESULT_OK)
             {
                 Uri treeUri = data.getData();
-                if(treeUri!=null)
+                if (treeUri != null)
                 {
                     try
                     {
-                        getActivity().getContentResolver().takePersistableUriPermission(treeUri,
-                                Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        getActivity().getContentResolver().takePersistableUriPermission(treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                     }
                     catch (SecurityException e)
                     {
@@ -209,7 +206,8 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
             {
                 Logger.showAndLog(getActivity(), e);
             }
-        } else if (!loc.getExternalSettings().dontAskWritePermission())
+        }
+        else if (!loc.getExternalSettings().dontAskWritePermission())
         {
             startCheckWritableTask(loc);
             return;
@@ -220,7 +218,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
     @Override
     protected ExternalStorageLocation getTargetLocation()
     {
-        return (ExternalStorageLocation)super.getTargetLocation();
+        return (ExternalStorageLocation) super.getTargetLocation();
     }
 
     String getCheckWritableTaskTag(Location loc)
@@ -248,7 +246,7 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
     private void startCheckWritableTask(Location loc)
     {
         Bundle args = new Bundle();
-        LocationsManager.storePathsInBundle(args, loc, null );
+        LocationsManager.storePathsInBundle(args, loc, null);
         args.putString(ARG_OPENER_TAG, getTag());
         TaskFragment f = new CheckLocationWritableTaskFragment();
         f.setArguments(args);
@@ -261,5 +259,4 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
     }
 
     private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
-
 }

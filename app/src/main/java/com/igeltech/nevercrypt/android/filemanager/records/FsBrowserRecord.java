@@ -39,7 +39,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     public static void updateRowView(FileListViewFragment host, Object item)
     {
         RowViewInfo rvi = getCurrentRowViewInfo(host, item);
-        if(rvi!=null)
+        if (rvi != null)
             updateRowView(rvi);
     }
 
@@ -50,17 +50,17 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 
     public static RowViewInfo getCurrentRowViewInfo(FileListViewFragment host, Object item)
     {
-        if(host == null || host.isRemoving() || !host.isResumed())
+        if (host == null || host.isRemoving() || !host.isResumed())
             return null;
         ListView list = host.getListView();
-        if(list == null)
+        if (list == null)
             return null;
         int start = list.getFirstVisiblePosition();
-        for(int i=start, j=list.getLastVisiblePosition();i<=j;i++)
-            if(j<list.getCount() && item == list.getItemAtPosition(i))
+        for (int i = start, j = list.getLastVisiblePosition(); i <= j; i++)
+            if (j < list.getCount() && item == list.getItemAtPosition(i))
             {
                 RowViewInfo rvi = new RowViewInfo();
-                rvi.view = list.getChildAt(i-start);
+                rvi.view = list.getChildAt(i - start);
                 rvi.position = i;
                 rvi.listView = list;
                 return rvi;
@@ -70,7 +70,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 
     public static RowViewInfo getCurrentRowViewInfo(FileManagerActivity host, Object item)
     {
-        if(host == null)
+        if (host == null)
             return null;
         FileListViewFragment f = (FileListViewFragment) host.getSupportFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
         return getCurrentRowViewInfo(f, item);
@@ -96,11 +96,11 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     @Override
     public View createView(int position, ViewGroup parent)
     {
-        if(_host == null)
+        if (_host == null)
             return null;
         LayoutInflater inflater = (LayoutInflater) _host.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.fs_browser_row, parent, false);
-        ((ViewGroup)v).setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+        ((ViewGroup) v).setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         updateView(v, position);
         return v;
     }
@@ -110,15 +110,14 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     {
         final FileListViewFragment hf = getHostFragment();
         AppCompatCheckBox cb = view.findViewById(android.R.id.checkbox);
-        if(cb!=null)
+        if (cb != null)
         {
-            if(allowSelect() && (_host.isSelectAction() || hf.isInSelectionMode()) && (!_host.isSelectAction() || !_host.isSingleSelectionMode()))
+            if (allowSelect() && (_host.isSelectAction() || hf.isInSelectionMode()) && (!_host.isSelectAction() || !_host.isSingleSelectionMode()))
             {
                 cb.setOnCheckedChangeListener(null);
                 cb.setChecked(isSelected());
-                cb.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                {
-                    if(isChecked)
+                cb.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+                    if (isChecked)
                         hf.selectFile(FsBrowserRecord.this);
                     else
                         hf.unselectFile(FsBrowserRecord.this);
@@ -129,18 +128,17 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
                 cb.setVisibility(View.INVISIBLE);
         }
         RadioButton rb = view.findViewById(R.id.radio);
-        if(rb!=null)
+        if (rb != null)
         {
-            if(allowSelect() && _host.isSelectAction() && _host.isSingleSelectionMode())
+            if (allowSelect() && _host.isSelectAction() && _host.isSingleSelectionMode())
             {
                 rb.setOnCheckedChangeListener(null);
                 rb.setChecked(isSelected());
-                rb.setOnCheckedChangeListener((compoundButton, isChecked) ->
-                {
-                    if(isChecked)
+                rb.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+                    if (isChecked)
                         hf.selectFile(FsBrowserRecord.this);
                     else
-                       hf.unselectFile(FsBrowserRecord.this);
+                        hf.unselectFile(FsBrowserRecord.this);
                 });
                 rb.setVisibility(View.VISIBLE);
             }
@@ -149,18 +147,17 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         }
 
         AppCompatTextView tv = view.findViewById(android.R.id.text1);
-     	tv.setText(getName());
+        tv.setText(getName());
 
         AppCompatImageView iv = view.findViewById(android.R.id.icon);
         iv.setImageDrawable(getDefaultIcon());
         iv.setScaleType(AppCompatImageView.ScaleType.CENTER_CROP);
-        iv.setOnClickListener(view1 ->
-        {
+        iv.setOnClickListener(view1 -> {
             if (allowSelect())
             {
-                if(isSelected())
+                if (isSelected())
                 {
-                    if(!_host.isSelectAction() || !_host.isSingleSelectionMode())
+                    if (!_host.isSelectAction() || !_host.isSingleSelectionMode())
                         hf.unselectFile(FsBrowserRecord.this);
                 }
                 else
@@ -192,27 +189,27 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 
     @Override
     public boolean allowSelect()
-	{
+    {
         return true;
-	}
-
-	@Override
-	public boolean open() throws Exception
-	{		
-		return false;
-	}
+    }
 
     @Override
-	public boolean openInplace() throws Exception
-	{
-		return false;
-	}
-	
-	@Override
-	public void setHostActivity(FileManagerActivity host)
-	{
-		_host = host;
-	}
+    public boolean open() throws Exception
+    {
+        return false;
+    }
+
+    @Override
+    public boolean openInplace() throws Exception
+    {
+        return false;
+    }
+
+    @Override
+    public void setHostActivity(FileManagerActivity host)
+    {
+        _host = host;
+    }
 
     @Override
     public boolean needLoadExtendedInfo()
@@ -227,14 +224,14 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     }
 
     public FsBrowserRecord(Context context)
-	{
+    {
         _context = context;
-	}
+    }
 
-	protected final Context _context;
-	protected FileManagerActivity _host;
+    protected final Context _context;
+    protected FileManagerActivity _host;
 
-	protected abstract Drawable getDefaultIcon();
+    protected abstract Drawable getDefaultIcon();
 
     protected FileListViewFragment getHostFragment()
     {

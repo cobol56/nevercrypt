@@ -36,7 +36,7 @@ public class CreateEncFsTaskFragment extends CreateLocationTaskFragment
     {
         super.initFormatter(state, formatter, password);
         Bundle args = getArguments();
-        EncFsFormatter cf = (EncFsFormatter)formatter;
+        EncFsFormatter cf = (EncFsFormatter) formatter;
         cf.setDataCodecName(args.getString(ARG_CIPHER_NAME));
         cf.setNameCodecName(args.getString(ARG_NAME_CIPHER_NAME));
         Config c = cf.getConfig();
@@ -56,16 +56,14 @@ public class CreateEncFsTaskFragment extends CreateLocationTaskFragment
     {
         Bundle args = getArguments();
         Path path = locationLocation.getCurrentPath();
-        if(path.isFile())
+        if (path.isFile())
             path = path.getParentPath();
         if (path == null || !path.isDirectory())
-            throw new UserException(_context,
-                    R.string.wrong_encfs_root_path);
+            throw new UserException(_context, R.string.wrong_encfs_root_path);
         if (!args.getBoolean(ARG_OVERWRITE, false))
         {
             Path cfgPath = PathUtil.buildPath(path, Config.CONFIG_FILENAME);
-            if (cfgPath!=null && cfgPath.isFile()
-                    && cfgPath.getFile().getSize() > 0)
+            if (cfgPath != null && cfgPath.isFile() && cfgPath.getFile().getSize() > 0)
             {
                 state.setResult(RESULT_REQUEST_OVERWRITE);
                 return false;

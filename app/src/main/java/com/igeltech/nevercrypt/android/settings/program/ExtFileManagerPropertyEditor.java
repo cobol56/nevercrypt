@@ -24,10 +24,9 @@ import static com.igeltech.nevercrypt.android.settings.UserSettings.EXTERNAL_FIL
 
 public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
 {
-
     public static void saveExtInfo(UserSettings settings, Settings.ExternalFileManagerInfo info)
     {
-        if(info == null)
+        if (info == null)
             settings.getSharedPreferences().edit().remove(EXTERNAL_FILE_MANAGER).commit();
         else
         {
@@ -44,12 +43,7 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
 
     public ExtFileManagerPropertyEditor(ProgramSettingsFragmentBase f)
     {
-        super(
-                f,
-                R.string.use_external_file_manager,
-                R.string.use_external_file_manager_desc,
-                f.getTag()
-        );
+        super(f, R.string.use_external_file_manager, R.string.use_external_file_manager_desc, f.getTag());
     }
 
     @Override
@@ -61,7 +55,7 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
     @Override
     public void load()
     {
-        if(!getHost().getPropertiesView().isPropertyEnabled(getId()))
+        if (!getHost().getPropertiesView().isPropertyEnabled(getId()))
             return;
         loadExtBrowserInfo();
         loadChoiceStrings();
@@ -71,9 +65,7 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
     @Override
     protected int loadValue()
     {
-        return getSelectionFromExtFMInfo(
-                getHost().getSettings().getExternalFileManagerInfo()
-        );
+        return getSelectionFromExtFMInfo(getHost().getSettings().getExternalFileManagerInfo());
     }
 
     @Override
@@ -99,7 +91,6 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         {
             return label;
         }
-
     }
 
     private final ArrayList<ExternalBrowserInfo> _extBrowserInfo = new ArrayList<>();
@@ -116,10 +107,7 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         //Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         //i.addCategory(Intent.CATEGORY_OPENABLE);
         //addMatches(_extBrowserInfo, i);
-        testPath = DocumentsContract.buildTreeDocumentUri(
-                ContainersDocumentProvider.AUTHORITY,
-                "id"
-        );
+        testPath = DocumentsContract.buildTreeDocumentUri(ContainersDocumentProvider.AUTHORITY, "id");
         addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, DocumentsContract.Document.MIME_TYPE_DIR);
         //addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, "resource/folder");
     }
@@ -128,21 +116,18 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
     {
         _choiceStrings.clear();
         _choiceStrings.add(getHost().getString(R.string.builtin_file_manager));
-        for(ExternalBrowserInfo i: _extBrowserInfo)
+        for (ExternalBrowserInfo i : _extBrowserInfo)
             _choiceStrings.add(i.label);
     }
 
     private int getSelectionFromExtFMInfo(Settings.ExternalFileManagerInfo info)
     {
-        if(info != null)
-            for(int i=0;i<_extBrowserInfo.size();i++)
+        if (info != null)
+            for (int i = 0; i < _extBrowserInfo.size(); i++)
             {
                 ExternalBrowserInfo item = _extBrowserInfo.get(i);
-                if(info.packageName.equals(item.resolveInfo.activityInfo.packageName) &&
-                        info.className.equals(item.resolveInfo.activityInfo.name) &&
-                        info.action.equals(item.action) &&
-                        info.mimeType.equals(item.mime))
-                    return i+1;
+                if (info.packageName.equals(item.resolveInfo.activityInfo.packageName) && info.className.equals(item.resolveInfo.activityInfo.name) && info.action.equals(item.action) && info.mimeType.equals(item.mime))
+                    return i + 1;
             }
         return 0;
     }
@@ -150,7 +135,7 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
     private Settings.ExternalFileManagerInfo getExtFMInfoFromSelection(int selection)
     {
         int idx = selection - 1;
-        if(idx<0 || idx>=_extBrowserInfo.size())
+        if (idx < 0 || idx >= _extBrowserInfo.size())
             return null;
 
         ExternalBrowserInfo item = _extBrowserInfo.get(idx);
@@ -162,17 +147,16 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         return res;
     }
 
-    private void addMatches(List<ExternalBrowserInfo> matches,String action,Uri data,String mime)
+    private void addMatches(List<ExternalBrowserInfo> matches, String action, Uri data, String mime)
     {
         final Intent intent = new Intent(action);
-        if(data!=null && mime!=null)
+        if (data != null && mime != null)
             intent.setDataAndType(data, mime);
-        else if(data!=null)
+        else if (data != null)
             intent.setData(data);
-        else if(mime!=null)
+        else if (mime != null)
             intent.setType(mime);
         addMatches(matches, intent);
-
     }
 
     private void addMatches(List<ExternalBrowserInfo> matches, Intent intent)
@@ -182,25 +166,25 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         final List<ResolveInfo> allMatches = pacMan.queryIntentActivities(intent, 0);
         for (ResolveInfo match : allMatches)
         {
-            if(match.activityInfo!=null && !match.activityInfo.applicationInfo.packageName.equals(ignoredPackage) && !isFileManagerAdded(matches, match))
+            if (match.activityInfo != null && !match.activityInfo.applicationInfo.packageName.equals(ignoredPackage) && !isFileManagerAdded(matches, match))
             {
                 ExternalBrowserInfo eb = new ExternalBrowserInfo();
                 eb.resolveInfo = match;
                 eb.action = intent.getAction();
                 eb.mime = intent.getType() == null ? "" : intent.getType();
                 eb.label = match.loadLabel(pacMan).toString();
-                if(intent.getData()!=null && ContentResolver.SCHEME_CONTENT.equals(intent.getData().getScheme()))
+                if (intent.getData() != null && ContentResolver.SCHEME_CONTENT.equals(intent.getData().getScheme()))
                     eb.label += " (content provider browser)";
                 matches.add(eb);
             }
         }
     }
 
-    private boolean isFileManagerAdded(List<ExternalBrowserInfo> matches,ResolveInfo m)
+    private boolean isFileManagerAdded(List<ExternalBrowserInfo> matches, ResolveInfo m)
     {
         for (ExternalBrowserInfo match : matches)
         {
-            if(match.resolveInfo.activityInfo.packageName.equals(m.activityInfo.packageName) && match.resolveInfo.activityInfo.name.equals(m.activityInfo.name))
+            if (match.resolveInfo.activityInfo.packageName.equals(m.activityInfo.packageName) && match.resolveInfo.activityInfo.name.equals(m.activityInfo.name))
                 return true;
         }
         return false;

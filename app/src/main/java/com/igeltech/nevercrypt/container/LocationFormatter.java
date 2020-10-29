@@ -4,13 +4,13 @@ import android.os.Parcel;
 
 public abstract class LocationFormatter extends LocationFormatterBase
 {
-	public LocationFormatter()
-	{
+    public LocationFormatter()
+    {
 
-	}
+    }
 
-	protected LocationFormatter(Parcel in)
-	{
-		super(in);
-	}
+    protected LocationFormatter(Parcel in)
+    {
+        super(in);
+    }
 }

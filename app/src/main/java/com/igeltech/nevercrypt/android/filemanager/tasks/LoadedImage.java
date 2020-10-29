@@ -31,9 +31,9 @@ public class LoadedImage
     public static Single<LoadedImage> createObservable(Context context, Path imagePath, Rect viewRect, Rect regionRect)
     {
         return Single.create(emitter -> {
-            PowerManager pm = (PowerManager)context.getApplicationContext().getSystemService(Context.POWER_SERVICE);
+            PowerManager pm = (PowerManager) context.getApplicationContext().getSystemService(Context.POWER_SERVICE);
             PowerManager.WakeLock wl = pm == null ? null : pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LoadImageTask");
-            if(wl!=null)
+            if (wl != null)
                 wl.acquire(10000);
             try
             {
@@ -43,10 +43,9 @@ public class LoadedImage
             }
             finally
             {
-                if(wl!=null)
+                if (wl != null)
                     wl.release();
             }
-
         });
     }
 
@@ -105,41 +104,41 @@ public class LoadedImage
         BitmapFactory.Options params = loadImageParams(_imagePath);
         boolean loadFull;
         boolean isJpg = "image/jpeg".equalsIgnoreCase(params.outMimeType);
-        if(_regionRect == null)
+        if (_regionRect == null)
         {
-            _regionRect = new Rect(0,0,params.outWidth,params.outHeight);
+            _regionRect = new Rect(0, 0, params.outWidth, params.outHeight);
             _isOptimSupported = isJpg || "image/png".equalsIgnoreCase(params.outMimeType);
             loadFull = true;
         }
         else
         {
-            if(_regionRect.top<0)
+            if (_regionRect.top < 0)
                 _regionRect.top = 0;
-            if(_regionRect.left<0)
-                _regionRect.left=0;
-            if(_regionRect.width()>params.outWidth)
-                _regionRect.right -= (_regionRect.width()-params.outWidth);
-            if(_regionRect.height()>params.outHeight)
-                _regionRect.bottom -= (_regionRect.height()-params.outHeight);
+            if (_regionRect.left < 0)
+                _regionRect.left = 0;
+            if (_regionRect.width() > params.outWidth)
+                _regionRect.right -= (_regionRect.width() - params.outWidth);
+            if (_regionRect.height() > params.outHeight)
+                _regionRect.bottom -= (_regionRect.height() - params.outHeight);
             loadFull = false;
         }
         _sampleSize = calcSampleSize(_viewRect, _regionRect);
-        for(int i=0;i<5;i++,_sampleSize*=2)
+        for (int i = 0; i < 5; i++, _sampleSize *= 2)
         {
             try
             {
-                if(loadFull)
+                if (loadFull)
                     _image = loadDownsampledImage(_imagePath, _sampleSize);
                 else
                     _image = CompatHelper.loadBitmapRegion(_imagePath, _sampleSize, _regionRect);
 
                 _flipX = _flipY = false;
                 _rotation = 0;
-                if(isJpg)
+                if (isJpg)
                     loadInitOrientation(_imagePath);
                 return;
             }
-            catch(OutOfMemoryError e)
+            catch (OutOfMemoryError e)
             {
                 System.gc();
             }
@@ -199,7 +198,7 @@ public class LoadedImage
         }
         catch (Exception e)
         {
-            if(GlobalConfig.isDebug())
+            if (GlobalConfig.isDebug())
                 Logger.log(e);
         }
     }

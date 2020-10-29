@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.container;
 
-
 import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
 
 import java.io.Closeable;

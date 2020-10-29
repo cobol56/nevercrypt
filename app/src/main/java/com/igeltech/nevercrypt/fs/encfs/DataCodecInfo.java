@@ -7,6 +7,8 @@ import com.igeltech.nevercrypt.fs.encfs.macs.MACCalculator;
 public interface DataCodecInfo extends AlgInfo
 {
     FileEncryptionEngine getFileEncDec();
+
     EncryptionEngine getStreamEncDec();
+
     MACCalculator getChecksumCalculator();
 }

@@ -29,7 +29,7 @@ public class ExFat implements FileSystem
 
     public static void makeNewFS(RandomAccessIO img, String label, int volumeSerial, long firstSector, int sectorsPerCluster) throws IOException
     {
-        if(makeFS(img, label, volumeSerial, firstSector, sectorsPerCluster)!=0)
+        if (makeFS(img, label, volumeSerial, firstSector, sectorsPerCluster) != 0)
             throw new IOException("Failed formatting an ExFAT image");
     }
 
@@ -37,7 +37,7 @@ public class ExFat implements FileSystem
     {
         _exfatImageFile = exFatImage;
         _exfatPtr = openFS(readOnly);
-        if(_exfatPtr == 0)
+        if (_exfatPtr == 0)
             throw new IOException("Failed opening exfat file system");
     }
 
@@ -80,9 +80,8 @@ public class ExFat implements FileSystem
     public void overwriteFreeSpace() throws IOException
     {
         int res = randFreeSpace();
-        if(res != 0)
+        if (res != 0)
             throw new IOException("Failed overwriting the free space. code " + res);
-
     }
 
     static
@@ -97,25 +96,46 @@ public class ExFat implements FileSystem
     private static native int makeFS(RandomAccessIO raio, String label, int volumeSerial, long firstSector, int sectorsPerCluster);
 
     native int readDir(String path, Collection<String> files);
+
     native int getAttr(FileStat stat, String path);
+
     native int makeDir(String path);
+
     native int makeFile(String path);
+
     native long getFreeSpace();
+
     native long getTotalSpace();
+
     native int rename(String oldPath, String newPath);
+
     native int delete(String path);
+
     native int rmdir(String path);
+
     native int truncate(long handle, long size);
+
     native long openFile(String path);
+
     native int closeFile(long handle);
+
     native long getSize(long handle);
+
     native int read(long handle, byte[] buf, int bufOffset, int count, long position);
+
     native int write(long handle, byte[] buf, int bufOffset, int count, long position);
+
     native int flush(long handle);
+
     native long openFS(boolean readOnly);
+
     native int closeFS();
+
     native long getFreeSpaceStartOffset();
+
     native int randFreeSpace();
+
     native int updateTime(String path, long time);
+
     native static int getVersion();
 }

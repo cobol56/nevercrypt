@@ -17,130 +17,129 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public abstract class OMLocationBase extends LocationBase implements OMLocation, Cloneable
-{	
-	public static class ExternalSettings extends LocationBase.ExternalSettings implements OMLocation.ExternalSettings
-	{
-		public ExternalSettings()
-		{
-			
-		}	
+{
+    public static class ExternalSettings extends LocationBase.ExternalSettings implements OMLocation.ExternalSettings
+    {
+        public ExternalSettings()
+        {
 
-		@Override
-		public void setPassword(byte[] password)
-		{
-			_pass = password == null ? null : encryptAndEncode(password);
-		}
+        }
 
-		@Override
-		public byte[] getPassword()
-		{
-			return _pass == null ? null : decodeAndDecrypt(_pass);
-		}
+        @Override
+        public void setPassword(byte[] password)
+        {
+            _pass = password == null ? null : encryptAndEncode(password);
+        }
 
-		@Override
-		public boolean hasPassword()
-		{
-			return _pass != null && _pass.length() > 0;
-		}
+        @Override
+        public byte[] getPassword()
+        {
+            return _pass == null ? null : decodeAndDecrypt(_pass);
+        }
 
-		@Override
-		public void setCustomKDFIterations(int val)
-		{
-			_customKDFIterations = val;
-		}
+        @Override
+        public boolean hasPassword()
+        {
+            return _pass != null && _pass.length() > 0;
+        }
 
-		@Override
-		public int getCustomKDFIterations()
-		{
-			return _customKDFIterations;
-		}
+        @Override
+        public void setCustomKDFIterations(int val)
+        {
+            _customKDFIterations = val;
+        }
 
-		@Override
-		public void saveToJSONObject(JSONObject jo) throws JSONException
-		{
-			super.saveToJSONObject(jo);
-			if(_pass!=null)
-				jo.put(SETTINGS_PASS, _pass);
-			if(_customKDFIterations >= 0)
-				storeProtectedField(jo, SETTINGS_CUSTOM_KDF_ITERATIONS, String.valueOf(_customKDFIterations));
-			else
-				jo.remove(SETTINGS_CUSTOM_KDF_ITERATIONS);
-		}
-		
-		@Override
-		public void loadFromJSONOjbect(JSONObject jo) throws JSONException
-		{
-			super.loadFromJSONOjbect(jo);
-			_pass = jo.optString(SETTINGS_PASS, null);
-			String iters = loadProtectedString(jo, SETTINGS_CUSTOM_KDF_ITERATIONS);
-			if(iters!=null)
-				_customKDFIterations = Integer.valueOf(iters);
-			else
-				_customKDFIterations = -1;
-		}
-		
-		private static final String SETTINGS_PASS = "pass";
-		private static final String SETTINGS_CUSTOM_KDF_ITERATIONS = "custom_kdf_iterations";
+        @Override
+        public int getCustomKDFIterations()
+        {
+            return _customKDFIterations;
+        }
 
-		private String _pass;
-		private int _customKDFIterations;
-	}
+        @Override
+        public void saveToJSONObject(JSONObject jo) throws JSONException
+        {
+            super.saveToJSONObject(jo);
+            if (_pass != null)
+                jo.put(SETTINGS_PASS, _pass);
+            if (_customKDFIterations >= 0)
+                storeProtectedField(jo, SETTINGS_CUSTOM_KDF_ITERATIONS, String.valueOf(_customKDFIterations));
+            else
+                jo.remove(SETTINGS_CUSTOM_KDF_ITERATIONS);
+        }
 
-	protected OMLocationBase(OMLocationBase sibling)
-	{
-		super(sibling);
-	}
+        @Override
+        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
+        {
+            super.loadFromJSONOjbect(jo);
+            _pass = jo.optString(SETTINGS_PASS, null);
+            String iters = loadProtectedString(jo, SETTINGS_CUSTOM_KDF_ITERATIONS);
+            if (iters != null)
+                _customKDFIterations = Integer.valueOf(iters);
+            else
+                _customKDFIterations = -1;
+        }
 
-	protected OMLocationBase(Settings settings, SharedData sharedData)
-	{
-		super(settings, sharedData);
-	}
-	
-	@Override		
-	public synchronized void close(boolean force) throws IOException
-	{
-		closeFileSystem(force);
-		SecureBuffer p = getPassword();
-		if(p != null)
-		{
-			p.close();
-			getSharedData().password = null;
-		}
-	}
+        private static final String SETTINGS_PASS = "pass";
+        private static final String SETTINGS_CUSTOM_KDF_ITERATIONS = "custom_kdf_iterations";
+        private String _pass;
+        private int _customKDFIterations;
+    }
 
-	@Override
-	public synchronized void setPassword(SecureBuffer password)
-	{
-		SecureBuffer p = getPassword();
-		if(p != null && p != password)
-			p.close();
+    protected OMLocationBase(OMLocationBase sibling)
+    {
+        super(sibling);
+    }
 
-		getSharedData().password = password;
-	}
+    protected OMLocationBase(Settings settings, SharedData sharedData)
+    {
+        super(settings, sharedData);
+    }
 
-	@Override
-	public void setNumKDFIterations(int num)
-	{
-		getSharedData().numKDFIterations = num;
-	}
-	
-	@Override
-	public boolean hasPassword()
-	{
-		return false;
-	}
+    @Override
+    public synchronized void close(boolean force) throws IOException
+    {
+        closeFileSystem(force);
+        SecureBuffer p = getPassword();
+        if (p != null)
+        {
+            p.close();
+            getSharedData().password = null;
+        }
+    }
 
-	@Override
+    @Override
+    public synchronized void setPassword(SecureBuffer password)
+    {
+        SecureBuffer p = getPassword();
+        if (p != null && p != password)
+            p.close();
+
+        getSharedData().password = password;
+    }
+
+    @Override
+    public void setNumKDFIterations(int num)
+    {
+        getSharedData().numKDFIterations = num;
+    }
+
+    @Override
+    public boolean hasPassword()
+    {
+        return false;
+    }
+
+    @Override
     public boolean hasCustomKDFIterations()
     {
         return false;
     }
 
-	@Override
-	public boolean requirePassword()
-	{
-		return hasPassword() && !getExternalSettings().hasPassword();
-	}
+    @Override
+    public boolean requirePassword()
+    {
+        return hasPassword() && !getExternalSettings().hasPassword();
+    }
 
     @Override
     public boolean requireCustomKDFIterations()
@@ -148,107 +147,104 @@ public abstract class OMLocationBase extends LocationBase implements OMLocation,
         return hasCustomKDFIterations() && getExternalSettings().getCustomKDFIterations() < 0;
     }
 
-	@Override
-	public boolean isOpenOrMounted()
-	{
-		return isOpen();
-	}
+    @Override
+    public boolean isOpenOrMounted()
+    {
+        return isOpen();
+    }
 
-	@Override
-	public ExternalSettings getExternalSettings()
-	{
-		return (ExternalSettings) super.getExternalSettings();
-	}
-	
-	@Override
-	public void setOpeningProgressReporter(ProgressReporter pr)
-	{
-		_openingProgressReporter = pr;
-	}
+    @Override
+    public ExternalSettings getExternalSettings()
+    {
+        return (ExternalSettings) super.getExternalSettings();
+    }
 
-	@Override
-	public boolean isReadOnly()
-	{
-		return getSharedData().isReadOnly;
-	}
+    @Override
+    public void setOpeningProgressReporter(ProgressReporter pr)
+    {
+        _openingProgressReporter = pr;
+    }
 
-	@Override
-	public void setOpenReadOnly(boolean readOnly)
-	{
-		getSharedData().isReadOnly = readOnly;
-	}
+    @Override
+    public boolean isReadOnly()
+    {
+        return getSharedData().isReadOnly;
+    }
 
-	protected ProgressReporter _openingProgressReporter;
+    @Override
+    public void setOpenReadOnly(boolean readOnly)
+    {
+        getSharedData().isReadOnly = readOnly;
+    }
 
-	protected static class SharedData extends LocationBase.SharedData
-	{
-		protected SharedData(String id)
-		{
-			super(id);
-		}
-		SecureBuffer password;
-		int numKDFIterations;
-		boolean isReadOnly;
-	}
+    protected ProgressReporter _openingProgressReporter;
 
-	@Override
-	protected SharedData getSharedData()
-	{
-		return (SharedData) super.getSharedData();
-	}
+    protected static class SharedData extends LocationBase.SharedData
+    {
+        protected SharedData(String id)
+        {
+            super(id);
+        }
 
-	protected SecureBuffer getPassword()
-	{
-		return getSharedData().password;
-	}
+        SecureBuffer password;
+        int numKDFIterations;
+        boolean isReadOnly;
+    }
 
-	protected int getNumKDFIterations()
-	{
-		return getSharedData().numKDFIterations;
-	}
+    @Override
+    protected SharedData getSharedData()
+    {
+        return (SharedData) super.getSharedData();
+    }
 
-	@Override
-	public Uri getDeviceAccessibleUri(Path path)
-	{
+    protected SecureBuffer getPassword()
+    {
+        return getSharedData().password;
+    }
+
+    protected int getNumKDFIterations()
+    {
+        return getSharedData().numKDFIterations;
+    }
+
+    @Override
+    public Uri getDeviceAccessibleUri(Path path)
+    {
         return !_globalSettings.dontUseContentProvider() ? MainContentProvider.getContentUriFromLocation(this, path) : null;
     }
 
-	@Override
-	protected ArrayList<Path> loadPaths(Collection<String> paths) throws IOException
-	{
-		ArrayList<Path> res = new ArrayList<>();
-		for(String path: paths)
-			res.add(StdFs.getStdFs().getPath(path));
-		return res;
-	}
-	
-	protected byte[] getSelectedPassword()
-	{
-		SecureBuffer p = getPassword();
-		if(p!=null)
-		{
-			byte[] pb = p.getDataArray();
-			if (pb != null && pb.length > 0)
-				return pb;
-		}
-		byte[] res = getExternalSettings().getPassword();
-		if(res == null)
-			res = new byte[0];
-		return res;
-	}
+    @Override
+    protected ArrayList<Path> loadPaths(Collection<String> paths) throws IOException
+    {
+        ArrayList<Path> res = new ArrayList<>();
+        for (String path : paths)
+            res.add(StdFs.getStdFs().getPath(path));
+        return res;
+    }
 
-	protected int getSelectedKDFIterations()
-	{
-		int n = getNumKDFIterations();
-		return n == 0 ?
-				getExternalSettings().getCustomKDFIterations() :
-				n;
-	}
-	
-	protected byte[] getFinalPassword() throws IOException
-	{		
-		return getSelectedPassword();
-	}
-	
-	
+    protected byte[] getSelectedPassword()
+    {
+        SecureBuffer p = getPassword();
+        if (p != null)
+        {
+            byte[] pb = p.getDataArray();
+            if (pb != null && pb.length > 0)
+                return pb;
+        }
+        byte[] res = getExternalSettings().getPassword();
+        if (res == null)
+            res = new byte[0];
+        return res;
+    }
+
+    protected int getSelectedKDFIterations()
+    {
+        int n = getNumKDFIterations();
+        return n == 0 ? getExternalSettings().getCustomKDFIterations() : n;
+    }
+
+    protected byte[] getFinalPassword() throws IOException
+    {
+        return getSelectedPassword();
+    }
 }

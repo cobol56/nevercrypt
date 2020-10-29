@@ -35,7 +35,7 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
         //    i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
         FileListViewFragment f = getDrawerController().getMainActivity().getFileListViewFragment();
-        if(f!=null)
+        if (f != null)
             f.startActivityForResult(i, FileListViewFragment.REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER);
     }
 
@@ -50,7 +50,7 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
     {
         super.updateView(view, position);
         AppCompatImageView iv = view.findViewById(R.id.close);
-        if(iv!=null)
+        if (iv != null)
             iv.setVisibility(View.INVISIBLE);
     }
 
@@ -68,7 +68,7 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
 
     private synchronized static Drawable getIcon(Context context)
     {
-        if(_icon == null)
+        if (_icon == null)
         {
             _icon = context.getResources().getDrawable(R.drawable.ic_storage, context.getTheme());
         }

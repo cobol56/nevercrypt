@@ -15,7 +15,7 @@ public class OpeningOptionsActivity extends SettingsBaseActivity
     public void onBackPressed()
     {
         PropertiesHostWithStateBundle frag = (PropertiesHostWithStateBundle) getFragmentManager().findFragmentByTag(SETTINGS_FRAGMENT_TAG);
-        if(frag!=null)
+        if (frag != null)
         {
             try
             {
@@ -44,5 +44,4 @@ public class OpeningOptionsActivity extends SettingsBaseActivity
     {
         return new OpeningOptionsFragment();
     }
-
 }

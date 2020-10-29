@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.helpers;
 
-
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog;
@@ -22,8 +21,7 @@ public class AppInitHelper extends AppInitHelperBase
     void startInitSequence()
     {
         MasterPasswordDialog.getObservable(_activity).
-                flatMapCompletable(isValidPassword ->
-                {
+                flatMapCompletable(isValidPassword -> {
                     if (isValidPassword)
                         return ExtStorageWritePermisisonCheckFragment.getObservable(_activity);
                     throw new UserException(_activity, R.string.invalid_master_password);
@@ -33,9 +31,8 @@ public class AppInitHelper extends AppInitHelperBase
                 subscribe(() -> {
                     convertLegacySettings();
                     _initFinished.onComplete();
-                }, err ->
-                {
-                    if(!(err instanceof CancellationException))
+                }, err -> {
+                    if (!(err instanceof CancellationException))
                         Logger.log(err);
                 });
     }

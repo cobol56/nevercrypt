@@ -21,15 +21,10 @@ public class DrawerContainerMenuItem extends DrawerLocationMenuItem
         @Override
         public void onLocationOpened(Location location)
         {
-            if(location.isFileSystemOpen())
+            if (location.isFileSystemOpen())
             {
                 Bundle args = getArguments();
-                FileManagerActivity.openFileManager(
-                        (FileManagerActivity)getActivity(),
-                        location, args != null ?
-                                args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0)
-                                : 0
-                );
+                FileManagerActivity.openFileManager((FileManagerActivity) getActivity(), location, args != null ? args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0) : 0);
             }
         }
     }
@@ -37,10 +32,7 @@ public class DrawerContainerMenuItem extends DrawerLocationMenuItem
     @Override
     public Drawable getIcon()
     {
-        return getLocation().isOpenOrMounted() ?
-                getOpenedIcon(getContext())
-                :
-                getClosedIcon(getContext());
+        return getLocation().isOpenOrMounted() ? getOpenedIcon(getContext()) : getClosedIcon(getContext());
     }
 
     @Override
@@ -74,7 +66,7 @@ public class DrawerContainerMenuItem extends DrawerLocationMenuItem
 
     private synchronized static Drawable getOpenedIcon(Context context)
     {
-        if(_openedIcon == null)
+        if (_openedIcon == null)
         {
             _openedIcon = context.getResources().getDrawable(R.drawable.ic_lock_open, context.getTheme());
         }
@@ -83,7 +75,7 @@ public class DrawerContainerMenuItem extends DrawerLocationMenuItem
 
     private synchronized static Drawable getClosedIcon(Context context)
     {
-        if(_closedIcon == null)
+        if (_closedIcon == null)
         {
             _closedIcon = context.getResources().getDrawable(R.drawable.ic_lock, context.getTheme());
         }

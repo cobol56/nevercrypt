@@ -2,7 +2,6 @@ package com.igeltech.nevercrypt.fs.encfs;
 
 public class B64
 {
-
     public static int B256ToB64Bytes(int numB256Bytes)
     {
         return (numB256Bytes * 8 + 5) / 6;  // round up
@@ -23,23 +22,12 @@ public class B64
         return (numB32Bytes * 5) / 8;  // round down
     }
 
-    public static void changeBase2Inline(byte[] src, int offset, int srcLen, int src2Pow, int dst2Pow,
-                           boolean outputPartialLastByte)
+    public static void changeBase2Inline(byte[] src, int offset, int srcLen, int src2Pow, int dst2Pow, boolean outputPartialLastByte)
     {
         changeBase2Inline(src, offset, srcLen, src2Pow, dst2Pow, outputPartialLastByte, 0, 0, null, 0);
     }
 
-    public static void changeBase2Inline(
-            byte[] src,
-            int offset,
-            int srcLen,
-            int src2Pow,
-            int dst2Pow,
-            boolean outputPartialLastByte,
-            long work,
-            int workBits,
-            byte[] outLoc,
-            int outOffset)
+    public static void changeBase2Inline(byte[] src, int offset, int srcLen, int src2Pow, int dst2Pow, boolean outputPartialLastByte, long work, int workBits, byte[] outLoc, int outOffset)
     {
         int mask = (1 << dst2Pow) - 1;
         if (outLoc == null)
@@ -58,16 +46,14 @@ public class B64
         }
 
         // we have at least one value that can be output
-        byte outVal = (byte)(work & mask);
+        byte outVal = (byte) (work & mask);
         work >>= dst2Pow;
         workBits -= dst2Pow;
 
         if (srcLen > 0)
         {
             // more input left, so recurse
-            changeBase2Inline(
-                    src, offset, srcLen, src2Pow, dst2Pow, outputPartialLastByte,
-                    work, workBits, outLoc, outOffset + 1);
+            changeBase2Inline(src, offset, srcLen, src2Pow, dst2Pow, outputPartialLastByte, work, workBits, outLoc, outOffset + 1);
             outLoc[outOffset] = outVal;
         }
         else
@@ -79,7 +65,7 @@ public class B64
             {
                 while (workBits > 0)
                 {
-                    outLoc[outOffset++] = (byte)(work & mask);
+                    outLoc[outOffset++] = (byte) (work & mask);
                     work >>= dst2Pow;
                     workBits -= dst2Pow;
                 }
@@ -88,12 +74,13 @@ public class B64
     }
 
     // character set for ascii b64:
-// ",-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-// a standard base64 (eg a64l doesn't use ',-' but uses './'.  We don't
-// do that because '/' is a reserved character, and it is useful not to have
-// '.' included in the encrypted names, so that it can be reserved for files
-// with special meaning.
+    // ",-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    // a standard base64 (eg a64l doesn't use ',-' but uses './'.  We don't
+    // do that because '/' is a reserved character, and it is useful not to have
+    // '.' included in the encrypted names, so that it can be reserved for files
+    // with special meaning.
     private static final char[] B642AsciiTable = ",-0123456789".toCharArray();
+
     public static String B64ToString(byte[] in, int offset, int count)
     {
         StringBuilder sb = new StringBuilder();
@@ -109,7 +96,7 @@ public class B64
             }
             else
                 ch = B642AsciiTable[ch];
-            sb.append((char)ch);
+            sb.append((char) ch);
         }
         return sb.toString();
     }
@@ -125,7 +112,7 @@ public class B64
             else
                 ch += '2' - 26;
 
-            sb.append((char)ch);
+            sb.append((char) ch);
         }
         return sb.toString();
     }
@@ -134,25 +121,25 @@ public class B64
     {
         byte[] res = new byte[s.length()];
         int i = 0;
-        for(char ch: s.toCharArray())
+        for (char ch : s.toCharArray())
         {
             int lch = Character.toUpperCase(ch);
             if (lch >= 'A')
                 lch -= 'A';
             else
                 lch += 26 - '2';
-            res[i++] = (byte)(lch & 0xFF);
+            res[i++] = (byte) (lch & 0xFF);
         }
         return res;
     }
 
-    private static final char[] Ascii2B64Table =
-        "                                            01  23456789:;       ".toCharArray();
+    private static final char[] Ascii2B64Table = "                                            01  23456789:;       ".toCharArray();
+
     public static byte[] StringToB64(String s)
     {
         byte[] res = new byte[s.length()];
         int i = 0;
-        for(char ch: s.toCharArray())
+        for (char ch : s.toCharArray())
         {
             if (ch >= 'A')
             {
@@ -162,8 +149,8 @@ public class B64
                     ch += 12 - 'A';
             }
             else
-                ch = (char)(Ascii2B64Table[ch] - '0');
-            res[i++] = (byte)(ch & 0xFF);
+                ch = (char) (Ascii2B64Table[ch] - '0');
+            res[i++] = (byte) (ch & 0xFF);
         }
         return res;
     }

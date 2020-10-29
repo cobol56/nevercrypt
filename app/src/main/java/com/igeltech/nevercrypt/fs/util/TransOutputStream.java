@@ -56,7 +56,7 @@ public abstract class TransOutputStream extends OutputStream implements DataOutp
     public void close(boolean closeBase) throws IOException
     {
         writeCurrentBuffer();
-        if(closeBase)
+        if (closeBase)
             _base.close();
     }
 
@@ -70,7 +70,7 @@ public abstract class TransOutputStream extends OutputStream implements DataOutp
 
     protected byte[] getCurrentBuffer() throws IOException
     {
-        if(_bytesWritten >= _bufferSize)
+        if (_bytesWritten >= _bufferSize)
         {
             transformBufferAndWriteToBase(_buffer, 0, _bytesWritten, getBufferPosition());
             _bufferPosition += _bytesWritten;
@@ -81,7 +81,7 @@ public abstract class TransOutputStream extends OutputStream implements DataOutp
 
     protected void writeCurrentBuffer() throws IOException
     {
-        if(_bytesWritten > 0)
+        if (_bytesWritten > 0)
         {
             transformBufferAndWriteToBase(_buffer, 0, _bytesWritten, getBufferPosition());
             _bufferPosition += _bytesWritten;
@@ -91,7 +91,7 @@ public abstract class TransOutputStream extends OutputStream implements DataOutp
 
     protected void transformBufferAndWriteToBase(byte[] buf, int offset, int count, long bufferPosition) throws IOException
     {
-        transformBufferToBase(buf, offset, count , bufferPosition, buf);
+        transformBufferToBase(buf, offset, count, bufferPosition, buf);
         writeToBase(buf, offset, count);
     }
 
@@ -107,7 +107,7 @@ public abstract class TransOutputStream extends OutputStream implements DataOutp
 
     protected void log(String msg, Object... params)
     {
-        if(ENABLE_DEBUG_LOG && GlobalConfig.isDebug())
+        if (ENABLE_DEBUG_LOG && GlobalConfig.isDebug())
             Logger.log(String.format("TransInputStream: " + msg, params));
     }
 
@@ -125,5 +125,4 @@ public abstract class TransOutputStream extends OutputStream implements DataOutp
     {
         return _bufferSize - _bytesWritten;
     }
-
 }

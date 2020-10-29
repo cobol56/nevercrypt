@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.fs.util;
 
-
 import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
@@ -22,7 +21,6 @@ public class OutputStreamBasedRandomAccessIO implements RandomAccessIO
     public void close() throws IOException
     {
         _base.close();
-
     }
 
     @Override
@@ -60,7 +58,7 @@ public class OutputStreamBasedRandomAccessIO implements RandomAccessIO
     @Override
     public void seek(long position) throws IOException
     {
-        if(_curPos != position)
+        if (_curPos != position)
             throw new UnsupportedOperationException();
     }
 

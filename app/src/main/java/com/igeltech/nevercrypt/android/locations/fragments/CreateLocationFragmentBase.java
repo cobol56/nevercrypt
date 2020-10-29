@@ -37,28 +37,28 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
     @Override
     public void onCreate(Bundle state)
     {
-        if(state!=null)
+        if (state != null)
             _state.putAll(state);
         super.onCreate(state);
         setHasOptionsMenu(true);
     }
 
     @Override
-    public void onSaveInstanceState (Bundle outState)
+    public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
         outState.putAll(_state);
     }
 
     @Override
-	public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
-	{
-		inflater.inflate(R.menu.create_location_menu, menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.create_location_menu, menu);
         menu.findItem(R.id.confirm).setTitle(R.string.create_new_container);
-	}
+    }
 
     @Override
-    public void onPrepareOptionsMenu (Menu menu)
+    public void onPrepareOptionsMenu(Menu menu)
     {
         super.onPrepareOptionsMenu(menu);
         MenuItem mi = menu.findItem(R.id.confirm);
@@ -67,7 +67,7 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         boolean enabled = checkParams();
         mi.setEnabled(enabled);
         StateListDrawable sld = (StateListDrawable) getActivity().getResources().getDrawable(R.drawable.ic_menu_done);
-        if(sld!=null)
+        if (sld != null)
         {
             sld.setState(enabled ? new int[]{android.R.attr.state_enabled} : new int[0]);
             mi.setIcon(sld.getCurrent());
@@ -75,7 +75,7 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
     }
 
     @Override
-	public boolean onOptionsItemSelected(MenuItem menuItem)
+    public boolean onOptionsItemSelected(MenuItem menuItem)
     {
         if (menuItem.getItemId() == R.id.confirm)
         {
@@ -107,7 +107,7 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
     {
         super.onDestroy();
         SecureBuffer sb = _state.getParcelable(Openable.PARAM_PASSWORD);
-        if(sb!=null)
+        if (sb != null)
         {
             sb.close();
             _state.remove(Openable.PARAM_PASSWORD);
@@ -172,7 +172,6 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         _propertiesView.setPropertiesState(false);
         _propertiesView.setPropertyState(R.string.path_to_container, true);
         _propertiesView.setPropertyState(R.string.container_format, true);
-
     }
 
     public void showCreateNewLocationProperties()
@@ -185,7 +184,6 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
     {
         return new ProgressDialogTaskFragmentCallbacks(getActivity(), R.string.loading)
         {
-
             @Override
             public void onCompleted(Bundle args, TaskFragment.Result result)
             {
@@ -209,6 +207,7 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
             }
         };
     }
+
     public TaskFragment.TaskCallbacks getCreateLocationTaskCallbacks()
     {
         return new CreateLocationTaskCallbacks();
@@ -218,11 +217,11 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
     protected final Bundle _state = new Bundle();
 
     protected abstract TaskFragment createAddExistingLocationTask();
+
     protected abstract TaskFragment createCreateLocationTask();
 
     protected class CreateLocationTaskCallbacks implements TaskFragment.TaskCallbacks
     {
-
         @Override
         public void onPrepare(Bundle args)
         {
@@ -237,9 +236,9 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
             _dialog.setIndeterminate(true);
             _dialog.setCancelable(true);
             _dialog.setOnCancelListener(dialog -> {
-                CreateLocationTaskFragment f = (CreateLocationTaskFragment) getFragmentManager()
-                        .findFragmentByTag(CreateContainerTaskFragmentBase.TAG);
-                if (f != null) f.cancel();
+                CreateLocationTaskFragment f = (CreateLocationTaskFragment) getFragmentManager().findFragmentByTag(CreateContainerTaskFragmentBase.TAG);
+                if (f != null)
+                    f.cancel();
             });
             _dialog.show();
         }
@@ -253,13 +252,13 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         @Override
         public void onCompleted(Bundle args, TaskFragment.Result result)
         {
-            if (result.isCancelled()) return;
+            if (result.isCancelled())
+                return;
             try
             {
                 int res = (Integer) result.getResult();
                 if (res == CreateContainerTaskFragmentBase.RESULT_REQUEST_OVERWRITE)
-                    OverwriteContainerDialog
-                            .showDialog(getFragmentManager());
+                    OverwriteContainerDialog.showDialog(getFragmentManager());
                 else
                 {
                     getActivity().setResult(AppCompatActivity.RESULT_OK);
@@ -288,9 +287,9 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         createNewLocationProperties();
         createExtProperties();
 
-        if(_state.containsKey(ARG_ADD_EXISTING_LOCATION))
+        if (_state.containsKey(ARG_ADD_EXISTING_LOCATION))
         {
-            if(_state.getBoolean(ARG_ADD_EXISTING_LOCATION))
+            if (_state.getBoolean(ARG_ADD_EXISTING_LOCATION))
                 showAddExistingLocationProperties();
             else
                 showCreateNewLocationProperties();
@@ -312,10 +311,11 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
     {
 
     }
+
     protected boolean checkParams()
     {
-        Uri loc = _state.containsKey(CreateContainerTaskFragmentBase.ARG_LOCATION) ? (Uri)_state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION) : null;
-        return loc!=null && !loc.toString().isEmpty();
+        Uri loc = _state.containsKey(CreateContainerTaskFragmentBase.ARG_LOCATION) ? (Uri) _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION) : null;
+        return loc != null && !loc.toString().isEmpty();
     }
 
     protected void showAddExistingLocationRequestProperties()

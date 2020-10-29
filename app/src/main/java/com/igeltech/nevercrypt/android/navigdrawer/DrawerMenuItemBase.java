@@ -66,7 +66,7 @@ public abstract class DrawerMenuItemBase
         AppCompatTextView tv = view.findViewById(android.R.id.text1);
         tv.setText(getTitle());
         AppCompatImageView iconView = view.findViewById(android.R.id.icon);
-        if(iconView!=null)
+        if (iconView != null)
         {
             iconView.setContentDescription(getTitle());
             Drawable icon = getIcon();
@@ -84,9 +84,9 @@ public abstract class DrawerMenuItemBase
     {
         ListView list = getDrawerController().getDrawerListView();
         int start = list.getFirstVisiblePosition();
-        for(int i=start, j=list.getLastVisiblePosition();i<=j;i++)
-            if(this == list.getItemAtPosition(i))
-                return getAdapter().getView(i, list.getChildAt(i-start),list);
+        for (int i = start, j = list.getLastVisiblePosition(); i <= j; i++)
+            if (this == list.getItemAtPosition(i))
+                return getAdapter().getView(i, list.getChildAt(i - start), list);
         return null;
     }
 

@@ -14,59 +14,56 @@ import java.util.ArrayList;
 
 public class PathsStore
 {
-
-	public PathsStore(LocationsManager lm)
+    public PathsStore(LocationsManager lm)
     {
         _lm = lm;
     }
 
-	public JSONObject getParamsStore()
+    public JSONObject getParamsStore()
     {
         return _params;
     }
 
-	public Location getLocation()
+    public Location getLocation()
     {
         return _location;
     }
 
-	public void setLocation(Location location)
+    public void setLocation(Location location)
     {
         _location = location;
     }
 
-	public ArrayList<Path> getPathsStore()
+    public ArrayList<Path> getPathsStore()
     {
         return _paths;
     }
 
-	public boolean isPathStoreData(String data)
+    public boolean isPathStoreData(String data)
     {
         JSONObject jo;
         try
         {
             jo = new JSONObject(data);
             if (jo.has("location"))
-				return true;
-
-		}
+                return true;
+        }
         catch (JSONException ignored)
         {
-		}
+        }
 
-		try
+        try
         {
-			Uri uri = Uri.parse(data);
+            Uri uri = Uri.parse(data);
             return uri.getPath() != null;
-
-		}
+        }
         catch (Exception e)
         {
             return false;
         }
-	}
+    }
 
-	public boolean load(String data)
+    public boolean load(String data)
     {
         _paths.clear();
         _params = new JSONObject();
@@ -89,9 +86,9 @@ public class PathsStore
         }
         catch (JSONException ignored)
         {
-		}
+        }
 
-		try
+        try
         {
             Uri uri = Uri.parse(data);
             loadFromUri(uri);
@@ -101,9 +98,9 @@ public class PathsStore
             return false;
         }
         return true;
-	}
+    }
 
-	@Override
+    @Override
     public String toString()
     {
         if (_location == null)
@@ -131,12 +128,12 @@ public class PathsStore
         return jo.toString();
     }
 
-	private final LocationsManager _lm;
+    private final LocationsManager _lm;
     private Location _location;
     private final ArrayList<Path> _paths = new ArrayList<>();
     private JSONObject _params = new JSONObject();
 
-	private void loadFromJO(JSONObject jo) throws Exception
+    private void loadFromJO(JSONObject jo) throws Exception
     {
         String uriString = jo.getString("location");
         Uri uri = Uri.parse(uriString);
@@ -149,13 +146,11 @@ public class PathsStore
         }
         if (jo.has("params"))
             _params = jo.getJSONObject("params");
+    }
 
-	}
-
-	private void loadFromUri(Uri uri) throws Exception
+    private void loadFromUri(Uri uri) throws Exception
     {
         _location = _lm.getLocation(uri);
         _paths.add(_location.getCurrentPath());
     }
-
 }

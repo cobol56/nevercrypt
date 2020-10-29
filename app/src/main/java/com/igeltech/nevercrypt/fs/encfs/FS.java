@@ -43,12 +43,7 @@ public class FS extends FileSystemWrapper
     {
         HMACSHA1KDF kdf = new HMACSHA1KDF();
         kdf.setProgressReporter(pr);
-        return kdf.deriveKey(
-                password,
-                salt,
-                numIterations,
-                keySize + ivSize
-        );
+        return kdf.deriveKey(password, salt, numIterations, keySize + ivSize);
     }
 
     public FS(Path rootPath, Config config, byte[] password) throws ApplicationException, IOException
@@ -77,7 +72,7 @@ public class FS extends FileSystemWrapper
         byte[] derivedKey = null;
         try
         {
-            if(_progressReporter!=null)
+            if (_progressReporter != null)
             {
                 _progressReporter.setCurrentEncryptionAlgName(_config.getDataCodecInfo().getName());
                 _progressReporter.setCurrentKDFName("SHA1");
@@ -92,8 +87,8 @@ public class FS extends FileSystemWrapper
         }
         finally
         {
-            if(derivedKey!=null)
-                Arrays.fill(derivedKey, (byte)0);
+            if (derivedKey != null)
+                Arrays.fill(derivedKey, (byte) 0);
         }
     }
 
@@ -106,7 +101,6 @@ public class FS extends FileSystemWrapper
     {
         _progressReporter = r;
     }
-
 
     public void encryptVolumeKeyAndWriteConfig(byte[] password) throws ApplicationException, IOException
     {
@@ -126,8 +120,8 @@ public class FS extends FileSystemWrapper
         }
         finally
         {
-            if(derivedKey!=null)
-                Arrays.fill(derivedKey, (byte)0);
+            if (derivedKey != null)
+                Arrays.fill(derivedKey, (byte) 0);
         }
         _config.write(_rootRealPath);
     }
@@ -152,7 +146,7 @@ public class FS extends FileSystemWrapper
     @Override
     public void close(boolean force) throws IOException
     {
-        if(_encryptionKey!=null)
+        if (_encryptionKey != null)
         {
             Arrays.fill(_encryptionKey, (byte) 0);
             _encryptionKey = null;
@@ -174,19 +168,14 @@ public class FS extends FileSystemWrapper
 
     synchronized com.igeltech.nevercrypt.fs.encfs.Path getPathFromRealPath(Path realPath) throws IOException
     {
-        if(realPath == null)
+        if (realPath == null)
             return null;
-        if(realPath.equals(_rootRealPath))
+        if (realPath.equals(_rootRealPath))
             return _rootPath;
         com.igeltech.nevercrypt.fs.encfs.Path p = getCachedPath(realPath);
-        if(p==null)
+        if (p == null)
         {
-            p = new com.igeltech.nevercrypt.fs.encfs.Path(
-                    this,
-                    realPath,
-                    getConfig().getNameCodecInfo(),
-                    _encryptionKey
-            );
+            p = new com.igeltech.nevercrypt.fs.encfs.Path(this, realPath, getConfig().getNameCodecInfo(), _encryptionKey);
             _cache.put(realPath, p);
         }
         return p;
@@ -224,14 +213,9 @@ public class FS extends FileSystemWrapper
             return null;
         }
     }
-    private static final DataCodecInfo[] _supportedDataCodecs = new DataCodecInfo[] { new AESDataCodecInfo() };
-    private static final NameCodecInfo[] _supportedNameCodecs = new NameCodecInfo[] {
-            new BlockNameCodecInfo(),
-            new BlockCSNameCodecInfo(),
-            new StreamNameCodecInfo(),
-            new NullNameCodecInfo()
-    };
 
+    private static final DataCodecInfo[] _supportedDataCodecs = new DataCodecInfo[]{new AESDataCodecInfo()};
+    private static final NameCodecInfo[] _supportedNameCodecs = new NameCodecInfo[]{new BlockNameCodecInfo(), new BlockCSNameCodecInfo(), new StreamNameCodecInfo(), new NullNameCodecInfo()};
     private final Path _rootRealPath;
     private final Map<com.igeltech.nevercrypt.fs.Path, com.igeltech.nevercrypt.fs.encfs.Path> _cache = new HashMap<>();
     private final RootPath _rootPath;
@@ -241,21 +225,14 @@ public class FS extends FileSystemWrapper
 
     private byte[] deriveKey(byte[] password) throws EncryptionEngineException, DigestException
     {
-        return deriveKey(
-                password,
-                getConfig().getSalt(),
-                getConfig().getKDFIterations(),
-                getConfig().getKeySize(),
-                getConfig().getDataCodecInfo().getFileEncDec().getIVSize(),
-                _progressReporter
-        );
+        return deriveKey(password, getConfig().getSalt(), getConfig().getKDFIterations(), getConfig().getKeySize(), getConfig().getDataCodecInfo().getFileEncDec().getIVSize(), _progressReporter);
     }
 
     private byte[] decryptVolumeKey(byte[] derivedKey) throws EncryptionEngineException, WrongPasswordException
     {
         byte[] encryptedVolumeKey = getConfig().getEncryptedVolumeKey();
         int checksum = 0;
-        for(int i=0;i<KEY_CHECKSUM_BYTES;i++)
+        for (int i = 0; i < KEY_CHECKSUM_BYTES; i++)
             checksum = (checksum << 8) | (encryptedVolumeKey[i] & 0xFF);
         byte[] volumeKey = Arrays.copyOfRange(encryptedVolumeKey, KEY_CHECKSUM_BYTES, encryptedVolumeKey.length);
         EncryptionEngine ee = getConfig().getDataCodecInfo().getStreamEncDec();
@@ -320,7 +297,7 @@ public class FS extends FileSystemWrapper
 
         for (int i = 1; i <= FS.KEY_CHECKSUM_BYTES; ++i)
         {
-            res[FS.KEY_CHECKSUM_BYTES - i] = (byte)checksum;
+            res[FS.KEY_CHECKSUM_BYTES - i] = (byte) checksum;
             checksum >>= 8;
         }
         return res;

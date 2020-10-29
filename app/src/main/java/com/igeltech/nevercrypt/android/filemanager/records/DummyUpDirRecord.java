@@ -11,60 +11,59 @@ import java.util.Stack;
 
 public class DummyUpDirRecord extends FolderRecord
 {
-	public DummyUpDirRecord(Context context) throws IOException
-	{
+    public DummyUpDirRecord(Context context) throws IOException
+    {
         super(context);
-	}
+    }
 
-	@Override
-	public String getName()
-	{
-		return "..";
-	}	
-	
-	@Override
-	public boolean allowSelect()
-	{
-		return false;
-	}
-	
     @Override
-	public boolean isFile()
-	{
-		return false;
-	}
+    public String getName()
+    {
+        return "..";
+    }
 
-	@Override
-	public boolean isDirectory()
-	{
-		return true;
-	}
+    @Override
+    public boolean allowSelect()
+    {
+        return false;
+    }
 
-	@Override
-	public boolean open() throws Exception
-	{
+    @Override
+    public boolean isFile()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean isDirectory()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean open() throws Exception
+    {
         super.open();
-		Stack<FileListDataFragment.HistoryItem> nh = _host.getFileListDataFragment().getNavigHistory();
-		if(!nh.empty())
-			nh.pop();
-		return true;
-	}
+        Stack<FileListDataFragment.HistoryItem> nh = _host.getFileListDataFragment().getNavigHistory();
+        if (!nh.empty())
+            nh.pop();
+        return true;
+    }
 
-	@Override
-	protected Drawable getDefaultIcon()
-	{
-		return getIcon(_host);
-	}
+    @Override
+    protected Drawable getDefaultIcon()
+    {
+        return getIcon(_host);
+    }
 
-	private static Drawable _icon;
+    private static Drawable _icon;
 
     private static synchronized Drawable getIcon(Context context)
     {
-        if(_icon == null && context!=null)
-		{
-			_icon = context.getResources().getDrawable(R.drawable.ic_folder_up, context.getTheme());
-		}
+        if (_icon == null && context != null)
+        {
+            _icon = context.getResources().getDrawable(R.drawable.ic_folder_up, context.getTheme());
+        }
         return _icon;
     }
-			
 }

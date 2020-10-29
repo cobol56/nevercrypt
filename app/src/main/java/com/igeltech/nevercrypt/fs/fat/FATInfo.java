@@ -8,7 +8,6 @@ import com.igeltech.nevercrypt.fs.RandomAccessIO;
 
 import java.io.IOException;
 
-
 public class FATInfo extends FileSystemInfo
 {
     public static final Creator<FATInfo> CREATOR = new Creator<FATInfo>()
@@ -25,7 +24,6 @@ public class FATInfo extends FileSystemInfo
             return new FATInfo[size];
         }
     };
-
     public static final String NAME = "FAT";
 
     @Override

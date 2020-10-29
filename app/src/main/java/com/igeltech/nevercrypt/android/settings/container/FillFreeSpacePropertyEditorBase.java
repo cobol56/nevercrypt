@@ -14,9 +14,7 @@ public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEdit
 {
     public FillFreeSpacePropertyEditorBase(CreateContainerFragmentBase createContainerFragment)
     {
-        super(createContainerFragment,
-                R.string.fill_free_space_with_random_data,
-                0);
+        super(createContainerFragment, R.string.fill_free_space_with_random_data, 0);
     }
 
     @Override
@@ -33,7 +31,6 @@ public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEdit
         getHostFragment().getState().putBoolean(CreateContainerTaskFragmentBase.ARG_FILL_FREE_SPACE, value);
     }
 
-
     @Override
     protected boolean loadValue()
     {
@@ -47,5 +44,4 @@ public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEdit
     }
 
     protected AppCompatTextView _titleTextView;
-
 }

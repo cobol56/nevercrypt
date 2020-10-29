@@ -13,13 +13,13 @@ public class OpenersRegistry
 {
     public static LocationOpenerBaseFragment getDefaultOpenerForLocation(Location location)
     {
-        if(location instanceof ContainerLocation)
+        if (location instanceof ContainerLocation)
             return new ContainerOpenerFragment();
-        if(location instanceof EncFsLocationBase)
+        if (location instanceof EncFsLocationBase)
             return new EncFSOpenerFragment();
-        if(location instanceof CryptoLocation)
+        if (location instanceof CryptoLocation)
             return new LocationOpenerFragment();
-        if(location instanceof Openable)
+        if (location instanceof Openable)
             return new LocationOpenerFragment();
         return new LocationOpenerBaseFragment();
     }

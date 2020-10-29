@@ -38,7 +38,7 @@ public class Config
     public static Path getConfigFilePath(com.igeltech.nevercrypt.fs.Directory dir) throws IOException
     {
         Path p = PathUtil.buildPath(dir.getPath(), CONFIG_FILENAME);
-        if(p!=null && p.isFile())
+        if (p != null && p.isFile())
             return p;
         p = PathUtil.buildPath(dir.getPath(), CONFIG_FILENAME2);
         return p != null && p.isFile() ? p : null;
@@ -47,11 +47,10 @@ public class Config
     public void read(Path pathToRootFolder) throws IOException, ApplicationException
     {
         Path p = getConfigFilePath(pathToRootFolder.getDirectory());
-        if(p!=null)
+        if (p != null)
             read(p.getFile());
         else
             throw new ApplicationException("EncFs config file doesn't exist");
-
     }
 
     public void read(File configFile) throws IOException, ApplicationException
@@ -74,10 +73,10 @@ public class Config
             //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
             NodeList nl = doc.getElementsByTagName("cfg");
-            if(nl.getLength() == 0)
+            if (nl.getLength() == 0)
                 throw new IllegalArgumentException("cfg element not found");
             Node n = nl.item(0);
-            if(n.getNodeType() != Node.ELEMENT_NODE)
+            if (n.getNodeType() != Node.ELEMENT_NODE)
                 throw new IllegalArgumentException("wrong document structure");
             readCfgElement((org.w3c.dom.Element) n);
         }
@@ -166,7 +165,10 @@ public class Config
         _dataCipher = codecInfo;
     }
 
-    public NameCodecInfo getNameCodecInfo() { return _nameCipher; }
+    public NameCodecInfo getNameCodecInfo()
+    {
+        return _nameCipher;
+    }
 
     public void setNameCodecInfo(NameCodecInfo codecInfo)
     {
@@ -178,18 +180,24 @@ public class Config
         return _salt;
     }
 
-    public void setSalt(byte[] salt) { _salt = salt; }
+    public void setSalt(byte[] salt)
+    {
+        _salt = salt;
+    }
 
     public int getKDFIterations()
     {
         return _kdfIterations;
     }
 
-    public void setKDFIterations(int val) { _kdfIterations = val; }
+    public void setKDFIterations(int val)
+    {
+        _kdfIterations = val;
+    }
 
     public int getKeySize()
     {
-        return _keySizeBits/8;
+        return _keySizeBits / 8;
     }
 
     public void setKeySize(int numBytes)
@@ -202,14 +210,20 @@ public class Config
         return _blockSize;
     }
 
-    public void setBlockSize(int val) { _blockSize = val; }
+    public void setBlockSize(int val)
+    {
+        _blockSize = val;
+    }
 
     public byte[] getEncryptedVolumeKey()
     {
         return _keyData;
     }
 
-    public void setEncryptedVolumeKey(byte[] val) { _keyData = val; }
+    public void setEncryptedVolumeKey(byte[] val)
+    {
+        _keyData = val;
+    }
 
     public boolean useChainedNameIV()
     {
@@ -246,14 +260,20 @@ public class Config
         return _blockMACBytes;
     }
 
-    public void setMACBytes(int val) { _blockMACBytes = val; }
+    public void setMACBytes(int val)
+    {
+        _blockMACBytes = val;
+    }
 
     public int getMACRandBytes()
     {
         return _blockMACRandBytes;
     }
 
-    public void setMACRandBytes(int val) { _blockMACRandBytes = val; }
+    public void setMACRandBytes(int val)
+    {
+        _blockMACRandBytes = val;
+    }
 
     private String _creator;
     private int _subVersion;
@@ -261,19 +281,14 @@ public class Config
     private NameCodecInfo _nameCipher;
     private int _keySizeBits;
     private int _blockSize;
-
     private byte[] _keyData;
     private byte[] _salt;
-
     private int _kdfIterations;
     private int _desiredKDFDuration;
-
     private int _blockMACBytes;      // MAC headers on blocks..
     private int _blockMACRandBytes;  // number of random bytes in the block header
-
     private boolean _uniqueIV;            // per-file Initialization Vector
     private boolean _externalIVChaining;  // IV seeding by filename IV chaining
-
     private boolean _chainedNameIV;  // filename IV chaining
     private boolean _allowHoles;     // allow holes in files (implicit zero blocks)
 
@@ -304,12 +319,12 @@ public class Config
 
         _keyData = getBytes(cfg, "encodedKeyData");
         int size = getParam(cfg, "encodedKeySize", 0);
-        if(size>0 && size!=_keyData.length)
+        if (size > 0 && size != _keyData.length)
             throw new IllegalArgumentException("Failed decoding key data");
 
         _salt = getBytes(cfg, "saltData");
         size = getParam(cfg, "saltLen", 0);
-        if(size>0 && size!=_salt.length)
+        if (size > 0 && size != _salt.length)
             throw new IllegalArgumentException("Failed decoding salt data");
         _kdfIterations = getParam(cfg, "kdfIterations", 0);
         _desiredKDFDuration = getParam(cfg, "desiredKDFDuration", 0);
@@ -318,7 +333,7 @@ public class Config
     private int getParam(Element cfg, String paramName, int defaultValue)
     {
         String s = getParam(cfg, paramName, null);
-        if(s == null)
+        if (s == null)
             return defaultValue;
         return Integer.valueOf(s);
     }
@@ -326,7 +341,7 @@ public class Config
     private boolean getParam(Element cfg, String paramName, boolean defaultValue)
     {
         String s = getParam(cfg, paramName, null);
-        if(s == null)
+        if (s == null)
             return defaultValue;
         return !"0".equals(s);
     }
@@ -334,7 +349,7 @@ public class Config
     private String getParam(Element cfg, String paramName, String defaultValue)
     {
         NodeList nl = cfg.getElementsByTagName(paramName);
-        if(nl.getLength() == 0)
+        if (nl.getLength() == 0)
             return defaultValue;
         Node n = nl.item(0);
         String data = n.getTextContent();
@@ -344,7 +359,7 @@ public class Config
     private byte[] getBytes(Element cfg, String paramName)
     {
         String encoded = getParam(cfg, paramName, null);
-        if(encoded == null)
+        if (encoded == null)
             return null;
         return Base64.decode(encoded, Base64.DEFAULT);
     }
@@ -352,19 +367,19 @@ public class Config
     private AlgInfo loadAlgInfo(Element cfg, String paramName, Iterable<? extends AlgInfo> supportedAlgs, AlgInfo defaultValue)
     {
         NodeList nl = cfg.getElementsByTagName(paramName);
-        if(nl.getLength() == 0)
+        if (nl.getLength() == 0)
             return defaultValue;
         Node n = nl.item(0);
-        if(n.getNodeType() != Node.ELEMENT_NODE)
+        if (n.getNodeType() != Node.ELEMENT_NODE)
             throw new IllegalArgumentException("Wrong document structure");
-        String algName = getParam((Element)n, "name", null);
-        if(algName == null)
+        String algName = getParam((Element) n, "name", null);
+        if (algName == null)
             throw new IllegalArgumentException("Name is not specified for " + paramName);
-        int major = getParam((Element)n, "major", 0);
-        int minor = getParam((Element)n, "minor", 0);
-        for(AlgInfo info: supportedAlgs)
+        int major = getParam((Element) n, "major", 0);
+        int minor = getParam((Element) n, "minor", 0);
+        for (AlgInfo info : supportedAlgs)
         {
-            if(algName.equals(info.getName()) && info.getVersion1() >= major && info.getVersion2() >= minor)
+            if (algName.equals(info.getName()) && info.getVersion1() >= major && info.getVersion2() >= minor)
                 return info.select(this);
         }
         throw new IllegalArgumentException("Unsupported algorithm: " + algName + " major=" + major + " minor=" + minor);
@@ -483,10 +498,6 @@ public class Config
         {
             Logger.showAndLog(context, e);
         }
-        return String.format(
-                "%s v%s",
-                context.getString(R.string.app_name),
-                verName
-        );
+        return String.format("%s v%s", context.getString(R.string.app_name), verName);
     }
 }

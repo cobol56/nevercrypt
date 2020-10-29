@@ -13,16 +13,11 @@ import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
 
 import java.io.IOException;
 
-
 public abstract class PathToContainerPropertyEditorBase extends PathPropertyEditor
 {
-
     public PathToContainerPropertyEditorBase(CreateContainerFragmentBase createLocationFragment)
     {
-        super(createLocationFragment,
-                R.string.path_to_container,
-                0,
-                createLocationFragment.getTag());
+        super(createLocationFragment, R.string.path_to_container, 0, createLocationFragment.getTag());
     }
 
     @Override
@@ -37,21 +32,12 @@ public abstract class PathToContainerPropertyEditorBase extends PathPropertyEdit
         return (CreateContainerFragment) getHost();
     }
 
-
     @Override
     protected Intent getSelectPathIntent() throws IOException
     {
         boolean addExisting = getHostFragment().getState().getBoolean(CreateLocationFragment.ARG_ADD_EXISTING_LOCATION);
         boolean isEncFs = getHostFragment().isEncFsFormat();
-        Intent i = FileManagerActivity.getSelectPathIntent(
-                getHost().getContext(),
-                null,
-                false,
-                true,
-                isEncFs || addExisting,
-                !addExisting,
-                true,
-                true);
+        Intent i = FileManagerActivity.getSelectPathIntent(getHost().getContext(), null, false, true, isEncFs || addExisting, !addExisting, true, true);
         i.putExtra(FileManagerActivity.EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS, true);
         return i;
     }
@@ -66,6 +52,6 @@ public abstract class PathToContainerPropertyEditorBase extends PathPropertyEdit
     protected String loadText()
     {
         Uri uri = getHostFragment().getState().getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION);
-        return uri!=null ? uri.toString() : null;
+        return uri != null ? uri.toString() : null;
     }
 }

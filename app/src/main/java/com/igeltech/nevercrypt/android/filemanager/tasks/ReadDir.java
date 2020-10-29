@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.filemanager.tasks;
 
-
 import android.content.Context;
 
 import com.igeltech.nevercrypt.android.filemanager.DirectorySettings;
@@ -22,14 +21,14 @@ public class ReadDir extends ReadDirBase
         if (directorySettings != null)
         {
             StringPathUtil pu;
-            if(path.isFile())
+            if (path.isFile())
                 pu = new StringPathUtil(path.getFile().getName());
-            else if(path.isDirectory())
+            else if (path.isDirectory())
                 pu = new StringPathUtil(path.getDirectory().getName());
             else
                 pu = new StringPathUtil(path.getPathString());
             ArrayList<String> masks = directorySettings.getHiddenFilesMasks();
-            if(masks != null)
+            if (masks != null)
                 for (String mask : masks)
                 {
                     if (pu.getFileName().matches(mask))
@@ -37,10 +36,7 @@ public class ReadDir extends ReadDirBase
                 }
         }
 
-        return path.isDirectory() ?
-                new FolderRecord(context)
-                :
-                new ExecutableFileRecord(context);
+        return path.isDirectory() ? new FolderRecord(context) : new ExecutableFileRecord(context);
     }
 
     ReadDir(Context context, Location targetLocation, Collection<Path> selectedFiles, DirectorySettings dirSettings, boolean showRootFolderLink)

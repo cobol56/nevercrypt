@@ -36,7 +36,7 @@ public class DrawerSettingsMenuItem extends DrawerMenuItemBase
 
     private synchronized static Drawable getIcon(Context context)
     {
-        if(_icon == null)
+        if (_icon == null)
         {
             _icon = context.getResources().getDrawable(R.drawable.ic_settings, context.getTheme());
         }

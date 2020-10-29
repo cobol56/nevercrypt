@@ -1,7 +1,6 @@
 package com.igeltech.nevercrypt.android.locations.tasks;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.PowerManager;
 
 import androidx.fragment.app.FragmentActivity;
@@ -21,15 +20,12 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 import java.io.IOException;
 
-public abstract class CreateLocationTaskFragmentBase extends
-        com.igeltech.nevercrypt.android.fragments.TaskFragment
+public abstract class CreateLocationTaskFragmentBase extends com.igeltech.nevercrypt.android.fragments.TaskFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.locations.tasks.CreateEDSLocationTaskFragment";
-
     public static final String ARG_LOCATION = "com.igeltech.nevercrypt.android.LOCATION";
     public static final String ARG_CIPHER_NAME = "com.igeltech.nevercrypt.android.CIPHER_NAME";
     public static final String ARG_OVERWRITE = "com.igeltech.nevercrypt.android.OVERWRITE";
-
     public static final int RESULT_REQUEST_OVERWRITE = 1;
 
     @Override
@@ -53,16 +49,12 @@ public abstract class CreateLocationTaskFragmentBase extends
     protected void doWork(TaskState state) throws Exception
     {
         state.setResult(0);
-        Location location = _locationsManager
-                .getLocation(
-                        getArguments().getParcelable(ARG_LOCATION));
+        Location location = _locationsManager.getLocation(getArguments().getParcelable(ARG_LOCATION));
 
-        if(!checkParams(state, location))
+        if (!checkParams(state, location))
             return;
-        PowerManager pm = (PowerManager) _context
-                .getSystemService(Context.POWER_SERVICE);
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                toString());
+        PowerManager pm = (PowerManager) _context.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, toString());
         wl.acquire();
         try
         {
@@ -85,8 +77,7 @@ public abstract class CreateLocationTaskFragmentBase extends
         }
         catch (WrongImageFormatException e)
         {
-            WrongPasswordOrBadContainerException e1 = new WrongPasswordOrBadContainerException(
-                    _context);
+            WrongPasswordOrBadContainerException e1 = new WrongPasswordOrBadContainerException(_context);
             e1.initCause(e);
             throw e1;
         }
@@ -96,8 +87,7 @@ public abstract class CreateLocationTaskFragmentBase extends
         }
         catch (Exception e)
         {
-            throw new UserException(_context,
-                    R.string.err_failed_creating_container, e);
+            throw new UserException(_context, R.string.err_failed_creating_container, e);
         }
     }
 
@@ -111,7 +101,6 @@ public abstract class CreateLocationTaskFragmentBase extends
             state.updateUI(prc);
             return !state.isTaskCancelled();
         });
-
     }
 
     protected boolean checkParams(TaskState state, Location locationLocation) throws Exception

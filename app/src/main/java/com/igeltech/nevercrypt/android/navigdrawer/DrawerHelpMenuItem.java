@@ -11,7 +11,6 @@ import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 public class DrawerHelpMenuItem extends DrawerMenuItemBase
 {
-
     public DrawerHelpMenuItem(DrawerControllerBase drawerController)
     {
         super(drawerController);
@@ -38,7 +37,7 @@ public class DrawerHelpMenuItem extends DrawerMenuItemBase
 
     private synchronized static Drawable getIcon(Context context)
     {
-        if(_icon == null)
+        if (_icon == null)
         {
             _icon = context.getResources().getDrawable(R.drawable.ic_help, context.getTheme());
         }
@@ -46,5 +45,4 @@ public class DrawerHelpMenuItem extends DrawerMenuItemBase
     }
 
     private static Drawable _icon;
-
 }

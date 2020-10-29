@@ -38,9 +38,7 @@ public class Directory extends DirectoryWrapper
             @Override
             public Iterator<com.igeltech.nevercrypt.fs.Path> iterator()
             {
-                return new FilteringIterator(
-                        new Directory.DirIterator(getPath().getFileSystem(), contents.iterator())
-                );
+                return new FilteringIterator(new Directory.DirIterator(getPath().getFileSystem(), contents.iterator()));
             }
         };
     }
@@ -54,7 +52,7 @@ public class Directory extends DirectoryWrapper
     @Override
     public void rename(String newName) throws IOException
     {
-        if(getPath().getNamingCodecInfo().useChainedNamingIV() || getPath().getFileSystem().getConfig().useExternalFileIV())
+        if (getPath().getNamingCodecInfo().useChainedNamingIV() || getPath().getFileSystem().getConfig().useExternalFileIV())
             throw new UnsupportedOperationException();
         StringPathUtil newEncodedPath = getPath().getParentPath().calcCombinedEncodedParts(newName);
         super.rename(newEncodedPath.getFileName());
@@ -64,12 +62,12 @@ public class Directory extends DirectoryWrapper
     public File createFile(String name) throws IOException
     {
         StringPathUtil decodedPath = getPath().getDecodedPath();
-        if(decodedPath!=null)
+        if (decodedPath != null)
             decodedPath = decodedPath.combine(name);
         StringPathUtil newEncodedPath = getPath().calcCombinedEncodedParts(name);
         com.igeltech.nevercrypt.fs.encfs.File res = (com.igeltech.nevercrypt.fs.encfs.File) super.createFile(newEncodedPath.getFileName());
         res.getPath().setEncodedPath(newEncodedPath);
-        if(decodedPath!=null)
+        if (decodedPath != null)
             res.getPath().setDecodedPath(decodedPath);
         res.getOutputStream().close();
         return res;
@@ -79,12 +77,12 @@ public class Directory extends DirectoryWrapper
     public com.igeltech.nevercrypt.fs.Directory createDirectory(String name) throws IOException
     {
         StringPathUtil decodedPath = getPath().getDecodedPath();
-        if(decodedPath!=null)
+        if (decodedPath != null)
             decodedPath = decodedPath.combine(name);
         StringPathUtil newEncodedPath = getPath().calcCombinedEncodedParts(name);
         Directory res = (Directory) super.createDirectory(newEncodedPath.getFileName());
         res.getPath().setEncodedPath(newEncodedPath);
-        if(decodedPath!=null)
+        if (decodedPath != null)
             res.getPath().setDecodedPath(decodedPath);
         return res;
     }
@@ -92,7 +90,7 @@ public class Directory extends DirectoryWrapper
     @Override
     public void moveTo(com.igeltech.nevercrypt.fs.Directory dst) throws IOException
     {
-        if(getPath().getNamingCodecInfo().useChainedNamingIV() || getPath().getFileSystem().getConfig().useExternalFileIV())
+        if (getPath().getNamingCodecInfo().useChainedNamingIV() || getPath().getFileSystem().getConfig().useExternalFileIV())
             throw new UnsupportedOperationException();
         super.moveTo(dst);
     }
@@ -130,7 +128,6 @@ public class Directory extends DirectoryWrapper
 
     private static class FilteringIterator extends FilteredIterator<com.igeltech.nevercrypt.fs.Path>
     {
-
         public FilteringIterator(Iterator<Path> base)
         {
             super(base);
@@ -141,11 +138,8 @@ public class Directory extends DirectoryWrapper
         {
             try
             {
-                Path p = (Path)item;
-                return !(
-                        (p.getParentPath().isRootDirectory() && Config.CONFIG_FILENAME.equals(p.getEncodedPath().getFileName()))
-                        || p.getDecodedPath() == null
-                );
+                Path p = (Path) item;
+                return !((p.getParentPath().isRootDirectory() && Config.CONFIG_FILENAME.equals(p.getEncodedPath().getFileName())) || p.getDecodedPath() == null);
             }
             catch (Throwable e)
             {

@@ -31,12 +31,10 @@ public abstract class DrawerControllerBase
         _drawerLayout = _activity.findViewById(R.id.drawer_layout);
         _drawerListView = _activity.findViewById(R.id.left_drawer);
 
-        _drawerToggle = new ActionBarDrawerToggle(
-                _activity,                  /* host Activity */
+        _drawerToggle = new ActionBarDrawerToggle(_activity,                  /* host Activity */
                 _drawerLayout,         /* DrawerLayout object */
                 R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        );
+                R.string.drawer_close  /* "close drawer" description */);
         _drawerLayout.addDrawerListener(_drawerToggle);
         _activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -44,20 +42,18 @@ public abstract class DrawerControllerBase
 
         _drawerListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
 
-        if(savedState!=null)
+        if (savedState != null)
         {
             ArrayList<DrawerMenuItemBase> copy = new ArrayList<>(list);
             for (DrawerMenuItemBase item : copy)
                 item.restoreState(savedState);
         }
-        _drawerListView.setOnItemClickListener((adapterView, view, i, l) ->
-        {
+        _drawerListView.setOnItemClickListener((adapterView, view, i, l) -> {
             DrawerMenuItemBase item = (DrawerMenuItemBase) _drawerListView.getItemAtPosition(i);
-            if(item!=null)
+            if (item != null)
                 item.onClick(view, i);
         });
-        _drawerListView.setOnItemLongClickListener((parent, view, position, id) ->
-        {
+        _drawerListView.setOnItemLongClickListener((parent, view, position, id) -> {
             DrawerMenuItemBase item = (DrawerMenuItemBase) _drawerListView.getItemAtPosition(position);
             return item != null && item.onLongClick(view, position);
         });
@@ -65,26 +61,26 @@ public abstract class DrawerControllerBase
 
     public void onPostCreate()
     {
-        if(_drawerToggle!=null)
+        if (_drawerToggle != null)
             _drawerToggle.syncState();
     }
 
     public void onConfigurationChanged(Configuration newConfig)
     {
-        if(_drawerToggle!=null)
+        if (_drawerToggle != null)
             _drawerToggle.onConfigurationChanged(newConfig);
     }
 
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if(_drawerLayout == null)
+        if (_drawerLayout == null)
             return false;
 
         if (item.getItemId() == android.R.id.home)
         {
             if (_drawerLayout.isDrawerOpen(_drawerListView))
                 _drawerLayout.closeDrawer(_drawerListView);
-             else
+            else
                 _drawerLayout.openDrawer(_drawerListView);
             return true;
         }
@@ -118,29 +114,29 @@ public abstract class DrawerControllerBase
 
     public boolean onBackPressed()
     {
-       if(_drawerListView == null || !_drawerLayout.isDrawerOpen(_drawerListView))
+        if (_drawerListView == null || !_drawerLayout.isDrawerOpen(_drawerListView))
             return false;
-       for(int i=0;i<_drawerListView.getCount();i++)
-       {
-           DrawerMenuItemBase item = (DrawerMenuItemBase) _drawerListView.getItemAtPosition(i);
-           if(item!=null && item.onBackPressed())
-               return true;
-       }
+        for (int i = 0; i < _drawerListView.getCount(); i++)
+        {
+            DrawerMenuItemBase item = (DrawerMenuItemBase) _drawerListView.getItemAtPosition(i);
+            if (item != null && item.onBackPressed())
+                return true;
+        }
         _drawerLayout.closeDrawer(_drawerListView);
-       return true;
+        return true;
     }
 
-    public void onSaveInstanceState (Bundle outState)
+    public void onSaveInstanceState(Bundle outState)
     {
-       if(_drawerListView == null)
+        if (_drawerListView == null)
             return;
-       saveState(outState);
+        saveState(outState);
     }
 
     public void updateMenuItemViews()
     {
         ListView lv = getDrawerListView();
-        if(lv != null)
+        if (lv != null)
         {
             DrawerAdapter adapter = (DrawerAdapter) lv.getAdapter();
             adapter.notifyDataSetChanged();
@@ -149,7 +145,7 @@ public abstract class DrawerControllerBase
 
     public void reloadItems()
     {
-        if(_drawerListView == null)
+        if (_drawerListView == null)
             return;
         Bundle b = new Bundle();
         saveState(b);
@@ -163,17 +159,16 @@ public abstract class DrawerControllerBase
     {
         openDrawer();
         DrawerAdapter da = (DrawerAdapter) _drawerListView.getAdapter();
-        for(int i=0, l=da.getCount();i<l;i++)
+        for (int i = 0, l = da.getCount(); i < l; i++)
         {
             DrawerMenuItemBase item = da.getItem(i);
-            if(item instanceof DrawerContainersMenu)
+            if (item instanceof DrawerContainersMenu)
             {
                 DrawerContainersMenu dcm = (DrawerContainersMenu) item;
-                if(!dcm.isExpanded())
+                if (!dcm.isExpanded())
                     dcm.rotateIconAndChangeState(da.getView(i, dcm.findView(_drawerListView), _drawerListView));
             }
         }
-
     }
 
     protected List<DrawerMenuItemBase> fillDrawer()
@@ -182,11 +177,11 @@ public abstract class DrawerControllerBase
         boolean isSelectAction = getMainActivity().isSelectAction();
         ArrayList<DrawerMenuItemBase> list = new ArrayList<>();
         DrawerAdapter adapter = new DrawerAdapter(list);
-        if(i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_CONTAINERS, true))
+        if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_CONTAINERS, true))
             adapter.add(new DrawerContainersMenu(this));
-        if(i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DEVICE, true))
+        if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DEVICE, true))
             adapter.add(new DrawerLocalFilesMenu(this));
-        if(!isSelectAction)
+        if (!isSelectAction)
         {
             adapter.add(new DrawerSettingsMenuItem(this));
             adapter.add(new DrawerHelpMenuItem(this));
@@ -198,43 +193,43 @@ public abstract class DrawerControllerBase
     }
 
     protected class DrawerAdapter extends ArrayAdapter<DrawerMenuItemBase>
-	{
+    {
+        DrawerAdapter(List<DrawerMenuItemBase> itemsList)
+        {
+            super(_activity, R.layout.drawer_folder, itemsList);
+        }
 
-		DrawerAdapter(List<DrawerMenuItemBase> itemsList)
-		{
-			super(_activity, R.layout.drawer_folder, itemsList);
-		}
-
-		@Override
-	    public int getItemViewType(int position)
-	    {
-	    	 DrawerMenuItemBase rec = getItem(position);
-			 return rec==null ? 0 : rec.getViewType();
-	    }
-
-	    @Override
-        public int getViewTypeCount()
-	     {
-	         return 4;
-	     }
-
-		@NonNull
         @Override
-	    public View getView(int position, View convertView, @NonNull ViewGroup parent)
-		{
-			final DrawerMenuItemBase rec = getItem(position);
+        public int getItemViewType(int position)
+        {
+            DrawerMenuItemBase rec = getItem(position);
+            return rec == null ? 0 : rec.getViewType();
+        }
+
+        @Override
+        public int getViewTypeCount()
+        {
+            return 4;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
+        {
+            final DrawerMenuItemBase rec = getItem(position);
             View v;
             if (convertView != null)
             {
                 v = convertView;
                 rec.updateView(v, position);
-            } else
+            }
+            else
                 v = rec.createView(position, parent);
             v.setTag(rec);
-	        return v;
-	    }
+            return v;
+        }
+    }
 
-	}
     private final FileManagerActivity _activity;
     private ListView _drawerListView;
     private DrawerLayout _drawerLayout;
@@ -242,10 +237,10 @@ public abstract class DrawerControllerBase
 
     private void saveState(Bundle outState)
     {
-        for(int i=0;i<_drawerListView.getCount();i++)
+        for (int i = 0; i < _drawerListView.getCount(); i++)
         {
             DrawerMenuItemBase item = (DrawerMenuItemBase) _drawerListView.getItemAtPosition(i);
-            if(item!=null)
+            if (item != null)
                 item.saveState(outState);
         }
     }

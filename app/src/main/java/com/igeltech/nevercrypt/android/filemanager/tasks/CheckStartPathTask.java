@@ -27,7 +27,7 @@ public class CheckStartPathTask extends AddExistingContainerTaskFragment
     {
         LocationsManager lm = LocationsManager.getLocationsManager(_context);
         Location loc = lm.getFromBundle(getArguments(), null);
-        if(loc.getCurrentPath().isFile())
+        if (loc.getCurrentPath().isFile())
             state.setResult(findOrCreateLocation(lm, loc, getArguments().getBoolean(ARG_STORE_LINK)));
         else
             state.setResult(null);
@@ -36,6 +36,6 @@ public class CheckStartPathTask extends AddExistingContainerTaskFragment
     @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        return ((FileManagerActivity)activity).getCheckStartPathCallbacks();
+        return ((FileManagerActivity) activity).getCheckStartPathCallbacks();
     }
 }

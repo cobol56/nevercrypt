@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.igeltech.nevercrypt.android.R;
 
-
 public abstract class ConfirmationDialog extends AppCompatDialogFragment
 {
     public static final String ARG_RECEIVER_TAG = "com.igeltech.nevercrypt.android.RECEIVER_TAG";
@@ -19,6 +18,7 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
     public interface Receiver
     {
         void onYes();
+
         void onNo();
     }
 
@@ -27,20 +27,13 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
     public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(getTitle())
-                .setCancelable(false)
-                .setPositiveButton(R.string.yes,
-                        (dialog, id) ->
-                        {
-                            onYes();
-                            dismiss();
-                        })
-                .setNegativeButton(R.string.no,
-                        (dialog, id) ->
-                        {
-                            onNo();
-                            dismiss();
-                        });
+        builder.setMessage(getTitle()).setCancelable(false).setPositiveButton(R.string.yes, (dialog, id) -> {
+            onYes();
+            dismiss();
+        }).setNegativeButton(R.string.no, (dialog, id) -> {
+            onNo();
+            dismiss();
+        });
 
         return builder.create();
     }
@@ -48,14 +41,14 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
     protected void onNo()
     {
         Receiver rec = getReceiver();
-        if(rec != null)
+        if (rec != null)
             rec.onNo();
     }
 
     protected void onYes()
     {
         Receiver rec = getReceiver();
-        if(rec != null)
+        if (rec != null)
             rec.onYes();
     }
 
@@ -65,16 +58,16 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
     {
         Bundle args = getArguments();
         String tag = args == null ? null : args.getString(ARG_RECEIVER_TAG);
-        if(tag != null)
+        if (tag != null)
         {
             Fragment f = getFragmentManager().findFragmentByTag(tag);
-            if(f instanceof Receiver)
+            if (f instanceof Receiver)
                 return (Receiver) f;
         }
         else
         {
-            FragmentActivity act =getActivity();
-            if(act instanceof Receiver)
+            FragmentActivity act = getActivity();
+            if (act instanceof Receiver)
                 return (Receiver) act;
         }
         return null;

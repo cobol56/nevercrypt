@@ -19,14 +19,13 @@ public class Util extends UtilBase
         return args.getParcelable(Openable.PARAM_PASSWORD);
     }
 
-
     public static String getDefaultSettingsPassword(Context context)
     {
         try
         {
             return SimpleCrypto.calcStringMD5(Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Logger.log(e);
         }

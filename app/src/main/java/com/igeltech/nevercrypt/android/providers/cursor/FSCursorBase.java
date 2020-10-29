@@ -77,7 +77,7 @@ public abstract class FSCursorBase extends AbstractCursor
     @Override
     public long getLong(int column)
     {
-        return (long)getValueFromCurrentCPI(column);
+        return (long) getValueFromCurrentCPI(column);
     }
 
     @Override
@@ -122,7 +122,6 @@ public abstract class FSCursorBase extends AbstractCursor
     private final String[] _projection;
     private final Context _context;
     final boolean _listDir;
-
     private Observable<CachedPathInfo> _request;
     private CachedPathInfo _current;
 
@@ -130,7 +129,7 @@ public abstract class FSCursorBase extends AbstractCursor
     {
         synchronized (this)
         {
-            if(_request == null)
+            if (_request == null)
                 try
                 {
                     _request = createObservable();
@@ -147,7 +146,7 @@ public abstract class FSCursorBase extends AbstractCursor
 
     private Object getValueFromCurrentCPI(int column)
     {
-        if(_current == null)
+        if (_current == null)
             return null;
         return getValueFromCachedPathInfo(_current, _projection[column]);
     }
@@ -157,7 +156,7 @@ public abstract class FSCursorBase extends AbstractCursor
         switch (columnName)
         {
             case COLUMN_ID:
-                return (long)cpi.getPath().getPathString().hashCode();
+                return (long) cpi.getPath().getPathString().hashCode();
             case COLUMN_NAME: //equals to DocumentsContract.Document.COLUMN_DISPLAY_NAME
             case COLUMN_TITLE:
                 return cpi.getName();
@@ -171,7 +170,6 @@ public abstract class FSCursorBase extends AbstractCursor
                 return cpi.getPath().getPathString();
             default:
                 return getDocumentValue(cpi, columnName);
-
         }
     }
 
@@ -205,27 +203,22 @@ public abstract class FSCursorBase extends AbstractCursor
     {
         boolean ro = _location.isReadOnly();
         int flags = 0;
-        if(!ro)
+        if (!ro)
         {
-            if(cpi.isFile())
+            if (cpi.isFile())
                 flags |= DocumentsContract.Document.FLAG_SUPPORTS_WRITE;
-            else if(cpi.isDirectory())
+            else if (cpi.isDirectory())
                 flags |= DocumentsContract.Document.FLAG_DIR_SUPPORTS_CREATE;
             flags |= DocumentsContract.Document.FLAG_SUPPORTS_DELETE;
             flags |= DocumentsContract.Document.FLAG_SUPPORTS_RENAME;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                flags |= DocumentsContract.Document.FLAG_SUPPORTS_COPY |
-                        DocumentsContract.Document.FLAG_SUPPORTS_MOVE;
+                flags |= DocumentsContract.Document.FLAG_SUPPORTS_COPY | DocumentsContract.Document.FLAG_SUPPORTS_MOVE;
         }
         return flags;
     }
 
     private String getDocumentMimeType(CachedPathInfo cpi)
     {
-        return cpi.isFile() ?
-                FileOpsService.getMimeTypeFromExtension(_context, new StringPathUtil(cpi.getName()).getFileExtension()) :
-                DocumentsContract.Document.MIME_TYPE_DIR;
+        return cpi.isFile() ? FileOpsService.getMimeTypeFromExtension(_context, new StringPathUtil(cpi.getName()).getFileExtension()) : DocumentsContract.Document.MIME_TYPE_DIR;
     }
-
-
 }

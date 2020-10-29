@@ -26,28 +26,28 @@ public class FileListViewAdapter extends ArrayAdapter<BrowserRecord>
     @Override
     public int getItemViewType(int position)
     {
-         BrowserRecord rec = getItem(position);
-         return rec==null ? 0 : rec.getViewType();
+        BrowserRecord rec = getItem(position);
+        return rec == null ? 0 : rec.getViewType();
     }
 
     @Override
     public int getViewTypeCount()
-     {
-         return 2;
-     }
+    {
+        return 2;
+    }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent)
     {
         BrowserRecord rec = getItem(position);
-        if(rec == null)
+        if (rec == null)
             return new View(getContext());
-        if(rec.needLoadExtendedInfo() && _currentLocationId!=null)
+        if (rec.needLoadExtendedInfo() && _currentLocationId != null)
             ExtendedFileInfoLoader.getInstance().requestExtendedInfo(_currentLocationId, rec);
 
         View v;
-        if(convertView!=null)
+        if (convertView != null)
         {
             v = convertView;
             rec.updateView(v, position);

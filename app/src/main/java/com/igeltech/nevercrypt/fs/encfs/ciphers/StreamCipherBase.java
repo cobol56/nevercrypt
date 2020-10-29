@@ -52,12 +52,14 @@ public class StreamCipherBase extends CipherBase
 
     private static void shuffleBytes(byte[] buf, int offset, int count)
     {
-        for (int i = 0; i < count - 1; ++i) buf[i + offset + 1] ^= buf[i + offset];
+        for (int i = 0; i < count - 1; ++i)
+            buf[i + offset + 1] ^= buf[i + offset];
     }
 
     private static void unshuffleBytes(byte[] buf, int offset, int count)
     {
-        for (int i = count - 1; i > 0; --i) buf[i + offset] ^= buf[i + offset - 1];
+        for (int i = count - 1; i > 0; --i)
+            buf[i + offset] ^= buf[i + offset - 1];
     }
 
     private static void flipBytes(byte[] buf, int offset, int count)
@@ -69,12 +71,13 @@ public class StreamCipherBase extends CipherBase
         {
             int toFlip = Math.min(revBuf.length, bytesLeft);
 
-            for (int i = 0; i < toFlip; ++i) revBuf[i] = buf[toFlip + offset - (i + 1)];
+            for (int i = 0; i < toFlip; ++i)
+                revBuf[i] = buf[toFlip + offset - (i + 1)];
             System.arraycopy(revBuf, 0, buf, offset, toFlip);
             bytesLeft -= toFlip;
             offset += toFlip;
         }
-        Arrays.fill(revBuf, (byte)0);
+        Arrays.fill(revBuf, (byte) 0);
     }
 
     private long _iv;

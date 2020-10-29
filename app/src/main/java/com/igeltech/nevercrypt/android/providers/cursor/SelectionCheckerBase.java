@@ -27,7 +27,7 @@ class SelectionCheckerBase implements Predicate<CachedPathInfo>
                 //if (f == null)
                 //    throw new IllegalArgumentException("Unsupported search filter: " + filtName);
                 //else
-                if(f!=null)
+                if (f != null)
                     _filters.add(f);
             }
         }
@@ -43,7 +43,6 @@ class SelectionCheckerBase implements Predicate<CachedPathInfo>
     }
 
     protected final Location _location;
-
     final List<Predicate<CachedPathInfo>> _filters = new ArrayList<>();
     private static final SearchFilter[] ALL_FILTERS = new SearchFilter[]{};
 

@@ -22,7 +22,7 @@ public class OpenInReadOnlyModePropertyEditor extends SwitchPropertyEditor
     protected void saveValue(boolean value)
     {
         getLocation().getExternalSettings().setOpenReadOnly(value);
-        if(getHost().getPropertiesView().isInstantSave())
+        if (getHost().getPropertiesView().isInstantSave())
             getLocation().saveExternalSettings();
     }
 

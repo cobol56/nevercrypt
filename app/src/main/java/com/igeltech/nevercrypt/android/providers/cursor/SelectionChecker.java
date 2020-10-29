@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.providers.cursor;
 
-
 import com.igeltech.nevercrypt.locations.Location;
 
 //full version compatibility

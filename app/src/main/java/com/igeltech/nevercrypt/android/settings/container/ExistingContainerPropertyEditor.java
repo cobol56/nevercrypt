@@ -12,11 +12,7 @@ public class ExistingContainerPropertyEditor extends PropertyEditorBase
 {
     public ExistingContainerPropertyEditor(CreateLocationFragmentBase createLocationFragment)
     {
-        super(
-                createLocationFragment,
-                R.layout.settings_create_new_or_existing_container,
-                R.string.create_new_container_or_add_existing_container,
-                0);
+        super(createLocationFragment, R.layout.settings_create_new_or_existing_container, R.string.create_new_container_or_add_existing_container, 0);
     }
 
     @Override

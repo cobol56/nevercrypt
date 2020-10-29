@@ -22,7 +22,7 @@ public class UseExternalFileManagerPropertyEditor extends SwitchPropertyEditor
     protected void saveValue(boolean value)
     {
         getLocation().getExternalSettings().setUseExtFileManager(value);
-        if(getHost().getPropertiesView().isInstantSave())
+        if (getHost().getPropertiesView().isInstantSave())
             getLocation().saveExternalSettings();
     }
 

@@ -4,12 +4,10 @@ import android.content.Context;
 
 public class CryptoApplication extends CryptoApplicationBase
 {
-
     public static void stopProgram(Context context, boolean exitProcess)
     {
         stopProgramBase(context, exitProcess);
-        if(exitProcess)
+        if (exitProcess)
             exitProcess();
     }
-
 }

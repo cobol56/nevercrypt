@@ -11,7 +11,6 @@ import java.util.Iterator;
 
 class ExFatDirectory extends ExFatRecord implements Directory
 {
-
     ExFatDirectory(ExFat exFat, ExFatPath path)
     {
         super(exFat, path);
@@ -55,7 +54,7 @@ class ExFatDirectory extends ExFatRecord implements Directory
         }
         final ArrayList<Path> paths = new ArrayList<>();
         StringPathUtil curPath = _path.getPathUtil();
-        for(String name: names)
+        for (String name : names)
             paths.add(new ExFatPath(_exFat, curPath.combine(name).toString()));
         return new Contents()
         {

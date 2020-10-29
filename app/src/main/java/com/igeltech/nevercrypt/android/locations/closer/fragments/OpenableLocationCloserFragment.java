@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.locations.closer.fragments;
 
-
 import android.content.Context;
 
 import com.igeltech.nevercrypt.android.Logger;
@@ -24,25 +23,12 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
 {
     public static void wipeMirror(Context context, Location location) throws IOException
     {
-        Location mirrorLocation = FileOpsService.getMirrorLocation(
-                UserSettings.getSettings(context).getWorkDir(),
-                context,
-                location.getId()
-        );
-        if(mirrorLocation.getCurrentPath().exists())
+        Location mirrorLocation = FileOpsService.getMirrorLocation(UserSettings.getSettings(context).getWorkDir(), context, location.getId());
+        if (mirrorLocation.getCurrentPath().exists())
         {
-            SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(
-                    mirrorLocation,
-                    null
-            )
-            );
+            SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(mirrorLocation, null));
             sdr.setIsDirLast(true);
-            WipeFilesTask.wipeFilesRnd(
-                    null,
-                    TempFilesMonitor.getMonitor(context).getSyncObject(),
-                    true,
-                    sdr
-            );
+            WipeFilesTask.wipeFilesRnd(null, TempFilesMonitor.getMonitor(context).getSyncObject(), true, sdr);
         }
     }
 
@@ -54,7 +40,7 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
         }
         catch (Exception e)
         {
-            if(forceClose)
+            if (forceClose)
                 Logger.log(e);
             else
                 throw e;
@@ -65,15 +51,15 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
 
     public static void makePostCloseCheck(Context context, Location loc)
     {
-        if(loc instanceof Openable && LocationsManager.isOpen(loc))
+        if (loc instanceof Openable && LocationsManager.isOpen(loc))
             return;
         LocationsManager lm = LocationsManager.getLocationsManager(context);
         LocationsManager.broadcastLocationChanged(context, loc);
         lm.unregOpenedLocation(loc);
-        if(loc instanceof CryptoLocation)
+        if (loc instanceof CryptoLocation)
             ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(context);
 
-        if(!lm.hasOpenLocations())
+        if (!lm.hasOpenLocations())
         {
             lm.broadcastAllContainersClosed();
             LocationsService.stopService(context);
@@ -88,11 +74,11 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
             boolean fc = getArguments().getBoolean(ARG_FORCE_CLOSE, UserSettings.getSettings(_context).alwaysForceClose());
             try
             {
-                closeLocation(_context, (Openable)location, fc);
+                closeLocation(_context, (Openable) location, fc);
             }
             catch (Exception e)
             {
-                if(fc)
+                if (fc)
                     Logger.log(e);
                 else
                     throw e;

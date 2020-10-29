@@ -33,10 +33,10 @@ public abstract class AppInitHelperBase
     void convertLegacySettings()
     {
         int curSettingsVersion = _settings.getCurrentSettingsVersion();
-        if(curSettingsVersion >= Settings.VERSION)
+        if (curSettingsVersion >= Settings.VERSION)
             return;
 
-        if(curSettingsVersion < 0)
+        if (curSettingsVersion < 0)
         {
             _settings.getSharedPreferences().edit().putInt(CURRENT_SETTINGS_VERSION, Settings.VERSION).commit();
         }

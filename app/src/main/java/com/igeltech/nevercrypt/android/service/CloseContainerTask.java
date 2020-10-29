@@ -13,21 +13,19 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class CloseContainerTask extends ServiceTaskWithNotificationBase
 {
-
-	@Override
-	public Object doWork(Context context, Intent i) throws Throwable
-	{
-		super.doWork(context, i);
-		CryptoLocation cont = (CryptoLocation) LocationsManager.getLocationsManager(context).getFromIntent(i, null);
-		if(cont!=null)
-			OMLocationCloserFragment.unmountAndClose(context, cont, UserSettings.getSettings(context).alwaysForceClose());
-		return null;
-	}
+    @Override
+    public Object doWork(Context context, Intent i) throws Throwable
+    {
+        super.doWork(context, i);
+        CryptoLocation cont = (CryptoLocation) LocationsManager.getLocationsManager(context).getFromIntent(i, null);
+        if (cont != null)
+            OMLocationCloserFragment.unmountAndClose(context, cont, UserSettings.getSettings(context).alwaysForceClose());
+        return null;
+    }
 
     @Override
     protected NotificationCompat.Builder initNotification()
     {
         return super.initNotification().setContentTitle(_context.getString(R.string.closing));
     }
-
 }

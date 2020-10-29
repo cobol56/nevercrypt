@@ -13,30 +13,30 @@ import java.io.OutputStream;
 
 public class StdFileRecord extends StdFsRecord implements com.igeltech.nevercrypt.fs.File
 {
-	public StdFileRecord(StdFsPath path) throws IOException
-	{
-		super(path);
-		if(path.exists() && !path.getJavaFile().isFile())
-			throw new IllegalArgumentException("StdFileRecord error: path must point to a file");		
-	}
-	
-	@Override
-	public long getSize() throws IOException
-	{
-		return _path.getJavaFile().length();		
-	}
+    public StdFileRecord(StdFsPath path) throws IOException
+    {
+        super(path);
+        if (path.exists() && !path.getJavaFile().isFile())
+            throw new IllegalArgumentException("StdFileRecord error: path must point to a file");
+    }
 
-	@Override
-	public ParcelFileDescriptor getFileDescriptor(AccessMode accessMode) throws IOException
-	{
-		return ParcelFileDescriptor.open(_path.getJavaFile(), Util.getParcelFileDescriptorModeFromAccessMode(accessMode));
-	}
+    @Override
+    public long getSize() throws IOException
+    {
+        return _path.getJavaFile().length();
+    }
 
-	@Override
-	public void copyToOutputStream(OutputStream output, long offset, long count, ProgressInfo progressInfo) throws IOException
-	{
+    @Override
+    public ParcelFileDescriptor getFileDescriptor(AccessMode accessMode) throws IOException
+    {
+        return ParcelFileDescriptor.open(_path.getJavaFile(), Util.getParcelFileDescriptorModeFromAccessMode(accessMode));
+    }
+
+    @Override
+    public void copyToOutputStream(OutputStream output, long offset, long count, ProgressInfo progressInfo) throws IOException
+    {
         Util.copyFileToOutputStream(output, this, offset, count, progressInfo);
-	}
+    }
 
     @Override
     public void copyFromInputStream(InputStream input, long offset, long count, ProgressInfo progressInfo) throws IOException
@@ -45,24 +45,21 @@ public class StdFileRecord extends StdFsRecord implements com.igeltech.nevercryp
     }
 
     @Override
-	public InputStream getInputStream() throws IOException
-	{
-		return new FileInputStream(_path.getJavaFile());
-		//return new RandomAccessInputStream(getRandomAccessIO(AccessMode.Read));
-	}
+    public InputStream getInputStream() throws IOException
+    {
+        return new FileInputStream(_path.getJavaFile());
+        //return new RandomAccessInputStream(getRandomAccessIO(AccessMode.Read));
+    }
 
-	@Override
-	public OutputStream getOutputStream() throws IOException
-	{
-		return new FileOutputStream(_path.getJavaFile());
-	}
+    @Override
+    public OutputStream getOutputStream() throws IOException
+    {
+        return new FileOutputStream(_path.getJavaFile());
+    }
 
-	@Override
-	public RandomAccessIO getRandomAccessIO(AccessMode accessMode)
-			throws IOException
-	{
-		return new StdFsFileIO(_path.getJavaFile(), accessMode);
-	}
-
-
+    @Override
+    public RandomAccessIO getRandomAccessIO(AccessMode accessMode) throws IOException
+    {
+        return new StdFsFileIO(_path.getJavaFile(), accessMode);
+    }
 }

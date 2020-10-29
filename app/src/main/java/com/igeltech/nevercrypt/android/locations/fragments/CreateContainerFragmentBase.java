@@ -44,8 +44,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
 {
     public void changeUniqueIVDependentOptions()
     {
-        boolean show = isEncFsFormat() && !_state.getBoolean(ARG_ADD_EXISTING_LOCATION, false) && _state.getBoolean(CreateEncFsTaskFragment.ARG_UNIQUE_IV, true) &&
-                _state.getBoolean(CreateEncFsTaskFragment.ARG_CHAINED_NAME_IV, true);
+        boolean show = isEncFsFormat() && !_state.getBoolean(ARG_ADD_EXISTING_LOCATION, false) && _state.getBoolean(CreateEncFsTaskFragment.ARG_UNIQUE_IV, true) && _state.getBoolean(CreateEncFsTaskFragment.ARG_CHAINED_NAME_IV, true);
         _propertiesView.setPropertyState(R.string.enable_filename_to_file_iv_chain, show);
     }
 
@@ -63,11 +62,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     @Override
     protected TaskFragment createAddExistingLocationTask()
     {
-        return AddExistingContainerTaskFragment.newInstance(
-                _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION),
-                !UserSettings.getSettings(getActivity()).neverSaveHistory(),
-                _state.getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT)
-        );
+        return AddExistingContainerTaskFragment.newInstance(_state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION), !UserSettings.getSettings(getActivity()).neverSaveHistory(), _state.getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT));
     }
 
     @Override
@@ -80,7 +75,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     public void showCreateNewLocationProperties()
     {
         Uri uri = _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION);
-        if(uri == null)
+        if (uri == null)
         {
             File path;
             path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
@@ -88,7 +83,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
                 path = getContext().getFilesDir();
             if (path != null)
                 path = new File(path, "new container.eds");
-            if(path!=null)
+            if (path != null)
             {
                 _state.putParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION, Uri.parse(path.getPath()));
                 getActivity().invalidateOptionsMenu();
@@ -97,7 +92,6 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
 
         super.showCreateNewLocationProperties();
         _propertiesView.setPropertyState(R.string.container_format, true);
-
     }
 
     @Override
@@ -105,7 +99,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     {
         int propertyId = dlg.getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID);
         PasswordDialogBase.PasswordReceiver pr = (PasswordDialogBase.PasswordReceiver) getPropertiesView().getPropertyById(propertyId);
-        if(pr!=null)
+        if (pr != null)
             pr.onPasswordEntered(dlg);
     }
 
@@ -114,7 +108,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     {
         int propertyId = dlg.getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID);
         PasswordDialogBase.PasswordReceiver pr = (PasswordDialogBase.PasswordReceiver) getPropertiesView().getPropertyById(propertyId);
-        if(pr!=null)
+        if (pr != null)
             pr.onPasswordNotEntered(dlg);
     }
 
@@ -122,7 +116,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     protected void createProperties()
     {
         super.createProperties();
-        if(!_state.containsKey(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT))
+        if (!_state.containsKey(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT))
             _state.putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, Container.getSupportedFormats().get(0).getFormatName());
     }
 

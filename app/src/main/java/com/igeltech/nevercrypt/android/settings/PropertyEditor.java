@@ -13,27 +13,42 @@ import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 
 public interface PropertyEditor
 {
-	String ARG_PROPERTY_ID = "com.igeltech.nevercrypt.android.PROPERTY_ID";
-	String ARG_HOST_FRAGMENT_TAG = TaskFragment.ARG_HOST_FRAGMENT;
-	
-	interface Host
-	{
-		Context getContext();
-		void startActivityForResult(Intent intent, int requestCode);
-		PropertiesView getPropertiesView();
-		FragmentManager getFragmentManager();
-		//void updateView();
-	}
-	int getId();
-	void setId(int id);
-	void load();
-	void save() throws Exception;
-	void save(Bundle b);
-	void load(Bundle b);
-	View getView(ViewGroup parent);
-	Host getHost();
-	boolean onActivityResult(int requestCode, int resultCode, Intent data);
-	void onClick();
-	int getStartPosition();
+    String ARG_PROPERTY_ID = "com.igeltech.nevercrypt.android.PROPERTY_ID";
+    String ARG_HOST_FRAGMENT_TAG = TaskFragment.ARG_HOST_FRAGMENT;
+
+    interface Host
+    {
+        Context getContext();
+
+        void startActivityForResult(Intent intent, int requestCode);
+
+        PropertiesView getPropertiesView();
+
+        FragmentManager getFragmentManager();
+        //void updateView();
+    }
+
+    int getId();
+
+    void setId(int id);
+
+    void load();
+
+    void save() throws Exception;
+
+    void save(Bundle b);
+
+    void load(Bundle b);
+
+    View getView(ViewGroup parent);
+
+    Host getHost();
+
+    boolean onActivityResult(int requestCode, int resultCode, Intent data);
+
+    void onClick();
+
+    int getStartPosition();
+
     void setStartPosition(int pos);
 }

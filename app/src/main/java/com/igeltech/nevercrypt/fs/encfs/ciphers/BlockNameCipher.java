@@ -26,7 +26,7 @@ public class BlockNameCipher implements NameCodec
         int len = plain.length; //calcLengthIncBlocs(plain.length);
         int blockSize = _cipher.getEncryptionBlockSize();
         int padding = blockSize - len % blockSize;
-        if(padding == 0)
+        if (padding == 0)
             padding = blockSize;
         byte[] res = new byte[calcEncodedLength(len + padding + 2)];
         System.arraycopy(plain, 0, res, 2, len);
@@ -37,8 +37,8 @@ public class BlockNameCipher implements NameCodec
         ByteBuffer.wrap(res).order(ByteOrder.BIG_ENDIAN).putShort(mac);
         byte[] iv = new byte[_cipher.getIVSize()];
         ByteBuffer.wrap(iv).order(ByteOrder.BIG_ENDIAN).putLong(mac & 0xFFFFL);
-        if(_iv!=null)
-            for(int i=0;i<_iv.length;i++)
+        if (_iv != null)
+            for (int i = 0; i < _iv.length; i++)
                 iv[i] ^= _iv[i];
         _cipher.setIV(iv);
         try
@@ -49,7 +49,7 @@ public class BlockNameCipher implements NameCodec
         {
             throw new RuntimeException("Encryption failed", e);
         }
-        if(_caseSensitive)
+        if (_caseSensitive)
         {
             B64.changeBase2Inline(res, 0, len + padding + 2, 8, 5, true);
             return B64.B32ToString(res, 0, res.length);
@@ -65,7 +65,7 @@ public class BlockNameCipher implements NameCodec
     public String decodeName(String encodedName)
     {
         byte[] buf;
-        if(_caseSensitive)
+        if (_caseSensitive)
         {
             byte[] tmp = B64.StringToB32(encodedName);
             buf = new byte[B64.B32ToB256Bytes(tmp.length)];
@@ -77,13 +77,13 @@ public class BlockNameCipher implements NameCodec
             buf = new byte[B64.B64ToB256Bytes(tmp.length)];
             B64.changeBase2Inline(tmp, 0, tmp.length, 6, 8, false, 0, 0, buf, 0);
         }
-        if(buf.length - 2 < _cipher.getEncryptionBlockSize())
+        if (buf.length - 2 < _cipher.getEncryptionBlockSize())
             throw new IllegalArgumentException("Encoded name is too short: " + encodedName);
         short mac = ByteBuffer.wrap(buf).order(ByteOrder.BIG_ENDIAN).getShort();
         byte[] iv = new byte[_cipher.getIVSize()];
         ByteBuffer.wrap(iv).order(ByteOrder.BIG_ENDIAN).putLong(mac & 0xFFFFL);
-        if(_iv!=null)
-            for(int i=0;i<_iv.length;i++)
+        if (_iv != null)
+            for (int i = 0; i < _iv.length; i++)
                 iv[i] ^= _iv[i];
         _cipher.setIV(iv);
         try
@@ -110,7 +110,7 @@ public class BlockNameCipher implements NameCodec
         }
         finally
         {
-            Arrays.fill(buf, (byte)0);
+            Arrays.fill(buf, (byte) 0);
         }
     }
 
@@ -145,7 +145,7 @@ public class BlockNameCipher implements NameCodec
     @Override
     public byte[] getChainedIV(String plaintextName)
     {
-        if(_chainedIV == null)
+        if (_chainedIV == null)
             _chainedIV = calcChainedIV(plaintextName);
         return _chainedIV;
     }
@@ -187,7 +187,7 @@ public class BlockNameCipher implements NameCodec
         int len = plain.length; //calcLengthIncBlocs(plain.length);
         int blockSize = _cipher.getEncryptionBlockSize();
         int padding = blockSize - len % blockSize;
-        if(padding == 0)
+        if (padding == 0)
             padding = blockSize;
         byte[] res = new byte[calcEncodedLength(len + padding + 2)];
         System.arraycopy(plain, 0, res, 2, len);

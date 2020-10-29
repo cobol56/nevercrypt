@@ -19,39 +19,33 @@ public class ChoiceDialog extends DialogFragment
 {
     public static final String ARG_VARIANTS = "com.igeltech.nevercrypt.android.VARIANTS";
     public static final String ARG_TITLE = "com.igeltech.nevercrypt.android.TITLE";
-
     public static final String TAG = "ChoiceDialog";
-	
-	public static void showDialog(FragmentManager fm, int propertyId, String title, List<String> variants, String hostFragmentTag)
-	{
+
+    public static void showDialog(FragmentManager fm, int propertyId, String title, List<String> variants, String hostFragmentTag)
+    {
         Bundle args = new Bundle();
         args.putStringArrayList(ARG_VARIANTS, new ArrayList<>(variants));
         args.putString(ARG_TITLE, title);
         args.putInt(PropertyEditor.ARG_PROPERTY_ID, propertyId);
-        if(hostFragmentTag!=null)
+        if (hostFragmentTag != null)
             args.putString(PropertyEditor.ARG_HOST_FRAGMENT_TAG, hostFragmentTag);
-		DialogFragment newFragment = new ChoiceDialog();
+        DialogFragment newFragment = new ChoiceDialog();
         newFragment.setArguments(args);
-	    newFragment.show(fm, TAG);
-	}
+        newFragment.show(fm, TAG);
+    }
 
-	@NonNull
+    @NonNull
     @Override
-	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
-	{
+    public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
+    {
         PropertyEditor.Host host = PropertiesView.getHost(ChoiceDialog.this);
         final ChoiceDialogPropertyEditor pe = (ChoiceDialogPropertyEditor) host.getPropertiesView().getPropertyById(getArguments().getInt(PropertyEditor.ARG_PROPERTY_ID));
         ArrayList<String> variants = getArguments().getStringArrayList(ARG_VARIANTS);
-		final String[] strings = variants == null ? new String[0] : variants.toArray(new String[variants.size()]);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-            .setTitle(getArguments().getString(ARG_TITLE))
-            .setSingleChoiceItems(strings, pe.getSelectedEntry(),
-                    (dialog, item) -> {
-                        pe.setSelectedEntry(item);
-                        dialog.dismiss();
-                    }
-            );
+        final String[] strings = variants == null ? new String[0] : variants.toArray(new String[variants.size()]);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setTitle(getArguments().getString(ARG_TITLE)).setSingleChoiceItems(strings, pe.getSelectedEntry(), (dialog, item) -> {
+            pe.setSelectedEntry(item);
+            dialog.dismiss();
+        });
         return builder.create();
-	}
-
+    }
 }

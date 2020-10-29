@@ -18,8 +18,7 @@ public class DrawerManageContainersMenuItem extends DrawerManageLocationMenuItem
 
     @Override
     public String getTitle()
-        {
-            return getContext().getString(R.string.manage_containers);
+    {
+        return getContext().getString(R.string.manage_containers);
     }
-
 }

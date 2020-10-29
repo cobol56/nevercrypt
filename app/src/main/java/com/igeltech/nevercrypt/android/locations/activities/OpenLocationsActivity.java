@@ -29,10 +29,7 @@ public class OpenLocationsActivity extends RxAppCompatActivity
             _locationsManager = LocationsManager.getLocationsManager(getActivity());
             try
             {
-                _targetLocations = state == null ?
-                        _locationsManager.getLocationsFromIntent(getActivity().getIntent())
-                        :
-                        _locationsManager.getLocationsFromBundle(state);
+                _targetLocations = state == null ? _locationsManager.getLocationsFromIntent(getActivity().getIntent()) : _locationsManager.getLocationsFromBundle(state);
             }
             catch (Exception e)
             {
@@ -40,8 +37,6 @@ public class OpenLocationsActivity extends RxAppCompatActivity
             }
             onFirstStart();
         }
-
-
 
         @Override
         public void onSaveInstanceState(Bundle outState)
@@ -63,7 +58,7 @@ public class OpenLocationsActivity extends RxAppCompatActivity
         {
             if (!_targetLocations.isEmpty())
                 _targetLocations.remove(0);
-            if(_targetLocations.isEmpty())
+            if (_targetLocations.isEmpty())
             {
                 getActivity().setResult(AppCompatActivity.RESULT_CANCELED);
                 getActivity().finish();
@@ -82,7 +77,7 @@ public class OpenLocationsActivity extends RxAppCompatActivity
 
         private void openNextLocation()
         {
-            if(_targetLocations.isEmpty())
+            if (_targetLocations.isEmpty())
             {
                 getActivity().setResult(AppCompatActivity.RESULT_OK);
                 getActivity().finish();
@@ -102,10 +97,7 @@ public class OpenLocationsActivity extends RxAppCompatActivity
                 opener.setArguments(args);
                 getFragmentManager().
                         beginTransaction().
-                        add(
-                                opener,
-                                openerTag
-                        ).
+                        add(opener, openerTag).
                         commit();
             }
         }
@@ -118,17 +110,16 @@ public class OpenLocationsActivity extends RxAppCompatActivity
         }
     }
 
-	@Override
-	protected void onCreate(final Bundle savedInstanceState)
-	{
-	    super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(final Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
         AppInitHelper.
                 createObservable(this).
                 compose(bindToLifecycle()).
-                subscribe(this::addMainFragment, err ->
-                {
-                    if(!(err instanceof CancellationException))
+                subscribe(this::addMainFragment, err -> {
+                    if (!(err instanceof CancellationException))
                         Logger.log(err);
                 });
     }
@@ -141,7 +132,7 @@ public class OpenLocationsActivity extends RxAppCompatActivity
     protected void addMainFragment()
     {
         FragmentManager fm = getSupportFragmentManager();
-        if(fm.findFragmentByTag(MainFragment.TAG) == null)
+        if (fm.findFragmentByTag(MainFragment.TAG) == null)
             fm.beginTransaction().add(createFragment(), MainFragment.TAG).commit();
     }
 }

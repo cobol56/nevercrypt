@@ -23,7 +23,7 @@ public abstract class TransInputStream extends InputStream implements DataInput
     {
         log("read %d %d %d", buf.length, offset, count);
         byte[] currentBuffer = getCurrentBuffer();
-        if(_bytesLeft <= 0)
+        if (_bytesLeft <= 0)
             return -1;
         int avail = Math.min(getSpaceInBuffer(), _bytesLeft);
         int read = Math.min(avail, count);
@@ -49,7 +49,7 @@ public abstract class TransInputStream extends InputStream implements DataInput
 
     public void close(boolean closeBase) throws IOException
     {
-        if(closeBase)
+        if (closeBase)
             _base.close();
     }
 
@@ -63,7 +63,7 @@ public abstract class TransInputStream extends InputStream implements DataInput
 
     protected byte[] getCurrentBuffer() throws IOException
     {
-        if(_bytesLeft <= 0)
+        if (_bytesLeft <= 0)
             _bytesLeft = readFromBaseAndTransformBuffer(_buffer, 0, _bufferSize, getBufferPosition());
         return _buffer;
     }
@@ -77,12 +77,12 @@ public abstract class TransInputStream extends InputStream implements DataInput
     protected int readFromBase(byte[] buf, int offset, int count) throws IOException
     {
         int t = 0;
-        while(t<count)
+        while (t < count)
         {
             int n = _base.read(buf, offset + t, count - t);
-            if(n<0)
+            if (n < 0)
                 return t;
-            t+=n;
+            t += n;
         }
         return t;
     }
@@ -94,7 +94,7 @@ public abstract class TransInputStream extends InputStream implements DataInput
 
     protected void log(String msg, Object... params)
     {
-        if(ENABLE_DEBUG_LOG && GlobalConfig.isDebug())
+        if (ENABLE_DEBUG_LOG && GlobalConfig.isDebug())
             Logger.log(String.format("TransInputStream: " + msg, params));
     }
 
@@ -113,5 +113,4 @@ public abstract class TransInputStream extends InputStream implements DataInput
     {
         return _bufferSize - getPositionInBuffer();
     }
-
 }

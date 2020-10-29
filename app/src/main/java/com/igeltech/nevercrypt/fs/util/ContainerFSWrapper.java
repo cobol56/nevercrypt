@@ -23,9 +23,9 @@ public class ContainerFSWrapper extends ActivityTrackingFSWrapper
 
     public synchronized DirectorySettings getDirectorySettings(com.igeltech.nevercrypt.fs.Path path)
     {
-        if(path == null)
+        if (path == null)
             return null;
-        if(_dirSettingsCache.containsKey(path))
+        if (_dirSettingsCache.containsKey(path))
             return _dirSettingsCache.get(path);
         DirectorySettings ds = null;
         try
@@ -41,5 +41,4 @@ public class ContainerFSWrapper extends ActivityTrackingFSWrapper
     }
 
     private final HashMap<com.igeltech.nevercrypt.fs.Path, DirectorySettings> _dirSettingsCache = new HashMap<>();
-
 }

@@ -29,7 +29,7 @@ public class SHA1MACCalculator extends MACCalculator
         }
         finally
         {
-            Arrays.fill(k, (byte)0);
+            Arrays.fill(k, (byte) 0);
         }
     }
 
@@ -43,13 +43,13 @@ public class SHA1MACCalculator extends MACCalculator
     public byte[] calcChecksum(byte[] buf, int offset, int count)
     {
         byte[] data;
-        if(isChainedIVEnabled())
+        if (isChainedIVEnabled())
         {
             byte[] iv = getChainedIV();
             data = new byte[count + 8];
             System.arraycopy(buf, offset, data, 0, count);
-            for(int i=0;i<8;i++)
-                data[count + i] = iv[7-i];
+            for (int i = 0; i < 8; i++)
+                data[count + i] = iv[7 - i];
         }
         else
             data = Arrays.copyOfRange(buf, offset, offset + count);
@@ -58,9 +58,9 @@ public class SHA1MACCalculator extends MACCalculator
             byte[] mac = new byte[_hmac.getDigestLength()];
             _hmac.calcHMAC(data, 0, data.length, mac);
             byte[] cut = new byte[8];
-            for(int i=0; i<mac.length - 1;i++)
+            for (int i = 0; i < mac.length - 1; i++)
                 cut[i % cut.length] ^= mac[i];
-            if(isChainedIVEnabled())
+            if (isChainedIVEnabled())
                 setChainedIV(cut.clone());
             return cut;
         }
@@ -70,7 +70,7 @@ public class SHA1MACCalculator extends MACCalculator
         }
         finally
         {
-            Arrays.fill(data, (byte)0);
+            Arrays.fill(data, (byte) 0);
         }
     }
 

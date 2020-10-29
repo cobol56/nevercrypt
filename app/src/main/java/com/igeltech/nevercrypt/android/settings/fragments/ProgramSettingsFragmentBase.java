@@ -70,7 +70,7 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
     public void onPasswordEntered(PasswordDialog dlg)
     {
         char[] data = dlg.getPassword();
-        if(data != null && data.length == 0)
+        if (data != null && data.length == 0)
             data = null;
 
         CryptoApplication.setMasterPassword(data == null ? null : new SecureBuffer(data));
@@ -221,23 +221,16 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
                     {
                         Logger.showAndLog(getActivity(), e);
                     }
-                } else
+                }
+                else
                     editSettings().remove(WORK_DIR).commit();
             }
 
             @Override
             protected Intent getSelectPathIntent() throws IOException
             {
-                Intent i = FileManagerActivity.getSelectPathIntent(
-                        getHost().getContext(),
-                        null,
-                        false,
-                        false,
-                        true,
-                        true,
-                        true,
-                        false);
-                i.putExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS,true);
+                Intent i = FileManagerActivity.getSelectPathIntent(getHost().getContext(), null, false, false, true, true, true, false);
+                i.putExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS, true);
                 return i;
             }
         }));
@@ -373,10 +366,7 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
             protected boolean loadValue()
             {
                 boolean value = _settings.dontUseContentProvider();
-                getPropertiesView().setPropertyState(
-                        R.string.force_temp_files,
-                        getPropertiesView().isPropertyEnabled(getId()) && !value
-                );
+                getPropertiesView().setPropertyState(R.string.force_temp_files, getPropertiesView().isPropertyEnabled(getId()) && !value);
                 return value;
             }
 
@@ -408,5 +398,4 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
         getPropertiesView().setPropertiesState(propIds, enable);
         getPropertiesView().loadProperties();
     }
-
 }

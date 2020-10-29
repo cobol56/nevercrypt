@@ -18,15 +18,15 @@ public class WriteSettingsTask extends TaskFragment
 {
     public static final String ARG_FIN_ACTIVITY = "com.igeltech.nevercrypt.android.FIN_ACTIVITY";
 
-	public static WriteSettingsTask newInstance(CryptoLocation cont, boolean finActivity)
+    public static WriteSettingsTask newInstance(CryptoLocation cont, boolean finActivity)
     {
         Bundle args = new Bundle();
         args.putBoolean(ARG_FIN_ACTIVITY, finActivity);
         LocationsManager.storePathsInBundle(args, cont, null);
-		WriteSettingsTask f = new WriteSettingsTask();
+        WriteSettingsTask f = new WriteSettingsTask();
         f.setArguments(args);
         return f;
-	}
+    }
 
     @Override
     protected void initTask(FragmentActivity activity)
@@ -41,16 +41,15 @@ public class WriteSettingsTask extends TaskFragment
     protected void doWork(TaskState state) throws Exception
     {
         CryptoLocation cont = (CryptoLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
-		cont.applyInternalSettings();
+        cont.applyInternalSettings();
         cont.writeInternalSettings();
-	}
+    }
 
     @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        LocationSettingsFragment f = (LocationSettingsFragment)
-                getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
-        if(f == null)
+        LocationSettingsFragment f = (LocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        if (f == null)
             return null;
         return new ProgressDialogTaskFragmentCallbacks(activity, R.string.saving_changes)
         {
@@ -61,10 +60,10 @@ public class WriteSettingsTask extends TaskFragment
                 try
                 {
                     result.getResult();
-                    if(args.getBoolean(WriteSettingsTask.ARG_FIN_ACTIVITY,false))
+                    if (args.getBoolean(WriteSettingsTask.ARG_FIN_ACTIVITY, false))
                         getActivity().finish();
                 }
-                catch(Throwable e)
+                catch (Throwable e)
                 {
                     Logger.showAndLog(_context, result.getError());
                 }

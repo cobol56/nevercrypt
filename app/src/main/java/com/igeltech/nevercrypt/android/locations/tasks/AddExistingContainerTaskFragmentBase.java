@@ -25,30 +25,30 @@ public abstract class AddExistingContainerTaskFragmentBase extends AddExistingCr
         Logger.debug("Adding location at " + locationLocation.getLocationUri());
         Path cp = locationLocation.getCurrentPath();
         boolean isEncFs = false;
-        if(cp.isFile())
+        if (cp.isFile())
         {
             String fn = cp.getFile().getName();
-            if(Config.CONFIG_FILENAME.equalsIgnoreCase(fn) || Config.CONFIG_FILENAME2.equalsIgnoreCase(fn))
+            if (Config.CONFIG_FILENAME.equalsIgnoreCase(fn) || Config.CONFIG_FILENAME2.equalsIgnoreCase(fn))
             {
                 Path parentPath = cp.getParentPath();
-                if(parentPath!=null)
+                if (parentPath != null)
                 {
                     locationLocation.setCurrentPath(parentPath);
                     isEncFs = true;
                 }
             }
         }
-        else if(cp.isDirectory())
+        else if (cp.isDirectory())
         {
             Path cfgPath = Config.getConfigFilePath(cp.getDirectory());
-            if(cfgPath == null)
+            if (cfgPath == null)
                 throw new UserException("EncFs config file doesn't exist", R.string.encfs_config_file_not_found);
             isEncFs = true;
         }
         else
             throw new UserException("Wrong path", R.string.wrong_path);
 
-        if(isEncFs)
+        if (isEncFs)
             return new EncFsLocation(locationLocation, _context);
         else
             return createContainerBasedLocation(locationLocation);
@@ -63,14 +63,8 @@ public abstract class AddExistingContainerTaskFragmentBase extends AddExistingCr
     protected ContainerLocation createContainerLocationBase(Location locationLocation, Settings settings) throws IOException
     {
         String formatName = getArguments().getString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT);
-        if(formatName == null)
+        if (formatName == null)
             formatName = "";
-        return ContainerFormatter.createBaseContainerLocationFromFormatInfo(
-                formatName,
-                locationLocation,
-                null,
-                _context,
-                settings
-        );
+        return ContainerFormatter.createBaseContainerLocationFromFormatInfo(formatName, locationLocation, null, _context, settings);
     }
 }

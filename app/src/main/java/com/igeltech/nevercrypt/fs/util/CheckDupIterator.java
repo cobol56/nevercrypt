@@ -14,7 +14,7 @@ public class CheckDupIterator<T> extends FilteredIterator<T>
     @Override
     protected boolean isValidItem(T item)
     {
-        if(_previousItems.contains(item))
+        if (_previousItems.contains(item))
             return false;
         _previousItems.add(item);
         return true;

@@ -7,7 +7,6 @@ import com.igeltech.nevercrypt.android.settings.IntPropertyEditor;
 
 public class ContainerSizePropertyEditor extends IntPropertyEditor
 {
-
     public ContainerSizePropertyEditor(CreateContainerFragmentBase createContainerFragment)
     {
         super(createContainerFragment, R.string.container_size, R.string.container_size_desc, createContainerFragment.getTag());

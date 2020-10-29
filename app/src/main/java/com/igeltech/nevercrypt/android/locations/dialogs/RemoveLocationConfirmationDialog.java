@@ -19,7 +19,7 @@ public class RemoveLocationConfirmationDialog extends ConfirmationDialog
     {
         DialogFragment f = new RemoveLocationConfirmationDialog();
         Bundle b = new Bundle();
-        LocationsManager.storePathsInBundle(b,loc, null);
+        LocationsManager.storePathsInBundle(b, loc, null);
         f.setArguments(b);
         f.show(fm, TAG);
     }
@@ -32,15 +32,15 @@ public class RemoveLocationConfirmationDialog extends ConfirmationDialog
     }
 
     @Override
-	protected void onYes()
-	{
-        if(_loc == null)
+    protected void onYes()
+    {
+        if (_loc == null)
             return;
         LocationListBaseFragment f = (LocationListBaseFragment) getFragmentManager().findFragmentByTag(LocationListBaseFragment.TAG);
-        if(f == null)
+        if (f == null)
             return;
         f.removeLocation(_loc);
-	}
+    }
 
     @Override
     protected String getTitle()

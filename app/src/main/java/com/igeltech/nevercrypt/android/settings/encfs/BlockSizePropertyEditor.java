@@ -9,12 +9,7 @@ public class BlockSizePropertyEditor extends IntPropertyEditor
 {
     public BlockSizePropertyEditor(CreateLocationFragment hostFragment)
     {
-        super(
-                hostFragment,
-                R.string.block_size,
-                R.string.block_size_descr,
-                hostFragment.getTag()
-        );
+        super(hostFragment, R.string.block_size, R.string.block_size_descr, hostFragment.getTag());
     }
 
     @Override
@@ -27,13 +22,12 @@ public class BlockSizePropertyEditor extends IntPropertyEditor
     protected void saveValue(int value)
     {
         value -= value % 64;
-        if(value < 64)
+        if (value < 64)
             value = 64;
-        if(value > 4096)
+        if (value > 4096)
             value = 4096;
         getHostFragment().getState().putInt(CreateEncFsTaskFragment.ARG_BLOCK_SIZE, value);
     }
-
 
     protected CreateLocationFragment getHostFragment()
     {

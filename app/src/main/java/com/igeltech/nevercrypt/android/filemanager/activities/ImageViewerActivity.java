@@ -29,134 +29,136 @@ import java.util.NavigableSet;
 import java.util.TreeSet;
 
 public class ImageViewerActivity extends AppCompatActivity implements PreviewFragment.Host
-{	
-	public static final String INTENT_PARAM_CURRENT_PATH = "current_path";
-	
-	public static class RestorePathsTask extends TaskFragment
-	{
-		public static final String TAG = "RestorePathsTask";
-		
-		public static RestorePathsTask newInstance()
-		{
-			return new RestorePathsTask();
-		}
+{
+    public static final String INTENT_PARAM_CURRENT_PATH = "current_path";
 
-		protected void initTask(AppCompatActivity activity)
-		{
-			_loc = ((ImageViewerActivity)activity).getLocation();
-			_pathStrings = activity.getIntent().getStringArrayListExtra(LocationsManager.PARAM_PATHS);
-			_settings = UserSettings.getSettings(activity);
-		}
+    public static class RestorePathsTask extends TaskFragment
+    {
+        public static final String TAG = "RestorePathsTask";
 
-		@Override
-		protected void doWork(TaskState state) throws Exception
-		{			
-			ArrayList<Path> paths = Util.restorePaths(_loc.getFS(), _pathStrings);
-			TreeSet<CachedPathInfo> res = new TreeSet(FileListDataFragment.getComparator(_settings));
-			for(Path p: paths)
-			{
-				CachedPathInfoBase cpi = new CachedPathInfoBase();
-				cpi.init(p);
-				res.add(cpi);
-			}
-			state.setResult(res);
-		}		
-		
-		@Override
-		protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
-		{
-			return ((ImageViewerActivity) activity).getRestorePathsTaskCallbacks();
-		}
-		private Location _loc;
-		private ArrayList<String> _pathStrings;
-		private Settings _settings;
-	}
+        public static RestorePathsTask newInstance()
+        {
+            return new RestorePathsTask();
+        }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		UserSettings us = UserSettings.getSettings(this);
-		if(us.isFlagSecureEnabled())
-			CompatHelper.setWindowFlagSecure(this);
-		if(us.isImageViewerFullScreenModeEnabled())
-			enableFullScreen();
-		_location = LocationsManager.getLocationsManager(this).getFromIntent(getIntent(), null);
-		getSupportFragmentManager().beginTransaction().add(RestorePathsTask.newInstance(), RestorePathsTask.TAG).commit();
-	}
+        protected void initTask(AppCompatActivity activity)
+        {
+            _loc = ((ImageViewerActivity) activity).getLocation();
+            _pathStrings = activity.getIntent().getStringArrayListExtra(LocationsManager.PARAM_PATHS);
+            _settings = UserSettings.getSettings(activity);
+        }
 
-	@Override
-	public NavigableSet<? extends CachedPathInfo> getCurrentFiles()
-	{
-		return _files;
-	}
+        @Override
+        protected void doWork(TaskState state) throws Exception
+        {
+            ArrayList<Path> paths = Util.restorePaths(_loc.getFS(), _pathStrings);
+            TreeSet<CachedPathInfo> res = new TreeSet(FileListDataFragment.getComparator(_settings));
+            for (Path p : paths)
+            {
+                CachedPathInfoBase cpi = new CachedPathInfoBase();
+                cpi.init(p);
+                res.add(cpi);
+            }
+            state.setResult(res);
+        }
 
-	@Override
-	public Location getLocation()
-	{
-		return _location;
-	}
+        @Override
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
+        {
+            return ((ImageViewerActivity) activity).getRestorePathsTaskCallbacks();
+        }
 
-	@Override
-	public Object getFilesListSync()
-	{
-		return new Object();
-	}
+        private Location _loc;
+        private ArrayList<String> _pathStrings;
+        private Settings _settings;
+    }
 
-	@Override
-	public void onToggleFullScreen()
-	{
-		CompatHelper.restartActivity(this);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        UserSettings us = UserSettings.getSettings(this);
+        if (us.isFlagSecureEnabled())
+            CompatHelper.setWindowFlagSecure(this);
+        if (us.isImageViewerFullScreenModeEnabled())
+            enableFullScreen();
+        _location = LocationsManager.getLocationsManager(this).getFromIntent(getIntent(), null);
+        getSupportFragmentManager().beginTransaction().add(RestorePathsTask.newInstance(), RestorePathsTask.TAG).commit();
+    }
 
-	public TaskFragment.TaskCallbacks getRestorePathsTaskCallbacks()
-	{
-		return new ProgressDialogTaskFragmentCallbacks(this,R.string.loading)
-		{
-			@Override
-			public void onCompleted(Bundle args, Result result)
-			{
-				super.onCompleted(args, result);
-				try			
-				{
-					_files = (TreeSet<CachedPathInfo>) result.getResult();
-				}
-				catch(Throwable e)
-				{
-					Logger.showAndLog(_context, result.getError());
-				}
-				if(getPreviewFragment()==null)
-					showFragment(getIntent().getStringExtra(INTENT_PARAM_CURRENT_PATH));
-			}
-		};
-	}
+    @Override
+    public NavigableSet<? extends CachedPathInfo> getCurrentFiles()
+    {
+        return _files;
+    }
 
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		PreviewFragment pf = (PreviewFragment) getSupportFragmentManager().findFragmentByTag(PreviewFragment.TAG);
-		if(pf!=null)
-			pf.updateImageViewFullScreen();
-	}
+    @Override
+    public Location getLocation()
+    {
+        return _location;
+    }
 
-	private TreeSet<CachedPathInfo> _files;
-	private Location _location;
+    @Override
+    public Object getFilesListSync()
+    {
+        return new Object();
+    }
 
-	private PreviewFragment getPreviewFragment()
-	{
-		return (PreviewFragment) getSupportFragmentManager().findFragmentByTag(PreviewFragment.TAG);
-	}
+    @Override
+    public void onToggleFullScreen()
+    {
+        CompatHelper.restartActivity(this);
+    }
 
-	private void showFragment(String currentImagePathString)
-	{
-		PreviewFragment f = PreviewFragment.newInstance(currentImagePathString);
-		getSupportFragmentManager().beginTransaction().add(android.R.id.content, f, PreviewFragment.TAG).commit();
-	}	
-	
-	private void enableFullScreen()
-	{		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		invalidateOptionsMenu();
-	}
+    public TaskFragment.TaskCallbacks getRestorePathsTaskCallbacks()
+    {
+        return new ProgressDialogTaskFragmentCallbacks(this, R.string.loading)
+        {
+            @Override
+            public void onCompleted(Bundle args, Result result)
+            {
+                super.onCompleted(args, result);
+                try
+                {
+                    _files = (TreeSet<CachedPathInfo>) result.getResult();
+                }
+                catch (Throwable e)
+                {
+                    Logger.showAndLog(_context, result.getError());
+                }
+                if (getPreviewFragment() == null)
+                    showFragment(getIntent().getStringExtra(INTENT_PARAM_CURRENT_PATH));
+            }
+        };
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
+        super.onWindowFocusChanged(hasFocus);
+        PreviewFragment pf = (PreviewFragment) getSupportFragmentManager().findFragmentByTag(PreviewFragment.TAG);
+        if (pf != null)
+            pf.updateImageViewFullScreen();
+    }
+
+    private TreeSet<CachedPathInfo> _files;
+    private Location _location;
+
+    private PreviewFragment getPreviewFragment()
+    {
+        return (PreviewFragment) getSupportFragmentManager().findFragmentByTag(PreviewFragment.TAG);
+    }
+
+    private void showFragment(String currentImagePathString)
+    {
+        PreviewFragment f = PreviewFragment.newInstance(currentImagePathString);
+        getSupportFragmentManager().beginTransaction().add(android.R.id.content, f, PreviewFragment.TAG).commit();
+    }
+
+    private void enableFullScreen()
+    {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        invalidateOptionsMenu();
+    }
 }

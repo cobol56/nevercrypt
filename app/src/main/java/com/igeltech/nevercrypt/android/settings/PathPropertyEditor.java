@@ -16,56 +16,47 @@ import java.io.IOException;
 
 public abstract class PathPropertyEditor extends TextPropertyEditor
 {
+    public PathPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId, String hostFragmentTag)
+    {
+        super(host, R.layout.settings_path_editor, titleResId, descResId, hostFragmentTag);
+    }
 
-	public PathPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId, String hostFragmentTag)
-	{
-		super(host, R.layout.settings_path_editor, titleResId, descResId, hostFragmentTag);
-	}
-	
-	@Override
-	public View createView(ViewGroup parent)
-	{
-		View view = super.createView(parent);
-		AppCompatButton b = view.findViewById(android.R.id.button2);
-		if(b!=null)
-			b.setOnClickListener(v -> {
-				try
-				{
-					requestActivity(getSelectPathIntent(), SELECT_PATH_REQ_CODE);
-				}
-				catch(Exception e)
-				{
-					Logger.showAndLog(getHost().getContext(), e);
-				}
-			});
-		return view;
-	}
-	
-	private static final int SELECT_PATH_REQ_CODE = 1;
-	
-	@Override
-	protected void onPropertyRequestResult(int propertyRequestCode, int resultCode, Intent data)
-	{
-		if(propertyRequestCode == SELECT_PATH_REQ_CODE && resultCode == AppCompatActivity.RESULT_OK && data!=null)
-			onPathSelected(data);	
-	}
-	
-	protected void onPathSelected(Intent result)
-	{
-		Uri uri = result.getData();
-		onTextChanged(uri == null ? "" : uri.toString());
-	}
-	
-	protected Intent getSelectPathIntent() throws IOException
-	{
-		return FileManagerActivity.getSelectPathIntent(
-				getHost().getContext(),
-				null,
-				false,
-				false,
-				true,
-				true,
-				true,
-				false);
-	}
+    @Override
+    public View createView(ViewGroup parent)
+    {
+        View view = super.createView(parent);
+        AppCompatButton b = view.findViewById(android.R.id.button2);
+        if (b != null)
+            b.setOnClickListener(v -> {
+                try
+                {
+                    requestActivity(getSelectPathIntent(), SELECT_PATH_REQ_CODE);
+                }
+                catch (Exception e)
+                {
+                    Logger.showAndLog(getHost().getContext(), e);
+                }
+            });
+        return view;
+    }
+
+    private static final int SELECT_PATH_REQ_CODE = 1;
+
+    @Override
+    protected void onPropertyRequestResult(int propertyRequestCode, int resultCode, Intent data)
+    {
+        if (propertyRequestCode == SELECT_PATH_REQ_CODE && resultCode == AppCompatActivity.RESULT_OK && data != null)
+            onPathSelected(data);
+    }
+
+    protected void onPathSelected(Intent result)
+    {
+        Uri uri = result.getData();
+        onTextChanged(uri == null ? "" : uri.toString());
+    }
+
+    protected Intent getSelectPathIntent() throws IOException
+    {
+        return FileManagerActivity.getSelectPathIntent(getHost().getContext(), null, false, false, true, true, true, false);
+    }
 }

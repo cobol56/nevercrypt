@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class EncryptionAlgorithmPropertyEditor extends ChoiceDialogPropertyEditor
 {
     public static String getEncEngineName(EncryptionEngine eng)
@@ -37,11 +36,11 @@ public class EncryptionAlgorithmPropertyEditor extends ChoiceDialogPropertyEdito
         {
             EncryptionEngine ee = VolumeLayoutBase.findCipher(algs, encAlgName, encModeName);
             return algs.indexOf(ee);
-        } else if (!algs.isEmpty())
+        }
+        else if (!algs.isEmpty())
             return 0;
         else
             return -1;
-
     }
 
     @Override

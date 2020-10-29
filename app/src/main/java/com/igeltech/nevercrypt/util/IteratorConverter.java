@@ -35,5 +35,4 @@ public abstract class IteratorConverter<S, T> implements Iterator<T>
     protected abstract T convert(S src);
 
     private final Iterator<? extends S> _srcIterator;
-
 }

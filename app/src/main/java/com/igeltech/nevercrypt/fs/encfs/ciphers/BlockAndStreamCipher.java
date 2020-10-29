@@ -40,7 +40,7 @@ public class BlockAndStreamCipher implements FileEncryptionEngine
     @Override
     public void decrypt(byte[] data, int offset, int len) throws EncryptionEngineException
     {
-        if(len == _blockCipher.getFileBlockSize())
+        if (len == _blockCipher.getFileBlockSize())
             _blockCipher.decrypt(data, offset, len);
         else
             _streamCipher.decrypt(data, offset, len);
@@ -49,7 +49,7 @@ public class BlockAndStreamCipher implements FileEncryptionEngine
     @Override
     public void encrypt(byte[] data, int offset, int len) throws EncryptionEngineException
     {
-        if(len == _blockCipher.getFileBlockSize())
+        if (len == _blockCipher.getFileBlockSize())
             _blockCipher.encrypt(data, offset, len);
         else
             _streamCipher.encrypt(data, offset, len);

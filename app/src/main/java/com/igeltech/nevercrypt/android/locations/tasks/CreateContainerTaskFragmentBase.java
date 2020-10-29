@@ -43,12 +43,12 @@ public abstract class CreateContainerTaskFragmentBase extends CreateLocationTask
     {
         super.initFormatter(state, formatter, password);
         Bundle args = getArguments();
-        ContainerFormatterBase cf = (ContainerFormatterBase)formatter;
+        ContainerFormatterBase cf = (ContainerFormatterBase) formatter;
         cf.setContainerFormat(getContainerFormatByName(args.getString(ARG_CONTAINER_FORMAT)));
         cf.setContainerSize(args.getInt(ARG_SIZE) * 1024L * 1024L);
         cf.setNumKDFIterations(args.getInt(Openable.PARAM_KDF_ITERATIONS, 0));
         FileSystemInfo fst = args.getParcelable(ARG_FILE_SYSTEM_TYPE);
-        if(fst!=null)
+        if (fst != null)
             cf.setFileSystemType(fst);
         String encAlgName = args.getString(ARG_CIPHER_NAME);
         String encModeName = args.getString(ARG_CIPHER_MODE_NAME);
@@ -66,17 +66,13 @@ public abstract class CreateContainerTaskFragmentBase extends CreateLocationTask
         Bundle args = getArguments();
         Path path = locationLocation.getCurrentPath();
         if (path.exists() && path.isDirectory())
-            throw new UserException(_context,
-                    R.string.container_file_name_is_not_specified);
+            throw new UserException(_context, R.string.container_file_name_is_not_specified);
         if (args.getInt(ARG_SIZE) < 1)
-            throw new UserException(getActivity(),
-                    R.string.err_container_size_is_too_small);
+            throw new UserException(getActivity(), R.string.err_container_size_is_too_small);
 
         if (!getArguments().getBoolean(ARG_OVERWRITE, false))
         {
-            if (path.exists()
-                    && path.isFile()
-                    && path.getFile().getSize() > 0)
+            if (path.exists() && path.isFile() && path.getFile().getSize() > 0)
             {
                 state.setResult(RESULT_REQUEST_OVERWRITE);
                 return false;
@@ -84,5 +80,4 @@ public abstract class CreateContainerTaskFragmentBase extends CreateLocationTask
         }
         return true;
     }
-
 }

@@ -85,7 +85,6 @@ class ExFatFile extends ExFatRecord implements File
     public long getSize() throws IOException
     {
         return _path.getAttr().size;
-
     }
 
     @Override

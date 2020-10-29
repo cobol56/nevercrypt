@@ -21,11 +21,11 @@ public class DrawerController extends DrawerControllerBase
         boolean isSelectAction = getMainActivity().isSelectAction();
         ArrayList<DrawerMenuItemBase> list = new ArrayList<>();
         DrawerAdapter adapter = new DrawerAdapter(list);
-        if(i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_CONTAINERS, true))
+        if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_CONTAINERS, true))
             adapter.add(new DrawerContainersMenu(this));
-        if(i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DEVICE, true))
+        if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DEVICE, true))
             adapter.add(new DrawerLocalFilesMenu(this));
-        if(!isSelectAction)
+        if (!isSelectAction)
         {
             adapter.add(new DrawerSettingsMenuItem(this));
             adapter.add(new DrawerHelpMenuItem(this));

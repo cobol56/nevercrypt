@@ -13,72 +13,70 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class CategoryPropertyEditor extends PropertyEditorBase
 {
-
-	@Override
-	public View createView(ViewGroup parent)
-	{
-		View view = super.createView(parent);
+    @Override
+    public View createView(ViewGroup parent)
+    {
+        View view = super.createView(parent);
         _indicatorIcon = view.findViewById(android.R.id.icon);
         _indicatorIcon.setRotation(isExpanded() ? 180 : 0);
-		return view;
-	}
+        return view;
+    }
 
-	@Override
-	public void onClick()
-	{
-		rotateIconAndChangeState();
-	}
+    @Override
+    public void onClick()
+    {
+        rotateIconAndChangeState();
+    }
 
-	@Override
-	public void save(Bundle b)
-	{
-		b.putBoolean(getBundleKey(), _isExpanded);
-	}
+    @Override
+    public void save(Bundle b)
+    {
+        b.putBoolean(getBundleKey(), _isExpanded);
+    }
 
-	@Override
-	public void save()
-	{
+    @Override
+    public void save()
+    {
 
-	}
+    }
 
-	@Override
-	public void load(Bundle b)
-	{
-		if(b.getBoolean(getBundleKey(), false))
-			expand();
-		else
-			collapse();
-	}
+    @Override
+    public void load(Bundle b)
+    {
+        if (b.getBoolean(getBundleKey(), false))
+            expand();
+        else
+            collapse();
+    }
 
-	public final boolean isExpanded()
-	{
-		return _isExpanded;
-	}
+    public final boolean isExpanded()
+    {
+        return _isExpanded;
+    }
 
-	public final void collapse()
-	{
-		_isExpanded = false;
-		load();
-		if(_indicatorIcon!=null)
-        	_indicatorIcon.setRotation(0);
-	}
+    public final void collapse()
+    {
+        _isExpanded = false;
+        load();
+        if (_indicatorIcon != null)
+            _indicatorIcon.setRotation(0);
+    }
 
-	public final void expand()
-	{
-		_isExpanded = true;
-		load();
-		if(_indicatorIcon!=null)
-        	_indicatorIcon.setRotation(180);
-	}
+    public final void expand()
+    {
+        _isExpanded = true;
+        load();
+        if (_indicatorIcon != null)
+            _indicatorIcon.setRotation(180);
+    }
 
-	protected CategoryPropertyEditor(Host host, int titleResId, int descResId)
-	{
-		super(host, R.layout.settings_category, titleResId, descResId);
-	}
+    protected CategoryPropertyEditor(Host host, int titleResId, int descResId)
+    {
+        super(host, R.layout.settings_category, titleResId, descResId);
+    }
 
-	private AppCompatImageView _indicatorIcon;
-	private boolean _isExpanded = true;
-
+    private AppCompatImageView _indicatorIcon;
+    private boolean _isExpanded = true;
 
     private void rotateIconAndChangeState()
     {
@@ -91,12 +89,11 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
             @Override
             public void onAnimationEnd(Animator animation)
             {
-                if(_isExpanded)
+                if (_isExpanded)
                     collapse();
                 else
                     expand();
                 _indicatorIcon.setHasTransientState(false);
-
             }
         });
         anim.start();

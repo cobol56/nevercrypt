@@ -17,7 +17,7 @@ import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 public abstract class PropertiesFragmentBase extends Fragment implements PropertyEditor.Host
 {
     @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.properties_fragment, container, false);
         _propertiesView = view.findViewById(R.id.list);
@@ -41,7 +41,7 @@ public abstract class PropertiesFragmentBase extends Fragment implements Propert
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(!getPropertiesView().onActivityResult(requestCode, resultCode, data))
+        if (!getPropertiesView().onActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
     }
 

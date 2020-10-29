@@ -17,102 +17,90 @@ import java.util.concurrent.CancellationException;
 
 public class ClearTempFolderTask extends WipeFilesTask
 {
-	public static final String ARG_EXIT_PROGRAM = "com.igeltech.nevercrypt.android.EXIT_PROGRAM";
+    public static final String ARG_EXIT_PROGRAM = "com.igeltech.nevercrypt.android.EXIT_PROGRAM";
 
-	public static SrcDstCollection getMirrorFiles(Context context) throws IOException
-	{
-		Location loc = FileOpsService.getSecTempFolderLocation(
-				UserSettings.getSettings(context).getWorkDir(),
-				context
-		);
-		if(loc.getCurrentPath()!=null && loc.getCurrentPath().exists())
-		{
-			SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(
-					FileOpsService.getSecTempFolderLocation(
-							UserSettings.getSettings(context).getWorkDir(),
-							context
-					),
-					null
-			)
-			);
-			sdr.setIsDirLast(true);
-			return sdr;
-		}
-		else
-			return new SrcDstPlain();
-	}
+    public static SrcDstCollection getMirrorFiles(Context context) throws IOException
+    {
+        Location loc = FileOpsService.getSecTempFolderLocation(UserSettings.getSettings(context).getWorkDir(), context);
+        if (loc.getCurrentPath() != null && loc.getCurrentPath().exists())
+        {
+            SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(FileOpsService.getSecTempFolderLocation(UserSettings.getSettings(context).getWorkDir(), context), null));
+            sdr.setIsDirLast(true);
+            return sdr;
+        }
+        else
+            return new SrcDstPlain();
+    }
 
-	public static class Param extends FileOperationTaskBase.FileOperationParam
-	{
-		public Param(Intent i, Context context)
-		{
-			super(i);
-			_context = context;
-		}
+    public static class Param extends FileOperationTaskBase.FileOperationParam
+    {
+        public Param(Intent i, Context context)
+        {
+            super(i);
+            _context = context;
+        }
 
-		public boolean shouldExitProgram()
-		{
-			return getIntent().getBooleanExtra(ARG_EXIT_PROGRAM, false);
-		}
+        public boolean shouldExitProgram()
+        {
+            return getIntent().getBooleanExtra(ARG_EXIT_PROGRAM, false);
+        }
 
-		@Override
-		protected SrcDstCollection loadRecords(Intent i)
-		{
-			try
-			{
-				return getMirrorFiles(_context);
-			}
-			catch (IOException e)
-			{
-				Logger.log(e);
-			}
+        @Override
+        protected SrcDstCollection loadRecords(Intent i)
+        {
+            try
+            {
+                return getMirrorFiles(_context);
+            }
+            catch (IOException e)
+            {
+                Logger.log(e);
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		private final Context _context;
-	}
+        private final Context _context;
+    }
 
-	public ClearTempFolderTask()
-	{
-		super(true);
-	}
+    public ClearTempFolderTask()
+    {
+        super(true);
+    }
 
-	@Override
-	protected Param getParam()
-	{
-		return (Param) super.getParam();
-	}
+    @Override
+    protected Param getParam()
+    {
+        return (Param) super.getParam();
+    }
 
-	@Override
-	protected FileOperationParam initParam(Intent i)
-	{
-		return new Param(i, _context);
-	}
+    @Override
+    protected FileOperationParam initParam(Intent i)
+    {
+        return new Param(i, _context);
+    }
 
-	@Override
-	public void onCompleted(Result result)
-	{
-		if(getParam().shouldExitProgram())
-		{
-			try
-			{
-				removeNotification();
-				result.getResult();
-				CryptoApplication.stopProgram(_context, true);
-			}
-			catch(CancellationException ignored)
-			{
-			}
-			catch (Throwable e)
-			{
-				reportError(e);
-				CryptoApplication.stopProgram(_context, false);
-			}
-
-		}
-		else
-			super.onCompleted(result);
-
-	}
+    @Override
+    public void onCompleted(Result result)
+    {
+        if (getParam().shouldExitProgram())
+        {
+            try
+            {
+                removeNotification();
+                result.getResult();
+                CryptoApplication.stopProgram(_context, true);
+            }
+            catch (CancellationException ignored)
+            {
+            }
+            catch (Throwable e)
+            {
+                reportError(e);
+                CryptoApplication.stopProgram(_context, false);
+            }
+        }
+        else
+            super.onCompleted(result);
+    }
 }

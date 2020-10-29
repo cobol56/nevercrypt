@@ -49,5 +49,4 @@ public class NullNameCipher implements NameCodec
     {
         return 0;
     }
-
 }

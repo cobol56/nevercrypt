@@ -28,7 +28,7 @@ public class CloseLocationsActivity extends AppCompatActivity
             super.onCreate(state);
             _locationsManager = LocationsManager.getLocationsManager(getActivity());
             _failedToClose = state != null && state.getBoolean(ARG_FAILED_TO_CLOSE_ALL);
-            if(MasterPasswordDialog.checkMasterPasswordIsSet(getActivity(), getFragmentManager(), getTag()))
+            if (MasterPasswordDialog.checkMasterPasswordIsSet(getActivity(), getFragmentManager(), getTag()))
                 startClosingLocations(state);
         }
 
@@ -72,7 +72,6 @@ public class CloseLocationsActivity extends AppCompatActivity
         }
 
         private static final String ARG_FAILED_TO_CLOSE_ALL = "com.igeltech.nevercrypt.android.FAILED_TO_CLOSE";
-
         private final ActivityResultHandler _resHandler = new ActivityResultHandler();
         private ArrayList<Location> _targetLocations;
         private LocationsManager _locationsManager;
@@ -82,18 +81,17 @@ public class CloseLocationsActivity extends AppCompatActivity
         {
             try
             {
-                if(state == null)
+                if (state == null)
                 {
                     Intent i = getActivity().getIntent();
-                    if(i!=null && (i.getData() != null || i.hasExtra(LocationsManager.PARAM_LOCATION_URIS)))
+                    if (i != null && (i.getData() != null || i.hasExtra(LocationsManager.PARAM_LOCATION_URIS)))
                         _targetLocations = _locationsManager.getLocationsFromIntent(i);
                     else
                     {
                         _targetLocations = new ArrayList<>();
-                        for(Location l: _locationsManager.getLocationsClosingOrder())
+                        for (Location l : _locationsManager.getLocationsClosingOrder())
                             _targetLocations.add(l);
                     }
-
                 }
                 else
                     _targetLocations = _locationsManager.getLocationsFromBundle(state);
@@ -107,7 +105,7 @@ public class CloseLocationsActivity extends AppCompatActivity
 
         private void closeNextLocation()
         {
-            if(_targetLocations.isEmpty())
+            if (_targetLocations.isEmpty())
             {
                 getActivity().setResult(_failedToClose ? AppCompatActivity.RESULT_CANCELED : AppCompatActivity.RESULT_OK);
                 getActivity().finish();
@@ -122,10 +120,8 @@ public class CloseLocationsActivity extends AppCompatActivity
                 args.putString(LocationCloserBaseFragment.PARAM_RECEIVER_FRAGMENT_TAG, getTag());
                 LocationsManager.storePathsInBundle(args, loc, null);
                 Intent i = getActivity().getIntent();
-                if(i.hasExtra(LocationCloserBaseFragment.ARG_FORCE_CLOSE))
-                    args.putBoolean(LocationCloserBaseFragment.ARG_FORCE_CLOSE,
-                            i.getBooleanExtra(LocationCloserBaseFragment.ARG_FORCE_CLOSE, false)
-                    );
+                if (i.hasExtra(LocationCloserBaseFragment.ARG_FORCE_CLOSE))
+                    args.putBoolean(LocationCloserBaseFragment.ARG_FORCE_CLOSE, i.getBooleanExtra(LocationCloserBaseFragment.ARG_FORCE_CLOSE, false));
                 LocationCloserBaseFragment closer = LocationCloserBaseFragment.getDefaultCloserForLocation(loc);
                 closer.setArguments(args);
                 getFragmentManager().beginTransaction().add(closer, closerTag).commit();
@@ -143,19 +139,19 @@ public class CloseLocationsActivity extends AppCompatActivity
         @Override
         public void onPasswordNotEntered(PasswordDialog dlg)
         {
-            if(MasterPasswordDialog.checkSettingsKey(getActivity()))
+            if (MasterPasswordDialog.checkSettingsKey(getActivity()))
                 startClosingLocations(null);
             else
                 getActivity().finish();
         }
     }
 
-	@Override
-	protected void onCreate(final Bundle savedInstanceState)
-	{
-	    super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(final Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
-        if(savedInstanceState == null)
+        if (savedInstanceState == null)
             getSupportFragmentManager().beginTransaction().add(new MainFragment(), MainFragment.TAG).commit();
-	}
+    }
 }

@@ -48,7 +48,7 @@ public abstract class DrawerManageLocationMenuItem extends DrawerMenuItemBase
 
     private synchronized static Drawable getIcon(Context context)
     {
-        if(_icon == null)
+        if (_icon == null)
         {
             _icon = context.getResources().getDrawable(R.drawable.ic_manage_locations, context.getTheme());
         }

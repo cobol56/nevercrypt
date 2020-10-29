@@ -38,6 +38,7 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
     public interface CloseLocationReceiver
     {
         void onTargetLocationClosed(Location location, Bundle closeTaskArgs);
+
         void onTargetLocationNotClosed(Location location, Bundle closeTaskArgs);
     }
 
@@ -51,7 +52,6 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
     public static class CloseLocationTaskFragment extends TaskFragment
     {
         public static final String ARG_CLOSER_TAG = "com.igeltech.nevercrypt.android.CLOSER_TAG";
-
         protected Context _context;
         protected LocationsManager _locationsManager;
 
@@ -65,9 +65,9 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         @Override
         protected void doWork(TaskState taskState) throws Exception
         {
-            PowerManager pm = (PowerManager)_context.getSystemService(Context.POWER_SERVICE);
+            PowerManager pm = (PowerManager) _context.getSystemService(Context.POWER_SERVICE);
             PowerManager.WakeLock wl = pm == null ? null : pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, toString());
-            if(wl!=null)
+            if (wl != null)
                 wl.acquire(30000);
             try
             {
@@ -78,7 +78,7 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
             }
             finally
             {
-                if(wl!=null)
+                if (wl != null)
                     wl.release();
             }
         }
@@ -99,12 +99,12 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         protected void detachTask()
         {
             FragmentManager fm = getFragmentManager();
-            if(fm!=null)
+            if (fm != null)
             {
                 FragmentTransaction trans = fm.beginTransaction();
                 trans.remove(this);
                 LocationCloserBaseFragment f = (LocationCloserBaseFragment) fm.findFragmentByTag(getArguments().getString(ARG_CLOSER_TAG));
-                if(f!=null)
+                if (f != null)
                     trans.remove(f);
                 trans.commitAllowingStateLoss();
                 Logger.debug(String.format("TaskFragment %s has been removed from the fragment manager", this));
@@ -119,7 +119,7 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
     public void onCreate(Bundle state)
     {
         super.onCreate(state);
-        if(getFragmentManager().findFragmentByTag(getCloseLocationTaskTag()) == null)
+        if (getFragmentManager().findFragmentByTag(getCloseLocationTaskTag()) == null)
             closeLocation();
     }
 
@@ -133,68 +133,66 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
     @Override
     public void onResume()
     {
-    	super.onResume();
+        super.onResume();
         _resHandler.handle();
     }
 
-
     public TaskFragment.TaskCallbacks getCloseLocationTaskCallbacks()
-	{
-		return new CloseLocationTaskCallbacks();
-	}
+    {
+        return new CloseLocationTaskCallbacks();
+    }
 
-	protected class CloseLocationTaskCallbacks implements TaskFragment.TaskCallbacks
-	{
-		@Override
-		public void onPrepare(Bundle args)
-		{
+    protected class CloseLocationTaskCallbacks implements TaskFragment.TaskCallbacks
+    {
+        @Override
+        public void onPrepare(Bundle args)
+        {
 
-		}
+        }
 
-		@Override
-		public void onResumeUI(Bundle args)
-		{
+        @Override
+        public void onResumeUI(Bundle args)
+        {
             FragmentActivity activity = getActivity();
             _dialog = new ProgressDialog(activity);
-            _dialog.setMessage (activity.getText(R.string.closing));
+            _dialog.setMessage(activity.getText(R.string.closing));
             _dialog.setIndeterminate(true);
             _dialog.setCancelable(false);
             _dialog.setOnCancelListener(dialog -> {
                 CloseLocationTaskFragment f = (CloseLocationTaskFragment) getFragmentManager().findFragmentByTag(CloseLocationTaskFragment.TAG);
-                if(f!=null)
+                if (f != null)
                     f.cancel();
             });
             _dialog.show();
-		}
+        }
 
-		@Override
-		public void onSuspendUI(Bundle args)
-		{
-			_dialog.dismiss();
+        @Override
+        public void onSuspendUI(Bundle args)
+        {
+            _dialog.dismiss();
+        }
 
-		}
+        @Override
+        public void onCompleted(Bundle args, TaskFragment.Result result)
+        {
+            procCloseLocationTaskResult(args, result);
+        }
 
-		@Override
-		public void onCompleted(Bundle args,TaskFragment.Result result)
-		{
-			procCloseLocationTaskResult(args, result);
-		}
+        @Override
+        public void onUpdateUI(Object state)
+        {
 
-		@Override
-		public void onUpdateUI(Object state)
-		{
+        }
 
-		}
+        private ProgressDialog _dialog;
+    }
 
-		private ProgressDialog _dialog;
-	}
+    protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
 
-	protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
-
-	protected TaskFragment getCloseLocationTask()
-	{
-		return new CloseLocationTaskFragment();
-	}
+    protected TaskFragment getCloseLocationTask()
+    {
+        return new CloseLocationTaskFragment();
+    }
 
     protected String getCloseLocationTaskTag()
     {
@@ -207,21 +205,18 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
     }
 
     protected Bundle initCloseLocationTaskParams(Location location)
-	{
+    {
         Bundle b = new Bundle();
         b.putString(CloseLocationTaskFragment.ARG_CLOSER_TAG, getTag());
-        if(getArguments().containsKey(ARG_FORCE_CLOSE))
+        if (getArguments().containsKey(ARG_FORCE_CLOSE))
             b.putBoolean(ARG_FORCE_CLOSE, getArguments().getBoolean(ARG_FORCE_CLOSE, false));
         LocationsManager.storePathsInBundle(b, location, null);
-		return b;
-	}
+        return b;
+    }
 
     protected Location getTargetLocation()
     {
-        return LocationsManager.getFromBundle(
-                getArguments(),
-                LocationsManager.getLocationsManager(getActivity()),
-                null);
+        return LocationsManager.getFromBundle(getArguments(), LocationsManager.getLocationsManager(getActivity()), null);
     }
 
     protected void finishCloser(boolean closed, Location location, Bundle closeTaskArgs)
@@ -233,24 +228,24 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
             onLocationNotClosed(location, closeTaskArgs);
     }
 
-	protected void onLocationClosed(Location location, Bundle closeTaskArgs)
-	{
-        String recTag = getArguments()!=null ? getArguments().getString(PARAM_RECEIVER_FRAGMENT_TAG) : null;
-        if(recTag != null)
+    protected void onLocationClosed(Location location, Bundle closeTaskArgs)
+    {
+        String recTag = getArguments() != null ? getArguments().getString(PARAM_RECEIVER_FRAGMENT_TAG) : null;
+        if (recTag != null)
         {
             CloseLocationReceiver rec = (CloseLocationReceiver) getFragmentManager().findFragmentByTag(recTag);
-            if(rec!=null)
+            if (rec != null)
                 rec.onTargetLocationClosed(location, closeTaskArgs);
         }
-	}
+    }
 
     protected void onLocationNotClosed(Location location, Bundle closeTaskArgs)
     {
-        String recTag = getArguments()!=null ? getArguments().getString(PARAM_RECEIVER_FRAGMENT_TAG) : null;
-        if(recTag != null)
+        String recTag = getArguments() != null ? getArguments().getString(PARAM_RECEIVER_FRAGMENT_TAG) : null;
+        if (recTag != null)
         {
             CloseLocationReceiver rec = (CloseLocationReceiver) getFragmentManager().findFragmentByTag(recTag);
-            if(rec!=null)
+            if (rec != null)
                 rec.onTargetLocationNotClosed(location, closeTaskArgs);
         }
     }
@@ -261,22 +256,16 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         {
             finishCloser(true, (Location) result.getResult(), args);
         }
-        catch(CancellationException ignored)
+        catch (CancellationException ignored)
         {
 
         }
-        catch(Throwable e)
+        catch (Throwable e)
         {
-            if(!args.getBoolean(ARG_FORCE_CLOSE,false))
+            if (!args.getBoolean(ARG_FORCE_CLOSE, false))
             {
                 Logger.log(e);
-                ForceCloseDialog.showDialog(
-                        getFragmentManager(),
-                        getTag(),
-                        getTargetLocation().getTitle(),
-                        getClass().getName(),
-                        getArguments()
-                );
+                ForceCloseDialog.showDialog(getFragmentManager(), getTag(), getTargetLocation().getTitle(), getClass().getName(), getArguments());
                 finishCloser(false, getTargetLocation(), args);
             }
             else
@@ -285,15 +274,14 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
                 finishCloser(false, getTargetLocation(), args);
             }
         }
-
     }
 
-	protected void startClosingTask(Bundle args)
-	{
+    protected void startClosingTask(Bundle args)
+    {
         TaskFragment f = getCloseLocationTask();
         f.setArguments(args);
         getFragmentManager().beginTransaction().add(f, getCloseLocationTaskTag()).commit();
-	}
+    }
 
     private static final String TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment";
 }

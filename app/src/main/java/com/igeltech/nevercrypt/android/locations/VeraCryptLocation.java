@@ -17,50 +17,49 @@ import java.util.List;
 
 public class VeraCryptLocation extends ContainerBasedLocation
 {
-	public static final String URI_SCHEME = "vc";
+    public static final String URI_SCHEME = "vc";
 
     public VeraCryptLocation(Uri uri, LocationsManagerBase lm, Context context, Settings settings) throws Exception
     {
         super(uri, lm, context, settings);
     }
 
-	public VeraCryptLocation(Location location, Context context) throws IOException
-	{
-		this(location, null, context, UserSettings.getSettings(context));
-	}
+    public VeraCryptLocation(Location location, Context context) throws IOException
+    {
+        this(location, null, context, UserSettings.getSettings(context));
+    }
 
-	public VeraCryptLocation(Location containerLocation, Container cont, Context context, Settings settings)
-	{
-		super(containerLocation, cont, context, settings);
-	}
+    public VeraCryptLocation(Location containerLocation, Container cont, Context context, Settings settings)
+    {
+        super(containerLocation, cont, context, settings);
+    }
 
-	public VeraCryptLocation(VeraCryptLocation sibling)
-	{
-		super(sibling);
-	}
+    public VeraCryptLocation(VeraCryptLocation sibling)
+    {
+        super(sibling);
+    }
 
-	@Override
-	public List<ContainerFormatInfo> getSupportedFormats()
-	{
-		return Collections.singletonList(getContainerFormatInfo());
-	}
+    @Override
+    public List<ContainerFormatInfo> getSupportedFormats()
+    {
+        return Collections.singletonList(getContainerFormatInfo());
+    }
 
-	@Override
-	public Uri getLocationUri()
-	{
-		return makeUri(URI_SCHEME).build();
-	}
+    @Override
+    public Uri getLocationUri()
+    {
+        return makeUri(URI_SCHEME).build();
+    }
 
-	@Override
-	public VeraCryptLocation copy()
-	{
-		return new VeraCryptLocation(this);
-	}
+    @Override
+    public VeraCryptLocation copy()
+    {
+        return new VeraCryptLocation(this);
+    }
 
-	@Override
-	public ContainerFormatInfo getContainerFormatInfo()
-	{
-		return new FormatInfo();
-	}
-
+    @Override
+    public ContainerFormatInfo getContainerFormatInfo()
+    {
+        return new FormatInfo();
+    }
 }

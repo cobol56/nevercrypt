@@ -14,25 +14,24 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
 {
-
-	@Override
-	public void initTask(FragmentActivity activity)
-	{
-		_context = activity.getApplicationContext();
-	}
+    @Override
+    public void initTask(FragmentActivity activity)
+    {
+        _context = activity.getApplicationContext();
+    }
 
     protected static final String ARG_STORE_LINK = "com.igeltech.nevercrypt.android.STORE_LINK";
-	protected Context _context;
+    protected Context _context;
 
     @Override
     protected void doWork(TaskState state) throws Exception
     {
-		LocationsManager lm = LocationsManager.getLocationsManager(_context);
+        LocationsManager lm = LocationsManager.getLocationsManager(_context);
         Location location = lm.getFromBundle(getArguments(), null);
         state.setResult(findOrCreateLocation(lm, location, getArguments().getBoolean(ARG_STORE_LINK)));
     }
 
-	@Override
+    @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         CreateLocationFragment f = (CreateLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
@@ -43,12 +42,12 @@ public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
     {
         CryptoLocation loc = createCryptoLocation(locationLocation);
         CryptoLocation exCont = (CryptoLocation) lm.findExistingLocation(loc);
-        if(exCont != null)
+        if (exCont != null)
         {
             if (lm.isStoredLocation(exCont.getId()) && exCont.getClass().equals(loc.getClass()))
             {
                 exCont.getExternalSettings().setVisibleToUser(true);
-                if(storeLink)
+                if (storeLink)
                     exCont.saveExternalSettings();
                 return exCont;
             }
@@ -68,10 +67,10 @@ public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
             loc.saveExternalSettings();
     }
 
-	protected void addCryptoLocation(LocationsManager lm, CryptoLocation loc, boolean storeLink) throws Exception
+    protected void addCryptoLocation(LocationsManager lm, CryptoLocation loc, boolean storeLink) throws Exception
     {
         lm.replaceLocation(loc, loc, storeLink);
-	}
+    }
 
-	protected abstract CryptoLocation createCryptoLocation(Location locationLocation) throws Exception;
+    protected abstract CryptoLocation createCryptoLocation(Location locationLocation) throws Exception;
 }

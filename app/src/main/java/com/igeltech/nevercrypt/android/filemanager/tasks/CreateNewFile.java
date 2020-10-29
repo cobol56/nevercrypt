@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.android.filemanager.tasks;
 
-
 import android.content.Context;
 
 import com.igeltech.nevercrypt.locations.Location;

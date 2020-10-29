@@ -7,31 +7,32 @@ import java.io.IOException;
 
 public class CmdRunner extends Thread
 {
-	public static String executeCommand(int timeout, TextShell exec, Object... command) throws ApplicationException
-	{
-		CmdRunner cmr = new CmdRunner(exec, command);
-		cmr.start();
-		try
-		{
-			cmr.join(timeout);
-		}
-		catch (InterruptedException ignored)
-		{
-		}
-		if(cmr.isAlive())
-		{
-			exec.close();
-			throw new ApplicationException("Timeout error");
-		}
-		try
-		{
-			return cmr.getResult();
-		}
-		catch (Throwable e)
-		{
-			throw new ApplicationException("Failed executing command", e);
-		}
-	}
+    public static String executeCommand(int timeout, TextShell exec, Object... command) throws ApplicationException
+    {
+        CmdRunner cmr = new CmdRunner(exec, command);
+        cmr.start();
+        try
+        {
+            cmr.join(timeout);
+        }
+        catch (InterruptedException ignored)
+        {
+        }
+        if (cmr.isAlive())
+        {
+            exec.close();
+            throw new ApplicationException("Timeout error");
+        }
+        try
+        {
+            return cmr.getResult();
+        }
+        catch (Throwable e)
+        {
+            throw new ApplicationException("Failed executing command", e);
+        }
+    }
+
     public CmdRunner(TextShell exec, Object... command)
     {
         _exec = exec;
@@ -53,11 +54,11 @@ public class CmdRunner extends Thread
             _exec.executeCommand(_command);
             _result = _exec.waitResult();
         }
-		catch (ExternalProgramFailedException | IOException e)
-		{
-			_error = e;
-		}
-	}
+        catch (ExternalProgramFailedException | IOException e)
+        {
+            _error = e;
+        }
+    }
 
     private Throwable _error;
     private String _result;

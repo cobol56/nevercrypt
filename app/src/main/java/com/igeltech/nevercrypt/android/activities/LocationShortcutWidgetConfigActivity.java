@@ -27,14 +27,13 @@ import java.io.IOException;
 
 public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidgetConfigActivityBase
 {
-
     public static class MainFragment extends PropertiesFragmentBase
     {
         public class TargetPathPropertyEditor extends PathPropertyEditor
         {
             public TargetPathPropertyEditor()
             {
-                super(MainFragment.this,R.string.target_path, 0, getTag());
+                super(MainFragment.this, R.string.target_path, 0, getTag());
             }
 
             @Override
@@ -52,17 +51,8 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
             @Override
             protected Intent getSelectPathIntent() throws IOException
             {
-                return FileManagerActivity.getSelectPathIntent(
-                        getContext(),
-                        null,
-                        false,
-                        true,
-                        true,
-                        false,
-                        true,
-                        true);
+                return FileManagerActivity.getSelectPathIntent(getContext(), null, false, true, true, false, true, true);
             }
-
         }
 
         @Override
@@ -93,7 +83,7 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
         }
 
         @Override
-        public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
         {
             inflater.inflate(R.menu.widget_config_menu, menu);
         }
@@ -111,7 +101,6 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
 
         private static final String ARG_TITLE = "title";
         private static final String ARG_URI = "uri";
-
         private final Bundle _state = new Bundle();
 
         protected PropertyEditor getPathPE()
@@ -126,16 +115,13 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
                 _propertiesView.saveProperties();
                 String title = _state.getString(ARG_TITLE);
                 String path = _state.getString(ARG_URI);
-                if(title==null || title.trim().isEmpty() || path==null || path.trim().isEmpty())
+                if (title == null || title.trim().isEmpty() || path == null || path.trim().isEmpty())
                     return;
 
                 initWidgetFields(title, path);
 
                 Intent resultValue = new Intent();
-                resultValue.putExtra(
-                        AppWidgetManager.EXTRA_APPWIDGET_ID,
-                        getWidgetId()
-                );
+                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, getWidgetId());
                 getActivity().setResult(RESULT_OK, resultValue);
                 getActivity().finish();
             }
@@ -145,7 +131,7 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
             }
         }
 
-        private void initWidgetFields(String title,String path) throws Exception
+        private void initWidgetFields(String title, String path) throws Exception
         {
             int widgetId = getWidgetId();
             Location target = LocationsManager.getLocationsManager(getActivity()).getDefaultLocationFromPath(path);
@@ -153,26 +139,18 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
             info.widgetTitle = title;
             info.locationUriString = target.getLocationUri().toString();
             UserSettings.getSettings(getContext()).setLocationShortcutWidgetInfo(widgetId, info);
-            LocationShortcutWidget.setWidgetLayout(
-                    getContext(),
-                    AppWidgetManager.getInstance(getContext()),
-                    widgetId,
-                    info,
-                    (!(target instanceof Openable)) || ((Openable) target).isOpen()
-            );
+            LocationShortcutWidget.setWidgetLayout(getContext(), AppWidgetManager.getInstance(getContext()), widgetId, info, (!(target instanceof Openable)) || ((Openable) target).isOpen());
         }
 
         private int getWidgetId()
         {
-            return getActivity().getIntent().getIntExtra(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
+            return getActivity().getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
     }
-	
-	@Override
+
+    @Override
     public void onCreate(Bundle icicle)
-	{
+    {
         super.onCreate(icicle);
         setResult(RESULT_CANCELED);
     }

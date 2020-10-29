@@ -18,8 +18,7 @@ public class DrawerManageLocalStorages extends DrawerManageLocationMenuItem
 
     @Override
     public String getTitle()
-        {
-            return getContext().getString(R.string.manage_local_storages);
+    {
+        return getContext().getString(R.string.manage_local_storages);
     }
-
 }

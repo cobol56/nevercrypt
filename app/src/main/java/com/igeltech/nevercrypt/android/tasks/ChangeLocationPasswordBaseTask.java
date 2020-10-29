@@ -32,14 +32,14 @@ public abstract class ChangeLocationPasswordBaseTask extends TaskFragment
     @Override
     protected void doWork(TaskState state) throws Exception
     {
-		changeLocationPassword();
-	}
+        changeLocationPassword();
+    }
 
-	@Override
+    @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
         final LocationSettingsFragment f = (LocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
-        if(f == null)
+        if (f == null)
             return null;
         return new ProgressDialogTaskFragmentCallbacks(activity, R.string.changing_password)
         {
@@ -60,5 +60,5 @@ public abstract class ChangeLocationPasswordBaseTask extends TaskFragment
         };
     }
 
-	protected abstract void changeLocationPassword() throws IOException, ApplicationException;
+    protected abstract void changeLocationPassword() throws IOException, ApplicationException;
 }

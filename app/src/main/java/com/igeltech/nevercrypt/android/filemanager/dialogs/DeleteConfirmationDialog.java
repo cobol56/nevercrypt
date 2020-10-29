@@ -29,50 +29,44 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DeleteConfirmationDialog extends AppCompatDialogFragment
 {
+    public static final String TAG = "DeleteConfirmationDialog";
 
-	public static final String TAG = "DeleteConfirmationDialog";
-	public static void showDialog(FragmentManager fm,Bundle args)
-	{		
-		AppCompatDialogFragment newFragment = new DeleteConfirmationDialog();
-		newFragment.setArguments(args);
-	    newFragment.show(fm, TAG);
-	}
-	
-	@NonNull
+    public static void showDialog(FragmentManager fm, Bundle args)
+    {
+        AppCompatDialogFragment newFragment = new DeleteConfirmationDialog();
+        newFragment.setArguments(args);
+        newFragment.show(fm, TAG);
+    }
+
+    @NonNull
     @Override
-	public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
-	{
-		Bundle args = getArguments();
-		ArrayList<Path> paths = new ArrayList<>();
-		Location loc = LocationsManager.getLocationsManager(getActivity()).getFromBundle(args, paths);
-		boolean wipe = args.getBoolean(FileListViewFragmentBase.ARG_WIPE_FILES, true);
+    public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
+    {
+        Bundle args = getArguments();
+        ArrayList<Path> paths = new ArrayList<>();
+        Location loc = LocationsManager.getLocationsManager(getActivity()).getFromBundle(args, paths);
+        boolean wipe = args.getBoolean(FileListViewFragmentBase.ARG_WIPE_FILES, true);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		LayoutInflater inflater = (LayoutInflater) builder.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		if(inflater == null)
-			throw new RuntimeException("Inflater is null");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = (LayoutInflater) builder.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (inflater == null)
+            throw new RuntimeException("Inflater is null");
 
-		View v = inflater.inflate(R.layout.delete_confirmation_dialog, null);
-		AppCompatTextView tv = v.findViewById(android.R.id.text1);
-		tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, "..."));
-		builder.setView(v);
+        View v = inflater.inflate(R.layout.delete_confirmation_dialog, null);
+        AppCompatTextView tv = v.findViewById(android.R.id.text1);
+        tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, "..."));
+        builder.setView(v);
 
-		builder
-				//.setMessage(getActivity().getString(R.string.do_you_really_want_to_delete_selected_files, fn))
-				.setCancelable(true)
-				.setPositiveButton(R.string.yes,
-						(dialog, id) ->
-						{
-							FileListViewFragment frag = (FileListViewFragment) getFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
-							if(frag!=null)
-								frag.deleteFiles(loc, paths, wipe);
-                            dialog.dismiss();
-                        })
-				.setNegativeButton(R.string.no,
-						(dialog, id) -> dialog.cancel());
+        builder
+                //.setMessage(getActivity().getString(R.string.do_you_really_want_to_delete_selected_files, fn))
+                .setCancelable(true).setPositiveButton(R.string.yes, (dialog, id) -> {
+            FileListViewFragment frag = (FileListViewFragment) getFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+            if (frag != null)
+                frag.deleteFiles(loc, paths, wipe);
+            dialog.dismiss();
+        }).setNegativeButton(R.string.no, (dialog, id) -> dialog.cancel());
 
-		Single.<String>create(c ->
-        {
+        Single.<String>create(c -> {
             String fn = "";
             if (loc != null)
             {
@@ -87,11 +81,7 @@ public class DeleteConfirmationDialog extends AppCompatDialogFragment
         }).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).
-                subscribe(
-                		fn -> tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, fn)),
-						err -> Logger.showAndLog(getActivity().getApplicationContext(), err)
-				);
-		return builder.create();
-	}
-
+                subscribe(fn -> tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, fn)), err -> Logger.showAndLog(getActivity().getApplicationContext(), err));
+        return builder.create();
+    }
 }

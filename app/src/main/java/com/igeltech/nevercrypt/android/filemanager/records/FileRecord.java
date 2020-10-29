@@ -33,7 +33,6 @@ import java.util.List;
 
 class FileRecord extends FsBrowserRecord
 {
-
     public static class ExtFileInfo implements ExtendedFileInfoLoader.ExtendedFileInfo
     {
         Drawable mainIcon;
@@ -57,11 +56,11 @@ class FileRecord extends FsBrowserRecord
         @Override
         public void clear()
         {
-            for(BrowserRecord r: _records)
+            for (BrowserRecord r : _records)
             {
-                FileRecord fr = (FileRecord)r;
+                FileRecord fr = (FileRecord) r;
                 RowViewInfo rvi = FileRecord.getCurrentRowViewInfo(fr.getHostFragment(), fr);
-                if(rvi!=null)
+                if (rvi != null)
                 {
                     AppCompatImageView iv = rvi.view.findViewById(android.R.id.icon);
                     iv.setImageDrawable(null);
@@ -82,15 +81,14 @@ class FileRecord extends FsBrowserRecord
         private final List<BrowserRecord> _records = new ArrayList<>();
     }
 
-	public FileRecord(Context context)
-	{
-		super(context);
+    public FileRecord(Context context)
+    {
+        super(context);
         _loadPreviews = _needLoadExtInfo = UserSettings.getSettings(context).showPreviews();
         DisplayMetrics dm = _context.getResources().getDisplayMetrics();
         _iconWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, GlobalConfig.FB_PREVIEW_WIDTH, dm);
         _iconHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, GlobalConfig.FB_PREVIEW_HEIGHT, dm);
-
-	}
+    }
 
     @Override
     public void init(Path path) throws IOException
@@ -101,16 +99,16 @@ class FileRecord extends FsBrowserRecord
 
     @Override
     public boolean allowSelect()
-	{
+    {
         return _host.allowFileSelect();
-	}
+    }
 
     @Override
     public void updateView(View view, final int position)
     {
         super.updateView(view, position);
         AppCompatTextView tv = view.findViewById(android.R.id.text2);
-        if(_infoString != null)
+        if (_infoString != null)
         {
             tv.setVisibility(View.VISIBLE);
             tv.setText(_infoString);
@@ -119,21 +117,21 @@ class FileRecord extends FsBrowserRecord
             tv.setVisibility(View.INVISIBLE);
 
         AppCompatImageView iv = view.findViewById(android.R.id.icon);
-        if(_mainIcon != null)
+        if (_mainIcon != null)
         {
             //iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
             iv.setImageDrawable(_mainIcon);
-            if(_animateIcon)
+            if (_animateIcon)
             {
                 iv.startAnimation(AnimationUtils.loadAnimation(_context, R.anim.restore));
                 _animateIcon = false;
             }
         }
         //DisplayMetrics dm = _mainActivity.getResources().getDisplayMetrics();
-		//_iconWidth = iv.getMeasuredWidth();
+        //_iconWidth = iv.getMeasuredWidth();
         //if(_iconWidth == 0)
         //    _iconWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Preferences.FB_PREVIEW_WIDTH, dm);
-	    //_iconHeight = iv.getMeasuredHeight();
+        //_iconHeight = iv.getMeasuredHeight();
         //if(_iconHeight == 0)
         //    _iconHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Preferences.FB_PREVIEW_HEIGHT, dm);
     }
@@ -154,21 +152,21 @@ class FileRecord extends FsBrowserRecord
 
     protected boolean _needLoadExtInfo;
 
-	@Override
-	protected Drawable getDefaultIcon()
-	{
-		return getFileIcon(_host);
-	}
+    @Override
+    protected Drawable getDefaultIcon()
+    {
+        return getFileIcon(_host);
+    }
 
     protected void updateFileInfoString()
     {
-        if(_path!=null)
+        if (_path != null)
         {
             try
             {
                 _infoString = formatInfoString(_context);
             }
-            catch(IOException ignored)
+            catch (IOException ignored)
             {
 
             }
@@ -178,39 +176,32 @@ class FileRecord extends FsBrowserRecord
     }
 
     protected String formatInfoString(Context context) throws IOException
-	{
+    {
         StringBuilder sb = new StringBuilder();
         appendSizeInfo(context, sb);
         appendModDataInfo(context, sb);
         return sb.toString();
-	}
+    }
 
     protected void appendSizeInfo(Context context, StringBuilder sb)
     {
-        sb.append(String.format("%s: %s",
-                context.getText(R.string.size),
-                Formatter.formatFileSize(context, getSize())
-        ));
+        sb.append(String.format("%s: %s", context.getText(R.string.size), Formatter.formatFileSize(context, getSize())));
     }
 
     protected void appendModDataInfo(Context context, StringBuilder sb)
     {
         Date md = getModificationDate();
-        if(md!=null)
+        if (md != null)
         {
             java.text.DateFormat df = android.text.format.DateFormat.getDateFormat(context);
             java.text.DateFormat tf = android.text.format.DateFormat.getTimeFormat(context);
-            sb.append(String.format(" %s: %s %s",
-                    context.getText(R.string.last_modified),
-                    df.format(md),
-                    tf.format(md)
-            ));
+            sb.append(String.format(" %s: %s %s", context.getText(R.string.last_modified), df.format(md), tf.format(md)));
         }
     }
 
     protected void initExtFileInfo(ExtFileInfo info)
     {
-        if(_loadPreviews)
+        if (_loadPreviews)
             info.mainIcon = loadMainIcon();
     }
 
@@ -233,29 +224,29 @@ class FileRecord extends FsBrowserRecord
     protected Drawable getImagePreview(Path path) throws IOException
     {
         Bitmap bitmap = Util.loadDownsampledImage(path, _iconWidth, _iconHeight);
-        return bitmap!=null ? new BitmapDrawable(_context.getResources(), bitmap) : null;
+        return bitmap != null ? new BitmapDrawable(_context.getResources(), bitmap) : null;
     }
 
     private static Drawable _fileIcon;
 
     private static synchronized Drawable getFileIcon(Context context)
     {
-        if(_fileIcon == null && context!=null)
+        if (_fileIcon == null && context != null)
         {
             _fileIcon = context.getResources().getDrawable(R.drawable.ic_file, context.getTheme());
         }
         return _fileIcon;
     }
+
     private int _iconWidth = 40, _iconHeight = 40;
     private String _infoString;
     private Drawable _mainIcon;
-
     private boolean _animateIcon;
     private final boolean _loadPreviews;
 
     private Drawable getDefaultAppIcon(String mime)
     {
-        if(mime.equals("*/*"))
+        if (mime.equals("*/*"))
             return null;
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setType(mime);
@@ -271,11 +262,11 @@ class FileRecord extends FsBrowserRecord
                     return icon;//drawableToBitmap(icon);
             }
         }
-        catch(NullPointerException ignored)
+        catch (NullPointerException ignored)
         {
             //bug?
             //java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String android.net.Uri.getHost()' on a null object reference
-	        //at android.os.Parcel.readException(Parcel.java:1552)
+            //at android.os.Parcel.readException(Parcel.java:1552)
         }
         return null;
     }
@@ -293,5 +284,4 @@ class FileRecord extends FsBrowserRecord
         return bitmap;
     }
     */
-
 }

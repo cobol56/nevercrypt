@@ -31,12 +31,7 @@ public class ContainerSettingsFragmentBase extends LocationSettingsFragment
     public ContainerFormatInfo getCurrentContainerFormat()
     {
         List<ContainerFormatInfo> supportedFormats = getLocation().getSupportedFormats();
-        return supportedFormats.size() == 1 ?
-                supportedFormats.get(0) :
-                Container.findFormatByName(
-                        supportedFormats,
-                        getLocation().getExternalSettings().getContainerFormatName()
-                );
+        return supportedFormats.size() == 1 ? supportedFormats.get(0) : Container.findFormatByName(supportedFormats, getLocation().getExternalSettings().getContainerFormatName());
     }
 
     @Override

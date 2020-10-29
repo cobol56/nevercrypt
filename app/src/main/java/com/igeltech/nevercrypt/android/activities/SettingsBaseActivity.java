@@ -13,21 +13,22 @@ public abstract class SettingsBaseActivity extends AppCompatActivity
     public static final String SETTINGS_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.locations.SETTINGS_FRAGMENT";
 
     @Override
-	public void onCreate(Bundle savedInstanceState)
+    public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(UserSettings.getSettings(this).isFlagSecureEnabled())
+        if (UserSettings.getSettings(this).isFlagSecureEnabled())
             CompatHelper.setWindowFlagSecure(this);
-        if(savedInstanceState == null)
+        if (savedInstanceState == null)
             getSupportFragmentManager().
-                beginTransaction().
-                add(android.R.id.content, getSettingsFragment(), SETTINGS_FRAGMENT_TAG).
-                commit();
+                    beginTransaction().
+                    add(android.R.id.content, getSettingsFragment(), SETTINGS_FRAGMENT_TAG).
+                    commit();
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         finish();
         return true;
     }

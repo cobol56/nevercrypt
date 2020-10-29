@@ -11,11 +11,7 @@ import java.io.IOException;
 
 public class Path extends PathBase
 {
-    public Path(
-            FS fs,
-            com.igeltech.nevercrypt.fs.Path realPath,
-            NameCodecInfo namingAlg,
-            byte[] encryptionKey)
+    public Path(FS fs, com.igeltech.nevercrypt.fs.Path realPath, NameCodecInfo namingAlg, byte[] encryptionKey)
     {
         super(fs);
         _realPath = realPath;
@@ -26,7 +22,7 @@ public class Path extends PathBase
     @Override
     public FS getFileSystem()
     {
-        return (FS)super.getFileSystem();
+        return (FS) super.getFileSystem();
     }
 
     public com.igeltech.nevercrypt.fs.Path getRealPath()
@@ -72,7 +68,7 @@ public class Path extends PathBase
     @Override
     public Path getParentPath() throws IOException
     {
-        if(_realPath.equals(getFileSystem().getEncFSRootPath()))
+        if (_realPath.equals(getFileSystem().getEncFSRootPath()))
             return null;
         com.igeltech.nevercrypt.fs.Path pp = _realPath.getParentPath();
         return pp == null ? null : getFileSystem().getPathFromRealPath(pp);
@@ -84,14 +80,14 @@ public class Path extends PathBase
         StringPathUtil encodedParts = calcCombinedEncodedParts(part);
         com.igeltech.nevercrypt.fs.Path newRealPath = _realPath.combine(encodedParts.getFileName());
         Path newPath = getFileSystem().getPathFromRealPath(newRealPath);
-        if(newPath._decodedPath == null)
+        if (newPath._decodedPath == null)
         {
             StringPathUtil decodedParts = _decodedPath;
             if (decodedParts != null)
                 decodedParts = decodedParts.combine(part);
             newPath.setDecodedPath(decodedParts);
         }
-        if(newPath._encodedPath == null)
+        if (newPath._encodedPath == null)
             newPath.setEncodedPath(encodedParts);
 
         return newPath;
@@ -118,29 +114,14 @@ public class Path extends PathBase
     @Override
     public Directory getDirectory() throws IOException
     {
-        return new com.igeltech.nevercrypt.fs.encfs.Directory(
-                this,
-                getRealPath().getDirectory()
-        );
+        return new com.igeltech.nevercrypt.fs.encfs.Directory(this, getRealPath().getDirectory());
     }
 
     @Override
     public File getFile() throws IOException
     {
         Config c = getFileSystem().getConfig();
-        return new com.igeltech.nevercrypt.fs.encfs.File(
-                this,
-                getRealPath().getFile(),
-                c.getDataCodecInfo(),
-                _encryptionKey,
-                c.useExternalFileIV() ? getChainedIV() : null,
-                c.getBlockSize(),
-                c.useUniqueIV(),
-                c.allowHoles(),
-                c.getMACBytes(),
-                c.getMACRandBytes(),
-                false
-        );
+        return new com.igeltech.nevercrypt.fs.encfs.File(this, getRealPath().getFile(), c.getDataCodecInfo(), _encryptionKey, c.useExternalFileIV() ? getChainedIV() : null, c.getBlockSize(), c.useUniqueIV(), c.allowHoles(), c.getMACBytes(), c.getMACRandBytes(), false);
     }
 
     @Override
@@ -151,7 +132,7 @@ public class Path extends PathBase
 
     public synchronized StringPathUtil getDecodedPath()
     {
-        if(_decodedPath == null)
+        if (_decodedPath == null)
             try
             {
                 _decodedPath = decodePath();
@@ -166,7 +147,7 @@ public class Path extends PathBase
 
     public synchronized StringPathUtil getEncodedPath() throws IOException
     {
-        if(_encodedPath == null)
+        if (_encodedPath == null)
             _encodedPath = buildEncodedPathFromRealPath(_realPath);
         return _encodedPath;
     }
@@ -183,7 +164,7 @@ public class Path extends PathBase
 
     public synchronized byte[] getChainedIV()
     {
-        if(_chainedIV == null)
+        if (_chainedIV == null)
             try
             {
                 _chainedIV = calcChaindedIV();
@@ -208,7 +189,6 @@ public class Path extends PathBase
     private byte[] _chainedIV;
     private StringPathUtil _decodedPath;
 
-
     private StringPathUtil decodePath() throws IOException
     {
         StringPathUtil encodedParts = getEncodedPath();
@@ -218,10 +198,10 @@ public class Path extends PathBase
         try
         {
             codec.init(_encryptionKey);
-            if (_namingInfo.useChainedNamingIV() && parent!=null)
+            if (_namingInfo.useChainedNamingIV() && parent != null)
                 codec.setIV(parent.getChainedIV());
             String decodedName = codec.decodeName(encodedParts.getFileName());
-            if(_namingInfo.useChainedNamingIV())
+            if (_namingInfo.useChainedNamingIV())
                 _chainedIV = codec.getChainedIV(decodedName);
             return decodedParent.combine(decodedName);
         }
@@ -237,10 +217,10 @@ public class Path extends PathBase
         try
         {
             codec.init(_encryptionKey);
-            if(_namingInfo.useChainedNamingIV())
+            if (_namingInfo.useChainedNamingIV())
             {
                 Path parent = getParentPath();
-                codec.setIV(parent!=null ? parent.getChainedIV() : null);
+                codec.setIV(parent != null ? parent.getChainedIV() : null);
             }
             return codec.getChainedIV(getDecodedPath().getFileName());
         }
@@ -254,11 +234,11 @@ public class Path extends PathBase
     {
         StringPathUtil encodedParts = new StringPathUtil();
         com.igeltech.nevercrypt.fs.Path rootPath = getFileSystem().getEncFSRootPath();
-        while(!realPath.equals(rootPath))
+        while (!realPath.equals(rootPath))
         {
             encodedParts = new StringPathUtil(PathUtil.getNameFromPath(realPath), encodedParts);
             realPath = realPath.getParentPath();
-            if(realPath == null)
+            if (realPath == null)
                 throw new IOException("Failed building path");
         }
         return encodedParts;

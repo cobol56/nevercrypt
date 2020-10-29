@@ -21,15 +21,14 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == REQUEST_CODE_ADD_LOCATION)
+        if (requestCode == REQUEST_CODE_ADD_LOCATION)
         {
-            if(resultCode == AppCompatActivity.RESULT_OK)
+            if (resultCode == AppCompatActivity.RESULT_OK)
             {
                 Uri treeUri = data.getData();
                 try
                 {
-                    getActivity().getContentResolver().takePersistableUriPermission(treeUri,
-                            Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    getActivity().getContentResolver().takePersistableUriPermission(treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
                 catch (SecurityException e)
                 {
@@ -50,14 +49,13 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
     @Override
     public void removeLocation(Location loc)
     {
-        DocumentTreeLocation tl = (DocumentTreeLocation)loc;
+        DocumentTreeLocation tl = (DocumentTreeLocation) loc;
         try
         {
             DocumentTreeFS.DocumentPath p = (DocumentTreeFS.DocumentPath) tl.getFS().getRootPath();
-            getActivity().getContentResolver().releasePersistableUriPermission(p.getDocumentUri(),
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            getActivity().getContentResolver().releasePersistableUriPermission(p.getDocumentUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
-        catch(SecurityException e)
+        catch (SecurityException e)
         {
             Logger.log(e);
         }
@@ -72,8 +70,8 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
     protected void loadLocations()
     {
         _locationsList.clear();
-		for(Location loc: LocationsManager.getLocationsManager(getActivity()).getLoadedLocations(true))
-            if(loc instanceof DocumentTreeLocation)
+        for (Location loc : LocationsManager.getLocationsManager(getActivity()).getLoadedLocations(true))
+            if (loc instanceof DocumentTreeLocation)
             {
                 LocationInfo li = new LocationInfo((DocumentTreeLocation) loc);
                 _locationsList.add(li);
@@ -108,12 +106,11 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
     }
 
     private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
-
     private static Drawable _icon;
 
     private synchronized Drawable getLoadedIcon()
     {
-        if(_icon == null)
+        if (_icon == null)
         {
             _icon = getResources().getDrawable(R.drawable.ic_ext_storage);
         }

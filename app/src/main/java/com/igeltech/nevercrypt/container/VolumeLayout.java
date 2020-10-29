@@ -1,6 +1,5 @@
 package com.igeltech.nevercrypt.container;
 
-
 import com.igeltech.nevercrypt.android.helpers.ContainerOpeningProgressReporter;
 import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
 import com.igeltech.nevercrypt.exceptions.ApplicationException;
@@ -13,14 +12,13 @@ import java.util.List;
 
 public interface VolumeLayout extends EncryptedFileLayout
 {
-
     void initNew();
 
     boolean readHeader(RandomAccessIO input) throws IOException, ApplicationException;
 
-    void writeHeader(RandomAccessIO output) throws  IOException, ApplicationException;
+    void writeHeader(RandomAccessIO output) throws IOException, ApplicationException;
 
-	void formatFS(RandomAccessIO output, FileSystemInfo fsInfo) throws ApplicationException, IOException;
+    void formatFS(RandomAccessIO output, FileSystemInfo fsInfo) throws ApplicationException, IOException;
 
     void setEngine(FileEncryptionEngine enc);
 

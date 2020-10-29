@@ -13,8 +13,8 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     protected void loadLocations()
     {
         _locationsList.clear();
-		for(CryptoLocation loc: LocationsManager.getLocationsManager(getActivity()).getLoadedCryptoLocations(true))
-                _locationsList.add(new ContainerInfo(loc));
+        for (CryptoLocation loc : LocationsManager.getLocationsManager(getActivity()).getLoadedCryptoLocations(true))
+            _locationsList.add(new ContainerInfo(loc));
     }
 
     @Override
@@ -31,12 +31,15 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
         }
 
         @Override
-        public boolean hasSettings() { return true; }
+        public boolean hasSettings()
+        {
+            return true;
+        }
 
         @Override
         public Drawable getIcon()
         {
-            return ((CryptoLocation)location).isOpenOrMounted() ? getOpenedContainerIcon() : getClosedContainerIcon();
+            return ((CryptoLocation) location).isOpenOrMounted() ? getOpenedContainerIcon() : getClosedContainerIcon();
         }
     }
 
@@ -44,18 +47,18 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
 
     private synchronized Drawable getOpenedContainerIcon()
     {
-        if(_openedContainerIcon == null)
+        if (_openedContainerIcon == null)
         {
-            _openedContainerIcon = getResources().getDrawable(R.drawable.ic_lock_open );
+            _openedContainerIcon = getResources().getDrawable(R.drawable.ic_lock_open);
         }
         return _openedContainerIcon;
     }
 
     private synchronized Drawable getClosedContainerIcon()
     {
-        if(_closedContainerIcon == null)
+        if (_closedContainerIcon == null)
         {
-            _closedContainerIcon = getResources().getDrawable(R.drawable.ic_lock );
+            _closedContainerIcon = getResources().getDrawable(R.drawable.ic_lock);
         }
         return _closedContainerIcon;
     }

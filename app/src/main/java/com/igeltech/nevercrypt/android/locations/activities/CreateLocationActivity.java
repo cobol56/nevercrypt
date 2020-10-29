@@ -30,5 +30,4 @@ public class CreateLocationActivity extends SettingsBaseActivity
                 throw new RuntimeException("Unknown location type");
         }
     }
-
 }

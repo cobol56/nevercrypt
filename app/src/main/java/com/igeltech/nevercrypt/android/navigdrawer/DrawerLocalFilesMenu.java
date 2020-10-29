@@ -15,10 +15,9 @@ public class DrawerLocalFilesMenu extends DrawerLocalFilesMenuBase
     @Override
     protected void addLocationMenuItem(List<DrawerMenuItemBase> list, Location loc)
     {
-        if(loc instanceof DeviceRootNPLocation && _allowDeviceLocations)
+        if (loc instanceof DeviceRootNPLocation && _allowDeviceLocations)
             list.add(new DrawerDeviceRootMemoryItem(loc, getDrawerController()));
         else
             super.addLocationMenuItem(list, loc);
     }
-
 }

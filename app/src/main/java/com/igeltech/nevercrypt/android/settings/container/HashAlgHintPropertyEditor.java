@@ -77,9 +77,6 @@ public class HashAlgHintPropertyEditor extends ChoiceDialogPropertyEditor
     private List<MessageDigest> getSupportedHashFuncs()
     {
         ContainerFormatInfo cfi = getHost().getCurrentContainerFormat();
-        return cfi != null ?
-                cfi.getVolumeLayout().getSupportedHashFuncs()
-                :
-                new ArrayList<MessageDigest>();
+        return cfi != null ? cfi.getVolumeLayout().getSupportedHashFuncs() : new ArrayList<MessageDigest>();
     }
 }

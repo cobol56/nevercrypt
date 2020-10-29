@@ -5,40 +5,37 @@ import com.igeltech.nevercrypt.crypto.CipherFactory;
 import com.igeltech.nevercrypt.crypto.blockciphers.Serpent;
 import com.igeltech.nevercrypt.crypto.modes.CBC;
 
-
 public class SerpentCBC extends CBC
-{	
-	public SerpentCBC()
-	{
-		super(new CipherFactory()
-		{
-			
-			@Override
-			public int getNumberOfCiphers()
-			{
-				return 1;
-			}
-			
-			@Override
-			public BlockCipherNative createCipher(int typeIndex)
-			{
-				return new Serpent();
-			}
-		});
-	}	
-	
-	@Override
-	public String getCipherName()
-	{
-		return "serpent";
-	}
-	
+{
+    public SerpentCBC()
+    {
+        super(new CipherFactory()
+        {
+            @Override
+            public int getNumberOfCiphers()
+            {
+                return 1;
+            }
+
+            @Override
+            public BlockCipherNative createCipher(int typeIndex)
+            {
+                return new Serpent();
+            }
+        });
+    }
 
     @Override
-	public int getKeySize()
-	{
-    	return 32;
-	}
+    public String getCipherName()
+    {
+        return "serpent";
+    }
+
+    @Override
+    public int getKeySize()
+    {
+        return 32;
+    }
 }
 
     
