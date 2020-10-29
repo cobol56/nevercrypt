@@ -25,7 +25,7 @@ import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
 
-public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidgetConfigActivityBase
+public class LocationShortcutWidgetConfigActivity extends SettingsBaseActivity
 {
     @Override
     public void onCreate(Bundle icicle)
