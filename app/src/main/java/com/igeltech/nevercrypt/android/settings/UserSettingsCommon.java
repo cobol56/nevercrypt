@@ -50,17 +50,23 @@ public abstract class UserSettingsCommon implements SettingsCommon
     public static final String FORCE_TEMP_FILES = "force_temp_files";
     public static final String SETTINGS_PROTECTION_KEY_CHECK = "protection_key_check";
     public static final String PREFS_NAME = "com.igeltech.nevercrypt.PREFERENCES";
-
-    public static boolean isWideScreenLayout(SettingsCommon settings, AppCompatActivity activity)
-    {
-        return !settings.disableLargeSceenLayouts() && activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
+    private static final String CHECK_PHRASE = "valid pass";
+    protected final SharedPreferences _prefs;
+    protected final Context _context;
+    private final SettingsCommon _defaultSettings;
+    private SecureBuffer _settingsProtectionKey;
+    private boolean _resetProtectedSettings;
 
     protected UserSettingsCommon(Context context, SettingsCommon defaultSettings)
     {
         _context = context;
         _defaultSettings = defaultSettings;
         _prefs = GlobalConfig.isDebug() ? context.getSharedPreferences("debug", 0) : context.getSharedPreferences(PREFS_NAME, 0);
+    }
+
+    public static boolean isWideScreenLayout(SettingsCommon settings, AppCompatActivity activity)
+    {
+        return !settings.disableLargeSceenLayouts() && activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     @Override
@@ -200,7 +206,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
         String s = _prefs.getString(VISITED_HINT_SECTIONS, null);
         if (s == null)
             return _defaultSettings.getVisitedHintSections();
-
         try
         {
             return Util.loadStringArrayFromString(s);
@@ -438,13 +443,6 @@ public abstract class UserSettingsCommon implements SettingsCommon
             _settingsProtectionKey = null;
         }
     }
-
-    protected final SharedPreferences _prefs;
-    private static final String CHECK_PHRASE = "valid pass";
-    protected final Context _context;
-    private final SettingsCommon _defaultSettings;
-    private SecureBuffer _settingsProtectionKey;
-    private boolean _resetProtectedSettings;
 
     private byte[] getUserSettingsPassword()
     {

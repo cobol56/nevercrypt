@@ -30,6 +30,13 @@ import java.util.Iterator;
 
 public class ContentResolverFs implements FileSystem
 {
+    private final ContentResolver _contentResolver;
+
+    public ContentResolverFs(ContentResolver contentResolver)
+    {
+        _contentResolver = contentResolver;
+    }
+
     public static String getFileNameByUri(ContentResolver cr, Uri uri)
     {
         String fileName = uri.getLastPathSegment();
@@ -49,7 +56,6 @@ public class ContentResolverFs implements FileSystem
                     cursor.close();
                 }
         }
-
         return fileName;
     }
 
@@ -90,13 +96,7 @@ public class ContentResolverFs implements FileSystem
                         paths.add(fs.new Path((Uri) uri));
             }
         }
-
         return paths;
-    }
-
-    public ContentResolverFs(ContentResolver contentResolver)
-    {
-        _contentResolver = contentResolver;
     }
 
     @Override
@@ -114,7 +114,6 @@ public class ContentResolverFs implements FileSystem
     @Override
     public void close(boolean force) throws IOException
     {
-
     }
 
     @Override
@@ -125,6 +124,8 @@ public class ContentResolverFs implements FileSystem
 
     public class Path implements com.igeltech.nevercrypt.fs.Path
     {
+        private final Uri _uri;
+
         public Path(Uri uri)
         {
             _uri = uri;
@@ -197,7 +198,6 @@ public class ContentResolverFs implements FileSystem
                 {
                     cursor.close();
                 }
-
             if (ContentResolver.SCHEME_FILE.equalsIgnoreCase(_uri.getScheme()))
             {
                 java.io.File f = new java.io.File(_uri.getPath());
@@ -299,12 +299,12 @@ public class ContentResolverFs implements FileSystem
         {
             return _uri.compareTo(((Path) another)._uri);
         }
-
-        private final Uri _uri;
     }
 
     class Directory implements com.igeltech.nevercrypt.fs.Directory
     {
+        private final Path _path;
+
         public Directory(Path path)
         {
             _path = path;
@@ -385,10 +385,11 @@ public class ContentResolverFs implements FileSystem
                 {
                     return new Iterator<com.igeltech.nevercrypt.fs.Path>()
                     {
+                        private boolean hasNext = columnIndex >= 0 && cursor.moveToFirst();
+
                         @Override
                         public void remove()
                         {
-
                         }
 
                         @Override
@@ -406,8 +407,6 @@ public class ContentResolverFs implements FileSystem
                         {
                             return hasNext;
                         }
-
-                        private boolean hasNext = columnIndex >= 0 && cursor.moveToFirst();
                     };
                 }
             };
@@ -424,12 +423,12 @@ public class ContentResolverFs implements FileSystem
         {
             return 0;
         }
-
-        private final Path _path;
     }
 
     class File implements com.igeltech.nevercrypt.fs.File
     {
+        private final Path _path;
+
         public File(Path path)
         {
             _path = path;
@@ -547,11 +546,7 @@ public class ContentResolverFs implements FileSystem
         {
             Util.copyFileFromInputStream(input, this, offset, count, progressInfo);
         }
-
-        private final Path _path;
     }
-
-    private final ContentResolver _contentResolver;
 }
 
 

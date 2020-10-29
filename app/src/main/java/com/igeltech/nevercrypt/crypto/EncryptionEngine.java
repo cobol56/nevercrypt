@@ -25,6 +25,8 @@ public interface EncryptionEngine
      */
     void encrypt(byte[] data, int offset, int len) throws EncryptionEngineException;
 
+    byte[] getIV();
+
     /**
      * Sets current iv
      *
@@ -32,16 +34,7 @@ public interface EncryptionEngine
      */
     void setIV(byte[] iv);
 
-    byte[] getIV();
-
     int getIVSize();
-
-    /**
-     * Set encryption/decryption key
-     *
-     * @param key encryption/decryption key
-     */
-    void setKey(byte[] key);
 
     /**
      * Returns current encryption/decryption key
@@ -49,6 +42,13 @@ public interface EncryptionEngine
      * @return current encryption/decryption key
      */
     byte[] getKey();
+
+    /**
+     * Set encryption/decryption key
+     *
+     * @param key encryption/decryption key
+     */
+    void setKey(byte[] key);
 
     /**
      * Returns encryption/decryption key size

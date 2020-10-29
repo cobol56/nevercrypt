@@ -61,7 +61,6 @@ class ExFatDirectory extends ExFatRecord implements Directory
             @Override
             public void close() throws IOException
             {
-
             }
 
             @Override

@@ -22,15 +22,8 @@ import java.util.Stack;
 
 public class DrawerLocationMenuItem extends DrawerMenuItemBase
 {
-    public static class Opener extends LocationOpenerBaseFragment
-    {
-        @Override
-        public void onLocationOpened(Location location)
-        {
-            Bundle args = getArguments();
-            FileManagerActivity.openFileManager((FileManagerActivity) getActivity(), location, args != null ? args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0) : 0);
-        }
-    }
+    private final Location _location;
+    private final View.OnClickListener _closeIconClickListener = v -> closeLocation();
 
     public DrawerLocationMenuItem(Location location, DrawerControllerBase drawerController)
     {
@@ -163,9 +156,6 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
         return false;
     }
 
-    private final Location _location;
-    private final View.OnClickListener _closeIconClickListener = v -> closeLocation();
-
     private FileListDataFragment.HistoryItem findPrevLocation(Location loc)
     {
         FileListDataFragment df = (FileListDataFragment) getDrawerController().
@@ -185,5 +175,15 @@ public class DrawerLocationMenuItem extends DrawerMenuItemBase
                 }
         }
         return null;
+    }
+
+    public static class Opener extends LocationOpenerBaseFragment
+    {
+        @Override
+        public void onLocationOpened(Location location)
+        {
+            Bundle args = getArguments();
+            FileManagerActivity.openFileManager((FileManagerActivity) getActivity(), location, args != null ? args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0) : 0);
+        }
     }
 }

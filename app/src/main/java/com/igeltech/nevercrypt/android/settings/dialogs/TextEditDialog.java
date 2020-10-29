@@ -18,15 +18,10 @@ import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 public class TextEditDialog extends AppCompatDialogFragment
 {
     public static final String TAG = "TextEditDialog";
-
-    public interface TextResultReceiver
-    {
-        void setResult(String text) throws Exception;
-    }
-
     public static final String ARG_TEXT = "com.igeltech.nevercrypt.android.ARG_TEXT";
     public static final String ARG_MESSAGE_ID = "com.igeltech.nevercrypt.android.ARG_MESSAGE_ID";
     public static final String ARG_EDIT_TEXT_RES_ID = "com.igeltech.nevercrypt.android.EDIT_TEXT_RES_ID";
+    private EditText _input;
 
     @NonNull
     @Override
@@ -37,11 +32,9 @@ public class TextEditDialog extends AppCompatDialogFragment
         if (mid != 0)
             alert.setMessage(getString(mid));
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-
         _input = (EditText) inflater.inflate(getArguments().getInt(ARG_EDIT_TEXT_RES_ID, R.layout.settings_edit_text), null);
         _input.setText(savedInstanceState == null ? getArguments().getString(ARG_TEXT) : savedInstanceState.getString(ARG_TEXT));
         alert.setView(_input);
-
         alert.setPositiveButton(getString(android.R.string.ok), (dialog, whichButton) -> {
             Host host = PropertiesView.getHost(TextEditDialog.this);
             if (host != null)
@@ -67,7 +60,6 @@ public class TextEditDialog extends AppCompatDialogFragment
 						// Canceled.
 					}
 				});*/
-
         return alert.create();
     }
 
@@ -78,5 +70,8 @@ public class TextEditDialog extends AppCompatDialogFragment
         outState.putString(ARG_TEXT, _input.getText().toString());
     }
 
-    private EditText _input;
+    public interface TextResultReceiver
+    {
+        void setResult(String text) throws Exception;
+    }
 }

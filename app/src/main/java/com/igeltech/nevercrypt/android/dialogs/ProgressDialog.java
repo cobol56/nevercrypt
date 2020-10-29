@@ -17,6 +17,9 @@ public class ProgressDialog extends AppCompatDialogFragment
 {
     public static final String TAG = "ProgressDialog";
     public static final String ARG_TITLE = "com.igeltech.nevercrypt.android.TITLE";
+    private DialogInterface.OnCancelListener _cancelListener;
+    private AppCompatTextView _statusTextView, _titleTextView;
+    private ProgressBar _progressBar;
 
     public static ProgressDialog showDialog(FragmentManager fm, String title)
     {
@@ -69,8 +72,4 @@ public class ProgressDialog extends AppCompatDialogFragment
         if (_cancelListener != null)
             _cancelListener.onCancel(dialog);
     }
-
-    private DialogInterface.OnCancelListener _cancelListener;
-    private AppCompatTextView _statusTextView, _titleTextView;
-    private ProgressBar _progressBar;
 }

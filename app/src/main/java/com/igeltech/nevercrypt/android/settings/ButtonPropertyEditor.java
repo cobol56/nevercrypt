@@ -10,43 +10,9 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class ButtonPropertyEditor extends PropertyEditorBase
 {
-    @Override
-    public View createView(ViewGroup parent)
-    {
-        View view = super.createView(parent);
-        _button = view.findViewById(android.R.id.button1);
-        if (_buttonTextId != 0)
-            _button.setText(_buttonTextId);
-        else if (_buttonText != null)
-            _button.setText(_buttonText);
-        _button.setOnClickListener(v -> onButtonClick());
-
-        return view;
-    }
-
-    @Override
-    public void save(Bundle b)
-    {
-
-    }
-
-    @Override
-    public void save()
-    {
-
-    }
-
-    @Override
-    public void load(Bundle b)
-    {
-        load();
-    }
-
-    @Override
-    public void load()
-    {
-
-    }
+    private final int _buttonTextId;
+    private final String _buttonText;
+    protected AppCompatButton _button;
 
     protected ButtonPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId, int buttonTextId)
     {
@@ -62,9 +28,39 @@ public abstract class ButtonPropertyEditor extends PropertyEditorBase
         _buttonText = buttonText;
     }
 
-    protected AppCompatButton _button;
-    private final int _buttonTextId;
-    private final String _buttonText;
+    @Override
+    public View createView(ViewGroup parent)
+    {
+        View view = super.createView(parent);
+        _button = view.findViewById(android.R.id.button1);
+        if (_buttonTextId != 0)
+            _button.setText(_buttonTextId);
+        else if (_buttonText != null)
+            _button.setText(_buttonText);
+        _button.setOnClickListener(v -> onButtonClick());
+        return view;
+    }
+
+    @Override
+    public void save(Bundle b)
+    {
+    }
+
+    @Override
+    public void save()
+    {
+    }
+
+    @Override
+    public void load(Bundle b)
+    {
+        load();
+    }
+
+    @Override
+    public void load()
+    {
+    }
 
     protected void onButtonClick()
     {

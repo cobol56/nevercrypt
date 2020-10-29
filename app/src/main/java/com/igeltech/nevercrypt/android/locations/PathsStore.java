@@ -14,6 +14,11 @@ import java.util.ArrayList;
 
 public class PathsStore
 {
+    private final LocationsManager _lm;
+    private final ArrayList<Path> _paths = new ArrayList<>();
+    private Location _location;
+    private JSONObject _params = new JSONObject();
+
     public PathsStore(LocationsManager lm)
     {
         _lm = lm;
@@ -51,7 +56,6 @@ public class PathsStore
         catch (JSONException ignored)
         {
         }
-
         try
         {
             Uri uri = Uri.parse(data);
@@ -87,7 +91,6 @@ public class PathsStore
         catch (JSONException ignored)
         {
         }
-
         try
         {
             Uri uri = Uri.parse(data);
@@ -127,11 +130,6 @@ public class PathsStore
         }
         return jo.toString();
     }
-
-    private final LocationsManager _lm;
-    private Location _location;
-    private final ArrayList<Path> _paths = new ArrayList<>();
-    private JSONObject _params = new JSONObject();
 
     private void loadFromJO(JSONObject jo) throws Exception
     {

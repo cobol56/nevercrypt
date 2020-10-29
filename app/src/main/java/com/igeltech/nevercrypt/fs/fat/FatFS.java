@@ -35,12 +35,35 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
 //import android.util.Log;
 
 public class FatFS implements FileSystem
 {
     public static final int SECTOR_SIZE = 512;
+    public static final String TAG = "FatFS";
+    public static final boolean LOG_ACQUIRE = false;
+    protected static final long MAX_FILE_SIZE = 2L * Integer.MAX_VALUE - 1;
+    protected static final String RESERVED_SYMBOLS = "<>:\"/\\|?*";
+    protected static final int LAST_CLUSTER = 0x0FFFFFFF;
+    protected static final int MAX_DIR_ENTRIES_CACHE = 10000;
+    private static final byte[] FAT_START = new byte[]{(byte) 0xeb, 0x3c, (byte) 0x90, (byte) 0x4D, (byte) 0x53, (byte) 0x44, (byte) 0x4F, (byte) 0x53, (byte) 0x35, (byte) 0x2E, (byte) 0x30, (byte) 0x00, (byte) 0x02, (byte) 0x01};
+    private final static int PATH_LOCK_TIMEOUT = 5000;
+    protected final Map<Path, OpenFileInfo> _openedFiles = new HashMap<>();
+    protected final Map<Path, DirEntry> _dirEntriesCache = new HashMap<>();
+    protected final Object _ioSyncer = new Object();
+    protected RandomAccessIO _input;
+    protected boolean _readOnlyMode, _isClosing;
+    protected BPB _bpb;
+    protected byte _clusterIndexSize;
+    protected int _totalClusterNumber;
+    protected int[] _clusterTable;
+    protected byte[] _emptyCluster;
+    private Path _rootPath;
+
+    protected FatFS(RandomAccessIO input)
+    {
+        _input = input;
+    }
 
     public static boolean isFAT(RandomAccessIO f)
     {
@@ -64,12 +87,8 @@ public class FatFS implements FileSystem
         catch (IOException ignored)
         {
         }
-
         return false;
     }
-
-    public static final String TAG = "FatFS";
-    public static final boolean LOG_ACQUIRE = false;
 
     private static int logAquiring(String tag)
     {
@@ -135,30 +154,25 @@ public class FatFS implements FileSystem
     {
         if (size <= 0 || size > 1000000000000L)
             throw new IllegalArgumentException("Wrong size: " + size);
-
         FatFS fat;
         synchronized (input)
         {
             int clustSize = getOptimalClusterSize(size, SECTOR_SIZE);
             int numClusters = (int) (size / (clustSize * SECTOR_SIZE));
             size = (long) numClusters * clustSize * SECTOR_SIZE;
-
             if (numClusters < 4085)
                 fat = new Fat12FS(input);
             else if (numClusters < 65525)
                 fat = new Fat16FS(input);
             else
                 fat = new Fat32FS(input);
-
             input.seek(size - 1);
             input.write(0);
-
             fat.initBPB(size);
             fat.writeHeader();
             fat.writeEmptyClusterTable();
             fat.writeFatBackup();
             fat.init();
-
             try (DirWriter os = fat.getDirWriter((FatPath) fat.getRootPath(), new Object()))
             {
                 int clusterSize = fat._bpb.bytesPerSector * fat._bpb.sectorsPerCluster;
@@ -166,7 +180,6 @@ public class FatFS implements FileSystem
                     os.write(0);
             }
         }
-
         return fat;
     }
 
@@ -193,18 +206,27 @@ public class FatFS implements FileSystem
             clusterSize = 1024;
         else
             clusterSize = 512;
-
         clusterSize /= sectorSize;
-
         if (clusterSize == 0)
             clusterSize = 1;
         else if (clusterSize > 128)
             clusterSize = 128;
-
         return clusterSize;
     }
 
-    private Path _rootPath;
+    public static boolean isValidFileNameImpl(String fileName)
+    {
+        String tfn = fileName.trim();
+        if (tfn.equals("") || tfn.equals(".") || tfn.endsWith(".."))
+            return false;
+        for (int i = 0; i < fileName.length(); i++)
+        {
+            char c = fileName.charAt(i);
+            if (c <= 31 || RESERVED_SYMBOLS.indexOf(c) >= 0)
+                return false;
+        }
+        return true;
+    }
 
     @Override
     public synchronized Path getRootPath()
@@ -308,22 +330,6 @@ public class FatFS implements FileSystem
         return isValidFileNameImpl(fileName);
     }
 
-    public static boolean isValidFileNameImpl(String fileName)
-    {
-        String tfn = fileName.trim();
-        if (tfn.equals("") || tfn.equals(".") || tfn.endsWith(".."))
-            return false;
-
-        for (int i = 0; i < fileName.length(); i++)
-        {
-            char c = fileName.charAt(i);
-            if (c <= 31 || RESERVED_SYMBOLS.indexOf(c) >= 0)
-                return false;
-        }
-
-        return true;
-    }
-
     public void setReadOnlyMode(boolean val)
     {
         _readOnlyMode = val;
@@ -365,7 +371,6 @@ public class FatFS implements FileSystem
             {
                 if (_isClosing)
                     throw new FileInUseException("File system is closing");
-
                 OpenFileInfo ofi = _openedFiles.get(path);
                 if (ofi != null)
                 {
@@ -399,7 +404,6 @@ public class FatFS implements FileSystem
                 }
             }
         }
-
         throw new FileInUseException("File is in use " + path.getPathString());
     }
 
@@ -470,8 +474,444 @@ public class FatFS implements FileSystem
         return new DirInputStream(new ClusterChainIO(de.startCluster, targetPath, -1, AccessMode.Read));
     }
 
+    protected void writeHeader() throws IOException
+    {
+        _input.seek(0);
+        int cnt = _bpb.reservedSectors * _bpb.bytesPerSector + _bpb.rootDirEntries * 32 + _bpb.sectorsPerFat * _bpb.numberOfFATs * _bpb.bytesPerSector;
+        byte[] buf = new byte[512];
+        for (int i = 0; i < cnt; i += 512)
+            _input.write(buf, 0, buf.length);
+        _input.seek(0);
+        _input.write(FAT_START, 0, FAT_START.length);
+        _bpb.write(_input);
+    }
+
+    protected void copySectors(int startSector, int destSector, int count) throws IOException
+    {
+        byte[] buf = new byte[_bpb.bytesPerSector];
+        int startOffset = startSector * _bpb.bytesPerSector;
+        int destOffset = destSector * _bpb.bytesPerSector;
+        for (int i = 0; i < count; i++)
+        {
+            _input.seek(startOffset + i * _bpb.bytesPerSector);
+            Util.readBytes(_input, buf, buf.length);
+            _input.seek(destOffset + i * _bpb.bytesPerSector);
+            _input.write(buf, 0, buf.length);
+        }
+    }
+
+    protected void writeEmptyClusterTable() throws IOException
+    {
+        _input.seek(getClusterIndexPosition(0));
+        int bytesPerFat = _bpb.getSectorsPerFat() * _bpb.bytesPerSector;
+        for (int i = 0; i < bytesPerFat; i++)
+            _input.write(0);
+        writeClusterIndex(0, _bpb.mediaType | 0x0FFFFF00);
+        writeClusterIndex(1, LAST_CLUSTER);
+    }
+
+    protected void writeFatBackup() throws IOException
+    {
+        copySectors(_bpb.reservedSectors, _bpb.reservedSectors + _bpb.getSectorsPerFat(), _bpb.getSectorsPerFat());
+    }
+
+    protected int calcTotalClustersNumber()
+    {
+        //return bpb.sectorsPerFat * bpb.bytesPerSector * 8 / clusterIndexSize;
+        int root_dir_sectors = _bpb.rootDirEntries * DirEntry.RECORD_SIZE / _bpb.bytesPerSector;
+        long data_sectors = _bpb.getTotalSectorsNumber() - (_bpb.reservedSectors + _bpb.numberOfFATs * _bpb.getSectorsPerFat() + root_dir_sectors);
+        return 2 + (int) (data_sectors / _bpb.sectorsPerCluster);
+    }
+
+    protected long getDataRegionSize(long totalSize)
+    {
+        int fatSize = _bpb.getSectorsPerFat() * _bpb.bytesPerSector;
+        return totalSize - fatSize * _bpb.numberOfFATs - _bpb.reservedSectors * _bpb.bytesPerSector - _bpb.rootDirEntries * DirEntry.RECORD_SIZE;
+    }
+
+    protected int calcSectorsPerCluster(long volumeSize)
+    {
+        return getOptimalClusterSize(volumeSize, SECTOR_SIZE);
+    }
+
+    protected short getReservedSectorsNumber()
+    {
+        return 2;
+    }
+
+    protected int getNumClusters(long volumeSize)
+    {
+        int bytesPerCluster = _bpb.sectorsPerCluster * _bpb.bytesPerSector;
+        return (int) (volumeSize / bytesPerCluster);
+    }
+
+    protected void initBPB(long size)
+    {
+        long numSectors = size / SECTOR_SIZE;
+        _bpb.bytesPerSector = SECTOR_SIZE;
+        _bpb.sectorsPerCluster = calcSectorsPerCluster(size);
+        _bpb.reservedSectors = getReservedSectorsNumber();
+        _bpb.numberOfFATs = 2;
+        _bpb.rootDirEntries = 512;
+        _bpb.mediaType = 0xF8;
+        //bpb.physicalDriveNumber = 0x80;
+        _bpb.physicalDriveNumber = 0;
+        _bpb.extendedBootSignature = 0x29;
+        _bpb.volumeSerialNumber = 12345;
+        _bpb.volumeLabel = new byte[]{'E', 'D', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+        //		fatsecs = ft->num_sectors - (ft->size_root_dir + ft->sector_size - 1) / ft->sector_size - ft->reserved;
+        //		ft->cluster_count = (int) (((__int64) fatsecs * ft->sector_size) / (ft->cluster_size * ft->sector_size));
+        //		ft->fat_length = (((ft->cluster_count * 3 + 1) >> 1) + ft->sector_size - 1) / ft->sector_size;
+        int rootDirSize = _bpb.rootDirEntries * 32;
+        long dataSectors = numSectors - (rootDirSize + _bpb.bytesPerSector - 1) / _bpb.bytesPerSector - _bpb.reservedSectors;
+        int clusterCount = (int) ((dataSectors * _bpb.bytesPerSector) / (_bpb.sectorsPerCluster * _bpb.bytesPerSector));
+        _bpb.sectorsPerFat = (((clusterCount * 3 + 1) >> 1) + _bpb.bytesPerSector - 1) / _bpb.bytesPerSector;
+        //clusterCount -= bpb.sectorsPerFat*bpb.numberOfFATs / bpb.sectorsPerCluster;
+        if (numSectors > 65535)
+        {
+            _bpb.sectorsBig = numSectors;
+            _bpb.totalSectorsNumber = 0;
+        }
+        else
+        {
+            _bpb.sectorsBig = 0;
+            _bpb.totalSectorsNumber = (int) numSectors;
+        }
+        Arrays.fill(_bpb.fileSystemLabel, (byte) ' ');
+        byte[] label = BPB.FAT12_LABEL.getBytes();
+        System.arraycopy(label, 0, _bpb.fileSystemLabel, 0, label.length);
+        _bpb.calcParams();
+    }
+
+    protected void loadClusterTable() throws IOException
+    {
+        _totalClusterNumber = calcTotalClustersNumber();
+        _clusterTable = new int[_totalClusterNumber];
+        for (int i = 0; i < _totalClusterNumber; i++)
+            _clusterTable[i] = readNextClusterIndex(i);
+    }
+
+    protected void freeClusters(int startCluster) throws IOException
+    {
+        synchronized (_ioSyncer)
+        {
+            int ci = startCluster;
+            while (ci > 0 && ci != LAST_CLUSTER)
+            {
+                int tci = ci;
+                ci = getNextClusterIndex(ci);
+                setNextClusterIndex(tci, 0, true);
+            }
+        }
+    }
+
+    protected void deleteEntry(DirEntry entry, FatPath basePath, Object opTag) throws IOException
+    {
+        lockPath(basePath, AccessMode.ReadWrite, opTag);
+        try
+        {
+            freeClusters(entry.startCluster);
+            entry.deleteEntry(this, basePath, opTag);
+        }
+        finally
+        {
+            releasePathLock(basePath);
+        }
+    }
+
+    protected DirEntry makeNewEntry(boolean setCluster) throws IOException
+    {
+        DirEntry entry = new DirEntry();
+        if (setCluster)
+        {
+            synchronized (_ioSyncer)
+            {
+                entry.startCluster = attachFreeCluster(0, true);
+                zeroCluster(entry.startCluster);
+            }
+        }
+        return entry;
+    }
+
+    protected DirEntry makeNewFile(FatPath parentPath, String name, Object opTag) throws IOException
+    {
+        DirEntry entry = makeNewEntry(false);
+        entry.name = name;
+        entry.setDir(false);
+        entry.writeEntry(this, parentPath, opTag);
+        updateModTime(parentPath, opTag);
+        FatPath newPath = (FatPath) parentPath.combine(name);
+        cacheDirEntry(newPath, entry);
+        return entry;
+    }
+
+    protected DirEntry makeNewDir(FatPath parentPath, String name, Object opTag) throws IOException
+    {
+        DirEntry entry = makeNewEntry(true);
+        entry.name = name;
+        entry.setDir(true);
+        entry.writeEntry(this, parentPath, opTag);
+        updateModTime(parentPath, opTag);
+        FatPath newPath = (FatPath) parentPath.combine(name);
+        cacheDirEntry(newPath, entry);
+        try (DirWriter s = getDirWriter(newPath, opTag))
+        {
+            DirEntry dotEntry = new DirEntry(0);
+            dotEntry.name = ".";
+            dotEntry.setDir(true);
+            dotEntry.startCluster = entry.startCluster;
+            dotEntry.writeEntry(new FileName("."), s);
+            dotEntry = new DirEntry(DirEntry.RECORD_SIZE);
+            dotEntry.name = "..";
+            dotEntry.setDir(true);
+            if (!parentPath.isRootDirectory())
+            {
+                DirEntry parentEntry = getCachedDirEntry(parentPath, opTag);
+                if (parentEntry != null)
+                    dotEntry.startCluster = parentEntry.startCluster;
+            }
+            dotEntry.writeEntry(new FileName(".."), s);
+            s.write(0);
+        }
+        return entry;
+    }
+
+    private void updateModTime(FatPath path, Object tag) throws IOException
+    {
+        FatPath parentPath = (FatPath) path.getParentPath();
+        if (parentPath != null)
+        {
+            DirEntry entry = getDirEntry(path, tag);
+            if (entry != null)
+            {
+                entry.lastModifiedDateTime = new Date();
+                entry.writeEntry(this, parentPath, tag);
+            }
+        }
+    }
+
+    protected int getClusterIndexPosition(int clusterIndex)
+    {
+        return _bpb.reservedSectors * _bpb.bytesPerSector + clusterIndex * _clusterIndexSize / 8;
+    }
+
+    protected int readNextClusterIndex(int clusterIndex) throws IOException
+    {
+        _input.seek(getClusterIndexPosition(clusterIndex));
+        return 0;
+    }
+
+    protected int getNextClusterIndex(int clusterIndex) throws IOException
+    {
+        return _clusterTable == null ? readNextClusterIndex(clusterIndex) : _clusterTable[clusterIndex];
+    }
+
+    protected DirReader getRootDirInputStream() throws IOException
+    {
+        return null;
+    }
+
+    protected DirWriter getRootDirOutputStream() throws IOException
+    {
+        return null;
+    }
+
+    protected void cacheDirEntry(FatPath path, DirEntry entry)
+    {
+        int li = logAquiring("dc");
+        try
+        {
+            synchronized (_dirEntriesCache)
+            {
+                logAquired(li);
+                if (_dirEntriesCache.size() > MAX_DIR_ENTRIES_CACHE)
+                    _dirEntriesCache.clear();
+                _dirEntriesCache.put(path, entry);
+            }
+        }
+        finally
+        {
+            logReleased(li);
+        }
+    }
+
+    protected DirEntry getCachedDirEntry(FatPath path, Object opTag) throws IOException
+    {
+        int li = logAquiring("dc");
+        try
+        {
+            synchronized (_dirEntriesCache)
+            {
+                logAquired(li);
+                if (_dirEntriesCache.containsKey(path))
+                {
+                    ////DEBUG
+                    //DirEntry de = _dirEntriesCache.get(path);
+                    //Log.d("NeverCrypt", String.format("DirEntry %s found in cache for %s . ",de,path.getPathString()));
+                    //return de;
+                    return _dirEntriesCache.get(path);
+                }
+            }
+        }
+        finally
+        {
+            logReleased(li);
+        }
+        DirEntry res = getDirEntry(path, opTag);
+        //Log.d("NeverCrypt", String.format("DirEntry %s not found in cache for %s and was created. ",res,path.getPathString()));
+        cacheDirEntry(path, res);
+        return res;
+    }
+
+    protected DirEntry getDirEntry(FatPath targetPath, Object opTag) throws IOException
+    {
+        String[] pathComponents = targetPath.getPathUtil().getComponents();
+        if (pathComponents.length == 0)
+            return null;
+        DirEntry res = null;
+        DirIterator it = new DirIterator();
+        FatPath p = (FatPath) getRootPath();
+        for (String dir : pathComponents)
+        {
+            DirReader dirStream;
+            lockPath(p, AccessMode.Read, opTag);
+            try
+            {
+                if (res == null)
+                    dirStream = getRootDirInputStream();
+                else
+                {
+                    if (res.isFile())
+                        return null;
+                    else if (res.name.equals("..") && res.startCluster == 0)
+                        dirStream = getRootDirInputStream();
+                    else
+                        dirStream = new DirInputStream(new ClusterChainIO(res.startCluster, p, -1, AccessMode.Read));
+                }
+            }
+            catch (IOException e)
+            {
+                releasePathLock(p);
+                throw e;
+            }
+            try
+            {
+                it.reset(p, dirStream);
+                res = null;
+                while (it.hasNext())
+                {
+                    DirEntry entry = it.nextDirEntry();
+                    if (dir.equalsIgnoreCase(entry.name))
+                    {
+                        res = entry;
+                        break;
+                    }
+                }
+            }
+            finally
+            {
+                dirStream.close();
+            }
+            if (res == null)
+                return null;
+            p = (FatPath) p.combine(dir);
+        }
+        return res;
+    }
+
+    protected ArrayList<Integer> loadClusterChain(int startClusterIndex) throws IOException
+    {
+        ArrayList<Integer> res = new ArrayList<>();
+        int idx = startClusterIndex;
+        synchronized (_ioSyncer)
+        {
+            if (_input == null)
+                throw new FileSystemClosedException();
+            try
+            {
+                while (idx > 0 && idx != LAST_CLUSTER)
+                {
+                    res.add(idx);
+                    idx = getNextClusterIndex(idx);
+                }
+            }
+            catch (ArrayIndexOutOfBoundsException ignored)
+            {
+            }
+        }
+        return res;
+    }
+
+    protected void writeClusterIndex(int clusterPosition, int clusterIndex) throws IOException
+    {
+        _input.seek(getClusterIndexPosition(clusterPosition));
+    }
+
+    protected void setNextClusterIndex(int clusterPosition, int clusterIndex, boolean commit) throws IOException
+    {
+        if (commit)
+            writeClusterIndex(clusterPosition, clusterIndex);
+        if (_clusterTable != null)
+            _clusterTable[clusterPosition] = clusterIndex;
+    }
+
+    protected int attachFreeCluster(int lastClusterIndex, boolean commit) throws IOException
+    {
+        synchronized (_ioSyncer)
+        {
+            if (_input == null)
+                throw new FileSystemClosedException();
+            int freeCluster = getFreeClusterIndex();
+            if (lastClusterIndex > 0 && lastClusterIndex != LAST_CLUSTER)
+                setNextClusterIndex(lastClusterIndex, freeCluster, commit);
+            setNextClusterIndex(freeCluster, LAST_CLUSTER, commit);
+            return freeCluster;
+        }
+    }
+
+	/*protected int getClusterIndexFromChainAt(int positionInChain, int startClusterIndex, boolean attachNew) throws IOException
+	{
+		int idx = startClusterIndex;
+		for (int i = 0; i < positionInChain; i++)
+		{
+			int prev = idx;
+			idx = getNextClusterIndex(idx);
+			if (idx < 0 || idx == LAST_CLUSTER)
+			{
+				if (attachNew)
+					idx = attachFreeCluster(prev,true);
+				else
+					throw new EOFException();
+			}
+		}
+		return idx;
+	}*/
+
+    protected void zeroCluster(int clusterIndex) throws IOException
+    {
+        _input.seek(_bpb.getClusterOffset(clusterIndex));
+        _input.write(_emptyCluster, 0, _emptyCluster.length);
+    }
+
+    protected int getFreeClusterIndex() throws IOException
+    {
+        for (int i = 2; i < _totalClusterNumber; i++)
+        {
+            if (getNextClusterIndex(i) == 0)
+                return i;
+        }
+        throw new NoFreeSpaceLeftException();
+    }
+
     public abstract class FatRecord implements FSRecord
     {
+        protected FatPath _path;
+
+        protected FatRecord(FatPath path) throws IOException
+        {
+            _path = path;
+        }
+
         @Override
         public Path getPath()
         {
@@ -502,11 +942,9 @@ public class FatFS implements FileSystem
         {
             if (_readOnlyMode)
                 throw new IOException(String.format("Can't update file %s: file system is opened in read only mode", _path.getPathString()));
-
             FatPath parentPath = (FatPath) _path.getParentPath();
             if (parentPath == null)
                 throw new IOException("Can't update last modified time of the root directory");
-
             Object tag = lockPath(_path, AccessMode.Write);
             try
             {
@@ -533,11 +971,9 @@ public class FatFS implements FileSystem
         {
             if (_readOnlyMode)
                 throw new IOException(String.format("Can't rename file %s: file system is opened in read only mode", _path.getPathString()));
-
             FatPath parentPath = (FatPath) _path.getParentPath();
             if (parentPath == null)
                 throw new IOException("Can't rename root directory");
-
             Object tag = lockPath(parentPath, AccessMode.Write);
             try
             {
@@ -576,15 +1012,12 @@ public class FatFS implements FileSystem
         {
             if (_readOnlyMode)
                 throw new IOException(String.format("Can't rename file %s: file system is opened in read only mode", _path.getPathString()));
-
             FatPath parentPath = (FatPath) _path.getParentPath();
             if (parentPath == null)
                 throw new IOException("Can't rename root directory");
-
             FatPath newParentPath = (FatPath) newParent.getPath();
             if (newParentPath.equals(parentPath))
                 return;
-
             Object tag = lockPath(parentPath, AccessMode.Write);
             try
             {
@@ -625,17 +1058,14 @@ public class FatFS implements FileSystem
                 releasePathLock(parentPath);
             }
         }
-
-        protected FatRecord(FatPath path) throws IOException
-        {
-            _path = path;
-        }
-
-        protected FatPath _path;
     }
 
     class DirIterator implements Iterator<Path>
     {
+        private DirReader _dirStream;
+        private DirEntry _next;
+        private FatPath _path;
+
         /**
          * Returns <tt>true</tt> if the iteration has more elements. (In other
          * words, returns <tt>true</tt> if <tt>next</tt> would return an element
@@ -660,7 +1090,6 @@ public class FatFS implements FileSystem
         {
             if (_next == null)
                 throw new NoSuchElementException();
-
             FatPath res;
             try
             {
@@ -670,7 +1099,6 @@ public class FatFS implements FileSystem
             {
                 throw new RuntimeException(e);
             }
-
             int li = logAquiring("dc");
             try
             {
@@ -685,7 +1113,6 @@ public class FatFS implements FileSystem
             {
                 logReleased(li);
             }
-
             setNext();
             return res;
         }
@@ -725,10 +1152,6 @@ public class FatFS implements FileSystem
             return res;
         }
 
-        private DirReader _dirStream;
-        private DirEntry _next;
-        private FatPath _path;
-
         private void setNext()
         {
             try
@@ -760,7 +1183,6 @@ public class FatFS implements FileSystem
                 throw new IOException(String.format("Can't delete directory %s: file system is opened in read only mode", _path.getPathString()));
             if (_path.isRootDirectory())
                 throw new IOException("Can't delete root directory");
-
             Object tag = lockPath(_path, AccessMode.Write);
             try
             {
@@ -769,7 +1191,6 @@ public class FatFS implements FileSystem
                     return;
                 if (!entry.isDir())
                     throw new IOException("Specified path is not a directory: " + _path.getPathString());
-
                 try (Contents dc = list(tag))
                 {
                     for (Path rec : dc)
@@ -792,7 +1213,6 @@ public class FatFS implements FileSystem
                 throw new IOException("Can't create directory: file system is opened in read only mode");
             if (!isValidFileName(name))
                 throw new IOException("Invalid file name: " + name);
-
             Object tag = lockPath(_path, AccessMode.Write);
             try
             {
@@ -816,7 +1236,6 @@ public class FatFS implements FileSystem
                 throw new IOException("Can't create directory: file system is opened in read only mode");
             if (!isValidFileName(name))
                 throw new IOException("Invalid file name: " + name);
-
             Object tag = lockPath(_path, AccessMode.Write);
             try
             {
@@ -1011,6 +1430,8 @@ public class FatFS implements FileSystem
 
     class FatPath extends PathBase
     {
+        private final String _pathString;
+
         public FatPath(String pathString)
         {
             super(FatFS.this);
@@ -1072,475 +1493,24 @@ public class FatFS implements FileSystem
         {
             return _pathString.length() == 0 ? "/" : _pathString;
         }
-
-        private final String _pathString;
-    }
-
-    protected static final long MAX_FILE_SIZE = 2L * Integer.MAX_VALUE - 1;
-    protected static final String RESERVED_SYMBOLS = "<>:\"/\\|?*";
-    protected static final int LAST_CLUSTER = 0x0FFFFFFF;
-    protected static final int MAX_DIR_ENTRIES_CACHE = 10000;
-    protected RandomAccessIO _input;
-    protected boolean _readOnlyMode, _isClosing;
-    protected BPB _bpb;
-    protected byte _clusterIndexSize;
-    protected int _totalClusterNumber;
-    protected int[] _clusterTable;
-    protected final Map<Path, OpenFileInfo> _openedFiles = new HashMap<>();
-    protected final Map<Path, DirEntry> _dirEntriesCache = new HashMap<>();
-    protected final Object _ioSyncer = new Object();
-    protected byte[] _emptyCluster;
-
-    protected FatFS(RandomAccessIO input)
-    {
-        _input = input;
-    }
-
-    protected void writeHeader() throws IOException
-    {
-        _input.seek(0);
-        int cnt = _bpb.reservedSectors * _bpb.bytesPerSector + _bpb.rootDirEntries * 32 + _bpb.sectorsPerFat * _bpb.numberOfFATs * _bpb.bytesPerSector;
-        byte[] buf = new byte[512];
-        for (int i = 0; i < cnt; i += 512)
-            _input.write(buf, 0, buf.length);
-        _input.seek(0);
-        _input.write(FAT_START, 0, FAT_START.length);
-        _bpb.write(_input);
-    }
-
-    protected void copySectors(int startSector, int destSector, int count) throws IOException
-    {
-        byte[] buf = new byte[_bpb.bytesPerSector];
-        int startOffset = startSector * _bpb.bytesPerSector;
-        int destOffset = destSector * _bpb.bytesPerSector;
-        for (int i = 0; i < count; i++)
-        {
-            _input.seek(startOffset + i * _bpb.bytesPerSector);
-            Util.readBytes(_input, buf, buf.length);
-            _input.seek(destOffset + i * _bpb.bytesPerSector);
-            _input.write(buf, 0, buf.length);
-        }
-    }
-
-    protected void writeEmptyClusterTable() throws IOException
-    {
-        _input.seek(getClusterIndexPosition(0));
-        int bytesPerFat = _bpb.getSectorsPerFat() * _bpb.bytesPerSector;
-        for (int i = 0; i < bytesPerFat; i++)
-            _input.write(0);
-        writeClusterIndex(0, _bpb.mediaType | 0x0FFFFF00);
-        writeClusterIndex(1, LAST_CLUSTER);
-    }
-
-    protected void writeFatBackup() throws IOException
-    {
-        copySectors(_bpb.reservedSectors, _bpb.reservedSectors + _bpb.getSectorsPerFat(), _bpb.getSectorsPerFat());
-    }
-
-    protected int calcTotalClustersNumber()
-    {
-        //return bpb.sectorsPerFat * bpb.bytesPerSector * 8 / clusterIndexSize;
-        int root_dir_sectors = _bpb.rootDirEntries * DirEntry.RECORD_SIZE / _bpb.bytesPerSector;
-        long data_sectors = _bpb.getTotalSectorsNumber() - (_bpb.reservedSectors + _bpb.numberOfFATs * _bpb.getSectorsPerFat() + root_dir_sectors);
-        return 2 + (int) (data_sectors / _bpb.sectorsPerCluster);
-    }
-
-    protected long getDataRegionSize(long totalSize)
-    {
-        int fatSize = _bpb.getSectorsPerFat() * _bpb.bytesPerSector;
-        return totalSize - fatSize * _bpb.numberOfFATs - _bpb.reservedSectors * _bpb.bytesPerSector - _bpb.rootDirEntries * DirEntry.RECORD_SIZE;
-    }
-
-    protected int calcSectorsPerCluster(long volumeSize)
-    {
-        return getOptimalClusterSize(volumeSize, SECTOR_SIZE);
-    }
-
-    protected short getReservedSectorsNumber()
-    {
-        return 2;
-    }
-
-    protected int getNumClusters(long volumeSize)
-    {
-        int bytesPerCluster = _bpb.sectorsPerCluster * _bpb.bytesPerSector;
-        return (int) (volumeSize / bytesPerCluster);
-    }
-
-    protected void initBPB(long size)
-    {
-        long numSectors = size / SECTOR_SIZE;
-
-        _bpb.bytesPerSector = SECTOR_SIZE;
-        _bpb.sectorsPerCluster = calcSectorsPerCluster(size);
-        _bpb.reservedSectors = getReservedSectorsNumber();
-        _bpb.numberOfFATs = 2;
-        _bpb.rootDirEntries = 512;
-
-        _bpb.mediaType = 0xF8;
-
-        //bpb.physicalDriveNumber = 0x80;
-        _bpb.physicalDriveNumber = 0;
-        _bpb.extendedBootSignature = 0x29;
-        _bpb.volumeSerialNumber = 12345;
-        _bpb.volumeLabel = new byte[]{'E', 'D', 'S', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
-
-        //		fatsecs = ft->num_sectors - (ft->size_root_dir + ft->sector_size - 1) / ft->sector_size - ft->reserved;
-        //		ft->cluster_count = (int) (((__int64) fatsecs * ft->sector_size) / (ft->cluster_size * ft->sector_size));
-        //		ft->fat_length = (((ft->cluster_count * 3 + 1) >> 1) + ft->sector_size - 1) / ft->sector_size;
-        int rootDirSize = _bpb.rootDirEntries * 32;
-
-        long dataSectors = numSectors - (rootDirSize + _bpb.bytesPerSector - 1) / _bpb.bytesPerSector - _bpb.reservedSectors;
-        int clusterCount = (int) ((dataSectors * _bpb.bytesPerSector) / (_bpb.sectorsPerCluster * _bpb.bytesPerSector));
-        _bpb.sectorsPerFat = (((clusterCount * 3 + 1) >> 1) + _bpb.bytesPerSector - 1) / _bpb.bytesPerSector;
-
-        //clusterCount -= bpb.sectorsPerFat*bpb.numberOfFATs / bpb.sectorsPerCluster;
-        if (numSectors > 65535)
-        {
-            _bpb.sectorsBig = numSectors;
-            _bpb.totalSectorsNumber = 0;
-        }
-        else
-        {
-            _bpb.sectorsBig = 0;
-            _bpb.totalSectorsNumber = (int) numSectors;
-        }
-
-        Arrays.fill(_bpb.fileSystemLabel, (byte) ' ');
-        byte[] label = BPB.FAT12_LABEL.getBytes();
-        System.arraycopy(label, 0, _bpb.fileSystemLabel, 0, label.length);
-        _bpb.calcParams();
-    }
-
-    protected void loadClusterTable() throws IOException
-    {
-        _totalClusterNumber = calcTotalClustersNumber();
-        _clusterTable = new int[_totalClusterNumber];
-        for (int i = 0; i < _totalClusterNumber; i++)
-            _clusterTable[i] = readNextClusterIndex(i);
-    }
-
-    protected void freeClusters(int startCluster) throws IOException
-    {
-        synchronized (_ioSyncer)
-        {
-            int ci = startCluster;
-            while (ci > 0 && ci != LAST_CLUSTER)
-            {
-                int tci = ci;
-                ci = getNextClusterIndex(ci);
-                setNextClusterIndex(tci, 0, true);
-            }
-        }
-    }
-
-    protected void deleteEntry(DirEntry entry, FatPath basePath, Object opTag) throws IOException
-    {
-        lockPath(basePath, AccessMode.ReadWrite, opTag);
-        try
-        {
-            freeClusters(entry.startCluster);
-            entry.deleteEntry(this, basePath, opTag);
-        }
-        finally
-        {
-            releasePathLock(basePath);
-        }
-    }
-
-    protected DirEntry makeNewEntry(boolean setCluster) throws IOException
-    {
-        DirEntry entry = new DirEntry();
-        if (setCluster)
-        {
-            synchronized (_ioSyncer)
-            {
-                entry.startCluster = attachFreeCluster(0, true);
-                zeroCluster(entry.startCluster);
-            }
-        }
-        return entry;
-    }
-
-    protected DirEntry makeNewFile(FatPath parentPath, String name, Object opTag) throws IOException
-    {
-        DirEntry entry = makeNewEntry(false);
-        entry.name = name;
-        entry.setDir(false);
-        entry.writeEntry(this, parentPath, opTag);
-        updateModTime(parentPath, opTag);
-        FatPath newPath = (FatPath) parentPath.combine(name);
-        cacheDirEntry(newPath, entry);
-        return entry;
-    }
-
-    protected DirEntry makeNewDir(FatPath parentPath, String name, Object opTag) throws IOException
-    {
-        DirEntry entry = makeNewEntry(true);
-        entry.name = name;
-        entry.setDir(true);
-        entry.writeEntry(this, parentPath, opTag);
-        updateModTime(parentPath, opTag);
-        FatPath newPath = (FatPath) parentPath.combine(name);
-        cacheDirEntry(newPath, entry);
-
-        try (DirWriter s = getDirWriter(newPath, opTag))
-        {
-            DirEntry dotEntry = new DirEntry(0);
-            dotEntry.name = ".";
-            dotEntry.setDir(true);
-            dotEntry.startCluster = entry.startCluster;
-            dotEntry.writeEntry(new FileName("."), s);
-
-            dotEntry = new DirEntry(DirEntry.RECORD_SIZE);
-            dotEntry.name = "..";
-            dotEntry.setDir(true);
-            if (!parentPath.isRootDirectory())
-            {
-                DirEntry parentEntry = getCachedDirEntry(parentPath, opTag);
-                if (parentEntry != null)
-                    dotEntry.startCluster = parentEntry.startCluster;
-            }
-            dotEntry.writeEntry(new FileName(".."), s);
-            s.write(0);
-        }
-        return entry;
-    }
-
-    private void updateModTime(FatPath path, Object tag) throws IOException
-    {
-        FatPath parentPath = (FatPath) path.getParentPath();
-        if (parentPath != null)
-        {
-            DirEntry entry = getDirEntry(path, tag);
-            if (entry != null)
-            {
-                entry.lastModifiedDateTime = new Date();
-                entry.writeEntry(this, parentPath, tag);
-            }
-        }
-    }
-
-    protected int getClusterIndexPosition(int clusterIndex)
-    {
-        return _bpb.reservedSectors * _bpb.bytesPerSector + clusterIndex * _clusterIndexSize / 8;
-    }
-
-    protected int readNextClusterIndex(int clusterIndex) throws IOException
-    {
-        _input.seek(getClusterIndexPosition(clusterIndex));
-        return 0;
-    }
-
-    protected int getNextClusterIndex(int clusterIndex) throws IOException
-    {
-        return _clusterTable == null ? readNextClusterIndex(clusterIndex) : _clusterTable[clusterIndex];
-    }
-
-    protected DirReader getRootDirInputStream() throws IOException
-    {
-        return null;
-    }
-
-    protected DirWriter getRootDirOutputStream() throws IOException
-    {
-        return null;
-    }
-
-    protected void cacheDirEntry(FatPath path, DirEntry entry)
-    {
-        int li = logAquiring("dc");
-        try
-        {
-            synchronized (_dirEntriesCache)
-            {
-                logAquired(li);
-                if (_dirEntriesCache.size() > MAX_DIR_ENTRIES_CACHE)
-                    _dirEntriesCache.clear();
-                _dirEntriesCache.put(path, entry);
-            }
-        }
-        finally
-        {
-            logReleased(li);
-        }
-    }
-
-    protected DirEntry getCachedDirEntry(FatPath path, Object opTag) throws IOException
-    {
-        int li = logAquiring("dc");
-        try
-        {
-            synchronized (_dirEntriesCache)
-            {
-                logAquired(li);
-                if (_dirEntriesCache.containsKey(path))
-                {
-                    ////DEBUG
-                    //DirEntry de = _dirEntriesCache.get(path);
-                    //Log.d("NeverCrypt", String.format("DirEntry %s found in cache for %s . ",de,path.getPathString()));
-                    //return de;
-                    return _dirEntriesCache.get(path);
-                }
-            }
-        }
-        finally
-        {
-            logReleased(li);
-        }
-        DirEntry res = getDirEntry(path, opTag);
-        //Log.d("NeverCrypt", String.format("DirEntry %s not found in cache for %s and was created. ",res,path.getPathString()));
-        cacheDirEntry(path, res);
-        return res;
-    }
-
-    protected DirEntry getDirEntry(FatPath targetPath, Object opTag) throws IOException
-    {
-        String[] pathComponents = targetPath.getPathUtil().getComponents();
-        if (pathComponents.length == 0)
-            return null;
-
-        DirEntry res = null;
-        DirIterator it = new DirIterator();
-        FatPath p = (FatPath) getRootPath();
-        for (String dir : pathComponents)
-        {
-            DirReader dirStream;
-            lockPath(p, AccessMode.Read, opTag);
-            try
-            {
-                if (res == null)
-                    dirStream = getRootDirInputStream();
-                else
-                {
-                    if (res.isFile())
-                        return null;
-                    else if (res.name.equals("..") && res.startCluster == 0)
-                        dirStream = getRootDirInputStream();
-                    else
-                        dirStream = new DirInputStream(new ClusterChainIO(res.startCluster, p, -1, AccessMode.Read));
-                }
-            }
-            catch (IOException e)
-            {
-                releasePathLock(p);
-                throw e;
-            }
-            try
-            {
-                it.reset(p, dirStream);
-                res = null;
-                while (it.hasNext())
-                {
-                    DirEntry entry = it.nextDirEntry();
-                    if (dir.equalsIgnoreCase(entry.name))
-                    {
-                        res = entry;
-                        break;
-                    }
-                }
-            }
-            finally
-            {
-                dirStream.close();
-            }
-
-            if (res == null)
-                return null;
-
-            p = (FatPath) p.combine(dir);
-        }
-        return res;
-    }
-
-    protected ArrayList<Integer> loadClusterChain(int startClusterIndex) throws IOException
-    {
-        ArrayList<Integer> res = new ArrayList<>();
-        int idx = startClusterIndex;
-        synchronized (_ioSyncer)
-        {
-            if (_input == null)
-                throw new FileSystemClosedException();
-
-            try
-            {
-                while (idx > 0 && idx != LAST_CLUSTER)
-                {
-                    res.add(idx);
-                    idx = getNextClusterIndex(idx);
-                }
-            }
-            catch (ArrayIndexOutOfBoundsException ignored)
-            {
-            }
-        }
-        return res;
-    }
-
-	/*protected int getClusterIndexFromChainAt(int positionInChain, int startClusterIndex, boolean attachNew) throws IOException
-	{
-		int idx = startClusterIndex;
-		for (int i = 0; i < positionInChain; i++)
-		{
-			int prev = idx;
-			idx = getNextClusterIndex(idx);
-			if (idx < 0 || idx == LAST_CLUSTER)
-			{
-				if (attachNew)
-					idx = attachFreeCluster(prev,true);
-				else
-					throw new EOFException();
-			}
-		}
-		return idx;
-	}*/
-
-    protected void writeClusterIndex(int clusterPosition, int clusterIndex) throws IOException
-    {
-        _input.seek(getClusterIndexPosition(clusterPosition));
-    }
-
-    protected void setNextClusterIndex(int clusterPosition, int clusterIndex, boolean commit) throws IOException
-    {
-        if (commit)
-            writeClusterIndex(clusterPosition, clusterIndex);
-        if (_clusterTable != null)
-            _clusterTable[clusterPosition] = clusterIndex;
-    }
-
-    protected int attachFreeCluster(int lastClusterIndex, boolean commit) throws IOException
-    {
-        synchronized (_ioSyncer)
-        {
-            if (_input == null)
-                throw new FileSystemClosedException();
-            int freeCluster = getFreeClusterIndex();
-            if (lastClusterIndex > 0 && lastClusterIndex != LAST_CLUSTER)
-                setNextClusterIndex(lastClusterIndex, freeCluster, commit);
-            setNextClusterIndex(freeCluster, LAST_CLUSTER, commit);
-            return freeCluster;
-        }
-    }
-
-    protected void zeroCluster(int clusterIndex) throws IOException
-    {
-        _input.seek(_bpb.getClusterOffset(clusterIndex));
-        _input.write(_emptyCluster, 0, _emptyCluster.length);
-    }
-
-    protected int getFreeClusterIndex() throws IOException
-    {
-        for (int i = 2; i < _totalClusterNumber; i++)
-        {
-            if (getNextClusterIndex(i) == 0)
-                return i;
-        }
-
-        throw new NoFreeSpaceLeftException();
     }
 
     class RootDirReader extends InputStream implements DirReader
     {
+        private final int length;
+        private final byte[] buffer;
+        private final long _startPosition;
+        private int bytesRead;
+        private int bufferOffset;
+        private int bytesAvail;
+
+        RootDirReader(int lng, long startPosition)
+        {
+            length = lng;
+            buffer = new byte[lng > 1024 ? 1024 : lng];
+            _startPosition = startPosition;
+        }
+
         @Override
         public void seek(long position) throws IOException
         {
@@ -1576,27 +1546,12 @@ public class FatFS implements FileSystem
             releasePathLock(getRootPath());
         }
 
-        RootDirReader(int lng, long startPosition)
-        {
-            length = lng;
-            buffer = new byte[lng > 1024 ? 1024 : lng];
-            _startPosition = startPosition;
-        }
-
-        private int bytesRead;
-        private final int length;
-        private final byte[] buffer;
-        private final long _startPosition;
-        private int bufferOffset;
-        private int bytesAvail;
-
         private void fillBuffer() throws IOException
         {
             synchronized (_ioSyncer)
             {
                 if (_input == null)
                     throw new FileSystemClosedException();
-
                 bytesRead += bytesAvail;
                 _input.seek(_startPosition + bytesRead);
                 bufferOffset = 0;
@@ -1612,6 +1567,31 @@ public class FatFS implements FileSystem
 
     class ClusterChainIO implements RandomAccessIO
     {
+        protected final ArrayList<Integer> _clusterChain;
+        protected final ArrayList<Integer> _addedClusters = new ArrayList<>();
+        protected final byte[] _oneByteBuf = new byte[1];
+        protected final int _bufferSize;
+        protected final byte[] _buffer;
+        protected final Path _path;
+        protected final AccessMode _mode;
+        protected final Object _rwSync = new Object();
+        protected long _currentStreamPosition, _maxStreamPosition;
+        protected int _lastCluster;
+        protected boolean _isBufferLoaded, _isBufferDirty;
+
+        ClusterChainIO(int startClusterIndex, Path path, long currentSize, AccessMode mode) throws IOException
+        {
+            _mode = mode;
+            _bufferSize = _bpb.sectorsPerCluster * _bpb.bytesPerSector;
+            _buffer = new byte[_bufferSize];
+            _clusterChain = loadClusterChain(startClusterIndex);
+            _lastCluster = _clusterChain.isEmpty() ? LAST_CLUSTER : _clusterChain.get(_clusterChain.size() - 1);
+            _maxStreamPosition = currentSize < 0 ? _clusterChain.size() * _bufferSize : currentSize;
+            _path = path;
+            //if(LOG_MORE)
+            //Log.d("FatFs",String.format("Opened file %s. Current size: %d.",_path.getPathString(),currentSize));
+        }
+
         @Override
         public void seek(long position) throws IOException
         {
@@ -1683,7 +1663,6 @@ public class FatFS implements FileSystem
             {
                 releasePathLock(_path);
             }
-
             //if(LOG_MORE)
             //	Log.d("FatFs",String.format("Closed file %s. Max size: %d.",_path.getPathString(),_maxStreamPosition));
         }
@@ -1692,7 +1671,6 @@ public class FatFS implements FileSystem
         {
             if (_mode == AccessMode.Read)
                 throw new IOException("Writing disabled");
-
             synchronized (_rwSync)
             {
                 _oneByteBuf[0] = (byte) (data & 0xFF);
@@ -1706,7 +1684,6 @@ public class FatFS implements FileSystem
                 throw new IOException("Writing disabled");
             if (len <= 0)
                 return;
-
             synchronized (_rwSync)
             {
                 if (_currentStreamPosition + len > MAX_FILE_SIZE)
@@ -1780,31 +1757,6 @@ public class FatFS implements FileSystem
             return _maxStreamPosition;
         }
 
-        ClusterChainIO(int startClusterIndex, Path path, long currentSize, AccessMode mode) throws IOException
-        {
-            _mode = mode;
-            _bufferSize = _bpb.sectorsPerCluster * _bpb.bytesPerSector;
-            _buffer = new byte[_bufferSize];
-            _clusterChain = loadClusterChain(startClusterIndex);
-            _lastCluster = _clusterChain.isEmpty() ? LAST_CLUSTER : _clusterChain.get(_clusterChain.size() - 1);
-            _maxStreamPosition = currentSize < 0 ? _clusterChain.size() * _bufferSize : currentSize;
-            _path = path;
-            //if(LOG_MORE)
-            //Log.d("FatFs",String.format("Opened file %s. Current size: %d.",_path.getPathString(),currentSize));
-        }
-
-        protected final ArrayList<Integer> _clusterChain;
-        protected final ArrayList<Integer> _addedClusters = new ArrayList<>();
-        protected final byte[] _oneByteBuf = new byte[1];
-        protected long _currentStreamPosition, _maxStreamPosition;
-        protected int _lastCluster;
-        protected final int _bufferSize;
-        protected final byte[] _buffer;
-        protected boolean _isBufferLoaded, _isBufferDirty;
-        protected final Path _path;
-        protected final AccessMode _mode;
-        protected final Object _rwSync = new Object();
-
         protected void writeBuffer() throws IOException
         {
             synchronized (_ioSyncer)
@@ -1850,7 +1802,6 @@ public class FatFS implements FileSystem
                     cluster = 0;
                 else
                     cluster = _clusterChain.get(clusterIndex);
-
                 int read = 0;
                 if (cluster != LAST_CLUSTER && cluster != 0)
                 {
@@ -1918,7 +1869,6 @@ public class FatFS implements FileSystem
             {
                 if (_input == null)
                     throw new FileSystemClosedException();
-
                 int numAddedClusters = _addedClusters.size();
                 if (_lastCluster != LAST_CLUSTER)
                     setNextClusterIndex(_lastCluster, _addedClusters.get(0), true);
@@ -1934,6 +1884,20 @@ public class FatFS implements FileSystem
 
     class RootDirWriter extends OutputStream implements DirWriter
     {
+        private final byte[] _buffer;
+        private final int _length;
+        private final long _startPosition;
+        private int _bufferOffset;
+        private int _bytesAvail;
+        private int _bytesWritten;
+
+        RootDirWriter(int lng, long startPosition)
+        {
+            _length = lng;
+            _buffer = new byte[lng > 1024 ? 1024 : lng];
+            _startPosition = startPosition;
+        }
+
         @Override
         public void seek(long position) throws IOException
         {
@@ -1959,10 +1923,8 @@ public class FatFS implements FileSystem
         {
             if (_bufferOffset >= _bytesAvail)
                 writeBuffer();
-
             if (_bytesAvail <= 0)
                 throw new EOFException();
-
             _buffer[_bufferOffset++] = (byte) oneByte;
         }
 
@@ -1985,20 +1947,6 @@ public class FatFS implements FileSystem
             }
         }
 
-        RootDirWriter(int lng, long startPosition)
-        {
-            _length = lng;
-            _buffer = new byte[lng > 1024 ? 1024 : lng];
-            _startPosition = startPosition;
-        }
-
-        private final byte[] _buffer;
-        private int _bufferOffset;
-        private int _bytesAvail;
-        private int _bytesWritten;
-        private final int _length;
-        private final long _startPosition;
-
         private void writeBuffer() throws IOException
         {
             synchronized (_ioSyncer)
@@ -2017,9 +1965,6 @@ public class FatFS implements FileSystem
                 _bytesAvail = _buffer.length;
         }
     }
-
-    private static final byte[] FAT_START = new byte[]{(byte) 0xeb, 0x3c, (byte) 0x90, (byte) 0x4D, (byte) 0x53, (byte) 0x44, (byte) 0x4F, (byte) 0x53, (byte) 0x35, (byte) 0x2E, (byte) 0x30, (byte) 0x00, (byte) 0x02, (byte) 0x01};
-    private final static int PATH_LOCK_TIMEOUT = 5000;
 }
 
 class Fat12FS extends FatFS
@@ -2048,9 +1993,7 @@ class Fat12FS extends FatFS
     {
         super.readNextClusterIndex(clusterIndex);
         int byte_offset = (clusterIndex * _clusterIndexSize) % 8;
-
         int res = ((Util.readWordLE(_input) >> byte_offset) & 0xFFF);
-
         return (res == 0 || (res >= 0x002 && res <= 0xFEF)) ? res : LAST_CLUSTER;
     }
 
@@ -2099,7 +2042,6 @@ class Fat16FS extends FatFS
     {
         super.readNextClusterIndex(clusterIndex);
         int res = (Util.readWordLE(_input) & 0xFFFF);
-
         return (res == 0 || (res >= 0x0002 && res <= 0xFFEF)) ? res : LAST_CLUSTER;
     }
 
@@ -2128,13 +2070,11 @@ class Fat16FS extends FatFS
     protected void initBPB(long size)
     {
         super.initBPB(size);
-
         int rootDirSize = 32 * _bpb.rootDirEntries;
         long numSectors = size / SECTOR_SIZE;
         long dataSectors = numSectors - (rootDirSize + _bpb.bytesPerSector - 1) / _bpb.bytesPerSector - _bpb.reservedSectors;
         int clusterCount = (int) ((dataSectors * _bpb.bytesPerSector) / (_bpb.sectorsPerCluster * _bpb.bytesPerSector));
         _bpb.sectorsPerFat = (clusterCount * 2 + _bpb.bytesPerSector - 1) / _bpb.bytesPerSector;
-
         byte[] label = BPB.FAT16_LABEL.getBytes();
         System.arraycopy(label, 0, _bpb.fileSystemLabel, 0, label.length);
         _bpb.calcParams();
@@ -2143,6 +2083,8 @@ class Fat16FS extends FatFS
 
 class Fat32FS extends FatFS
 {
+    protected FSInfo fsInfo;
+
     public Fat32FS(RandomAccessIO inputStream)
     {
         super(inputStream);
@@ -2170,8 +2112,6 @@ class Fat32FS extends FatFS
         }
     }
 
-    protected FSInfo fsInfo;
-
     @Override
     protected void writeHeader() throws IOException
     {
@@ -2198,14 +2138,12 @@ class Fat32FS extends FatFS
                 fsInfo.lastAllocatedCluster = i;
                 return i;
             }
-
         for (int i = 2; i < start; i++)
             if (getNextClusterIndex(i) == 0)
             {
                 fsInfo.lastAllocatedCluster = i;
                 return i;
             }
-
         throw new NoFreeSpaceLeftException();
     }
 
@@ -2281,13 +2219,11 @@ class Fat32FS extends FatFS
     protected void initBPB(long size)
     {
         super.initBPB(size);
-
         BPB32 b = (BPB32) _bpb;
         b.bytesPerSector = SECTOR_SIZE;
         b.sectorsPerCluster = calcSectorsPerCluster(size);
         b.rootDirEntries = 0;
         b.sectorsPerFat = 0;
-
         long numSectors = size / SECTOR_SIZE;
         //Align data area for TrueCrypt
         b.reservedSectors = 32 - 1;
@@ -2298,11 +2234,9 @@ class Fat32FS extends FatFS
             int clusterCount = (int) ((dataSectors * _bpb.bytesPerSector) / (_bpb.sectorsPerCluster * _bpb.bytesPerSector));
             b.sectorsPerFat32 = (clusterCount * 4 + _bpb.bytesPerSector - 1) / _bpb.bytesPerSector;
         } while (b.bytesPerSector == SECTOR_SIZE && (b.reservedSectors * b.bytesPerSector + b.sectorsPerFat32 * b.numberOfFATs * b.bytesPerSector) % 4096 != 0);
-
         b.rootClusterNumber = 2;
         b.FSInfoSector = 1;
         b.bootSectorReservedCopySector = 6;
-
         byte[] label = BPB.FAT32_LABEL.getBytes();
         System.arraycopy(label, 0, _bpb.fileSystemLabel, 0, label.length);
         b.calcParams();

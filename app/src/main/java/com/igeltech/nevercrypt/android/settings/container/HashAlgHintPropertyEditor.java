@@ -51,7 +51,6 @@ public class HashAlgHintPropertyEditor extends ChoiceDialogPropertyEditor
     {
         ArrayList<String> entries = new ArrayList<>();
         entries.add("-");
-
         for (MessageDigest hf : getSupportedHashFuncs())
             entries.add(getHashFuncName(hf));
         return entries;

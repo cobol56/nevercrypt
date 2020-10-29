@@ -11,6 +11,13 @@ import java.io.IOException;
 
 public class Path extends PathBase
 {
+    private final NameCodecInfo _namingInfo;
+    private final com.igeltech.nevercrypt.fs.Path _realPath;
+    private final byte[] _encryptionKey;
+    private StringPathUtil _encodedPath;
+    private byte[] _chainedIV;
+    private StringPathUtil _decodedPath;
+
     public Path(FS fs, com.igeltech.nevercrypt.fs.Path realPath, NameCodecInfo namingAlg, byte[] encryptionKey)
     {
         super(fs);
@@ -89,7 +96,6 @@ public class Path extends PathBase
         }
         if (newPath._encodedPath == null)
             newPath.setEncodedPath(encodedParts);
-
         return newPath;
     }
 
@@ -145,16 +151,16 @@ public class Path extends PathBase
         return _decodedPath;
     }
 
+    public void setDecodedPath(StringPathUtil decodedPath)
+    {
+        _decodedPath = decodedPath;
+    }
+
     public synchronized StringPathUtil getEncodedPath() throws IOException
     {
         if (_encodedPath == null)
             _encodedPath = buildEncodedPathFromRealPath(_realPath);
         return _encodedPath;
-    }
-
-    public void setDecodedPath(StringPathUtil decodedPath)
-    {
-        _decodedPath = decodedPath;
     }
 
     public void setEncodedPath(StringPathUtil encodedPath)
@@ -181,13 +187,6 @@ public class Path extends PathBase
     {
         return getEncodedPath().isEmpty();
     }
-
-    private final NameCodecInfo _namingInfo;
-    private final com.igeltech.nevercrypt.fs.Path _realPath;
-    private StringPathUtil _encodedPath;
-    private final byte[] _encryptionKey;
-    private byte[] _chainedIV;
-    private StringPathUtil _decodedPath;
 
     private StringPathUtil decodePath() throws IOException
     {

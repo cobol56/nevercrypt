@@ -14,6 +14,9 @@ import java.io.IOException;
 
 class SaveTempFileChangesTask extends CopyFilesTask
 {
+    private static final String BAK_EXTENSION = ".cryptbak";
+    private static final String TMP_EXTENSION = ".crypttmp";
+
     @Override
     protected int getNotificationMainTextId()
     {
@@ -90,7 +93,4 @@ class SaveTempFileChangesTask extends CopyFilesTask
             }
         };
     }
-
-    private static final String BAK_EXTENSION = ".cryptbak";
-    private static final String TMP_EXTENSION = ".crypttmp";
 }

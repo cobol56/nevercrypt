@@ -11,6 +11,11 @@ import java.util.Arrays;
 
 public class MACOutputStream extends TransOutputStream
 {
+    protected final SecureRandom _random;
+    private final byte[] _transBuffer;
+    private final MACCalculator _macCalc;
+    private final int _macBytes, _randBytes, _overhead;
+
     public MACOutputStream(OutputStream base, MACCalculator macCalc, int blockSize, int macBytes, int randBytes) throws FileNotFoundException
     {
         super(base, blockSize - macBytes - randBytes);
@@ -34,11 +39,6 @@ public class MACOutputStream extends TransOutputStream
             Arrays.fill(_transBuffer, (byte) 0);
         }
     }
-
-    private final byte[] _transBuffer;
-    private final MACCalculator _macCalc;
-    private final int _macBytes, _randBytes, _overhead;
-    protected final SecureRandom _random;
 
     @Override
     protected void transformBufferAndWriteToBase(byte[] buf, int offset, int count, long bufferPosition) throws IOException

@@ -14,6 +14,16 @@ import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 
 public abstract class ServiceTaskWithNotificationBase implements Task
 {
+    protected Context _context;
+    NotificationCompat.Builder _notificationBuilder;
+    private boolean _isCancelled;
+    private long _prevUpdateTime;
+    private int _taskId;
+
+    ServiceTaskWithNotificationBase()
+    {
+    }
+
     @Override
     public Object doWork(Context context, Intent i) throws Throwable
     {
@@ -37,12 +47,6 @@ public abstract class ServiceTaskWithNotificationBase implements Task
     {
         return _isCancelled;
     }
-
-    private boolean _isCancelled;
-    protected Context _context;
-    NotificationCompat.Builder _notificationBuilder;
-    private long _prevUpdateTime;
-    private int _taskId;
 
     protected void initTask(Context context, Intent i) throws Exception
     {
@@ -88,14 +92,9 @@ public abstract class ServiceTaskWithNotificationBase implements Task
         final Intent emptyIntent = new Intent();
         PendingIntent pi = PendingIntent.getActivity(_context, 0, emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         nb.setContentIntent(pi);
-
         NotificationManagerCompat nm = NotificationManagerCompat.from(_context);
         if (nm != null)
             nm.notify(FileOpsService.getNewNotificationId(), nb.build());
-    }
-
-    ServiceTaskWithNotificationBase()
-    {
     }
 
     protected NotificationCompat.Builder initNotification()

@@ -22,38 +22,14 @@ public class ExtendedFileInfoLoader implements Closeable
 {
     private static final int FB_EXTENDED_INFO_QUEUE_SIZE = 40;
     private static final int FB_NUM_CACHED_EXTENDED_INFO = 100;
-
-    public interface ExtendedFileInfo
-    {
-        void attach(BrowserRecord record);
-
-        void detach(BrowserRecord record);
-
-        void clear();
-    }
-
-    static String getPathKey(String locationId, Path path)
-    {
-        return String.format("%s/%s", locationId, path.getPathString());
-    }
-
-    public static synchronized ExtendedFileInfoLoader getInstance()
-    {
-        if (_instance == null)
-            _instance = new ExtendedFileInfoLoader();
-        return _instance;
-    }
-
-    public static synchronized void closeInstance()
-    {
-        if (_instance != null)
-        {
-            _instance.close();
-            _instance = null;
-        }
-    }
-
     private static ExtendedFileInfoLoader _instance;
+    //private final Map<String,IconInfo> _loadedInfo = new HashMap<String,IconInfo>(Preferences.MAX_CACHED_ICONS);
+    private final LruCache<String, ExtendedFileInfo> _loadedInfo;
+    private final FileInfoLoadQueue _loadingQueue;
+    private final Handler _updateViewHandler;
+    private final LoadingTask _loadingTask;
+    private boolean _stop;
+    private boolean _pause = true;
 
     public ExtendedFileInfoLoader()
     {
@@ -79,6 +55,27 @@ public class ExtendedFileInfoLoader implements Closeable
         _loadingQueue = new FileInfoLoadQueue(FB_EXTENDED_INFO_QUEUE_SIZE);
         _loadingTask = new LoadingTask();
         _loadingTask.start();
+    }
+
+    static String getPathKey(String locationId, Path path)
+    {
+        return String.format("%s/%s", locationId, path.getPathString());
+    }
+
+    public static synchronized ExtendedFileInfoLoader getInstance()
+    {
+        if (_instance == null)
+            _instance = new ExtendedFileInfoLoader();
+        return _instance;
+    }
+
+    public static synchronized void closeInstance()
+    {
+        if (_instance != null)
+        {
+            _instance.close();
+            _instance = null;
+        }
     }
 
     //Call from main thread
@@ -146,6 +143,28 @@ public class ExtendedFileInfoLoader implements Closeable
         }
     }
 
+    private void removeOldestInfo()
+    {
+        _loadingQueue.poll();
+    }
+
+    private void enqueueRequest(InfoCache ii)
+    {
+        if (_loadingQueue.size() == _loadingQueue.getCapacity())
+            removeOldestInfo();
+        _loadingQueue.add(ii);
+        _loadingQueue.notify();
+    }
+
+    public interface ExtendedFileInfo
+    {
+        void attach(BrowserRecord record);
+
+        void detach(BrowserRecord record);
+
+        void clear();
+    }
+
     private class LoadingTask extends Thread
     {
         @Override
@@ -189,31 +208,14 @@ public class ExtendedFileInfoLoader implements Closeable
             }
         }
     }
-
-    //private final Map<String,IconInfo> _loadedInfo = new HashMap<String,IconInfo>(Preferences.MAX_CACHED_ICONS);
-    private final LruCache<String, ExtendedFileInfo> _loadedInfo;
-    private final FileInfoLoadQueue _loadingQueue;
-    private final Handler _updateViewHandler;
-    private boolean _stop;
-    private boolean _pause = true;
-    private final LoadingTask _loadingTask;
-
-    private void removeOldestInfo()
-    {
-        _loadingQueue.poll();
-    }
-
-    private void enqueueRequest(InfoCache ii)
-    {
-        if (_loadingQueue.size() == _loadingQueue.getCapacity())
-            removeOldestInfo();
-        _loadingQueue.add(ii);
-        _loadingQueue.notify();
-    }
 }
 
 class InfoCache
 {
+    public final String locationId;
+    public final BrowserRecord record;
+    boolean discard;
+
     InfoCache(String locId, BrowserRecord rec)
     {
         locationId = locId;
@@ -224,14 +226,14 @@ class InfoCache
     {
         return ExtendedFileInfoLoader.getPathKey(locationId, record.getPath());
     }
-
-    public final String locationId;
-    public final BrowserRecord record;
-    boolean discard;
 }
 
 class FileInfoLoadQueue extends AbstractQueue<InfoCache>
 {
+    private final InfoCache[] _buf;
+    private int _usedSlots;
+    private int _headPosition;
+
     FileInfoLoadQueue(int capacity)
     {
         _buf = new InfoCache[capacity];
@@ -257,7 +259,6 @@ class FileInfoLoadQueue extends AbstractQueue<InfoCache>
     {
         if (e == null)
             throw new RuntimeException("Argument cannot be null");
-
         if (_usedSlots < _buf.length)
         {
             _buf[(_headPosition + _usedSlots++) % _buf.length] = e;
@@ -277,7 +278,6 @@ class FileInfoLoadQueue extends AbstractQueue<InfoCache>
     {
         if (_usedSlots == 0)
             return null;
-
         InfoCache tmp = _buf[_headPosition];
         _buf[_headPosition] = null;
         _headPosition = ++_headPosition % _buf.length;
@@ -289,7 +289,6 @@ class FileInfoLoadQueue extends AbstractQueue<InfoCache>
     {
         if (_usedSlots == 0)
             return null;
-
         int pos = (_headPosition + _usedSlots - 1) % _buf.length;
         InfoCache tmp = _buf[pos];
         _buf[pos] = null;
@@ -310,6 +309,8 @@ class FileInfoLoadQueue extends AbstractQueue<InfoCache>
     {
         return new Iterator<InfoCache>()
         {
+            private int _proc = 0;
+
             @Override
             public void remove()
             {
@@ -321,7 +322,6 @@ class FileInfoLoadQueue extends AbstractQueue<InfoCache>
             {
                 if (!hasNext())
                     throw new NoSuchElementException();
-
                 return _buf[(_headPosition + _proc++) % _buf.length];
             }
 
@@ -330,8 +330,6 @@ class FileInfoLoadQueue extends AbstractQueue<InfoCache>
             {
                 return _proc < _usedSlots;
             }
-
-            private int _proc = 0;
         };
     }
 
@@ -340,8 +338,4 @@ class FileInfoLoadQueue extends AbstractQueue<InfoCache>
     {
         return _usedSlots;
     }
-
-    private final InfoCache[] _buf;
-    private int _usedSlots;
-    private int _headPosition;
 }

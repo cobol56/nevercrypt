@@ -13,6 +13,14 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class CategoryPropertyEditor extends PropertyEditorBase
 {
+    private AppCompatImageView _indicatorIcon;
+    private boolean _isExpanded = true;
+
+    protected CategoryPropertyEditor(Host host, int titleResId, int descResId)
+    {
+        super(host, R.layout.settings_category, titleResId, descResId);
+    }
+
     @Override
     public View createView(ViewGroup parent)
     {
@@ -37,7 +45,6 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
     @Override
     public void save()
     {
-
     }
 
     @Override
@@ -69,14 +76,6 @@ public abstract class CategoryPropertyEditor extends PropertyEditorBase
         if (_indicatorIcon != null)
             _indicatorIcon.setRotation(180);
     }
-
-    protected CategoryPropertyEditor(Host host, int titleResId, int descResId)
-    {
-        super(host, R.layout.settings_category, titleResId, descResId);
-    }
-
-    private AppCompatImageView _indicatorIcon;
-    private boolean _isExpanded = true;
 
     private void rotateIconAndChangeState()
     {

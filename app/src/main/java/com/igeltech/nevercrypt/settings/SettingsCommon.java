@@ -22,96 +22,6 @@ public interface SettingsCommon
     int FB_SORT_FILENAME_NUM_DESC = 7;
     int THEME_DEFAULT = 0;
 
-    class InvalidSettingsPassword extends Exception
-    {
-    }
-
-    class LocationShortcutWidgetInfo
-    {
-        public String widgetTitle;
-        public String locationUriString;
-
-        public String save() throws JSONException
-        {
-            JSONObject jo = new JSONObject();
-            jo.put(SETTINGS_WIDGET_TITLE, widgetTitle);
-            jo.put(SETTINGS_LOCATION_URI, locationUriString);
-            return jo.toString();
-        }
-
-        public void load(String data)
-        {
-            JSONObject jo;
-            try
-            {
-                jo = new JSONObject(data);
-                widgetTitle = jo.optString(SETTINGS_WIDGET_TITLE);
-                locationUriString = jo.optString(SETTINGS_LOCATION_URI);
-            }
-            catch (JSONException ignored)
-            {
-            }
-        }
-
-        @Override
-        public String toString()
-        {
-            try
-            {
-                return save();
-            }
-            catch (JSONException e)
-            {
-                return "error";
-            }
-        }
-
-        private static final String SETTINGS_WIDGET_TITLE = "widget_title";
-        private static final String SETTINGS_LOCATION_URI = "location_uri";
-    }
-
-    class ExternalFileManagerInfo
-    {
-        public String packageName;
-        public String className;
-        public String action;
-        public String mimeType;
-
-        public void save(JSONObject jo) throws JSONException
-        {
-            jo.put(SETTINGS_PACKAGE_NAME, packageName);
-            jo.put(SETTINGS_CLASS_NAME, className);
-            jo.put(SETTINGS_ACTION, action);
-            jo.put(SETTINGS_MIME_TYPE, mimeType);
-        }
-
-        public void load(JSONObject jo)
-        {
-            packageName = jo.optString(SETTINGS_PACKAGE_NAME);
-            className = jo.optString(SETTINGS_CLASS_NAME);
-            action = jo.optString(SETTINGS_ACTION);
-            mimeType = jo.optString(SETTINGS_MIME_TYPE);
-        }
-
-        public void load(String s) throws JSONException
-        {
-            JSONObject jo = new JSONObject(s);
-            load(jo);
-        }
-
-        public String save() throws JSONException
-        {
-            JSONObject jo = new JSONObject();
-            save(jo);
-            return jo.toString();
-        }
-
-        private static final String SETTINGS_PACKAGE_NAME = "package_name";
-        private static final String SETTINGS_CLASS_NAME = "class_name";
-        private static final String SETTINGS_ACTION = "action";
-        private static final String SETTINGS_MIME_TYPE = "mime_type";
-    }
-
     String getStoredLocations();
 
     void setStoredLocations(String locations);
@@ -169,4 +79,92 @@ public interface SettingsCommon
     boolean dontUseContentProvider();
 
     boolean forceTempFiles();
+
+    class InvalidSettingsPassword extends Exception
+    {
+    }
+
+    class LocationShortcutWidgetInfo
+    {
+        private static final String SETTINGS_WIDGET_TITLE = "widget_title";
+        private static final String SETTINGS_LOCATION_URI = "location_uri";
+        public String widgetTitle;
+        public String locationUriString;
+
+        public String save() throws JSONException
+        {
+            JSONObject jo = new JSONObject();
+            jo.put(SETTINGS_WIDGET_TITLE, widgetTitle);
+            jo.put(SETTINGS_LOCATION_URI, locationUriString);
+            return jo.toString();
+        }
+
+        public void load(String data)
+        {
+            JSONObject jo;
+            try
+            {
+                jo = new JSONObject(data);
+                widgetTitle = jo.optString(SETTINGS_WIDGET_TITLE);
+                locationUriString = jo.optString(SETTINGS_LOCATION_URI);
+            }
+            catch (JSONException ignored)
+            {
+            }
+        }
+
+        @Override
+        public String toString()
+        {
+            try
+            {
+                return save();
+            }
+            catch (JSONException e)
+            {
+                return "error";
+            }
+        }
+    }
+
+    class ExternalFileManagerInfo
+    {
+        private static final String SETTINGS_PACKAGE_NAME = "package_name";
+        private static final String SETTINGS_CLASS_NAME = "class_name";
+        private static final String SETTINGS_ACTION = "action";
+        private static final String SETTINGS_MIME_TYPE = "mime_type";
+        public String packageName;
+        public String className;
+        public String action;
+        public String mimeType;
+
+        public void save(JSONObject jo) throws JSONException
+        {
+            jo.put(SETTINGS_PACKAGE_NAME, packageName);
+            jo.put(SETTINGS_CLASS_NAME, className);
+            jo.put(SETTINGS_ACTION, action);
+            jo.put(SETTINGS_MIME_TYPE, mimeType);
+        }
+
+        public void load(JSONObject jo)
+        {
+            packageName = jo.optString(SETTINGS_PACKAGE_NAME);
+            className = jo.optString(SETTINGS_CLASS_NAME);
+            action = jo.optString(SETTINGS_ACTION);
+            mimeType = jo.optString(SETTINGS_MIME_TYPE);
+        }
+
+        public void load(String s) throws JSONException
+        {
+            JSONObject jo = new JSONObject(s);
+            load(jo);
+        }
+
+        public String save() throws JSONException
+        {
+            JSONObject jo = new JSONObject();
+            save(jo);
+            return jo.toString();
+        }
+    }
 }

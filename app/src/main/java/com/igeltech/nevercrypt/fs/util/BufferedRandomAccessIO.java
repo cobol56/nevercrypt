@@ -10,6 +10,8 @@ import java.io.IOException;
 public abstract class BufferedRandomAccessIO extends RandomAccessIOWrapper
 {
     public static boolean ENABLE_DEBUG_LOG = false;
+    protected final int _bufferSize;
+    protected long _currentPosition, _length;
 
     public BufferedRandomAccessIO(RandomAccessIO base, int bufferSize) throws FileNotFoundException
     {
@@ -52,7 +54,6 @@ public abstract class BufferedRandomAccessIO extends RandomAccessIOWrapper
             //Log.d("EDS ClusterChainIO",String.format("ClusterChainIO read: file=%s read %d bytes",_path.getPathString(),avail));
             return read;
         }
-
         return 0;
     }
 
@@ -108,9 +109,6 @@ public abstract class BufferedRandomAccessIO extends RandomAccessIOWrapper
         writeCurrentBuffer();
         super.flush();
     }
-
-    protected long _currentPosition, _length;
-    protected final int _bufferSize;
 
     protected abstract byte[] getCurrentBuffer() throws IOException;
 

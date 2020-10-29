@@ -8,6 +8,7 @@ import com.igeltech.nevercrypt.crypto.modes.XTS;
 public class AESXTS extends XTS
 {
     public static final String NAME = "aes";
+    private final int _keySize;
 
     public AESXTS()
     {
@@ -44,8 +45,6 @@ public class AESXTS extends XTS
     {
         return NAME;
     }
-
-    private final int _keySize;
 }
 
     

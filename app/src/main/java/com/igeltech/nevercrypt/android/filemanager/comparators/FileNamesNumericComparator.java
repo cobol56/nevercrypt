@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 public class FileNamesNumericComparator<T extends CachedPathInfo> extends FileNamesComparator<T>
 {
+    private static final Pattern PATTERN = Pattern.compile("((?:-|\\+)?[0-9]+)", 0);
+
     public FileNamesNumericComparator(boolean asc)
     {
         super(asc);
@@ -21,7 +23,6 @@ public class FileNamesNumericComparator<T extends CachedPathInfo> extends FileNa
         String n2 = o2.getName();
         if (n2 == null)
             n2 = "";
-
         boolean b1 = false, b2 = false;
         int v1 = 0, v2 = 0;
         Matcher m = PATTERN.matcher(n1);
@@ -47,6 +48,4 @@ public class FileNamesNumericComparator<T extends CachedPathInfo> extends FileNa
             return _asc;
         return super.compareImpl(o1, o2);
     }
-
-    private static final Pattern PATTERN = Pattern.compile("((?:-|\\+)?[0-9]+)", 0);
 }

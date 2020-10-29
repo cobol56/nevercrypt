@@ -17,9 +17,7 @@ public class AboutDialog extends AboutDialogBase
         if (v == null)
             return null;
         v.findViewById(R.id.donation_button).setOnClickListener(view -> openWebPage(GlobalConfig.DONATIONS_URL));
-
         v.findViewById(R.id.check_source_code_button).setOnClickListener(view -> openWebPage(GlobalConfig.SOURCE_CODE_URL));
-
         return v;
     }
 }

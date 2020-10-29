@@ -16,18 +16,6 @@ public interface PropertyEditor
     String ARG_PROPERTY_ID = "com.igeltech.nevercrypt.android.PROPERTY_ID";
     String ARG_HOST_FRAGMENT_TAG = TaskFragment.ARG_HOST_FRAGMENT;
 
-    interface Host
-    {
-        Context getContext();
-
-        void startActivityForResult(Intent intent, int requestCode);
-
-        PropertiesView getPropertiesView();
-
-        FragmentManager getFragmentManager();
-        //void updateView();
-    }
-
     int getId();
 
     void setId(int id);
@@ -51,4 +39,16 @@ public interface PropertyEditor
     int getStartPosition();
 
     void setStartPosition(int pos);
+
+    interface Host
+    {
+        Context getContext();
+
+        void startActivityForResult(Intent intent, int requestCode);
+
+        PropertiesView getPropertiesView();
+
+        FragmentManager getFragmentManager();
+        //void updateView();
+    }
 }

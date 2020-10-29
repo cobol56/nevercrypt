@@ -11,7 +11,6 @@ public class FileInUseException extends IOException
 
     public FileInUseException()
     {
-
     }
 
     public FileInUseException(String msg)

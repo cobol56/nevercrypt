@@ -9,9 +9,39 @@ import java.util.Arrays;
 
 public class StreamCipherBase extends CipherBase
 {
+    private long _iv;
+
     public StreamCipherBase(EncryptionEngine base)
     {
         super(base);
+    }
+
+    private static void shuffleBytes(byte[] buf, int offset, int count)
+    {
+        for (int i = 0; i < count - 1; ++i)
+            buf[i + offset + 1] ^= buf[i + offset];
+    }
+
+    private static void unshuffleBytes(byte[] buf, int offset, int count)
+    {
+        for (int i = count - 1; i > 0; --i)
+            buf[i + offset] ^= buf[i + offset - 1];
+    }
+
+    private static void flipBytes(byte[] buf, int offset, int count)
+    {
+        byte[] revBuf = new byte[64];
+        int bytesLeft = count;
+        while (bytesLeft > 0)
+        {
+            int toFlip = Math.min(revBuf.length, bytesLeft);
+            for (int i = 0; i < toFlip; ++i)
+                revBuf[i] = buf[toFlip + offset - (i + 1)];
+            System.arraycopy(revBuf, 0, buf, offset, toFlip);
+            bytesLeft -= toFlip;
+            offset += toFlip;
+        }
+        Arrays.fill(revBuf, (byte) 0);
     }
 
     @Override
@@ -49,36 +79,4 @@ public class StreamCipherBase extends CipherBase
         super.decrypt(data, offset, len);
         unshuffleBytes(data, offset, len);
     }
-
-    private static void shuffleBytes(byte[] buf, int offset, int count)
-    {
-        for (int i = 0; i < count - 1; ++i)
-            buf[i + offset + 1] ^= buf[i + offset];
-    }
-
-    private static void unshuffleBytes(byte[] buf, int offset, int count)
-    {
-        for (int i = count - 1; i > 0; --i)
-            buf[i + offset] ^= buf[i + offset - 1];
-    }
-
-    private static void flipBytes(byte[] buf, int offset, int count)
-    {
-        byte[] revBuf = new byte[64];
-
-        int bytesLeft = count;
-        while (bytesLeft > 0)
-        {
-            int toFlip = Math.min(revBuf.length, bytesLeft);
-
-            for (int i = 0; i < toFlip; ++i)
-                revBuf[i] = buf[toFlip + offset - (i + 1)];
-            System.arraycopy(revBuf, 0, buf, offset, toFlip);
-            bytesLeft -= toFlip;
-            offset += toFlip;
-        }
-        Arrays.fill(revBuf, (byte) 0);
-    }
-
-    private long _iv;
 }

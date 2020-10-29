@@ -4,6 +4,9 @@ import java.util.Iterator;
 
 public class CombinedIterator<T> implements Iterator<T>
 {
+    private final Iterator<Iterator<T>> _iterIter;
+    private Iterator<T> _iter;
+
     public CombinedIterator(Iterable<Iterator<T>> iters)
     {
         _iterIter = iters.iterator();
@@ -48,7 +51,4 @@ public class CombinedIterator<T> implements Iterator<T>
         }
         return _iter;
     }
-
-    private final Iterator<Iterator<T>> _iterIter;
-    private Iterator<T> _iter;
 }

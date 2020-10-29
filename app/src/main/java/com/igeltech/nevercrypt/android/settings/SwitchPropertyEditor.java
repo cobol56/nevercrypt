@@ -9,6 +9,9 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class SwitchPropertyEditor extends PropertyEditorBase
 {
+    protected CompoundButton _switchButton;
+    private boolean _loadingValue;
+
     public SwitchPropertyEditor(Host host, int titleResId, int descResId)
     {
         super(host, R.layout.settings_switch_editor, titleResId, descResId);
@@ -87,9 +90,6 @@ public abstract class SwitchPropertyEditor extends PropertyEditorBase
     {
         return _switchButton.isChecked();
     }
-
-    protected CompoundButton _switchButton;
-    private boolean _loadingValue;
 
     protected abstract boolean loadValue();
 

@@ -21,8 +21,29 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+interface DirReader extends DataInput, RandomStorageAccess, Closeable
+{
+}
+
+interface DirWriter extends DataOutput, RandomStorageAccess, Closeable
+{
+}
+
 class DirEntry
 {
+    public static final byte[] ALLOWED_SYMBOLS = {'!', '#', '$', '%', '&', '(', ')', '-', '@', '^', '_', '`', '{', '}', '~', '\''};
+    static final int RECORD_SIZE = 32;
+    public String name;
+    public String dosName;
+    public byte attributes;
+    public Date createDateTime;
+    public Date lastAccessDate;
+    public Date lastModifiedDateTime;
+    public int startCluster;
+    public long fileSize;
+    public int offset = -1;
+    public int numLFNRecords;
+
     public DirEntry()
     {
         this(-1);
@@ -34,17 +55,143 @@ class DirEntry
         offset = streamOffset;
     }
 
-    public static final byte[] ALLOWED_SYMBOLS = {'!', '#', '$', '%', '&', '(', ')', '-', '@', '^', '_', '`', '{', '}', '~', '\''};
-    public String name;
-    public String dosName;
-    public byte attributes;
-    public Date createDateTime;
-    public Date lastAccessDate;
-    public Date lastModifiedDateTime;
-    public int startCluster;
-    public long fileSize;
-    public int offset = -1;
-    public int numLFNRecords;
+    /**
+     * Reads directory entry from the stream at the current position
+     *
+     * @param input InputStream.
+     * @return next entry or null if there are no more entries
+     * @throws IOException
+     */
+    public static DirEntry readEntry(DirReader input) throws IOException
+    {
+        byte[] buf = new byte[RECORD_SIZE];
+        StringBuilder lfnSb = null;
+        String lfn;
+        byte expectedChecksum = 0;
+        int seq = -1;
+        int pSeq;
+        int lfns = 0;
+        for (; ; )
+        {
+            if (Util.readBytes(input, buf) != RECORD_SIZE)
+                return null;
+            int fb = Util.unsignedByteToInt(buf[0]);
+            //if (fb == 0) return null;
+            if (fb == 0xE5 || fb == 0) // deleted record
+                continue;
+            if (buf[0x0B] == 0x0F) // LFN record
+            {
+                if (seq < 0)
+                {
+                    pSeq = -1;
+                    expectedChecksum = 0;
+                    lfnSb = null;
+                }
+                else
+                    pSeq = seq;
+                seq = fb;
+                if (lfnSb == null)
+                {
+                    if ((seq & 0x40) == 0)
+                    {
+                        seq = -1;
+                        continue;
+                    }
+                    lfnSb = new StringBuilder();
+                    lfns = 0;
+                }
+                seq &= 0x3F;
+                if (pSeq >= 0)
+                {
+                    if (buf[0x0d] != expectedChecksum || pSeq != seq + 1)
+                    {
+                        seq = -1;
+                        continue;
+                    }
+                }
+                else
+                    expectedChecksum = buf[0x0d];
+                lfnSb.insert(0, new String(buf, 1, 10, StandardCharsets.UTF_16LE) + new String(buf, 0x0E, 12, StandardCharsets.UTF_16LE) + new String(buf, 0x1C, 4, StandardCharsets.UTF_16LE));
+                lfns++;
+            }
+            else
+            {
+                if (seq == 1)
+                {
+                    lfn = lfnSb.toString();
+                    int idx = lfn.indexOf(0);
+                    if (idx >= 0)
+                        lfn = lfn.substring(0, idx);
+                }
+                else
+                    lfn = null;
+                //if (fb == 0x05 || fb == 0xE5)
+                //	seq = -1;
+                //else
+                DirEntry entry = new DirEntry();
+                entry.attributes = buf[0x0B];
+                if (entry.isVolumeLabel())
+                {
+                    seq = -1;
+                    continue;
+                }
+                if (lfn != null)
+                {
+                    byte cs = calcChecksum(buf, 0);
+                    if (expectedChecksum != cs)
+                        lfn = null;
+                }
+                entry.dosName = new String(buf, 0, 11, StandardCharsets.US_ASCII);
+                if (lfn == null)
+                {
+                    String tmp = entry.dosName.substring(0, 8).trim();
+                    if ((buf[0x0C] & 0x8) != 0) // lower case base name
+                        tmp = FileName.toLowerCase(tmp);
+                    entry.name = tmp;
+                    tmp = entry.dosName.substring(8, 11).trim();
+                    if (tmp.length() > 0)
+                    {
+                        if ((buf[0x0C] & 0x4) != 0) // lower case extension
+                            tmp = FileName.toLowerCase(tmp);
+                        entry.name += '.' + tmp;
+                    }
+                }
+                else
+                {
+                    entry.name = lfn;
+                    entry.numLFNRecords = lfns;
+                }
+                entry.offset = ((int) input.getFilePointer() - RECORD_SIZE * (entry.numLFNRecords + 1));
+                if (!".".equals(entry.name) && !"..".equals(entry.name) && !FatFS.isValidFileNameImpl(entry.name))
+                {
+                    Logger.log(String.format("DirEntry.readEntry: incorrect file name: %s; dir offset: %d", entry.name, entry.offset));
+                    continue;
+                }
+                int dv = Util.unsignedShortToIntLE(buf, 0x10);
+                int tv = Util.unsignedShortToIntLE(buf, 0x0E);
+                int secs = Util.unsignedByteToInt(buf[0x0D]) / 100;
+                entry.createDateTime = new GregorianCalendar(1980 + (dv >> 9), ((dv >> 5) & 0xF) - 1, dv & 0x1F, tv >> 11, (tv >> 5) & 0x3F, (tv & 0x1F) * 2 + secs).getTime();
+                dv = Util.unsignedShortToIntLE(buf, 0x12);
+                entry.lastAccessDate = new GregorianCalendar(1980 + (dv >> 9), ((dv >> 5) & 0xF) - 1, dv & 0x1F).getTime();
+                dv = Util.unsignedShortToIntLE(buf, 0x18);
+                tv = Util.unsignedShortToIntLE(buf, 0x16);
+                entry.lastModifiedDateTime = new GregorianCalendar(1980 + (dv >> 9), ((dv >> 5) & 0xF) - 1, dv & 0x1F, tv >> 11, (tv >> 5) & 0x3F, (tv & 0x1F) * 2).getTime();
+                entry.fileSize = Util.unsignedIntToLongLE(buf, 0x1C);
+                entry.startCluster = (Util.unsignedShortToIntLE(buf, 0x14) << 16) | Util.unsignedShortToIntLE(buf, 0x1A);
+                //DEBUG
+                //Log.d("NeverCrypt", String.format("Read entry %s at %d. lfns=%d", entry.name,entry.offset,lfns));
+                return entry;
+            }
+        }
+    }
+
+    private static byte calcChecksum(byte[] fn, int offset)
+    {
+        int sum = 0;
+        for (int i = 0; i < 11; i++)
+            sum = Util.unsignedByteToInt((byte) (((sum & 1) << 7) + (sum >> 1) + fn[i + offset]));
+        return (byte) sum;
+    }
 
     public void copyFrom(DirEntry src, boolean copyName)
     {
@@ -106,143 +253,6 @@ class DirEntry
         return !isDir() && (attributes & Attributes.volumeLabel) == 0;
     }
 
-    /**
-     * Reads directory entry from the stream at the current position
-     *
-     * @param input InputStream.
-     * @return next entry or null if there are no more entries
-     * @throws IOException
-     */
-    public static DirEntry readEntry(DirReader input) throws IOException
-    {
-        byte[] buf = new byte[RECORD_SIZE];
-        StringBuilder lfnSb = null;
-        String lfn;
-        byte expectedChecksum = 0;
-        int seq = -1;
-        int pSeq;
-        int lfns = 0;
-
-        for (; ; )
-        {
-            if (Util.readBytes(input, buf) != RECORD_SIZE)
-                return null;
-            int fb = Util.unsignedByteToInt(buf[0]);
-            //if (fb == 0) return null;
-            if (fb == 0xE5 || fb == 0) // deleted record
-                continue;
-            if (buf[0x0B] == 0x0F) // LFN record
-            {
-                if (seq < 0)
-                {
-                    pSeq = -1;
-                    expectedChecksum = 0;
-                    lfnSb = null;
-                }
-                else
-                    pSeq = seq;
-
-                seq = fb;
-                if (lfnSb == null)
-                {
-                    if ((seq & 0x40) == 0)
-                    {
-                        seq = -1;
-                        continue;
-                    }
-                    lfnSb = new StringBuilder();
-                    lfns = 0;
-                }
-                seq &= 0x3F;
-                if (pSeq >= 0)
-                {
-                    if (buf[0x0d] != expectedChecksum || pSeq != seq + 1)
-                    {
-                        seq = -1;
-                        continue;
-                    }
-                }
-                else
-                    expectedChecksum = buf[0x0d];
-                lfnSb.insert(0, new String(buf, 1, 10, StandardCharsets.UTF_16LE) + new String(buf, 0x0E, 12, StandardCharsets.UTF_16LE) + new String(buf, 0x1C, 4, StandardCharsets.UTF_16LE));
-                lfns++;
-            }
-            else
-            {
-                if (seq == 1)
-                {
-                    lfn = lfnSb.toString();
-                    int idx = lfn.indexOf(0);
-                    if (idx >= 0)
-                        lfn = lfn.substring(0, idx);
-                }
-                else
-                    lfn = null;
-                //if (fb == 0x05 || fb == 0xE5)
-                //	seq = -1;
-                //else
-                DirEntry entry = new DirEntry();
-                entry.attributes = buf[0x0B];
-                if (entry.isVolumeLabel())
-                {
-                    seq = -1;
-                    continue;
-                }
-
-                if (lfn != null)
-                {
-                    byte cs = calcChecksum(buf, 0);
-                    if (expectedChecksum != cs)
-                        lfn = null;
-                }
-
-                entry.dosName = new String(buf, 0, 11, StandardCharsets.US_ASCII);
-                if (lfn == null)
-                {
-                    String tmp = entry.dosName.substring(0, 8).trim();
-                    if ((buf[0x0C] & 0x8) != 0) // lower case base name
-                        tmp = FileName.toLowerCase(tmp);
-                    entry.name = tmp;
-                    tmp = entry.dosName.substring(8, 11).trim();
-                    if (tmp.length() > 0)
-                    {
-                        if ((buf[0x0C] & 0x4) != 0) // lower case extension
-                            tmp = FileName.toLowerCase(tmp);
-                        entry.name += '.' + tmp;
-                    }
-                }
-                else
-                {
-                    entry.name = lfn;
-                    entry.numLFNRecords = lfns;
-                }
-
-                entry.offset = ((int) input.getFilePointer() - RECORD_SIZE * (entry.numLFNRecords + 1));
-                if (!".".equals(entry.name) && !"..".equals(entry.name) && !FatFS.isValidFileNameImpl(entry.name))
-                {
-                    Logger.log(String.format("DirEntry.readEntry: incorrect file name: %s; dir offset: %d", entry.name, entry.offset));
-                    continue;
-                }
-
-                int dv = Util.unsignedShortToIntLE(buf, 0x10);
-                int tv = Util.unsignedShortToIntLE(buf, 0x0E);
-                int secs = Util.unsignedByteToInt(buf[0x0D]) / 100;
-
-                entry.createDateTime = new GregorianCalendar(1980 + (dv >> 9), ((dv >> 5) & 0xF) - 1, dv & 0x1F, tv >> 11, (tv >> 5) & 0x3F, (tv & 0x1F) * 2 + secs).getTime();
-                dv = Util.unsignedShortToIntLE(buf, 0x12);
-                entry.lastAccessDate = new GregorianCalendar(1980 + (dv >> 9), ((dv >> 5) & 0xF) - 1, dv & 0x1F).getTime();
-                dv = Util.unsignedShortToIntLE(buf, 0x18);
-                tv = Util.unsignedShortToIntLE(buf, 0x16);
-                entry.lastModifiedDateTime = new GregorianCalendar(1980 + (dv >> 9), ((dv >> 5) & 0xF) - 1, dv & 0x1F, tv >> 11, (tv >> 5) & 0x3F, (tv & 0x1F) * 2).getTime();
-                entry.fileSize = Util.unsignedIntToLongLE(buf, 0x1C);
-                entry.startCluster = (Util.unsignedShortToIntLE(buf, 0x14) << 16) | Util.unsignedShortToIntLE(buf, 0x1A);
-                //DEBUG
-                //Log.d("NeverCrypt", String.format("Read entry %s at %d. lfns=%d", entry.name,entry.offset,lfns));
-                return entry;
-            }
-        }
-    }
-
     public void writeEntry(FatFS fat, FatPath basePath, Object opTag) throws IOException
     {
         fat.lockPath(basePath, AccessMode.ReadWrite, opTag);
@@ -259,7 +269,6 @@ class DirEntry
             }
             if (offset < 0)
                 isLast = getFreeDirEntryOffset(fat, basePath, fn.isLFN ? (getNumLFNRecords() + 1) : 1, opTag);
-
             try (DirWriter os = fat.getDirWriter(basePath, opTag))
             {
                 //DEBUG
@@ -269,7 +278,6 @@ class DirEntry
                 if (isLast)
                     os.write(0);
                 //zeroRemainingClusterSpace(fat, os, ((IFSStream) os).getPosition());
-
             }
         }
         finally
@@ -319,15 +327,12 @@ class DirEntry
     {
         if (offset < 0)
             throw new IOException("deleteEntry error: can't delete new entry");
-
         for (int i = 0; i <= numLFNRecords; i++)
         {
             output.seek(offset + i * 32);
             output.write(0xE5);
         }
     }
-
-    static final int RECORD_SIZE = 32;
 
     private void initDosName(FileName fn, FatFS fat, FatPath basePath, Object opTag) throws IOException
     {
@@ -363,15 +368,6 @@ class DirEntry
             throw new EOFException("getFreeDirEntryOffset error: no more free space");
         offset = res - numDeletedEntries * DirEntry.RECORD_SIZE;
         return buf[0] == 0;
-    }
-
-    private static byte calcChecksum(byte[] fn, int offset)
-    {
-        int sum = 0;
-
-        for (int i = 0; i < 11; i++)
-            sum = Util.unsignedByteToInt((byte) (((sum & 1) << 7) + (sum >> 1) + fn[i + offset]));
-        return (byte) sum;
     }
 
     private byte getGreaterTimeRes(Date date)
@@ -446,11 +442,9 @@ class DirEntry
         int lastChar = numChars % 13;
         if (lastChar != 0)
             numRecords++;
-
         byte[] recData = new byte[RECORD_SIZE];
         recData[0x0b] = 0x0f;
         recData[0x0d] = (byte) checkSum;
-
         for (int seq = numRecords; seq > 0; seq--)
         {
             int charIdx = (seq - 1) * 13;
@@ -483,14 +477,6 @@ class DirEntry
         final static byte archive = 0x20;
         final static byte device = 0x40;
     }
-}
-
-interface DirReader extends DataInput, RandomStorageAccess, Closeable
-{
-}
-
-interface DirWriter extends DataOutput, RandomStorageAccess, Closeable
-{
 }
 
 class DirOutputStream extends RandomAccessOutputStream implements DirWriter

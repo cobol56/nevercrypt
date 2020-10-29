@@ -8,6 +8,8 @@ public class ExternalProgramFailedException extends ApplicationException
      *
      */
     private static final long serialVersionUID = 1L;
+    private final int _exitCode;
+    private final String _output;
 
     public ExternalProgramFailedException(int exitCode, String output, String... command)
     {
@@ -16,17 +18,6 @@ public class ExternalProgramFailedException extends ApplicationException
         _exitCode = exitCode;
         _output = output;
     }
-
-    public int getExitCode()
-    {
-        return _exitCode;
-    }
-
-    public String getCommandOutput()
-    {
-        return _output;
-    }
-
     //	public String getCommand()
     //	{
     //		return _command;
@@ -40,7 +31,14 @@ public class ExternalProgramFailedException extends ApplicationException
         return String.format("External program failed.\nCommand: %s\nExit code: %d\nOutput: %s", tmp, exitCode, output);
     }
 
-    private final int _exitCode;
-    private final String _output;
+    public int getExitCode()
+    {
+        return _exitCode;
+    }
+
+    public String getCommandOutput()
+    {
+        return _output;
+    }
     //private final String _command;
 }

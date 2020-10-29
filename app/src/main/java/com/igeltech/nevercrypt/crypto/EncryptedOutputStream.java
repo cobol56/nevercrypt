@@ -10,6 +10,9 @@ import java.util.Arrays;
 
 public class EncryptedOutputStream extends TransOutputStream
 {
+    protected final EncryptedFileLayout _layout;
+    protected boolean _allowEmptyParts;
+
     public EncryptedOutputStream(OutputStream base, EncryptedFileLayout layout) throws FileNotFoundException
     {
         super(base, layout.getEngine().getFileBlockSize());
@@ -33,9 +36,6 @@ public class EncryptedOutputStream extends TransOutputStream
     {
         _allowEmptyParts = val;
     }
-
-    protected final EncryptedFileLayout _layout;
-    protected boolean _allowEmptyParts;
 
     @Override
     protected void transformBufferToBase(byte[] buf, int offset, int count, long bufferPosition, byte[] baseBuffer) throws IOException

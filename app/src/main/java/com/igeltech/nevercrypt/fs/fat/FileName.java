@@ -7,15 +7,17 @@ import java.nio.charset.StandardCharsets;
 
 class FileName
 {
+    static private final CharsetEncoder asciiEncoder = StandardCharsets.US_ASCII.newEncoder(); // or
+    private final String _name;
+    public boolean isLFN;
+    public boolean isLowerCaseName;
+    public boolean isLowerCaseExtension;
+
     public FileName(String name)
     {
         _name = name;
         init();
     }
-
-    public boolean isLFN;
-    public boolean isLowerCaseName;
-    public boolean isLowerCaseExtension;
 
     public static boolean isLegalDosChar(char c)
     {
@@ -25,7 +27,6 @@ class FileName
             if (b == c)
                 return true;
         return false;
-
         // Arrays.asList(DirEntry.ALLOWED_SYMBOLS). .contains(c);
     }
 
@@ -45,48 +46,6 @@ class FileName
                 return false;
         }
         return true;
-    }
-
-    public String getDosName(int counter)
-    {
-        if (_name.equals(".") || _name.equals(".."))
-            return extendName(_name, 11);
-
-        StringPathUtil p = new StringPathUtil(_name);
-        String fn = p.getFileNameWithoutExtension().toUpperCase();
-        String filteredName = "";
-        for (int i = 0, l = fn.length(); i < l; i++)
-        {
-            char c = fn.charAt(i);
-            if (c == ' ')
-                break;
-            if (!isLegalDosChar(c))
-                c = '~';
-            filteredName += c;
-        }
-        if (counter > 0)
-        {
-            String counterString = String.valueOf(counter);
-            if (counterString.length() >= 8)
-                filteredName = counterString.substring(0, 8);
-            else
-                filteredName = filteredName.substring(0, Math.min(8, filteredName.length()) - counterString.length()) + counterString;
-        }
-        fn = extendName(filteredName, 8);
-
-        String ex = p.getFileExtension().toUpperCase();
-        filteredName = "";
-        for (int i = 0, l = ex.length(); i < l; i++)
-        {
-            char c = ex.charAt(i);
-            if (c == ' ')
-                break;
-            if (!isLegalDosChar(c))
-                c = '~';
-            filteredName += c;
-        }
-        ex = extendName(filteredName, 3);
-        return fn + ex;
     }
 
     public static boolean isPureAscii(String v)
@@ -122,14 +81,51 @@ class FileName
         return res.toString();
     }
 
-    private final String _name;
+    public String getDosName(int counter)
+    {
+        if (_name.equals(".") || _name.equals(".."))
+            return extendName(_name, 11);
+        StringPathUtil p = new StringPathUtil(_name);
+        String fn = p.getFileNameWithoutExtension().toUpperCase();
+        String filteredName = "";
+        for (int i = 0, l = fn.length(); i < l; i++)
+        {
+            char c = fn.charAt(i);
+            if (c == ' ')
+                break;
+            if (!isLegalDosChar(c))
+                c = '~';
+            filteredName += c;
+        }
+        if (counter > 0)
+        {
+            String counterString = String.valueOf(counter);
+            if (counterString.length() >= 8)
+                filteredName = counterString.substring(0, 8);
+            else
+                filteredName = filteredName.substring(0, Math.min(8, filteredName.length()) - counterString.length()) + counterString;
+        }
+        fn = extendName(filteredName, 8);
+        String ex = p.getFileExtension().toUpperCase();
+        filteredName = "";
+        for (int i = 0, l = ex.length(); i < l; i++)
+        {
+            char c = ex.charAt(i);
+            if (c == ' ')
+                break;
+            if (!isLegalDosChar(c))
+                c = '~';
+            filteredName += c;
+        }
+        ex = extendName(filteredName, 3);
+        return fn + ex;
+    }
 
     private void init()
     {
         isLFN = isLowerCaseExtension = isLowerCaseName = false;
         if (_name.equals(".") || _name.equals(".."))
             return;
-
         StringPathUtil p = new StringPathUtil(_name);
         String fn = p.getFileNameWithoutExtension();
         if (fn.equals(toUpperCase(fn)))
@@ -138,7 +134,6 @@ class FileName
             isLowerCaseName = true;
         else
             isLFN = true;
-
         String ex = p.getFileExtension();
         if (ex.equals(toUpperCase(ex)))
             isLowerCaseExtension = false;
@@ -160,8 +155,6 @@ class FileName
             name += ' ';
         return name;
     }
-
-    static private final CharsetEncoder asciiEncoder = StandardCharsets.US_ASCII.newEncoder(); // or
     // "ISO-8859-1"
     // for
     // ISO

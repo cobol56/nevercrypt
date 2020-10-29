@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public class PFDRandomAccessIO extends FDRandomAccessIO
 {
+    private final ParcelFileDescriptor _pfd;
+
     public PFDRandomAccessIO(ParcelFileDescriptor pfd)
     {
         super(pfd.getFd());
@@ -18,6 +20,4 @@ public class PFDRandomAccessIO extends FDRandomAccessIO
         _pfd.close();
         super.close();
     }
-
-    private final ParcelFileDescriptor _pfd;
 }

@@ -24,6 +24,14 @@ import static com.igeltech.nevercrypt.android.settings.UserSettings.EXTERNAL_FIL
 
 public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
 {
+    private final ArrayList<ExternalBrowserInfo> _extBrowserInfo = new ArrayList<>();
+    private final ArrayList<String> _choiceStrings = new ArrayList<>();
+
+    public ExtFileManagerPropertyEditor(ProgramSettingsFragmentBase f)
+    {
+        super(f, R.string.use_external_file_manager, R.string.use_external_file_manager_desc, f.getTag());
+    }
+
     public static void saveExtInfo(UserSettings settings, Settings.ExternalFileManagerInfo info)
     {
         if (info == null)
@@ -39,11 +47,6 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
                 Logger.log(e);
             }
         }
-    }
-
-    public ExtFileManagerPropertyEditor(ProgramSettingsFragmentBase f)
-    {
-        super(f, R.string.use_external_file_manager, R.string.use_external_file_manager_desc, f.getTag());
     }
 
     @Override
@@ -81,29 +84,12 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         return _choiceStrings;
     }
 
-    private static class ExternalBrowserInfo
-    {
-        ResolveInfo resolveInfo;
-        public String action, mime, label;
-
-        @Override
-        public String toString()
-        {
-            return label;
-        }
-    }
-
-    private final ArrayList<ExternalBrowserInfo> _extBrowserInfo = new ArrayList<>();
-    private final ArrayList<String> _choiceStrings = new ArrayList<>();
-
     private void loadExtBrowserInfo()
     {
         _extBrowserInfo.clear();
-
         Uri testPath = Uri.fromFile(getHost().getContext().getFilesDir());
         addMatches(_extBrowserInfo, Intent.ACTION_VIEW, testPath, "resource/folder");
         addMatches(_extBrowserInfo, Intent.ACTION_MEDIA_MOUNTED, testPath, null);
-
         //Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         //i.addCategory(Intent.CATEGORY_OPENABLE);
         //addMatches(_extBrowserInfo, i);
@@ -137,7 +123,6 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
         int idx = selection - 1;
         if (idx < 0 || idx >= _extBrowserInfo.size())
             return null;
-
         ExternalBrowserInfo item = _extBrowserInfo.get(idx);
         Settings.ExternalFileManagerInfo res = new Settings.ExternalFileManagerInfo();
         res.packageName = item.resolveInfo.activityInfo.packageName;
@@ -188,5 +173,17 @@ public class ExtFileManagerPropertyEditor extends ChoiceDialogPropertyEditor
                 return true;
         }
         return false;
+    }
+
+    private static class ExternalBrowserInfo
+    {
+        public String action, mime, label;
+        ResolveInfo resolveInfo;
+
+        @Override
+        public String toString()
+        {
+            return label;
+        }
     }
 }

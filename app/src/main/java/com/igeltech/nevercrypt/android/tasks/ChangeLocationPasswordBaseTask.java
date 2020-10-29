@@ -19,15 +19,15 @@ import java.io.IOException;
 
 public abstract class ChangeLocationPasswordBaseTask extends TaskFragment
 {
+    protected CryptoLocation _location;
+    protected Context _context;
+
     @Override
     public void initTask(FragmentActivity activity)
     {
         _context = activity.getApplicationContext();
         _location = (CryptoLocation) LocationsManager.getLocationsManager(_context).getFromBundle(getArguments(), null);
     }
-
-    protected CryptoLocation _location;
-    protected Context _context;
 
     @Override
     protected void doWork(TaskState state) throws Exception

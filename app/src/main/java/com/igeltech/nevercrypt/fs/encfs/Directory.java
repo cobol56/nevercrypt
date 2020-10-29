@@ -103,6 +103,8 @@ public class Directory extends DirectoryWrapper
 
     private static class DirIterator extends IteratorConverter<com.igeltech.nevercrypt.fs.Path, Path>
     {
+        private final FS _fs;
+
         protected DirIterator(FS fs, Iterator<? extends com.igeltech.nevercrypt.fs.Path> srcIterator)
         {
             super(srcIterator);
@@ -122,8 +124,6 @@ public class Directory extends DirectoryWrapper
                 return null;
             }
         }
-
-        private final FS _fs;
     }
 
     private static class FilteringIterator extends FilteredIterator<com.igeltech.nevercrypt.fs.Path>

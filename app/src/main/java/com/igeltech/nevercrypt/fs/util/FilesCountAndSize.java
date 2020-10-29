@@ -8,13 +8,12 @@ import java.util.Iterator;
 
 public class FilesCountAndSize
 {
-    public FilesCountAndSize()
-    {
-
-    }
-
     public int filesCount;
     public long totalSize;
+
+    public FilesCountAndSize()
+    {
+    }
 
     public static FilesCountAndSize getFilesCount(SrcDstCollection srcDstCol)
     {
@@ -25,7 +24,6 @@ public class FilesCountAndSize
             result.filesCount++;
             iter.next();
         }
-
         return result;
     }
 

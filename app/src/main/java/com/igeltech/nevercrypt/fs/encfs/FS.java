@@ -27,24 +27,15 @@ import java.util.Map;
 
 public class FS extends FileSystemWrapper
 {
-    public static Iterable<DataCodecInfo> getSupportedDataCodecs()
-    {
-        return Arrays.asList(_supportedDataCodecs);
-    }
-
-    public static Iterable<NameCodecInfo> getSupportedNameCodecs()
-    {
-        return Arrays.asList(_supportedNameCodecs);
-    }
-
     public static final int KEY_CHECKSUM_BYTES = 4;
-
-    public static byte[] deriveKey(byte[] password, byte[] salt, int numIterations, int keySize, int ivSize, ProgressReporter pr) throws EncryptionEngineException, DigestException
-    {
-        HMACSHA1KDF kdf = new HMACSHA1KDF();
-        kdf.setProgressReporter(pr);
-        return kdf.deriveKey(password, salt, numIterations, keySize + ivSize);
-    }
+    private static final DataCodecInfo[] _supportedDataCodecs = new DataCodecInfo[]{new AESDataCodecInfo()};
+    private static final NameCodecInfo[] _supportedNameCodecs = new NameCodecInfo[]{new BlockNameCodecInfo(), new BlockCSNameCodecInfo(), new StreamNameCodecInfo(), new NullNameCodecInfo()};
+    private final Path _rootRealPath;
+    private final Map<com.igeltech.nevercrypt.fs.Path, com.igeltech.nevercrypt.fs.encfs.Path> _cache = new HashMap<>();
+    private final RootPath _rootPath;
+    private final Config _config;
+    private byte[] _encryptionKey;
+    private ContainerOpeningProgressReporter _progressReporter;
 
     public FS(Path rootPath, Config config, byte[] password) throws ApplicationException, IOException
     {
@@ -90,6 +81,23 @@ public class FS extends FileSystemWrapper
             if (derivedKey != null)
                 Arrays.fill(derivedKey, (byte) 0);
         }
+    }
+
+    public static Iterable<DataCodecInfo> getSupportedDataCodecs()
+    {
+        return Arrays.asList(_supportedDataCodecs);
+    }
+
+    public static Iterable<NameCodecInfo> getSupportedNameCodecs()
+    {
+        return Arrays.asList(_supportedNameCodecs);
+    }
+
+    public static byte[] deriveKey(byte[] password, byte[] salt, int numIterations, int keySize, int ivSize, ProgressReporter pr) throws EncryptionEngineException, DigestException
+    {
+        HMACSHA1KDF kdf = new HMACSHA1KDF();
+        kdf.setProgressReporter(pr);
+        return kdf.deriveKey(password, salt, numIterations, keySize + ivSize);
     }
 
     public Config getConfig()
@@ -186,43 +194,6 @@ public class FS extends FileSystemWrapper
         return _cache.get(realPath);
     }
 
-    private class RootPath extends com.igeltech.nevercrypt.fs.encfs.Path
-    {
-        public RootPath()
-        {
-            super(FS.this, _rootRealPath, getConfig().getNameCodecInfo(), _encryptionKey);
-            setDecodedPath(new StringPathUtil());
-            setEncodedPath(new StringPathUtil());
-        }
-
-        @Override
-        public boolean isRootDirectory() throws IOException
-        {
-            return true;
-        }
-
-        @Override
-        public synchronized byte[] getChainedIV()
-        {
-            return new byte[getNamingCodecInfo().getEncDec().getIVSize()];
-        }
-
-        @Override
-        public com.igeltech.nevercrypt.fs.encfs.Path getParentPath() throws IOException
-        {
-            return null;
-        }
-    }
-
-    private static final DataCodecInfo[] _supportedDataCodecs = new DataCodecInfo[]{new AESDataCodecInfo()};
-    private static final NameCodecInfo[] _supportedNameCodecs = new NameCodecInfo[]{new BlockNameCodecInfo(), new BlockCSNameCodecInfo(), new StreamNameCodecInfo(), new NullNameCodecInfo()};
-    private final Path _rootRealPath;
-    private final Map<com.igeltech.nevercrypt.fs.Path, com.igeltech.nevercrypt.fs.encfs.Path> _cache = new HashMap<>();
-    private final RootPath _rootPath;
-    private byte[] _encryptionKey;
-    private final Config _config;
-    private ContainerOpeningProgressReporter _progressReporter;
-
     private byte[] deriveKey(byte[] password) throws EncryptionEngineException, DigestException
     {
         return deriveKey(password, getConfig().getSalt(), getConfig().getKDFIterations(), getConfig().getKeySize(), getConfig().getDataCodecInfo().getFileEncDec().getIVSize(), _progressReporter);
@@ -247,7 +218,6 @@ public class FS extends FileSystemWrapper
         {
             ee.close();
         }
-
         MACCalculator cc = getConfig().getDataCodecInfo().getChecksumCalculator();
         try
         {
@@ -278,10 +248,8 @@ public class FS extends FileSystemWrapper
         {
             cc.close();
         }
-
         byte[] res = new byte[volumeKey.length + FS.KEY_CHECKSUM_BYTES];
         System.arraycopy(volumeKey, 0, res, FS.KEY_CHECKSUM_BYTES, volumeKey.length);
-
         EncryptionEngine ee = dataCodec.getStreamEncDec();
         try
         {
@@ -294,7 +262,6 @@ public class FS extends FileSystemWrapper
         {
             ee.close();
         }
-
         for (int i = 1; i <= FS.KEY_CHECKSUM_BYTES; ++i)
         {
             res[FS.KEY_CHECKSUM_BYTES - i] = (byte) checksum;
@@ -308,5 +275,33 @@ public class FS extends FileSystemWrapper
         Config cfg = new Config();
         cfg.read(rootFolderPath);
         return cfg;
+    }
+
+    private class RootPath extends com.igeltech.nevercrypt.fs.encfs.Path
+    {
+        public RootPath()
+        {
+            super(FS.this, _rootRealPath, getConfig().getNameCodecInfo(), _encryptionKey);
+            setDecodedPath(new StringPathUtil());
+            setEncodedPath(new StringPathUtil());
+        }
+
+        @Override
+        public boolean isRootDirectory() throws IOException
+        {
+            return true;
+        }
+
+        @Override
+        public synchronized byte[] getChainedIV()
+        {
+            return new byte[getNamingCodecInfo().getEncDec().getIVSize()];
+        }
+
+        @Override
+        public com.igeltech.nevercrypt.fs.encfs.Path getParentPath() throws IOException
+        {
+            return null;
+        }
     }
 }

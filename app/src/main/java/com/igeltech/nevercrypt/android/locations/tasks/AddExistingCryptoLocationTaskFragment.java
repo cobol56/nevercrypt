@@ -14,14 +14,14 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public abstract class AddExistingCryptoLocationTaskFragment extends TaskFragment
 {
+    protected static final String ARG_STORE_LINK = "com.igeltech.nevercrypt.android.STORE_LINK";
+    protected Context _context;
+
     @Override
     public void initTask(FragmentActivity activity)
     {
         _context = activity.getApplicationContext();
     }
-
-    protected static final String ARG_STORE_LINK = "com.igeltech.nevercrypt.android.STORE_LINK";
-    protected Context _context;
 
     @Override
     protected void doWork(TaskState state) throws Exception

@@ -15,6 +15,11 @@ import java.util.List;
 
 public class HashingAlgorithmPropertyEditor extends ChoiceDialogPropertyEditor
 {
+    public HashingAlgorithmPropertyEditor(CreateContainerFragmentBase createContainerFragment)
+    {
+        super(createContainerFragment, R.string.hash_algorithm, 0, createContainerFragment.getTag());
+    }
+
     public static String getHashFuncName(MessageDigest md)
     {
         if (md instanceof RIPEMD160)
@@ -22,11 +27,6 @@ public class HashingAlgorithmPropertyEditor extends ChoiceDialogPropertyEditor
         if (md instanceof Whirlpool)
             return "Whirlpool";
         return md.getAlgorithm();
-    }
-
-    public HashingAlgorithmPropertyEditor(CreateContainerFragmentBase createContainerFragment)
-    {
-        super(createContainerFragment, R.string.hash_algorithm, 0, createContainerFragment.getTag());
     }
 
     @Override

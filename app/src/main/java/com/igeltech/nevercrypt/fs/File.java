@@ -8,18 +8,6 @@ import java.io.OutputStream;
 
 public interface File extends FSRecord
 {
-    enum AccessMode
-    {
-        Read, Write, WriteAppend, ReadWrite, ReadWriteTruncate
-    }
-
-    interface ProgressInfo
-    {
-        void setProcessed(long num);
-
-        boolean isCancelled();
-    }
-
     InputStream getInputStream() throws IOException;
 
     OutputStream getOutputStream() throws IOException;
@@ -33,4 +21,16 @@ public interface File extends FSRecord
     void copyToOutputStream(OutputStream output, long offset, long count, ProgressInfo progressInfo) throws IOException;
 
     void copyFromInputStream(InputStream input, long offset, long count, ProgressInfo progressInfo) throws IOException;
+
+    enum AccessMode
+    {
+        Read, Write, WriteAppend, ReadWrite, ReadWriteTruncate
+    }
+
+    interface ProgressInfo
+    {
+        void setProcessed(long num);
+
+        boolean isCancelled();
+    }
 }

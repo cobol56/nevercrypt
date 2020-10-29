@@ -29,28 +29,6 @@ import java.util.concurrent.CancellationException;
 
 class CopyFilesTask extends FileOperationTaskBase
 {
-    public static class CopyFilesTaskParam extends FileOperationTaskBase.FileOperationParam
-    {
-        CopyFilesTaskParam(Intent i)
-        {
-            super(i);
-            _overwrite = i.getBooleanExtra(FileOpsService.ARG_OVERWRITE, false);
-        }
-
-        public boolean forceOverwrite()
-        {
-            return _overwrite;
-        }
-
-        SrcDstPlain getOverwriteTargetsStorage()
-        {
-            return _overwriteTargets;
-        }
-
-        private final boolean _overwrite;
-        private final SrcDstPlain _overwriteTargets = new SrcDstPlain();
-    }
-
     @Override
     public void onCompleted(Result result)
     {
@@ -63,7 +41,6 @@ class CopyFilesTask extends FileOperationTaskBase
         }
         catch (CancellationException ignored)
         {
-
         }
         catch (Throwable e)
         {
@@ -139,7 +116,6 @@ class CopyFilesTask extends FileOperationTaskBase
         }
         else if (!makeDir(record))
             res = false;
-
         updateUIOnTime();
         return res;
     }
@@ -223,7 +199,6 @@ class CopyFilesTask extends FileOperationTaskBase
             dstPath = null;
         if (!getParam().forceOverwrite() && dstPath != null)
             return false;
-
         if (!(targetFolder instanceof DocumentTreeFS.Directory))
         {
             long size = srcFile.getSize();
@@ -276,5 +251,27 @@ class CopyFilesTask extends FileOperationTaskBase
     protected CopyFilesTaskParam getParam()
     {
         return (CopyFilesTaskParam) super.getParam();
+    }
+
+    public static class CopyFilesTaskParam extends FileOperationTaskBase.FileOperationParam
+    {
+        private final boolean _overwrite;
+        private final SrcDstPlain _overwriteTargets = new SrcDstPlain();
+
+        CopyFilesTaskParam(Intent i)
+        {
+            super(i);
+            _overwrite = i.getBooleanExtra(FileOpsService.ARG_OVERWRITE, false);
+        }
+
+        public boolean forceOverwrite()
+        {
+            return _overwrite;
+        }
+
+        SrcDstPlain getOverwriteTargetsStorage()
+        {
+            return _overwriteTargets;
+        }
     }
 }

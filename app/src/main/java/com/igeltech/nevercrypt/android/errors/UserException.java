@@ -4,6 +4,11 @@ import android.content.Context;
 
 public class UserException extends Exception
 {
+    private static final long serialVersionUID = 1L;
+    private final int _messageId;
+    private final Object[] _args;
+    private Context _context;
+
     public UserException(Context context, int messageId)
     {
         super(context != null ? context.getString(messageId) : "");
@@ -25,6 +30,19 @@ public class UserException extends Exception
         _args = args;
     }
 
+    protected UserException(String message)
+    {
+        super(message);
+        _messageId = 0;
+        _args = null;
+    }
+
+    protected UserException()
+    {
+        _messageId = 0;
+        _args = null;
+    }
+
     public void setContext(Context context)
     {
         _context = context;
@@ -40,22 +58,4 @@ public class UserException extends Exception
         }
         return super.getLocalizedMessage();
     }
-
-    protected UserException(String message)
-    {
-        super(message);
-        _messageId = 0;
-        _args = null;
-    }
-
-    protected UserException()
-    {
-        _messageId = 0;
-        _args = null;
-    }
-
-    private static final long serialVersionUID = 1L;
-    private Context _context;
-    private final int _messageId;
-    private final Object[] _args;
 }

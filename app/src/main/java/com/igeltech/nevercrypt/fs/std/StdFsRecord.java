@@ -12,6 +12,13 @@ import java.util.GregorianCalendar;
 
 public abstract class StdFsRecord implements FSRecord
 {
+    protected StdFsPath _path;
+
+    protected StdFsRecord(StdFsPath path)
+    {
+        _path = path;
+    }
+
     @Override
     public Date getLastModified() throws IOException
     {
@@ -63,12 +70,5 @@ public abstract class StdFsRecord implements FSRecord
         if (!_path.getJavaFile().renameTo(newPath.getJavaFile()))
             throw new IOException(String.format("Failed renaming %s to %s", _path.getPathString(), newPath.getPathString()));
         _path = newPath;
-    }
-
-    protected StdFsPath _path;
-
-    protected StdFsRecord(StdFsPath path)
-    {
-        _path = path;
     }
 }

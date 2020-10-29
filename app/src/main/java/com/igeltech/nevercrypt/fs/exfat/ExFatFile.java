@@ -53,7 +53,6 @@ class ExFatFile extends ExFatRecord implements File
             long startPos = 0;
             if (accessMode == AccessMode.WriteAppend)
                 startPos = fs.size;
-
             long handle = _exFat.openFile(_path.getPathString());
             if (handle == 0)
                 throw new IOException("Failed getting file handle");

@@ -16,6 +16,8 @@ import java.io.IOException;
 
 public abstract class PathPropertyEditor extends TextPropertyEditor
 {
+    private static final int SELECT_PATH_REQ_CODE = 1;
+
     public PathPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId, String hostFragmentTag)
     {
         super(host, R.layout.settings_path_editor, titleResId, descResId, hostFragmentTag);
@@ -39,8 +41,6 @@ public abstract class PathPropertyEditor extends TextPropertyEditor
             });
         return view;
     }
-
-    private static final int SELECT_PATH_REQ_CODE = 1;
 
     @Override
     protected void onPropertyRequestResult(int propertyRequestCode, int resultCode, Intent data)

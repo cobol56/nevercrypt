@@ -24,6 +24,7 @@ import static com.igeltech.nevercrypt.android.filemanager.tasks.CopyToClipboardT
 public class PrepareToSendTask extends TaskFragment
 {
     public static final String TAG = "PrepareToSendTask";
+    protected Context _context;
 
     public static PrepareToSendTask newInstance(Location loc, Collection<? extends Path> paths)
     {
@@ -39,8 +40,6 @@ public class PrepareToSendTask extends TaskFragment
     {
         _context = activity.getApplicationContext();
     }
-
-    protected Context _context;
 
     @Override
     protected void doWork(TaskState state) throws Exception
@@ -83,7 +82,6 @@ public class PrepareToSendTask extends TaskFragment
                 }
             }
         }
-
         PrepareSendResult result = new PrepareSendResult();
         result.mimeType = mime1 != null && mime2 != null ? (mime1 + "/" + mime2) : null;
         result.location = location;
@@ -146,10 +144,10 @@ public class PrepareToSendTask extends TaskFragment
 
     private static class PrepareSendResult
     {
+        public String mimeType;
+        public Location location;
         ArrayList<Path> tempFilesToPrepare;
         ArrayList<Uri> urisToSend;
         ClipData clipData;
-        public String mimeType;
-        public Location location;
     }
 }

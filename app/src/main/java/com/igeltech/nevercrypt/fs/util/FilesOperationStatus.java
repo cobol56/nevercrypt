@@ -15,7 +15,6 @@ public class FilesOperationStatus implements Cloneable
 
     public void updateProcessed()
     {
-
     }
 
     public FilesOperationStatus clone()

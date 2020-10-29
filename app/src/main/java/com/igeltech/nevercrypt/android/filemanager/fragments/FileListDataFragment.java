@@ -64,10 +64,10 @@ import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_SIZE_DESC;
 
 public class FileListDataFragment extends RxFragment
 {
-    public static FileListDataFragment newInstance()
-    {
-        return new FileListDataFragment();
-    }
+    public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment";
+    private static final String STATE_NAVIG_HISTORY = "com.igeltech.nevercrypt.android.PATH_HISTORY";
+    private static final int REQUEST_CODE_OPEN_LOCATION = 1;
+    public static Subject<Boolean> TEST_READING_OBSERVABLE;
 
     static
     {
@@ -75,7 +75,20 @@ public class FileListDataFragment extends RxFragment
             TEST_READING_OBSERVABLE = BehaviorSubject.createDefault(false);
     }
 
-    public static Subject<Boolean> TEST_READING_OBSERVABLE;
+    private final Object _filesListSync = new Object();
+    private final Stack<HistoryItem> _navigHistory = new Stack<>();
+    private final Subject<LoadLocationInfo> _locationLoading = BehaviorSubject.create();
+    private final Subject<BrowserRecord> _recordLoadedSubject = PublishSubject.create();
+    private LocationsManager _locationsManager;
+    private Location _location;
+    private DirectorySettings _directorySettings;
+    private NavigableSet<BrowserRecord> _fileList;
+    private Disposable _readLocationObserver;
+
+    public static FileListDataFragment newInstance()
+    {
+        return new FileListDataFragment();
+    }
 
     public static <T extends CachedPathInfo> Comparator<T> getComparator(Settings settings)
     {
@@ -111,8 +124,6 @@ public class FileListDataFragment extends RxFragment
             locUri = intent.getData();
         return locUri;
     }
-
-    public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment";
 
     @Override
     public void onCreate(Bundle state)
@@ -280,33 +291,6 @@ public class FileListDataFragment extends RxFragment
         return _recordLoadedSubject;
     }
 
-    static class LoadLocationInfo implements Cloneable
-    {
-        enum Stage
-        {
-            StartedLoading, Loading, FinishedLoading
-        }
-
-        Stage stage;
-        CachedPathInfo folder;
-        BrowserRecord file;
-        DirectorySettings folderSettings;
-        Location location;
-
-        @Override
-        public LoadLocationInfo clone()
-        {
-            try
-            {
-                return (LoadLocationInfo) super.clone();
-            }
-            catch (CloneNotSupportedException ignore)
-            {
-                return null;
-            }
-        }
-    }
-
     public synchronized void readLocation(Location location, Collection<Path> selectedFiles)
     {
         Logger.debug(TAG + " readCurrentLocation");
@@ -315,7 +299,6 @@ public class FileListDataFragment extends RxFragment
         _location = location;
         if (_location == null)
             return;
-
         FileManagerActivity activity = (FileManagerActivity) getActivity();
         if (activity == null)
             return;
@@ -359,16 +342,13 @@ public class FileListDataFragment extends RxFragment
                     _locationLoading.onNext(loadLocationInfo);
                 }).
                 observeOn(Schedulers.io()).
-                flatMapObservable(loadLocationInfo -> ReadDir.createObservable(context, loadLocationInfo.location, selectedFiles, loadLocationInfo.folderSettings, showRootFolder
-
-                ));
+                flatMapObservable(loadLocationInfo -> ReadDir.createObservable(context, loadLocationInfo.location, selectedFiles, loadLocationInfo.folderSettings, showRootFolder));
         if (TEST_READING_OBSERVABLE != null)
         {
             observable = observable.
                     doOnSubscribe(res -> TEST_READING_OBSERVABLE.onNext(true)).
                     doFinally(() -> TEST_READING_OBSERVABLE.onNext(false));
         }
-
         _readLocationObserver = observable.
                 compose(bindUntilEvent(FragmentEvent.DESTROY)).
                 subscribeOn(Schedulers.io()).
@@ -470,65 +450,6 @@ public class FileListDataFragment extends RxFragment
         return _directorySettings;
     }
 
-    public static class HistoryItem implements Parcelable
-    {
-        public static final Creator<HistoryItem> CREATOR = new Creator<HistoryItem>()
-        {
-            @Override
-            public HistoryItem createFromParcel(Parcel in)
-            {
-                return new HistoryItem(in);
-            }
-
-            @Override
-            public HistoryItem[] newArray(int size)
-            {
-                return new HistoryItem[size];
-            }
-        };
-
-        @Override
-        public int describeContents()
-        {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel parcel, int flags)
-        {
-            parcel.writeParcelable(locationUri, flags);
-            parcel.writeInt(scrollPosition);
-            parcel.writeString(locationId);
-        }
-
-        HistoryItem()
-        {
-        }
-
-        public Uri locationUri;
-        public int scrollPosition;
-        public String locationId;
-
-        HistoryItem(Parcel p)
-        {
-            locationUri = p.readParcelable(ClassLoader.getSystemClassLoader());
-            scrollPosition = p.readInt();
-            locationId = p.readString();
-        }
-    }
-
-    private static final String STATE_NAVIG_HISTORY = "com.igeltech.nevercrypt.android.PATH_HISTORY";
-    private static final int REQUEST_CODE_OPEN_LOCATION = 1;
-    private LocationsManager _locationsManager;
-    private Location _location;
-    private DirectorySettings _directorySettings;
-    private NavigableSet<BrowserRecord> _fileList;
-    private final Object _filesListSync = new Object();
-    private final Stack<HistoryItem> _navigHistory = new Stack<>();
-    private final Subject<LoadLocationInfo> _locationLoading = BehaviorSubject.create();
-    private final Subject<BrowserRecord> _recordLoadedSubject = PublishSubject.create();
-    private Disposable _readLocationObserver;
-
     private synchronized void cancelReadDirTask()
     {
         if (_readLocationObserver != null)
@@ -562,7 +483,6 @@ public class FileListDataFragment extends RxFragment
         }
         if (loc == null)
             loc = getFallbackLocation();
-
         if (autoOpen && !LocationsManager.isOpen(loc))
         {
             Intent i = new Intent(getActivity(), OpenLocationsActivity.class);
@@ -626,5 +546,78 @@ public class FileListDataFragment extends RxFragment
     private Comparator<BrowserRecord> initSorter()
     {
         return getComparator(UserSettings.getSettings(getActivity()));
+    }
+
+    static class LoadLocationInfo implements Cloneable
+    {
+        Stage stage;
+        CachedPathInfo folder;
+        BrowserRecord file;
+        DirectorySettings folderSettings;
+        Location location;
+
+        @Override
+        public LoadLocationInfo clone()
+        {
+            try
+            {
+                return (LoadLocationInfo) super.clone();
+            }
+            catch (CloneNotSupportedException ignore)
+            {
+                return null;
+            }
+        }
+
+        enum Stage
+        {
+            StartedLoading, Loading, FinishedLoading
+        }
+    }
+
+    public static class HistoryItem implements Parcelable
+    {
+        public static final Creator<HistoryItem> CREATOR = new Creator<HistoryItem>()
+        {
+            @Override
+            public HistoryItem createFromParcel(Parcel in)
+            {
+                return new HistoryItem(in);
+            }
+
+            @Override
+            public HistoryItem[] newArray(int size)
+            {
+                return new HistoryItem[size];
+            }
+        };
+        public Uri locationUri;
+        public int scrollPosition;
+        public String locationId;
+
+        HistoryItem()
+        {
+        }
+
+        HistoryItem(Parcel p)
+        {
+            locationUri = p.readParcelable(ClassLoader.getSystemClassLoader());
+            scrollPosition = p.readInt();
+            locationId = p.readString();
+        }
+
+        @Override
+        public int describeContents()
+        {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int flags)
+        {
+            parcel.writeParcelable(locationUri, flags);
+            parcel.writeInt(scrollPosition);
+            parcel.writeString(locationId);
+        }
     }
 }

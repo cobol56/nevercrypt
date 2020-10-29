@@ -33,6 +33,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public abstract class ContainersDocumentProviderBase extends android.provider.DocumentsProvider
 {
+    private static final String[] ALL_ROOT_COLUMNS = {DocumentsContract.Root.COLUMN_AVAILABLE_BYTES, DocumentsContract.Root.COLUMN_DOCUMENT_ID, DocumentsContract.Root.COLUMN_FLAGS, DocumentsContract.Root.COLUMN_ICON, DocumentsContract.Root.COLUMN_MIME_TYPES, DocumentsContract.Root.COLUMN_ROOT_ID, DocumentsContract.Root.COLUMN_SUMMARY, DocumentsContract.Root.COLUMN_TITLE};
+    private static final String[] ALL_DOCUMENT_COLUMNS = {DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_FLAGS, DocumentsContract.Document.COLUMN_ICON, DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_MIME_TYPE, DocumentsContract.Document.COLUMN_SIZE, DocumentsContract.Document.COLUMN_SUMMARY};
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Uri getUriFromLocation(Location location)
     {
@@ -159,7 +162,6 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                 Context context = getContext();
                 if (context != null)
                     context.getContentResolver().notifyChange(getUriFromLocation(res), null);
-
                 em.onSuccess(getDocumentIdFromLocation(res));
             }).
                     subscribeOn(Schedulers.io()).
@@ -206,7 +208,6 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                     context.getContentResolver().notifyChange(getUriFromLocation(srcLocation), null);
                     context.getContentResolver().notifyChange(getUriFromLocation(res), null);
                 }
-
                 em.onSuccess(getDocumentIdFromLocation(res));
             }).
                     subscribeOn(Schedulers.io()).
@@ -319,7 +320,6 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
                 int maxParents = 0;
                 while (testPath != null && !testPath.equals(parentPath) && maxParents++ < 1000)
                     testPath = testPath.getParentPath();
-
                 em.onSuccess(testPath != null && maxParents < 1000);
             }).
                     subscribeOn(Schedulers.io()).
@@ -331,9 +331,6 @@ public abstract class ContainersDocumentProviderBase extends android.provider.Do
             throw new IllegalArgumentException("isChildDocument failed", e);
         }
     }
-
-    private static final String[] ALL_ROOT_COLUMNS = {DocumentsContract.Root.COLUMN_AVAILABLE_BYTES, DocumentsContract.Root.COLUMN_DOCUMENT_ID, DocumentsContract.Root.COLUMN_FLAGS, DocumentsContract.Root.COLUMN_ICON, DocumentsContract.Root.COLUMN_MIME_TYPES, DocumentsContract.Root.COLUMN_ROOT_ID, DocumentsContract.Root.COLUMN_SUMMARY, DocumentsContract.Root.COLUMN_TITLE};
-    private static final String[] ALL_DOCUMENT_COLUMNS = {DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_FLAGS, DocumentsContract.Document.COLUMN_ICON, DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_MIME_TYPE, DocumentsContract.Document.COLUMN_SIZE, DocumentsContract.Document.COLUMN_SUMMARY};
 
     protected LocationsManager getLocationsManager()
     {

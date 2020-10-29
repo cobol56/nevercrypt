@@ -16,10 +16,9 @@ import com.igeltech.nevercrypt.android.R;
 
 public class SortDialog extends DialogFragment
 {
-    public interface SortingReceiver
-    {
-        void applySort(int sortMode);
-    }
+    private static final String ARG_SORT_MODE = "com.igeltech.nevercrypt.android.SORT_MODE";
+    private static final String ARG_SORT_LABELS_RES_ID = "com.igeltech.nevercrypt.android.SORT_LABELS_RES_ID";
+    private static final String ARG_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.RECEIVER_FRAGMENT_TAG";
 
     public static void showDialog(FragmentManager fm, int sortMode, String receiverFragmentTag)
     {
@@ -50,7 +49,6 @@ public class SortDialog extends DialogFragment
         listView.setItemChecked(sortMode / 2, true);
         boolean asc = sortMode % 2 == 0;
         sortDirection.check(asc ? R.id.sort_asc : R.id.sort_desc);
-
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
         alert.setTitle(R.string.sort).setView(v).setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
             int pos = listView.getCheckedItemPosition();
@@ -78,7 +76,8 @@ public class SortDialog extends DialogFragment
             ((SortingReceiver) getActivity()).applySort(sortMode);
     }
 
-    private static final String ARG_SORT_MODE = "com.igeltech.nevercrypt.android.SORT_MODE";
-    private static final String ARG_SORT_LABELS_RES_ID = "com.igeltech.nevercrypt.android.SORT_LABELS_RES_ID";
-    private static final String ARG_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.RECEIVER_FRAGMENT_TAG";
+    public interface SortingReceiver
+    {
+        void applySort(int sortMode);
+    }
 }

@@ -12,6 +12,8 @@ import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 
 public class StaticPropertyEditor extends PropertyEditorBase
 {
+    protected AppCompatTextView _descTextView;
+
     public StaticPropertyEditor(PropertyEditor.Host host, int titleResId)
     {
         this(host, titleResId, 0);
@@ -74,8 +76,6 @@ public class StaticPropertyEditor extends PropertyEditorBase
         CompatHelper.storeTextInClipboard(getHost().getContext(), _descTextView.getText().toString());
         Toast.makeText(getHost().getContext(), R.string.text_has_been_copied, Toast.LENGTH_SHORT).show();
     }
-
-    protected AppCompatTextView _descTextView;
 
     protected String loadText()
     {

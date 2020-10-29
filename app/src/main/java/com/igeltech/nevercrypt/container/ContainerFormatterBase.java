@@ -29,21 +29,13 @@ import java.security.SecureRandom;
 
 public abstract class ContainerFormatterBase extends LocationFormatter
 {
-    public static ContainerLocation createBaseContainerLocationFromFormatInfo(String formatName, Location containerLocation, Container cont, Context context, Settings settings)
-    {
-
-        switch (formatName)
-        {
-            case com.igeltech.nevercrypt.luks.FormatInfo.FORMAT_NAME:
-                return new LUKSLocation(containerLocation, cont, context, settings);
-            case com.igeltech.nevercrypt.truecrypt.FormatInfo.FORMAT_NAME:
-                return new TrueCryptLocation(containerLocation, cont, context, settings);
-            case com.igeltech.nevercrypt.veracrypt.FormatInfo.FORMAT_NAME:
-                return new VeraCryptLocation(containerLocation, cont, context, settings);
-            default:
-                return new ContainerBasedLocation(containerLocation, cont, context, settings);
-        }
-    }
+    protected ContainerFormatInfo _containerFormat;
+    protected FileSystemInfo _fileSystemType = new FATInfo();
+    protected FileEncryptionEngine _encryptionEngine;
+    protected MessageDigest _hashFunc;
+    protected long _containerSize;
+    protected boolean _randFreeSpace;
+    protected int _numKDFIterations;
 
     protected ContainerFormatterBase(Parcel in)
     {
@@ -60,6 +52,25 @@ public abstract class ContainerFormatterBase extends LocationFormatter
         s = in.readString();
         if (s != null)
             setHashFunc(s);
+    }
+
+    protected ContainerFormatterBase()
+    {
+    }
+
+    public static ContainerLocation createBaseContainerLocationFromFormatInfo(String formatName, Location containerLocation, Container cont, Context context, Settings settings)
+    {
+        switch (formatName)
+        {
+            case com.igeltech.nevercrypt.luks.FormatInfo.FORMAT_NAME:
+                return new LUKSLocation(containerLocation, cont, context, settings);
+            case com.igeltech.nevercrypt.truecrypt.FormatInfo.FORMAT_NAME:
+                return new TrueCryptLocation(containerLocation, cont, context, settings);
+            case com.igeltech.nevercrypt.veracrypt.FormatInfo.FORMAT_NAME:
+                return new VeraCryptLocation(containerLocation, cont, context, settings);
+            default:
+                return new ContainerBasedLocation(containerLocation, cont, context, settings);
+        }
     }
 
     @Override
@@ -80,11 +91,6 @@ public abstract class ContainerFormatterBase extends LocationFormatter
             dest.writeString(null);
         }
         dest.writeString(_hashFunc != null ? _hashFunc.getAlgorithm() : null);
-    }
-
-    protected ContainerFormatterBase()
-    {
-
     }
 
     public void setContainerFormat(ContainerFormatInfo containerFormat)
@@ -132,14 +138,6 @@ public abstract class ContainerFormatterBase extends LocationFormatter
         _fileSystemType = fsInfo;
     }
 
-    protected ContainerFormatInfo _containerFormat;
-    protected FileSystemInfo _fileSystemType = new FATInfo();
-    protected FileEncryptionEngine _encryptionEngine;
-    protected MessageDigest _hashFunc;
-    protected long _containerSize;
-    protected boolean _randFreeSpace;
-    protected int _numKDFIterations;
-
     @Override
     protected CryptoLocation createLocation(Location location) throws IOException, ApplicationException, UserException
     {
@@ -147,7 +145,6 @@ public abstract class ContainerFormatterBase extends LocationFormatter
             throw new IllegalStateException("Container format is not specified");
         if (_containerSize < 1024L * 1024L)
             throw new IllegalStateException("Container size is too small");
-
         VolumeLayout layout = getLayout();
         setVolumeLayoutPassword(layout);
         if (_numKDFIterations > 0)

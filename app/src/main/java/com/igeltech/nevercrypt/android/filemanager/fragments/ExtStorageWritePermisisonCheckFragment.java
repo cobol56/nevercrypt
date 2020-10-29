@@ -22,12 +22,13 @@ import io.reactivex.subjects.CompletableSubject;
 public class ExtStorageWritePermisisonCheckFragment extends RxAppCompatDialogFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.ExtStorageWritePermisisonCheckFragment";
+    private static final int REQUEST_EXT_STORAGE_PERMISSIONS = 1;
+    private final CompletableSubject _extStoragePermissionCheckSubject = CompletableSubject.create();
 
     public static Completable getObservable(RxAppCompatActivity activity)
     {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED))
             return Completable.complete();
-
         FragmentManager fm = activity.getSupportFragmentManager();
         ExtStorageWritePermisisonCheckFragment f = (ExtStorageWritePermisisonCheckFragment) fm.findFragmentByTag(TAG);
         if (f == null)
@@ -72,9 +73,6 @@ public class ExtStorageWritePermisisonCheckFragment extends RxAppCompatDialogFra
             }
         }
     }
-
-    private static final int REQUEST_EXT_STORAGE_PERMISSIONS = 1;
-    private final CompletableSubject _extStoragePermissionCheckSubject = CompletableSubject.create();
 
     @TargetApi(Build.VERSION_CODES.M)
     private boolean requestExtStoragePermissionWithRationale()

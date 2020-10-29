@@ -8,25 +8,25 @@ import java.util.List;
 
 public interface ContainerLocation extends CryptoLocation
 {
-    interface ExternalSettings extends CryptoLocation.ExternalSettings
-    {
-        void setContainerFormatName(String containerFormatName);
-
-        void setEncEngineName(String encEngineName);
-
-        void setHashFuncName(String hashFuncName);
-
-        String getContainerFormatName();
-
-        String getEncEngineName();
-
-        String getHashFuncName();
-    }
-
     @Override
     ExternalSettings getExternalSettings();
 
     Container getCryptoContainer() throws IOException;
 
     List<ContainerFormatInfo> getSupportedFormats();
+
+    interface ExternalSettings extends CryptoLocation.ExternalSettings
+    {
+        String getContainerFormatName();
+
+        void setContainerFormatName(String containerFormatName);
+
+        String getEncEngineName();
+
+        void setEncEngineName(String encEngineName);
+
+        String getHashFuncName();
+
+        void setHashFuncName(String hashFuncName);
+    }
 }

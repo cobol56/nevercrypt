@@ -43,6 +43,7 @@ public class SrcDstSingle implements SrcDstCollection, SrcDst
             return new SrcDstSingle[size];
         }
     };
+    private final Location _srcLocation, _dstLocation;
 
     public SrcDstSingle(Location srcLoc, Location dstLoc)
     {
@@ -55,6 +56,8 @@ public class SrcDstSingle implements SrcDstCollection, SrcDst
     {
         return new Iterator<SrcDst>()
         {
+            private boolean _shown;
+
             public void remove()
             {
                 throw new UnsupportedOperationException();
@@ -72,8 +75,6 @@ public class SrcDstSingle implements SrcDstCollection, SrcDst
             {
                 return !_shown;
             }
-
-            private boolean _shown;
         };
     }
 
@@ -101,6 +102,4 @@ public class SrcDstSingle implements SrcDstCollection, SrcDst
         dest.writeParcelable(_srcLocation.getLocationUri(), flags);
         dest.writeParcelable(_dstLocation == null ? Uri.EMPTY : _dstLocation.getLocationUri(), flags);
     }
-
-    private final Location _srcLocation, _dstLocation;
 }

@@ -26,52 +26,9 @@ import java.util.List;
 
 class PrepareTempFilesTask extends CopyFilesTask
 {
-    public static class FilesTaskParam extends CopyFilesTaskParam
-    {
-        FilesTaskParam(Intent i, Context context)
-        {
-            super(i);
-            _context = context;
-        }
-
-        @Override
-        protected SrcDstCollection loadRecords(Intent i)
-        {
-            ArrayList<Path> paths = new ArrayList<>();
-            Location loc = LocationsManager.getLocationsManager(_context).getFromIntent(i, paths);
-            String wd = UserSettings.getSettings(_context).getWorkDir();
-            ArrayList<SrcDstCollection> cols = new ArrayList<>();
-            try
-            {
-                for (Path srcPath : paths)
-                {
-                    Location srcLoc = loc.copy();
-                    srcLoc.setCurrentPath(srcPath);
-                    Path parentPath = null;
-                    try
-                    {
-                        parentPath = srcPath.getParentPath();
-                    }
-                    catch (IOException ignored)
-                    {
-                    }
-                    if (parentPath == null)
-                        parentPath = srcPath;
-                    SrcDstSingle sds = new SrcDstSingle(srcLoc, TempFilesMonitor.getTmpLocation(loc, parentPath, _context, wd));
-                    SrcDstCollection sd = srcPath.isFile() ? sds : new SrcDstRec(sds);
-                    cols.add(sd);
-                }
-                return new SrcDstGroup(cols);
-            }
-            catch (IOException e)
-            {
-                Logger.showAndLog(_context, e);
-            }
-            return null;
-        }
-
-        private final Context _context;
-    }
+    private final List<Location> _tempFilesList = new ArrayList<>();
+    private long _fileSizeLimit;
+    private boolean _wipe;
 
     @Override
     public Object doWork(Context context, Intent i) throws Throwable
@@ -82,10 +39,6 @@ class PrepareTempFilesTask extends CopyFilesTask
         super.doWork(context, i);
         return _tempFilesList;
     }
-
-    private long _fileSizeLimit;
-    private boolean _wipe;
-    private final List<Location> _tempFilesList = new ArrayList<>();
 
     @Override
     protected FilesTaskParam initParam(Intent i)
@@ -146,7 +99,6 @@ class PrepareTempFilesTask extends CopyFilesTask
         Path res = super.calcDstPath(src, dstFolder);
         if (res == null)
             res = (src instanceof File) ? dstFolder.createFile(src.getName()).getPath() : (src instanceof Directory) ? dstFolder.createDirectory(src.getName()).getPath() : null;
-
         return res;
     }
 
@@ -171,5 +123,52 @@ class PrepareTempFilesTask extends CopyFilesTask
     private void addFileToMonitor(Location srcLocation, Location srcFodlerLocation, Location dstFilePath) throws IOException
     {
         TempFilesMonitor.getMonitor(_context).addFileToMonitor(srcLocation, srcFodlerLocation, dstFilePath, false);
+    }
+
+    public static class FilesTaskParam extends CopyFilesTaskParam
+    {
+        private final Context _context;
+
+        FilesTaskParam(Intent i, Context context)
+        {
+            super(i);
+            _context = context;
+        }
+
+        @Override
+        protected SrcDstCollection loadRecords(Intent i)
+        {
+            ArrayList<Path> paths = new ArrayList<>();
+            Location loc = LocationsManager.getLocationsManager(_context).getFromIntent(i, paths);
+            String wd = UserSettings.getSettings(_context).getWorkDir();
+            ArrayList<SrcDstCollection> cols = new ArrayList<>();
+            try
+            {
+                for (Path srcPath : paths)
+                {
+                    Location srcLoc = loc.copy();
+                    srcLoc.setCurrentPath(srcPath);
+                    Path parentPath = null;
+                    try
+                    {
+                        parentPath = srcPath.getParentPath();
+                    }
+                    catch (IOException ignored)
+                    {
+                    }
+                    if (parentPath == null)
+                        parentPath = srcPath;
+                    SrcDstSingle sds = new SrcDstSingle(srcLoc, TempFilesMonitor.getTmpLocation(loc, parentPath, _context, wd));
+                    SrcDstCollection sd = srcPath.isFile() ? sds : new SrcDstRec(sds);
+                    cols.add(sd);
+                }
+                return new SrcDstGroup(cols);
+            }
+            catch (IOException e)
+            {
+                Logger.showAndLog(_context, e);
+            }
+            return null;
+        }
     }
 }

@@ -5,6 +5,14 @@ import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
 
 public class AES implements BlockCipherNative
 {
+    static
+    {
+        System.loadLibrary("cryptaes");
+    }
+
+    private final int _keySize;
+    private long _contextPtr;
+
     public AES()
     {
         this(32);
@@ -68,14 +76,6 @@ public class AES implements BlockCipherNative
     {
         return 16;
     }
-
-    static
-    {
-        System.loadLibrary("cryptaes");
-    }
-
-    private long _contextPtr;
-    private final int _keySize;
 
     private native long initContext(byte[] key);
 

@@ -15,13 +15,6 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
 {
     public static final String ARG_RECEIVER_TAG = "com.igeltech.nevercrypt.android.RECEIVER_TAG";
 
-    public interface Receiver
-    {
-        void onYes();
-
-        void onNo();
-    }
-
     @NonNull
     @Override
     public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
@@ -34,7 +27,6 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
             onNo();
             dismiss();
         });
-
         return builder.create();
     }
 
@@ -71,5 +63,12 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
                 return (Receiver) act;
         }
         return null;
+    }
+
+    public interface Receiver
+    {
+        void onYes();
+
+        void onNo();
     }
 }

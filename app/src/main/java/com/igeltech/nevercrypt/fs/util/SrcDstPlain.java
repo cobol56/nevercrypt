@@ -16,20 +16,6 @@ import java.util.Collection;
 
 public class SrcDstPlain extends ArrayList<SrcDstCollection.SrcDst> implements SrcDstCollection
 {
-    public static SrcDstCollection fromPaths(Location srcLoc, Location dstLoc, Collection<? extends Path> srcPaths)
-    {
-        if (srcPaths == null)
-            return new SrcDstSingle(srcLoc, dstLoc);
-        SrcDstPlain res = new SrcDstPlain();
-        for (Path p : srcPaths)
-        {
-            Location l = srcLoc.copy();
-            l.setCurrentPath(p);
-            res.add(l, dstLoc);
-        }
-        return res;
-    }
-
     public static final Parcelable.Creator<SrcDstPlain> CREATOR = new Parcelable.Creator<SrcDstPlain>()
     {
         public SrcDstPlain createFromParcel(Parcel in)
@@ -61,6 +47,21 @@ public class SrcDstPlain extends ArrayList<SrcDstCollection.SrcDst> implements S
             return new SrcDstPlain[size];
         }
     };
+    private static final long serialVersionUID = 1L;
+
+    public static SrcDstCollection fromPaths(Location srcLoc, Location dstLoc, Collection<? extends Path> srcPaths)
+    {
+        if (srcPaths == null)
+            return new SrcDstSingle(srcLoc, dstLoc);
+        SrcDstPlain res = new SrcDstPlain();
+        for (Path p : srcPaths)
+        {
+            Location l = srcLoc.copy();
+            l.setCurrentPath(p);
+            res.add(l, dstLoc);
+        }
+        return res;
+    }
 
     public void add(Location srcLoc, Location dstLoc)
     {
@@ -102,6 +103,8 @@ public class SrcDstPlain extends ArrayList<SrcDstCollection.SrcDst> implements S
 
     private static class SrcDstSimple implements SrcDst
     {
+        private final Location _srcLoc, _dstLoc;
+
         public SrcDstSimple(Location srcLoc, Location dstLoc)
         {
             _srcLoc = srcLoc;
@@ -119,9 +122,5 @@ public class SrcDstPlain extends ArrayList<SrcDstCollection.SrcDst> implements S
         {
             return _dstLoc;
         }
-
-        private final Location _srcLoc, _dstLoc;
     }
-
-    private static final long serialVersionUID = 1L;
 }

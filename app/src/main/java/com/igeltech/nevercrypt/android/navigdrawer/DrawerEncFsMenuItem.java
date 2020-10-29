@@ -16,49 +16,11 @@ import com.igeltech.nevercrypt.locations.Location;
 
 public class DrawerEncFsMenuItem extends DrawerLocationMenuItem
 {
-    public static class Opener extends EncFSOpenerFragment
-    {
-        @Override
-        public void onLocationOpened(Location location)
-        {
-            Bundle args = getArguments();
-            FileManagerActivity.openFileManager((FileManagerActivity) getActivity(), location, args != null ? args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0) : 0);
-        }
-    }
-
-    @Override
-    public Drawable getIcon()
-    {
-        return getLocation().isOpen() ? getOpenedIcon(getContext()) : getClosedIcon(getContext());
-    }
-
-    @Override
-    public CryptoLocation getLocation()
-    {
-        return (CryptoLocation) super.getLocation();
-    }
+    private static Drawable _openedIcon, _closedIcon;
 
     protected DrawerEncFsMenuItem(CryptoLocation container, DrawerControllerBase drawerController)
     {
         super(container, drawerController);
-    }
-
-    @Override
-    protected LocationOpenerBaseFragment getOpener()
-    {
-        return new Opener();
-    }
-
-    @Override
-    protected LocationCloserBaseFragment getCloser()
-    {
-        return new OMLocationCloserFragment();
-    }
-
-    @Override
-    protected boolean hasSettings()
-    {
-        return true;
     }
 
     private synchronized static Drawable getOpenedIcon(Context context)
@@ -79,5 +41,43 @@ public class DrawerEncFsMenuItem extends DrawerLocationMenuItem
         return _closedIcon;
     }
 
-    private static Drawable _openedIcon, _closedIcon;
+    @Override
+    public Drawable getIcon()
+    {
+        return getLocation().isOpen() ? getOpenedIcon(getContext()) : getClosedIcon(getContext());
+    }
+
+    @Override
+    public CryptoLocation getLocation()
+    {
+        return (CryptoLocation) super.getLocation();
+    }
+
+    @Override
+    protected LocationOpenerBaseFragment getOpener()
+    {
+        return new Opener();
+    }
+
+    @Override
+    protected LocationCloserBaseFragment getCloser()
+    {
+        return new OMLocationCloserFragment();
+    }
+
+    @Override
+    protected boolean hasSettings()
+    {
+        return true;
+    }
+
+    public static class Opener extends EncFSOpenerFragment
+    {
+        @Override
+        public void onLocationOpened(Location location)
+        {
+            Bundle args = getArguments();
+            FileManagerActivity.openFileManager((FileManagerActivity) getActivity(), location, args != null ? args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0) : 0);
+        }
+    }
 }

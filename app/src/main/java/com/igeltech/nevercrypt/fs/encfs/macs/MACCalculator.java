@@ -5,11 +5,8 @@ import java.nio.ByteOrder;
 
 public abstract class MACCalculator
 {
-    public void setChainedIV(byte[] iv)
-    {
-        _chainedIV = iv;
-        _useChainedIV = iv != null;
-    }
+    private byte[] _chainedIV;
+    private boolean _useChainedIV;
 
     public boolean isChainedIVEnabled()
     {
@@ -18,12 +15,17 @@ public abstract class MACCalculator
 
     public void init(byte[] key)
     {
-
     }
 
     public byte[] getChainedIV()
     {
         return _chainedIV;
+    }
+
+    public void setChainedIV(byte[] iv)
+    {
+        _chainedIV = iv;
+        _useChainedIV = iv != null;
     }
 
     public long calc64(byte[] buf, int offset, int count)
@@ -51,11 +53,7 @@ public abstract class MACCalculator
 
     public void close()
     {
-
     }
 
     public abstract byte[] calcChecksum(byte[] buf, int offset, int count);
-
-    private byte[] _chainedIV;
-    private boolean _useChainedIV;
 }

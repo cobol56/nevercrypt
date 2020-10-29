@@ -2,6 +2,10 @@ package com.igeltech.nevercrypt.android.service;
 
 public class Result
 {
+    private final boolean _isCancelled;
+    private final Throwable _error;
+    private final Object _result;
+
     public Result()
     {
         this(null);
@@ -37,8 +41,4 @@ public class Result
             throw _error;
         return _result;
     }
-
-    private final boolean _isCancelled;
-    private final Throwable _error;
-    private final Object _result;
 }

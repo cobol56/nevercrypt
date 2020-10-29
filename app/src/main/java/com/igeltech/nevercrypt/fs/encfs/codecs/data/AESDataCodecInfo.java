@@ -13,6 +13,7 @@ import com.igeltech.nevercrypt.fs.encfs.macs.SHA1MACCalculator;
 public class AESDataCodecInfo implements DataCodecInfo
 {
     public static final String NAME = "ssl/aes";
+    private Config _config;
 
     @Override
     public FileEncryptionEngine getFileEncDec()
@@ -63,6 +64,4 @@ public class AESDataCodecInfo implements DataCodecInfo
     {
         return 0;
     }
-
-    private Config _config;
 }

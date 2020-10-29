@@ -25,6 +25,47 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
 {
+    public static final Parcelable.Creator<SrcDstRec> CREATOR = new Parcelable.Creator<SrcDstRec>()
+    {
+        public SrcDstRec createFromParcel(Parcel in)
+        {
+            try
+            {
+                LocationsManager lm = LocationsManagerBase.getLocationsManager(null, false);
+                Uri u = in.readParcelable(getClass().getClassLoader());
+                Location srcLoc = lm != null ? lm.getLocation(u) : null;
+                u = in.readParcelable(getClass().getClassLoader());
+                Location dstLoc = Uri.EMPTY.equals(u) ? null : lm != null ? lm.getLocation(u) : null;
+                boolean dirLast = in.readByte() == 1;
+                if (srcLoc != null)
+                {
+                    SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(srcLoc, dstLoc));
+                    sdr.setIsDirLast(dirLast);
+                    return sdr;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                Logger.log(e);
+                return null;
+            }
+        }
+
+        public SrcDstRec[] newArray(int size)
+        {
+            return new SrcDstRec[size];
+        }
+    };
+    private final SrcDstCollection.SrcDst _topElement;
+    private List<SrcDstRec> _subElements;
+    private boolean _dirLast;
+
+    public SrcDstRec(SrcDstCollection.SrcDst topElement)
+    {
+        _topElement = topElement;
+    }
+
     public static SrcDstCollection fromPathsNoDest(Location srcLoc, boolean dirLast, Path... srcPaths)
     {
         return fromPaths(srcLoc, null, dirLast, srcPaths);
@@ -61,42 +102,37 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
         return new SrcDstGroup(res);
     }
 
-    public static final Parcelable.Creator<SrcDstRec> CREATOR = new Parcelable.Creator<SrcDstRec>()
+    private static Observable<SrcDst> observeTree(SrcDstRec tree, boolean isDirLast)
     {
-        public SrcDstRec createFromParcel(Parcel in)
-        {
-            try
-            {
-                LocationsManager lm = LocationsManagerBase.getLocationsManager(null, false);
-                Uri u = in.readParcelable(getClass().getClassLoader());
-                Location srcLoc = lm != null ? lm.getLocation(u) : null;
-                u = in.readParcelable(getClass().getClassLoader());
-                Location dstLoc = Uri.EMPTY.equals(u) ? null : lm != null ? lm.getLocation(u) : null;
-                boolean dirLast = in.readByte() == 1;
-                if (srcLoc != null)
-                {
-                    SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(srcLoc, dstLoc));
-                    sdr.setIsDirLast(dirLast);
-                    return sdr;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                Logger.log(e);
-                return null;
-            }
-        }
+        return Observable.create(emitter -> {
+            if (!isDirLast)
+                emitter.onNext(tree);
+            for (SrcDstRec sdc : tree.getSubElements())
+                observeTree(sdc, isDirLast).
+                        subscribe(emitter::onNext, emitter::onError);
+            if (isDirLast)
+                emitter.onNext(tree);
+            emitter.onComplete();
+        });
+    }
 
-        public SrcDstRec[] newArray(int size)
-        {
-            return new SrcDstRec[size];
-        }
-    };
-
-    public SrcDstRec(SrcDstCollection.SrcDst topElement)
+    private static Location calcSubDestLocation(SrcDstCollection.SrcDst parentSrcDst, String nextDirName) throws IOException
     {
-        _topElement = topElement;
+        Location loc = parentSrcDst.getDstLocation();
+        if (loc == null)
+            return null;
+        try
+        {
+            loc = loc.copy();
+            Path dstSubPath = PathUtil.getDirectory(loc.getCurrentPath(), nextDirName).getPath();
+            loc.setCurrentPath(dstSubPath);
+            return loc;
+        }
+        catch (IOException e)
+        {
+            Logger.log(e);
+        }
+        return null;
     }
 
     public void setIsDirLast(boolean val)
@@ -149,10 +185,6 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
         return _topElement.getDstLocation();
     }
 
-    private final SrcDstCollection.SrcDst _topElement;
-    private List<SrcDstRec> _subElements;
-    private boolean _dirLast;
-
     private List<SrcDstRec> getSubElements()
     {
         if (_subElements == null)
@@ -169,20 +201,6 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
         return _subElements;
     }
 
-    private static Observable<SrcDst> observeTree(SrcDstRec tree, boolean isDirLast)
-    {
-        return Observable.create(emitter -> {
-            if (!isDirLast)
-                emitter.onNext(tree);
-            for (SrcDstRec sdc : tree.getSubElements())
-                observeTree(sdc, isDirLast).
-                        subscribe(emitter::onNext, emitter::onError);
-            if (isDirLast)
-                emitter.onNext(tree);
-            emitter.onComplete();
-        });
-    }
-
     private List<SrcDstRec> listSubElements() throws IOException
     {
         ArrayList<SrcDstRec> res = new ArrayList<>();
@@ -190,7 +208,6 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
         Path startPath = srcLocation.getCurrentPath();
         if (startPath == null || !startPath.isDirectory())
             return res;
-
         Directory directory = startPath.getDirectory();
         String directoryName = directory.getName();
         try (Directory.Contents dc = directory.list())
@@ -201,6 +218,8 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
                 subSrcLocation.setCurrentPath(subPath);
                 SrcDst subSrcDst = new SrcDst()
                 {
+                    private Location _dstLocationCache;
+
                     @Override
                     public Location getSrcLocation() throws IOException
                     {
@@ -214,32 +233,11 @@ public class SrcDstRec implements SrcDstCollection, SrcDstCollection.SrcDst
                             _dstLocationCache = calcSubDestLocation(_topElement, directoryName);
                         return _dstLocationCache;
                     }
-
-                    private Location _dstLocationCache;
                 };
                 res.add(new SrcDstRec(subSrcDst));
             }
         }
         return res;
-    }
-
-    private static Location calcSubDestLocation(SrcDstCollection.SrcDst parentSrcDst, String nextDirName) throws IOException
-    {
-        Location loc = parentSrcDst.getDstLocation();
-        if (loc == null)
-            return null;
-        try
-        {
-            loc = loc.copy();
-            Path dstSubPath = PathUtil.getDirectory(loc.getCurrentPath(), nextDirName).getPath();
-            loc.setCurrentPath(dstSubPath);
-            return loc;
-        }
-        catch (IOException e)
-        {
-            Logger.log(e);
-        }
-        return null;
     }
 }
 

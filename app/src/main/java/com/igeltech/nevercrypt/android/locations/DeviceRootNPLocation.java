@@ -10,12 +10,8 @@ import com.igeltech.nevercrypt.settings.Settings;
 
 public class DeviceRootNPLocation extends DeviceBasedLocation
 {
-    public static String getLocationId()
-    {
-        return URI_SCHEME;
-    }
-
     public static final String URI_SCHEME = "rootfsnp";
+    private final Context _context;
 
     public DeviceRootNPLocation(Context context)
     {
@@ -32,6 +28,11 @@ public class DeviceRootNPLocation extends DeviceBasedLocation
     {
         super(settings, locationUri);
         _context = context;
+    }
+
+    public static String getLocationId()
+    {
+        return URI_SCHEME;
     }
 
     @Override
@@ -57,6 +58,4 @@ public class DeviceRootNPLocation extends DeviceBasedLocation
     {
         return new DeviceRootNPLocation(_context, _currentPathString);
     }
-
-    private final Context _context;
 }

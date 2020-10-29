@@ -8,15 +8,11 @@ import com.igeltech.nevercrypt.locations.Location;
 
 public class DrawerDocumentTreeMenuItem extends DrawerLocationMenuItem
 {
+    private static Drawable _icon;
+
     public DrawerDocumentTreeMenuItem(Location location, DrawerControllerBase drawerController)
     {
         super(location, drawerController);
-    }
-
-    @Override
-    public Drawable getIcon()
-    {
-        return getIcon(getDrawerController().getMainActivity());
     }
 
     private synchronized static Drawable getIcon(Context context)
@@ -28,5 +24,9 @@ public class DrawerDocumentTreeMenuItem extends DrawerLocationMenuItem
         return _icon;
     }
 
-    private static Drawable _icon;
+    @Override
+    public Drawable getIcon()
+    {
+        return getIcon(getDrawerController().getMainActivity());
+    }
 }

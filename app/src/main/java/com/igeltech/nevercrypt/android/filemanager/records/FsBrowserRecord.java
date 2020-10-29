@@ -24,11 +24,13 @@ import java.io.IOException;
 
 public abstract class FsBrowserRecord extends CachedPathInfoBase implements BrowserRecord
 {
-    public static class RowViewInfo
+    protected final Context _context;
+    protected FileManagerActivity _host;
+    private boolean _isSelected;
+
+    public FsBrowserRecord(Context context)
     {
-        public ListView listView;
-        public View view;
-        public int position;
+        _context = context;
     }
 
     public static void updateRowView(FileManagerActivity host, Object item)
@@ -82,15 +84,15 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         return 0;
     }
 
+    public boolean isSelected()
+    {
+        return _isSelected;
+    }
+
     @Override
     public void setSelected(boolean val)
     {
         _isSelected = val;
-    }
-
-    public boolean isSelected()
-    {
-        return _isSelected;
     }
 
     @Override
@@ -145,10 +147,8 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
             else
                 rb.setVisibility(View.INVISIBLE);
         }
-
         AppCompatTextView tv = view.findViewById(android.R.id.text1);
         tv.setText(getName());
-
         AppCompatImageView iv = view.findViewById(android.R.id.icon);
         iv.setImageDrawable(getDefaultIcon());
         iv.setScaleType(AppCompatImageView.ScaleType.CENTER_CROP);
@@ -164,7 +164,6 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
                     hf.selectFile(FsBrowserRecord.this);
             }
         });
-
         iv = view.findViewById(android.R.id.icon1);
         iv.setVisibility(View.INVISIBLE);
     }
@@ -178,7 +177,6 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     @Override
     public void setExtData(ExtendedFileInfoLoader.ExtendedFileInfo data)
     {
-
     }
 
     @Override
@@ -223,14 +221,6 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         init(path);
     }
 
-    public FsBrowserRecord(Context context)
-    {
-        _context = context;
-    }
-
-    protected final Context _context;
-    protected FileManagerActivity _host;
-
     protected abstract Drawable getDefaultIcon();
 
     protected FileListViewFragment getHostFragment()
@@ -238,5 +228,10 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         return _host == null ? null : (FileListViewFragment) _host.getSupportFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
     }
 
-    private boolean _isSelected;
+    public static class RowViewInfo
+    {
+        public ListView listView;
+        public View view;
+        public int position;
+    }
 }

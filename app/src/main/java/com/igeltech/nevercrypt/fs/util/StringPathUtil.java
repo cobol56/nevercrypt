@@ -10,6 +10,50 @@ import java.util.regex.Pattern;
 
 public class StringPathUtil implements Comparable<StringPathUtil>
 {
+    protected final List<String> _components;
+
+    public StringPathUtil()
+    {
+        _components = new ArrayList<>();
+    }
+
+    public StringPathUtil(String pathString)
+    {
+        _components = splitPath(pathString);
+    }
+
+    public StringPathUtil(String... components)
+    {
+        _components = Arrays.asList(components);
+    }
+
+    public StringPathUtil(List<String> components)
+    {
+        _components = new ArrayList<>(components);
+    }
+
+    public StringPathUtil(StringPathUtil p1, String... components)
+    {
+        this(p1, Arrays.asList(components));
+    }
+
+    public StringPathUtil(StringPathUtil p1, List<String> components)
+    {
+        _components = new ArrayList<>(p1._components);
+        _components.addAll(components);
+    }
+
+    public StringPathUtil(String part, StringPathUtil parts)
+    {
+        _components = new ArrayList<>(parts._components);
+        _components.add(0, part);
+    }
+
+    public StringPathUtil(StringPathUtil p1, StringPathUtil p2)
+    {
+        this(p1, p2._components);
+    }
+
     public static List<String> splitPath(String path)
     {
         ArrayList<String> res = new ArrayList<>();
@@ -66,48 +110,6 @@ public class StringPathUtil implements Comparable<StringPathUtil>
         return dotIndex > 0 ? fn.substring(dotIndex + 1) : "";
     }
 
-    public StringPathUtil()
-    {
-        _components = new ArrayList<>();
-    }
-
-    public StringPathUtil(String pathString)
-    {
-        _components = splitPath(pathString);
-    }
-
-    public StringPathUtil(String... components)
-    {
-        _components = Arrays.asList(components);
-    }
-
-    public StringPathUtil(List<String> components)
-    {
-        _components = new ArrayList<>(components);
-    }
-
-    public StringPathUtil(StringPathUtil p1, String... components)
-    {
-        this(p1, Arrays.asList(components));
-    }
-
-    public StringPathUtil(StringPathUtil p1, List<String> components)
-    {
-        _components = new ArrayList<>(p1._components);
-        _components.addAll(components);
-    }
-
-    public StringPathUtil(String part, StringPathUtil parts)
-    {
-        _components = new ArrayList<>(parts._components);
-        _components.add(0, part);
-    }
-
-    public StringPathUtil(StringPathUtil p1, StringPathUtil p2)
-    {
-        this(p1, p2._components);
-    }
-
     @Override
     public boolean equals(Object o)
     {
@@ -119,13 +121,10 @@ public class StringPathUtil implements Comparable<StringPathUtil>
             for (int i = 0; i < ocomponents.size(); i++)
                 if (!ocomponents.get(i).equalsIgnoreCase(_components.get(i)))
                     return false;
-
             return true;
         }
-
         if (o instanceof String)
             return equals(new StringPathUtil((String) o));
-
         return super.equals(o);
     }
 
@@ -208,11 +207,9 @@ public class StringPathUtil implements Comparable<StringPathUtil>
         int s = _components.size();
         if (subPath._components.size() <= s)
             return false;
-
         for (int i = 0; i < s; i++)
             if (!_components.get(i).equalsIgnoreCase(subPath._components.get(i)))
                 return false;
-
         return true;
     }
 
@@ -227,6 +224,4 @@ public class StringPathUtil implements Comparable<StringPathUtil>
     {
         return toString().compareTo(other.toString());
     }
-
-    protected final List<String> _components;
 }

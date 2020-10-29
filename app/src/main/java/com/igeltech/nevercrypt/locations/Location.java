@@ -14,91 +14,6 @@ import java.io.IOException;
 
 public interface Location extends Cloneable
 {
-    interface ProtectionKeyProvider
-    {
-        SecureBuffer getProtectionKey();
-    }
-
-    interface ExternalSettings
-    {
-        void setProtectionKeyProvider(ProtectionKeyProvider p);
-
-        String getTitle();
-
-        void setTitle(String title);
-
-        boolean isVisibleToUser();
-
-        void setVisibleToUser(boolean val);
-
-        void saveToJSONObject(JSONObject jo) throws JSONException;
-
-        void loadFromJSONOjbect(JSONObject jo) throws JSONException;
-
-        boolean useExtFileManager();
-
-        void setUseExtFileManager(boolean val);
-    }
-
-    class DefaultExternalSettings implements ExternalSettings
-    {
-        @Override
-        public void setProtectionKeyProvider(ProtectionKeyProvider p)
-        {
-
-        }
-
-        @Override
-        public String getTitle()
-        {
-            return "";
-        }
-
-        @Override
-        public void setTitle(String title)
-        {
-
-        }
-
-        @Override
-        public boolean isVisibleToUser()
-        {
-            return _isVisibleToUser;
-        }
-
-        @Override
-        public void setVisibleToUser(boolean val)
-        {
-            _isVisibleToUser = val;
-        }
-
-        @Override
-        public void saveToJSONObject(JSONObject jo) throws JSONException
-        {
-
-        }
-
-        @Override
-        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
-        {
-
-        }
-
-        @Override
-        public boolean useExtFileManager()
-        {
-            return false;
-        }
-
-        @Override
-        public void setUseExtFileManager(boolean val)
-        {
-
-        }
-
-        private boolean _isVisibleToUser;
-    }
-
     String getTitle();
 
     String getId();
@@ -133,4 +48,84 @@ public interface Location extends Cloneable
     void saveExternalSettings();
 
     Intent getExternalFileManagerLaunchIntent();
+
+    interface ProtectionKeyProvider
+    {
+        SecureBuffer getProtectionKey();
+    }
+
+    interface ExternalSettings
+    {
+        void setProtectionKeyProvider(ProtectionKeyProvider p);
+
+        String getTitle();
+
+        void setTitle(String title);
+
+        boolean isVisibleToUser();
+
+        void setVisibleToUser(boolean val);
+
+        void saveToJSONObject(JSONObject jo) throws JSONException;
+
+        void loadFromJSONOjbect(JSONObject jo) throws JSONException;
+
+        boolean useExtFileManager();
+
+        void setUseExtFileManager(boolean val);
+    }
+
+    class DefaultExternalSettings implements ExternalSettings
+    {
+        private boolean _isVisibleToUser;
+
+        @Override
+        public void setProtectionKeyProvider(ProtectionKeyProvider p)
+        {
+        }
+
+        @Override
+        public String getTitle()
+        {
+            return "";
+        }
+
+        @Override
+        public void setTitle(String title)
+        {
+        }
+
+        @Override
+        public boolean isVisibleToUser()
+        {
+            return _isVisibleToUser;
+        }
+
+        @Override
+        public void setVisibleToUser(boolean val)
+        {
+            _isVisibleToUser = val;
+        }
+
+        @Override
+        public void saveToJSONObject(JSONObject jo) throws JSONException
+        {
+        }
+
+        @Override
+        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
+        {
+        }
+
+        @Override
+        public boolean useExtFileManager()
+        {
+            return false;
+        }
+
+        @Override
+        public void setUseExtFileManager(boolean val)
+        {
+        }
+    }
 }

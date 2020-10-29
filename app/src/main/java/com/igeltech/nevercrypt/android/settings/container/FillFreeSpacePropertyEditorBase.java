@@ -12,6 +12,8 @@ import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 
 public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEditor
 {
+    protected AppCompatTextView _titleTextView;
+
     public FillFreeSpacePropertyEditorBase(CreateContainerFragmentBase createContainerFragment)
     {
         super(createContainerFragment, R.string.fill_free_space_with_random_data, 0);
@@ -42,6 +44,4 @@ public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEdit
     {
         return (CreateContainerFragmentBase) getHost();
     }
-
-    protected AppCompatTextView _titleTextView;
 }

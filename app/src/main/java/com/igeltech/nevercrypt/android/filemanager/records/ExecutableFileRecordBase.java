@@ -20,6 +20,9 @@ import java.io.IOException;
 
 public abstract class ExecutableFileRecordBase extends FileRecord
 {
+    protected final Settings _settings;
+    protected Location _loc;
+
     public ExecutableFileRecordBase(Context context)
     {
         super(context);
@@ -51,7 +54,6 @@ public abstract class ExecutableFileRecordBase extends FileRecord
     {
         if (!isFile())
             return false;
-
         String mime = FileOpsService.getMimeTypeFromExtension(_host, new StringPathUtil(getName()).getFileExtension());
         if (mime.startsWith("image/"))
         {
@@ -61,9 +63,6 @@ public abstract class ExecutableFileRecordBase extends FileRecord
         _host.showProperties(this, true);
         return open();
     }
-
-    protected Location _loc;
-    protected final Settings _settings;
 
     protected void extractFileAndStartViewer(Location location, BrowserRecord rec) throws UserException, IOException
     {

@@ -22,6 +22,9 @@ import java.io.InputStream;
 
 public class CompatHelperBase
 {
+    private static String serviceRunningNotificationsChannelId;
+    private static String fileOperationsNotificationsChannelId;
+
     public static void setWindowFlagSecure(AppCompatActivity act)
     {
         act.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
@@ -57,8 +60,6 @@ public class CompatHelperBase
         }
     }
 
-    private static String serviceRunningNotificationsChannelId;
-
     public static synchronized String getServiceRunningNotificationsChannelId(Context context)
     {
         if (serviceRunningNotificationsChannelId == null)
@@ -74,8 +75,6 @@ public class CompatHelperBase
         }
         return serviceRunningNotificationsChannelId;
     }
-
-    private static String fileOperationsNotificationsChannelId;
 
     public static synchronized String getFileOperationsNotificationsChannelId(Context context)
     {

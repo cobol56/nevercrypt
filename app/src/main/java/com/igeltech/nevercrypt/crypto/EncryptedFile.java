@@ -11,15 +11,11 @@ import java.io.IOException;
 
 public class EncryptedFile extends TransRandomAccessIO
 {
-    public static boolean isBufferEmpty(byte[] buf, int offset, int count)
-    {
-        for (int i = 0; i < count; i++)
-            if (buf[offset + i] != 0)
-                return false;
-        return true;
-    }
-
     private static final int DEFAULT_BUFFER_SIZE_IN_BLOCKS = 16;
+    protected final long _dataOffset;
+    protected final int _fileBlockSize;
+    protected final EncryptedFileLayout _layout;
+    protected byte[] _transBuffer;
 
     public EncryptedFile(RandomAccessIO base, EncryptedFileLayout layout) throws FileNotFoundException
     {
@@ -39,7 +35,6 @@ public class EncryptedFile extends TransRandomAccessIO
         }
         catch (IOException ignored)
         {
-
         }
     }
 
@@ -53,10 +48,13 @@ public class EncryptedFile extends TransRandomAccessIO
         this(pathToFile.getFile().getRandomAccessIO(mode), layout, bufferSizeInBlocks);
     }
 
-    protected final long _dataOffset;
-    protected final int _fileBlockSize;
-    protected final EncryptedFileLayout _layout;
-    protected byte[] _transBuffer;
+    public static boolean isBufferEmpty(byte[] buf, int offset, int count)
+    {
+        for (int i = 0; i < count; i++)
+            if (buf[offset + i] != 0)
+                return false;
+        return true;
+    }
 
     @Override
     protected long calcBasePosition(long position)
@@ -75,7 +73,6 @@ public class EncryptedFile extends TransRandomAccessIO
     {
         if (baseBuffer != dstBuffer)
             System.arraycopy(baseBuffer, offset, dstBuffer, offset, count);
-
         if (!_allowSkip)
             decryptBuffer(dstBuffer, offset, count, bufferPosition);
         else

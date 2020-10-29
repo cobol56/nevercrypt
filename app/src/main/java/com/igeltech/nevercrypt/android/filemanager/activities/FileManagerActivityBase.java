@@ -57,6 +57,18 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
 {
     public static final String TAG = "FileManagerActivity";
     public static final String ACTION_ASK_OVERWRITE = "com.igeltech.nevercrypt.android.ACTION_ASK_OVERWRITE";
+    public static final String EXTRA_ALLOW_MULTIPLE = Intent.EXTRA_ALLOW_MULTIPLE;
+    public static final String EXTRA_ALLOW_FILE_SELECT = "com.igeltech.nevercrypt.android.ALLOW_FILE_SELECT";
+    public static final String EXTRA_ALLOW_FOLDER_SELECT = "com.igeltech.nevercrypt.android.ALLOW_FOLDER_SELECT";
+    public static final String EXTRA_ALLOW_CREATE_NEW_FILE = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FILE";
+    public static final String EXTRA_ALLOW_CREATE_NEW_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FOLDER";
+    public static final String EXTRA_ALLOW_BROWSE_CONTAINERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_CONTAINERS";
+    public static final String EXTRA_ALLOW_BROWSE_DEVICE = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DEVICE";
+    public static final String EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DOCUMENT_PROVIDERS";
+    public static final String EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_SELECT_FROM_CONTENT_PROVIDERS";
+    public static final String EXTRA_ALLOW_SELECT_ROOT_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_SELECT_ROOT_FOLDER";
+    protected static final String FOLDER_MIME_TYPE = "resource/folder";
+    public static Subject<Boolean> TEST_INIT_OBSERVABLE;
 
     static
     {
@@ -64,7 +76,96 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
             TEST_INIT_OBSERVABLE = BehaviorSubject.createDefault(false);
     }
 
-    public static Subject<Boolean> TEST_INIT_OBSERVABLE;
+    protected final DrawerController _drawer = createDrawerController();
+    private final BroadcastReceiver _updatePathReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            rereadCurrentLocation();
+        }
+    };
+    private final BroadcastReceiver _closeAllReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            checkIfCurrentLocationIsStillOpen();
+            getDrawerController().updateMenuItemViews();
+        }
+    };
+    private final BroadcastReceiver _locationChangedReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            if (isFinishing())
+                return;
+            try
+            {
+                Uri locUri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
+                if (locUri != null)
+                {
+                    Location changedLocation = LocationsManager.getLocationsManager(getApplicationContext()).getLocation(locUri);
+                    if (changedLocation != null)
+                    {
+                        Location loc = getRealLocation();
+                        if (loc != null && changedLocation.getId().equals(loc.getId()))
+                            checkIfCurrentLocationIsStillOpen();
+                        FileListDataFragment f = getFileListDataFragment();
+                        if (f != null && !LocationsManager.isOpen(changedLocation))
+                            f.removeLocationFromHistory(changedLocation);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.showAndLog(context, e);
+                finish();
+            }
+        }
+    };
+    private final BroadcastReceiver _locationAddedOrRemovedReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            if (isFinishing())
+                return;
+            if (LocationsManager.BROADCAST_LOCATION_REMOVED.equals(intent.getAction()))
+            {
+                try
+                {
+                    Uri locUri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
+                    if (locUri != null)
+                    {
+                        Location changedLocation = LocationsManager.getLocationsManager(getApplicationContext()).getLocation(locUri);
+                        if (changedLocation != null)
+                        {
+                            FileListDataFragment f = getFileListDataFragment();
+                            if (f != null)
+                                f.removeLocationFromHistory(changedLocation);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.showAndLog(context, e);
+                }
+            }
+            getDrawerController().reloadItems();
+        }
+    };
+    private final BroadcastReceiver _exitBroadcastReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            finish();
+        }
+    };
+    protected boolean _isLargeScreenLayout;
+    protected UserSettings _settings;
 
     public static Location getStartLocation(Context context)
     {
@@ -88,15 +189,12 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
         intent.setAction(Intent.ACTION_PICK);
         if (startPath == null)
             startPath = getStartLocation(context).getLocationUri();
-
         intent.setData(startPath);
-
         intent.putExtra(EXTRA_ALLOW_MULTIPLE, allowMultiSelect);
         intent.putExtra(EXTRA_ALLOW_FILE_SELECT, allowFileSelect);
         intent.putExtra(EXTRA_ALLOW_FOLDER_SELECT, allowDirSelect);
         intent.putExtra(EXTRA_ALLOW_CREATE_NEW_FILE, allowCreateNew);
         intent.putExtra(EXTRA_ALLOW_CREATE_NEW_FOLDER, allowCreateNew);
-
         intent.putExtra(EXTRA_ALLOW_BROWSE_DEVICE, allowBrowseDevice);
         intent.putExtra(EXTRA_ALLOW_BROWSE_CONTAINERS, allowBrowseContainer);
         return intent;
@@ -112,17 +210,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     {
         selectPath(context, f, requestCode, allowMultiSelect, allowFileSelect, allowDirSelect, allowCreateNew, true, true);
     }
-
-    public static final String EXTRA_ALLOW_MULTIPLE = Intent.EXTRA_ALLOW_MULTIPLE;
-    public static final String EXTRA_ALLOW_FILE_SELECT = "com.igeltech.nevercrypt.android.ALLOW_FILE_SELECT";
-    public static final String EXTRA_ALLOW_FOLDER_SELECT = "com.igeltech.nevercrypt.android.ALLOW_FOLDER_SELECT";
-    public static final String EXTRA_ALLOW_CREATE_NEW_FILE = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FILE";
-    public static final String EXTRA_ALLOW_CREATE_NEW_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FOLDER";
-    public static final String EXTRA_ALLOW_BROWSE_CONTAINERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_CONTAINERS";
-    public static final String EXTRA_ALLOW_BROWSE_DEVICE = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DEVICE";
-    public static final String EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DOCUMENT_PROVIDERS";
-    public static final String EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_SELECT_FROM_CONTENT_PROVIDERS";
-    public static final String EXTRA_ALLOW_SELECT_ROOT_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_SELECT_ROOT_FOLDER";
 
     public static Location getRealLocation(Location loc)
     {
@@ -270,7 +357,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
         registerReceiver(_locationAddedOrRemovedReceiver, LocationsManager.getLocationRemovedIntentFilter());
         registerReceiver(_locationChangedReceiver, new IntentFilter(LocationsManager.BROADCAST_LOCATION_CHANGED));
         registerReceiver(_locationAddedOrRemovedReceiver, new IntentFilter(LocationsManager.BROADCAST_LOCATION_CHANGED));
-
         _drawer.init(savedInstanceState);
         AppInitHelper.
                 createObservable(this).
@@ -313,7 +399,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     @Override
     public void onToggleFullScreen()
     {
-
     }
 
     @Override
@@ -346,21 +431,16 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     public void onBackPressed()
     {
         Logger.debug(TAG + ": onBackPressed");
-
         if (_drawer.onBackPressed())
             return;
-
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment2);
         if (f != null && ((FileManagerFragment) f).onBackPressed())
             return;
-
         if (hideSecondaryFragment())
             return;
-
         f = getSupportFragmentManager().findFragmentById(R.id.fragment1);
         if (f != null && ((FileManagerFragment) f).onBackPressed())
             return;
-
         super.onBackPressed();
     }
 
@@ -501,100 +581,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     }
 
     protected abstract DrawerController createDrawerController();
-
-    protected static final String FOLDER_MIME_TYPE = "resource/folder";
-    protected final DrawerController _drawer = createDrawerController();
-    protected boolean _isLargeScreenLayout;
-    protected UserSettings _settings;
-    private final BroadcastReceiver _updatePathReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            rereadCurrentLocation();
-        }
-    };
-    private final BroadcastReceiver _closeAllReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            checkIfCurrentLocationIsStillOpen();
-            getDrawerController().updateMenuItemViews();
-        }
-    };
-    private final BroadcastReceiver _locationChangedReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            if (isFinishing())
-                return;
-
-            try
-            {
-                Uri locUri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
-                if (locUri != null)
-                {
-                    Location changedLocation = LocationsManager.getLocationsManager(getApplicationContext()).getLocation(locUri);
-                    if (changedLocation != null)
-                    {
-                        Location loc = getRealLocation();
-                        if (loc != null && changedLocation.getId().equals(loc.getId()))
-                            checkIfCurrentLocationIsStillOpen();
-
-                        FileListDataFragment f = getFileListDataFragment();
-                        if (f != null && !LocationsManager.isOpen(changedLocation))
-                            f.removeLocationFromHistory(changedLocation);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.showAndLog(context, e);
-                finish();
-            }
-        }
-    };
-    private final BroadcastReceiver _locationAddedOrRemovedReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            if (isFinishing())
-                return;
-            if (LocationsManager.BROADCAST_LOCATION_REMOVED.equals(intent.getAction()))
-            {
-                try
-                {
-                    Uri locUri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
-                    if (locUri != null)
-                    {
-                        Location changedLocation = LocationsManager.getLocationsManager(getApplicationContext()).getLocation(locUri);
-                        if (changedLocation != null)
-                        {
-                            FileListDataFragment f = getFileListDataFragment();
-                            if (f != null)
-                                f.removeLocationFromHistory(changedLocation);
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.showAndLog(context, e);
-                }
-            }
-            getDrawerController().reloadItems();
-        }
-    };
-    private final BroadcastReceiver _exitBroadcastReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            finish();
-        }
-    };
 
     protected void actionMain(Bundle savedState) throws Exception
     {

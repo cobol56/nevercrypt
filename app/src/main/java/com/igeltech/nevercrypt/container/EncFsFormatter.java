@@ -17,6 +17,14 @@ import java.io.IOException;
 
 public class EncFsFormatter extends LocationFormatter
 {
+    protected final Config _config = new Config();
+    protected String _dataCodecName, _nameCodecName;
+
+    public EncFsFormatter()
+    {
+        _config.initNew(_context);
+    }
+
     public static AlgInfo findInfoByName(Config config, Iterable<? extends AlgInfo> supportedAlgs, String name)
     {
         for (AlgInfo info : supportedAlgs)
@@ -25,11 +33,6 @@ public class EncFsFormatter extends LocationFormatter
                 return info.select(config);
         }
         throw new IllegalArgumentException("Unsupported codec: " + name);
-    }
-
-    public EncFsFormatter()
-    {
-        _config.initNew(_context);
     }
 
     public void setDataCodecName(String name)
@@ -46,9 +49,6 @@ public class EncFsFormatter extends LocationFormatter
     {
         return _config;
     }
-
-    protected String _dataCodecName, _nameCodecName;
-    protected final Config _config = new Config();
 
     @Override
     protected CryptoLocation createLocation(Location location) throws IOException, ApplicationException

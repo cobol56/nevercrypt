@@ -33,53 +33,13 @@ import java.util.List;
 
 class FileRecord extends FsBrowserRecord
 {
-    public static class ExtFileInfo implements ExtendedFileInfoLoader.ExtendedFileInfo
-    {
-        Drawable mainIcon;
-
-        @Override
-        public void attach(BrowserRecord record)
-        {
-            FileRecord fr = (FileRecord) record;
-            _records.add(fr);
-            fr._mainIcon = mainIcon;
-            fr._needLoadExtInfo = false;
-            FileRecord.updateRowView(fr.getHostFragment(), fr);
-        }
-
-        @Override
-        public void detach(BrowserRecord record)
-        {
-            _records.remove(record);
-        }
-
-        @Override
-        public void clear()
-        {
-            for (BrowserRecord r : _records)
-            {
-                FileRecord fr = (FileRecord) r;
-                RowViewInfo rvi = FileRecord.getCurrentRowViewInfo(fr.getHostFragment(), fr);
-                if (rvi != null)
-                {
-                    AppCompatImageView iv = rvi.view.findViewById(android.R.id.icon);
-                    iv.setImageDrawable(null);
-                    iv.setImageBitmap(null);
-                    FileRecord.updateRowView(rvi);
-                }
-            }
-
-            //if(mainIcon instanceof BitmapDrawable)
-            //{
-            //   Bitmap b = ((BitmapDrawable) mainIcon).getBitmap();
-            //    if(b!=null)
-            //        b.recycle();
-            //}
-            mainIcon = null;
-        }
-
-        private final List<BrowserRecord> _records = new ArrayList<>();
-    }
+    private static Drawable _fileIcon;
+    private final boolean _loadPreviews;
+    protected boolean _needLoadExtInfo;
+    private int _iconWidth = 40, _iconHeight = 40;
+    private String _infoString;
+    private Drawable _mainIcon;
+    private boolean _animateIcon;
 
     public FileRecord(Context context)
     {
@@ -88,6 +48,15 @@ class FileRecord extends FsBrowserRecord
         DisplayMetrics dm = _context.getResources().getDisplayMetrics();
         _iconWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, GlobalConfig.FB_PREVIEW_WIDTH, dm);
         _iconHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, GlobalConfig.FB_PREVIEW_HEIGHT, dm);
+    }
+
+    private static synchronized Drawable getFileIcon(Context context)
+    {
+        if (_fileIcon == null && context != null)
+        {
+            _fileIcon = context.getResources().getDrawable(R.drawable.ic_file, context.getTheme());
+        }
+        return _fileIcon;
     }
 
     @Override
@@ -115,7 +84,6 @@ class FileRecord extends FsBrowserRecord
         }
         else
             tv.setVisibility(View.INVISIBLE);
-
         AppCompatImageView iv = view.findViewById(android.R.id.icon);
         if (_mainIcon != null)
         {
@@ -150,8 +118,6 @@ class FileRecord extends FsBrowserRecord
         return _needLoadExtInfo;
     }
 
-    protected boolean _needLoadExtInfo;
-
     @Override
     protected Drawable getDefaultIcon()
     {
@@ -168,7 +134,6 @@ class FileRecord extends FsBrowserRecord
             }
             catch (IOException ignored)
             {
-
             }
         }
         else
@@ -227,30 +192,12 @@ class FileRecord extends FsBrowserRecord
         return bitmap != null ? new BitmapDrawable(_context.getResources(), bitmap) : null;
     }
 
-    private static Drawable _fileIcon;
-
-    private static synchronized Drawable getFileIcon(Context context)
-    {
-        if (_fileIcon == null && context != null)
-        {
-            _fileIcon = context.getResources().getDrawable(R.drawable.ic_file, context.getTheme());
-        }
-        return _fileIcon;
-    }
-
-    private int _iconWidth = 40, _iconHeight = 40;
-    private String _infoString;
-    private Drawable _mainIcon;
-    private boolean _animateIcon;
-    private final boolean _loadPreviews;
-
     private Drawable getDefaultAppIcon(String mime)
     {
         if (mime.equals("*/*"))
             return null;
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setType(mime);
-
         PackageManager pacMan = _context.getPackageManager();
         try
         {
@@ -269,6 +216,52 @@ class FileRecord extends FsBrowserRecord
             //at android.os.Parcel.readException(Parcel.java:1552)
         }
         return null;
+    }
+
+    public static class ExtFileInfo implements ExtendedFileInfoLoader.ExtendedFileInfo
+    {
+        private final List<BrowserRecord> _records = new ArrayList<>();
+        Drawable mainIcon;
+
+        @Override
+        public void attach(BrowserRecord record)
+        {
+            FileRecord fr = (FileRecord) record;
+            _records.add(fr);
+            fr._mainIcon = mainIcon;
+            fr._needLoadExtInfo = false;
+            FileRecord.updateRowView(fr.getHostFragment(), fr);
+        }
+
+        @Override
+        public void detach(BrowserRecord record)
+        {
+            _records.remove(record);
+        }
+
+        @Override
+        public void clear()
+        {
+            for (BrowserRecord r : _records)
+            {
+                FileRecord fr = (FileRecord) r;
+                RowViewInfo rvi = FileRecord.getCurrentRowViewInfo(fr.getHostFragment(), fr);
+                if (rvi != null)
+                {
+                    AppCompatImageView iv = rvi.view.findViewById(android.R.id.icon);
+                    iv.setImageDrawable(null);
+                    iv.setImageBitmap(null);
+                    FileRecord.updateRowView(rvi);
+                }
+            }
+            //if(mainIcon instanceof BitmapDrawable)
+            //{
+            //   Bitmap b = ((BitmapDrawable) mainIcon).getBitmap();
+            //    if(b!=null)
+            //        b.recycle();
+            //}
+            mainIcon = null;
+        }
     }
 
     /*

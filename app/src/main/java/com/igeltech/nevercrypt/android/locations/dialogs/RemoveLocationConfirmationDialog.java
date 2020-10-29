@@ -14,6 +14,7 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 public class RemoveLocationConfirmationDialog extends ConfirmationDialog
 {
     public static final String TAG = "RemoveLocationConfirmationDialog";
+    private Location _loc;
 
     public static void showDialog(FragmentManager fm, Location loc)
     {
@@ -47,6 +48,4 @@ public class RemoveLocationConfirmationDialog extends ConfirmationDialog
     {
         return getString(R.string.do_you_really_want_to_remove_from_the_list, _loc == null ? "" : _loc.getTitle());
     }
-
-    private Location _loc;
 }

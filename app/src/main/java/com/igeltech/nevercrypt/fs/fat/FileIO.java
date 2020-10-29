@@ -10,6 +10,11 @@ import java.util.Date;
 
 public class FileIO extends ClusterChainIO
 {
+    private final FatFS _fat;
+    private final FatPath _basePath;
+    private final DirEntry _fileEntry;
+    private final Object _opTag;
+
     public FileIO(FatFS fat, DirEntry fileEntry, FatPath path, File.AccessMode mode, Object opTag) throws IOException
     {
         fat.super(fileEntry.startCluster, path, fileEntry.fileSize, mode);
@@ -51,11 +56,6 @@ public class FileIO extends ClusterChainIO
             updateFileEntry();
         }
     }
-
-    private final FatFS _fat;
-    private final FatPath _basePath;
-    private final DirEntry _fileEntry;
-    private final Object _opTag;
 
     @Override
     protected void writeBuffer() throws IOException

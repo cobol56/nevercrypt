@@ -9,6 +9,9 @@ import java.io.IOException;
 
 public class StdFsPath extends PathBase
 {
+    private final String _pathString;
+    private final StdFs _stdFS;
+
     public StdFsPath(StdFs stdFs, String pathString)
     {
         super(stdFs);
@@ -62,9 +65,6 @@ public class StdFsPath extends PathBase
     {
         return _pathString;
     }
-
-    private final String _pathString;
-    private final StdFs _stdFS;
 
     private StringPathUtil getAbsPath()
     {

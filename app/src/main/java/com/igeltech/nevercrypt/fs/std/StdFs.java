@@ -10,6 +10,14 @@ import java.io.IOException;
 
 public class StdFs implements FileSystem
 {
+    private static StdFs _rootStdFs;
+    private final StringPathUtil _rootDir;
+
+    protected StdFs(String rootDir)
+    {
+        _rootDir = new StringPathUtil(rootDir);
+    }
+
     public static StdFsPath makePath(Object... elements) throws IOException
     {
         return (StdFsPath) Util.makePath(getStdFs(), elements);
@@ -28,7 +36,6 @@ public class StdFs implements FileSystem
                 _rootStdFs = new StdFs("");
             return _rootStdFs;
         }
-
         return new StdFs(rootDir);
     }
 
@@ -54,7 +61,6 @@ public class StdFs implements FileSystem
     @Override
     public void close(boolean force) throws IOException
     {
-
     }
 
     @Override
@@ -73,12 +79,4 @@ public class StdFs implements FileSystem
         StringPathUtil pu = new StringPathUtil(f.getPath());
         return getPath(pu.getSubPath(_rootDir).toString());
     }
-
-    protected StdFs(String rootDir)
-    {
-        _rootDir = new StringPathUtil(rootDir);
-    }
-
-    private static StdFs _rootStdFs;
-    private final StringPathUtil _rootDir;
 }

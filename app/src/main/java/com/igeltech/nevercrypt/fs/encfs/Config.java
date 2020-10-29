@@ -34,6 +34,22 @@ public class Config
 {
     public static final String CONFIG_FILENAME2 = "encfs6.xml";
     public static final String CONFIG_FILENAME = '.' + CONFIG_FILENAME2;
+    private String _creator;
+    private int _subVersion;
+    private DataCodecInfo _dataCipher;
+    private NameCodecInfo _nameCipher;
+    private int _keySizeBits;
+    private int _blockSize;
+    private byte[] _keyData;
+    private byte[] _salt;
+    private int _kdfIterations;
+    private int _desiredKDFDuration;
+    private int _blockMACBytes;      // MAC headers on blocks..
+    private int _blockMACRandBytes;  // number of random bytes in the block header
+    private boolean _uniqueIV;            // per-file Initialization Vector
+    private boolean _externalIVChaining;  // IV seeding by filename IV chaining
+    private boolean _chainedNameIV;  // filename IV chaining
+    private boolean _allowHoles;     // allow holes in files (implicit zero blocks)
 
     public static Path getConfigFilePath(com.igeltech.nevercrypt.fs.Directory dir) throws IOException
     {
@@ -105,7 +121,6 @@ public class Config
         {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
             Document doc = docBuilder.newDocument();
             doc.setXmlStandalone(true);
             Element el = doc.createElement("boost_serialization");
@@ -113,12 +128,10 @@ public class Config
             el.setAttribute("signature", "serialization::archive");
             el.setAttribute("version", "14");
             el.appendChild(makeCfgElement(doc));
-
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "boost_serialization");
             DOMSource source = new DOMSource(doc);
-
             StreamResult result = new StreamResult(out);
             transformer.transform(source, result);
         }
@@ -275,23 +288,6 @@ public class Config
         _blockMACRandBytes = val;
     }
 
-    private String _creator;
-    private int _subVersion;
-    private DataCodecInfo _dataCipher;
-    private NameCodecInfo _nameCipher;
-    private int _keySizeBits;
-    private int _blockSize;
-    private byte[] _keyData;
-    private byte[] _salt;
-    private int _kdfIterations;
-    private int _desiredKDFDuration;
-    private int _blockMACBytes;      // MAC headers on blocks..
-    private int _blockMACRandBytes;  // number of random bytes in the block header
-    private boolean _uniqueIV;            // per-file Initialization Vector
-    private boolean _externalIVChaining;  // IV seeding by filename IV chaining
-    private boolean _chainedNameIV;  // filename IV chaining
-    private boolean _allowHoles;     // allow holes in files (implicit zero blocks)
-
     private Iterable<NameCodecInfo> getSupportedNameCodecs()
     {
         return FS.getSupportedNameCodecs();
@@ -316,12 +312,10 @@ public class Config
         _blockMACBytes = getParam(cfg, "blockMACBytes", 0);
         _blockMACRandBytes = getParam(cfg, "blockMACRandBytes", 0);
         _allowHoles = getParam(cfg, "allowHoles", true);
-
         _keyData = getBytes(cfg, "encodedKeyData");
         int size = getParam(cfg, "encodedKeySize", 0);
         if (size > 0 && size != _keyData.length)
             throw new IllegalArgumentException("Failed decoding key data");
-
         _salt = getBytes(cfg, "saltData");
         size = getParam(cfg, "saltLen", 0);
         if (size > 0 && size != _salt.length)
@@ -391,99 +385,76 @@ public class Config
         cfgEl.setAttribute("class_id", "0");
         cfgEl.setAttribute("tracking_level", "0");
         cfgEl.setAttribute("version", "20");
-
         Element el = doc.createElement("version");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_subVersion));
-
         el = doc.createElement("creator");
         cfgEl.appendChild(el);
         el.setTextContent(_creator);
-
         el = makeAlgInfoElement(doc, "cipherAlg", _dataCipher);
         cfgEl.appendChild(el);
         el.setAttribute("class_id", "1");
         el.setAttribute("tracking_level", "0");
         el.setAttribute("version", "0");
-
         el = makeAlgInfoElement(doc, "nameAlg", _nameCipher);
         cfgEl.appendChild(el);
-
         el = doc.createElement("keySize");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_keySizeBits));
-
         el = doc.createElement("blockSize");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_blockSize));
-
         el = doc.createElement("uniqueIV");
         cfgEl.appendChild(el);
         el.setTextContent(_uniqueIV ? "1" : "0");
-
         el = doc.createElement("chainedNameIV");
         cfgEl.appendChild(el);
         el.setTextContent(_chainedNameIV ? "1" : "0");
-
         el = doc.createElement("externalIVChaining");
         cfgEl.appendChild(el);
         el.setTextContent(_externalIVChaining ? "1" : "0");
-
         el = doc.createElement("blockMACBytes");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_blockMACBytes));
-
         el = doc.createElement("blockMACRandBytes");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_blockMACRandBytes));
-
         el = doc.createElement("allowHoles");
         cfgEl.appendChild(el);
         el.setTextContent(_allowHoles ? "1" : "0");
-
         el = doc.createElement("encodedKeySize");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_keyData.length));
-
         el = doc.createElement("encodedKeyData");
         cfgEl.appendChild(el);
         el.setTextContent(Base64.encodeToString(_keyData, Base64.DEFAULT));
-
         el = doc.createElement("saltLen");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_salt.length));
-
         el = doc.createElement("saltData");
         cfgEl.appendChild(el);
         el.setTextContent(Base64.encodeToString(_salt, Base64.DEFAULT));
-
         el = doc.createElement("kdfIterations");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_kdfIterations));
-
         el = doc.createElement("desiredKDFDuration");
         cfgEl.appendChild(el);
         el.setTextContent(String.valueOf(_desiredKDFDuration));
-
         return cfgEl;
     }
 
     private Element makeAlgInfoElement(Document doc, String paramName, AlgInfo info)
     {
         Element el = doc.createElement(paramName);
-
         Element el2 = doc.createElement("name");
         el.appendChild(el2);
         el2.setTextContent(info.getName());
-
         el2 = doc.createElement("major");
         el.appendChild(el2);
         el2.setTextContent(String.valueOf(info.getVersion1()));
-
         el2 = doc.createElement("minor");
         el.appendChild(el2);
         el2.setTextContent(String.valueOf(info.getVersion2()));
-
         return el;
     }
 

@@ -17,6 +17,13 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 public abstract class CreateContainerTaskFragmentBase extends CreateLocationTaskFragment
 {
+    public static final String ARG_CONTAINER_FORMAT = "com.igeltech.nevercrypt.android.CONTAINER_FORMAT";
+    public static final String ARG_CIPHER_MODE_NAME = "com.igeltech.nevercrypt.android.CIPHER_MODE_NAME";
+    public static final String ARG_HASHING_ALG = "com.igeltech.nevercrypt.android.HASHING_ALG";
+    public static final String ARG_SIZE = "com.igeltech.nevercrypt.android.SIZE";
+    public static final String ARG_FILL_FREE_SPACE = "com.igeltech.nevercrypt.android.FILL_FREE_SPACE";
+    public static final String ARG_FILE_SYSTEM_TYPE = "com.igeltech.nevercrypt.android.FILE_SYSTEM_TYPE";
+
     public static ContainerFormatInfo getContainerFormatByName(String name)
     {
         for (ContainerFormatInfo ci : Container.getSupportedFormats())
@@ -24,13 +31,6 @@ public abstract class CreateContainerTaskFragmentBase extends CreateLocationTask
                 return ci;
         return null;
     }
-
-    public static final String ARG_CONTAINER_FORMAT = "com.igeltech.nevercrypt.android.CONTAINER_FORMAT";
-    public static final String ARG_CIPHER_MODE_NAME = "com.igeltech.nevercrypt.android.CIPHER_MODE_NAME";
-    public static final String ARG_HASHING_ALG = "com.igeltech.nevercrypt.android.HASHING_ALG";
-    public static final String ARG_SIZE = "com.igeltech.nevercrypt.android.SIZE";
-    public static final String ARG_FILL_FREE_SPACE = "com.igeltech.nevercrypt.android.FILL_FREE_SPACE";
-    public static final String ARG_FILE_SYSTEM_TYPE = "com.igeltech.nevercrypt.android.FILE_SYSTEM_TYPE";
 
     @Override
     protected LocationFormatter createFormatter()
@@ -69,7 +69,6 @@ public abstract class CreateContainerTaskFragmentBase extends CreateLocationTask
             throw new UserException(_context, R.string.container_file_name_is_not_specified);
         if (args.getInt(ARG_SIZE) < 1)
             throw new UserException(getActivity(), R.string.err_container_size_is_too_small);
-
         if (!getArguments().getBoolean(ARG_OVERWRITE, false))
         {
             if (path.exists() && path.isFile() && path.getFile().getSize() > 0)

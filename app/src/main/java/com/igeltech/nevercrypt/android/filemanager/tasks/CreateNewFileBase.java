@@ -23,6 +23,31 @@ import io.reactivex.subjects.Subject;
 
 public abstract class CreateNewFileBase
 {
+    public static final int FILE_TYPE_FILE = 0;
+    public static final int FILE_TYPE_FOLDER = 1;
+    public static Subject<Boolean> TEST_OBSERVABLE;
+
+    static
+    {
+        if (GlobalConfig.isTest())
+            TEST_OBSERVABLE = PublishSubject.create();
+    }
+
+    protected final Context _context;
+    protected final Location _location;
+    protected final String _fileName;
+    private final int _fileType;
+    private final boolean _returnExisting;
+
+    CreateNewFileBase(Context context, Location location, String fileName, int fileType, boolean returnExisting)
+    {
+        _context = context;
+        _location = location;
+        _fileName = fileName;
+        _fileType = fileType;
+        _returnExisting = returnExisting;
+    }
+
     public static Single<BrowserRecord> createObservable(Context context, Location location, String fileName, int fileType, boolean returnExisting)
     {
         Single<BrowserRecord> observable = Single.create(em -> {
@@ -35,25 +60,6 @@ public abstract class CreateNewFileBase
                     doOnSubscribe(res -> TEST_OBSERVABLE.onNext(true)).
                     doFinally(() -> TEST_OBSERVABLE.onNext(false));
         return observable;
-    }
-
-    static
-    {
-        if (GlobalConfig.isTest())
-            TEST_OBSERVABLE = PublishSubject.create();
-    }
-
-    public static Subject<Boolean> TEST_OBSERVABLE;
-    public static final int FILE_TYPE_FILE = 0;
-    public static final int FILE_TYPE_FOLDER = 1;
-
-    CreateNewFileBase(Context context, Location location, String fileName, int fileType, boolean returnExisting)
-    {
-        _context = context;
-        _location = location;
-        _fileName = fileName;
-        _fileType = fileType;
-        _returnExisting = returnExisting;
     }
 
     protected BrowserRecord create() throws Exception
@@ -79,12 +85,6 @@ public abstract class CreateNewFileBase
                 throw new IllegalArgumentException("Unsupported file type");
         }
     }
-
-    protected final Context _context;
-    protected final Location _location;
-    protected final String _fileName;
-    private final int _fileType;
-    private final boolean _returnExisting;
 
     private FolderRecord createNewFolder(String fileName) throws IOException
     {

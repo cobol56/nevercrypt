@@ -13,6 +13,38 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class PropertyEditorBase implements PropertyEditor
 {
+    protected final int _layoutResId, _titleResId, _descResId;
+    protected final PropertyEditor.Host _host;
+    protected String _title, _desc;
+    protected View _view;
+    private int _propertyId;
+    private int _startPosition;
+
+    protected PropertyEditorBase(PropertyEditor.Host host, int layoutResId, int titleResId, int descResId)
+    {
+        _layoutResId = layoutResId;
+        _host = host;
+        _titleResId = titleResId;
+        _descResId = descResId;
+        _propertyId = _titleResId;
+        _title = null;
+        _desc = null;
+        //_view = createView();
+    }
+
+    protected PropertyEditorBase(PropertyEditor.Host host, int propertyId, int layoutResId, String title, String desc)
+    {
+        _layoutResId = layoutResId;
+        _host = host;
+        _title = title;
+        _desc = desc;
+        _propertyId = propertyId;
+        _titleResId = 0;
+        _descResId = 0;
+        _title = title;
+        _desc = desc;
+    }
+
     public static int getReqCode(int fieldIdx, int fieldRecCode)
     {
         return (fieldRecCode << 8) + fieldIdx;
@@ -45,7 +77,6 @@ public abstract class PropertyEditorBase implements PropertyEditor
     {
         if (_view == null)
             _view = createView(parent);
-
         return _view;
     }
 
@@ -69,7 +100,6 @@ public abstract class PropertyEditorBase implements PropertyEditor
     @Override
     public void onClick()
     {
-
     }
 
     @Override
@@ -104,36 +134,6 @@ public abstract class PropertyEditorBase implements PropertyEditor
         _startPosition = pos;
     }
 
-    protected PropertyEditorBase(PropertyEditor.Host host, int layoutResId, int titleResId, int descResId)
-    {
-        _layoutResId = layoutResId;
-        _host = host;
-        _titleResId = titleResId;
-        _descResId = descResId;
-        _propertyId = _titleResId;
-        _title = null;
-        _desc = null;
-        //_view = createView();
-    }
-
-    protected PropertyEditorBase(PropertyEditor.Host host, int propertyId, int layoutResId, String title, String desc)
-    {
-        _layoutResId = layoutResId;
-        _host = host;
-        _title = title;
-        _desc = desc;
-        _propertyId = propertyId;
-        _titleResId = 0;
-        _descResId = 0;
-        _title = title;
-        _desc = desc;
-    }
-
-    protected final int _layoutResId, _titleResId, _descResId;
-    protected String _title, _desc;
-    protected final PropertyEditor.Host _host;
-    protected View _view;
-
     protected View createView(ViewGroup parent)
     {
         LayoutInflater li = (LayoutInflater) getHost().getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -147,7 +147,6 @@ public abstract class PropertyEditorBase implements PropertyEditor
             else if (_title != null)
                 tv.setText(_title);
         }
-
         tv = view.findViewById(R.id.desc);
         if (tv != null)
         {
@@ -179,7 +178,4 @@ public abstract class PropertyEditorBase implements PropertyEditor
     protected void onPropertyRequestResult(int propertyRequestCode, int resultCode, Intent data)
     {
     }
-
-    private int _propertyId;
-    private int _startPosition;
 }

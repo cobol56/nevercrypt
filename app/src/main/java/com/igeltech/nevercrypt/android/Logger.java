@@ -14,6 +14,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
 public class Logger implements UncaughtExceptionHandler
 {
     public static final String TAG = "NeverCrypt";
+    private static final Object _syncObject = new Object();
+    private static Logger l;
+    private static boolean _disableLog = false;
 
     public static void disableLog(boolean val)
     {
@@ -24,10 +27,6 @@ public class Logger implements UncaughtExceptionHandler
     {
         return _disableLog;
     }
-
-    private static Logger l;
-    private static boolean _disableLog = false;
-    private static final Object _syncObject = new Object();
 
     public static void initLogger() throws IOException
     {
@@ -122,7 +121,6 @@ public class Logger implements UncaughtExceptionHandler
         }
         catch (Throwable ignored)
         {
-
         }
     }
 }

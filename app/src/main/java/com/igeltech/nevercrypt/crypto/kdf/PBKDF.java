@@ -15,6 +15,10 @@ import java.util.concurrent.CancellationException;
 
 public abstract class PBKDF
 {
+    private static final int COUNTER_LENGTH = 4;
+    protected ProgressReporter _progressReporter;
+    private int _finishedIterations, _totalIterations;
+
     public static Iterable<PBKDF> getAvailablePBKDFS()
     {
         return Arrays.asList(new HMACSHA512KDF(), new HMACRIPEMD160KDF(), new HMACWhirlpoolKDF());
@@ -43,7 +47,6 @@ public abstract class PBKDF
                 deriveKey(hmac, srcKey, salt, iterations, u, b);
                 System.arraycopy(u, 0, res, (b - 1) * digestLength, digestLength);
             }
-
             deriveKey(hmac, srcKey, salt, iterations, u, b);
             System.arraycopy(u, 0, res, (b - 1) * digestLength, r);
             Arrays.fill(u, (byte) 0);
@@ -60,10 +63,6 @@ public abstract class PBKDF
         _progressReporter = r;
     }
 
-    protected ProgressReporter _progressReporter;
-    private static final int COUNTER_LENGTH = 4;
-    private int _finishedIterations, _totalIterations;
-
     protected void calcHMAC(HMAC hmac, byte[] key, byte[] message, byte[] result) throws DigestException, EncryptionEngineException
     {
         hmac.calcHMAC(message, 0, message.length, result);
@@ -75,15 +74,12 @@ public abstract class PBKDF
         ByteBuffer bb = ByteBuffer.allocate(COUNTER_LENGTH);
         bb.order(ByteOrder.BIG_ENDIAN);
         bb.putInt(block);
-
         byte[] init = new byte[salt.length + COUNTER_LENGTH];
         System.arraycopy(salt, 0, init, 0, salt.length);
         System.arraycopy(bb.array(), 0, init, salt.length, COUNTER_LENGTH);
-
         byte[] j = new byte[digestLength];
         calcHMAC(hmac, key, init, j);
         System.arraycopy(j, 0, u, 0, digestLength);
-
         int prevPrc = -1;
         byte[] k = new byte[digestLength];
         for (int c = 1; c < iterations; c++)
@@ -120,30 +116,30 @@ public abstract class PBKDF
 
 class HMACSHA512 extends HMAC
 {
+    private static final int SHA512_BLOCK_SIZE = 128;
+
     public HMACSHA512(byte[] key) throws NoSuchAlgorithmException
     {
         super(key, MessageDigest.getInstance("SHA-512"), SHA512_BLOCK_SIZE);
     }
-
-    private static final int SHA512_BLOCK_SIZE = 128;
 }
 
 class HMACRIPEMD160 extends HMAC
 {
+    private static final int RIPEMD160_BLOCK_SIZE = 64;
+
     public HMACRIPEMD160(byte[] key) throws NoSuchAlgorithmException
     {
         super(key, new RIPEMD160(), RIPEMD160_BLOCK_SIZE);
     }
-
-    private static final int RIPEMD160_BLOCK_SIZE = 64;
 }
 
 class HMACWhirlpool extends HMAC
 {
+    private static final int WHIRLPOOL_BLOCK_SIZE = 64;
+
     public HMACWhirlpool(byte[] key) throws NoSuchAlgorithmException
     {
         super(key, new Whirlpool(), WHIRLPOOL_BLOCK_SIZE);
     }
-
-    private static final int WHIRLPOOL_BLOCK_SIZE = 64;
 }

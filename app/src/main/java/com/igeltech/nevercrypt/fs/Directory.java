@@ -5,10 +5,6 @@ import java.io.IOException;
 
 public interface Directory extends FSRecord
 {
-    interface Contents extends Iterable<Path>, Closeable
-    {
-    }
-
     Directory createDirectory(String name) throws IOException;
 
     File createFile(String name) throws IOException;
@@ -18,4 +14,8 @@ public interface Directory extends FSRecord
     long getTotalSpace() throws IOException;
 
     long getFreeSpace() throws IOException;
+
+    interface Contents extends Iterable<Path>, Closeable
+    {
+    }
 }

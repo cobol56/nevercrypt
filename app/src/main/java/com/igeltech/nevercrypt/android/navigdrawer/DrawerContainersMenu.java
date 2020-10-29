@@ -11,15 +11,15 @@ import java.util.Collection;
 
 public class DrawerContainersMenu extends DrawerSubMenuBase
 {
+    public DrawerContainersMenu(DrawerControllerBase drawerController)
+    {
+        super(drawerController);
+    }
+
     @Override
     public String getTitle()
     {
         return getContext().getString(R.string.containers);
-    }
-
-    public DrawerContainersMenu(DrawerControllerBase drawerController)
-    {
-        super(drawerController);
     }
 
     @Override
@@ -35,7 +35,6 @@ public class DrawerContainersMenu extends DrawerSubMenuBase
                 res.add(new DrawerEncFsMenuItem(loc, getDrawerController()));
         }
         res.add(new DrawerManageContainersMenuItem(getDrawerController()));
-
         return res;
     }
 }

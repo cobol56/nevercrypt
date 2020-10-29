@@ -4,6 +4,9 @@ import java.io.IOException;
 
 public class DirectoryIsNotEmptyException extends IOException
 {
+    private static final long serialVersionUID = 1L;
+    private final String _path;
+
     public DirectoryIsNotEmptyException(String path)
     {
         _path = path;
@@ -19,7 +22,4 @@ public class DirectoryIsNotEmptyException extends IOException
     {
         return _path;
     }
-
-    private static final long serialVersionUID = 1L;
-    private final String _path;
 }

@@ -2,21 +2,21 @@ package com.igeltech.nevercrypt.locations;
 
 public interface OMLocation extends Openable
 {
-    interface ExternalSettings extends Location.ExternalSettings
-    {
-        void setPassword(byte[] password);
-
-        byte[] getPassword();
-
-        void setCustomKDFIterations(int val);
-
-        int getCustomKDFIterations();
-
-        boolean hasPassword();
-    }
-
     @Override
     ExternalSettings getExternalSettings();
 
     boolean isOpenOrMounted();
+
+    interface ExternalSettings extends Location.ExternalSettings
+    {
+        byte[] getPassword();
+
+        void setPassword(byte[] password);
+
+        int getCustomKDFIterations();
+
+        void setCustomKDFIterations(int val);
+
+        boolean hasPassword();
+    }
 }

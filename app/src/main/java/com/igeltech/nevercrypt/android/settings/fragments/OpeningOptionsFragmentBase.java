@@ -18,6 +18,10 @@ import com.igeltech.nevercrypt.settings.Settings;
 
 public abstract class OpeningOptionsFragmentBase extends PropertiesFragmentBase implements PropertiesHostWithStateBundle, PropertiesHostWithLocation
 {
+    private final Bundle _state = new Bundle();
+    protected Openable _location;
+    protected Settings _settings;
+
     public void saveExternalSettings()
     {
         _location.saveExternalSettings();
@@ -58,9 +62,6 @@ public abstract class OpeningOptionsFragmentBase extends PropertiesFragmentBase 
             createContainerProperties();
     }
 
-    protected Openable _location;
-    protected Settings _settings;
-
     protected void createLocationProperties()
     {
         _propertiesView.addProperty(new OpenInReadOnlyModePropertyEditor(this));
@@ -79,6 +80,4 @@ public abstract class OpeningOptionsFragmentBase extends PropertiesFragmentBase 
     protected void createContainerProperties()
     {
     }
-
-    private final Bundle _state = new Bundle();
 }

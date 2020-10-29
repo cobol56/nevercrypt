@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class LocRootDirRecord extends FolderRecord
 {
+    private String _rootFolderName;
+
     public LocRootDirRecord(Context context) throws IOException
     {
         super(context);
@@ -40,6 +42,4 @@ public class LocRootDirRecord extends FolderRecord
     {
         return true;
     }
-
-    private String _rootFolderName;
 }

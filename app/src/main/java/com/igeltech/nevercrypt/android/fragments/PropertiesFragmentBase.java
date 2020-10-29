@@ -16,6 +16,8 @@ import com.igeltech.nevercrypt.android.settings.views.PropertiesView;
 
 public abstract class PropertiesFragmentBase extends Fragment implements PropertyEditor.Host
 {
+    protected PropertiesView _propertiesView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -44,8 +46,6 @@ public abstract class PropertiesFragmentBase extends Fragment implements Propert
         if (!getPropertiesView().onActivityResult(requestCode, resultCode, data))
             super.onActivityResult(requestCode, resultCode, data);
     }
-
-    protected PropertiesView _propertiesView;
 
     protected void initProperties(Bundle state)
     {

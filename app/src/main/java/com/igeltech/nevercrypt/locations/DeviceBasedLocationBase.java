@@ -17,17 +17,24 @@ import java.io.IOException;
 
 public abstract class DeviceBasedLocationBase implements Location, Cloneable
 {
-    public static String getId(String chrootPath)
-    {
-        return "stdfs" + chrootPath;
-    }
-
-    public static String getLocationId(Uri locationUri)
-    {
-        return locationUri.getQueryParameter("root_dir");
-    }
-
     public static final String URI_SCHEME = "file";
+    /*@Override
+    public boolean equals(Object obj)
+    {
+        try
+        {
+            return (obj instanceof DeviceBasedLocation) &&
+                    getId().equals(((DeviceBasedLocation) obj).getId()) &&
+                    getCurrentPath().equals(((DeviceBasedLocation) obj).getCurrentPath());
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }*/
+    protected final Settings _settings;
+    private final SharedData _sharedData;
+    protected String _currentPathString;
 
     public DeviceBasedLocationBase(Settings settings, String title, String rootDir, String currentPath)
     {
@@ -41,6 +48,16 @@ public abstract class DeviceBasedLocationBase implements Location, Cloneable
         _settings = sibling._settings;
         _sharedData = sibling.getSharedData();
         _currentPathString = sibling._currentPathString;
+    }
+
+    public static String getId(String chrootPath)
+    {
+        return "stdfs" + chrootPath;
+    }
+
+    public static String getLocationId(Uri locationUri)
+    {
+        return locationUri.getQueryParameter("root_dir");
     }
 
     @Override
@@ -113,7 +130,6 @@ public abstract class DeviceBasedLocationBase implements Location, Cloneable
     @Override
     public void saveExternalSettings()
     {
-
     }
 
     @Override
@@ -215,37 +231,6 @@ public abstract class DeviceBasedLocationBase implements Location, Cloneable
         }
     }
 
-	/*@Override
-	public boolean equals(Object obj)
-	{
-		try
-		{
-			return (obj instanceof DeviceBasedLocation) &&
-					getId().equals(((DeviceBasedLocation) obj).getId()) &&
-					getCurrentPath().equals(((DeviceBasedLocation) obj).getCurrentPath());
-		}
-		catch (Exception e)
-		{
-			return false;
-		}
-	}*/
-    protected final Settings _settings;
-    private final SharedData _sharedData;
-    protected String _currentPathString;
-
-    protected static class SharedData
-    {
-        public SharedData(String chroot, String title)
-        {
-            this.chroot = chroot;
-            this.title = title;
-        }
-
-        final String chroot, title;
-        FileSystem fs;
-        ExternalSettings externalSettings;
-    }
-
     protected SharedData getSharedData()
     {
         return _sharedData;
@@ -259,5 +244,18 @@ public abstract class DeviceBasedLocationBase implements Location, Cloneable
     protected ExternalSettings loadExternalSettings()
     {
         return new DefaultExternalSettings();
+    }
+
+    protected static class SharedData
+    {
+        final String chroot, title;
+        FileSystem fs;
+        ExternalSettings externalSettings;
+
+        public SharedData(String chroot, String title)
+        {
+            this.chroot = chroot;
+            this.title = title;
+        }
     }
 }

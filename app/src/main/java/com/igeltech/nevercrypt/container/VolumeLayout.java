@@ -22,9 +22,9 @@ public interface VolumeLayout extends EncryptedFileLayout
 
     void setEngine(FileEncryptionEngine enc);
 
-    void setHashFunc(MessageDigest hf);
-
     MessageDigest getHashFunc();
+
+    void setHashFunc(MessageDigest hf);
 
     void setPassword(byte[] password);
 

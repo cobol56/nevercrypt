@@ -16,6 +16,13 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class DrawerMenuItemBase
 {
+    private final DrawerControllerBase _drawerController;
+
+    protected DrawerMenuItemBase(DrawerControllerBase drawerController)
+    {
+        _drawerController = drawerController;
+    }
+
     public abstract String getTitle();
 
     public void onClick(View view, int position)
@@ -45,12 +52,10 @@ public abstract class DrawerMenuItemBase
 
     public void saveState(Bundle state)
     {
-
     }
 
     public void restoreState(Bundle state)
     {
-
     }
 
     public View createView(int position, ViewGroup parent)
@@ -101,11 +106,6 @@ public abstract class DrawerMenuItemBase
         return R.layout.drawer_item;
     }
 
-    protected DrawerMenuItemBase(DrawerControllerBase drawerController)
-    {
-        _drawerController = drawerController;
-    }
-
     protected ArrayAdapter<DrawerMenuItemBase> getAdapter()
     {
         return (ArrayAdapter<DrawerMenuItemBase>) getDrawerController().getDrawerListView().getAdapter();
@@ -130,6 +130,4 @@ public abstract class DrawerMenuItemBase
     {
         return getDrawerController().getMainActivity();
     }
-
-    private final DrawerControllerBase _drawerController;
 }

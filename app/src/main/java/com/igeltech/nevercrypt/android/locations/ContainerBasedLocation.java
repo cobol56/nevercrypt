@@ -33,84 +33,7 @@ import java.util.List;
 public class ContainerBasedLocation extends CryptoLocationBase implements ContainerLocation
 {
     public static final String URI_SCHEME = "crypto-container";
-
-    public static String getLocationId(LocationsManagerBase lm, Uri locationUri) throws Exception
-    {
-        Location containerLocation = getContainerLocationFromUri(locationUri, lm);
-        return getLocationId(containerLocation);
-    }
-
-    public static String getLocationId(Location containerLocation)
-    {
-        return SimpleCrypto.calcStringMD5(containerLocation.getLocationUri().toString());
-    }
-
-    public static class ExternalSettings extends CryptoLocationBase.ExternalSettings implements ContainerLocation.ExternalSettings
-    {
-        public ExternalSettings()
-        {
-
-        }
-
-        @Override
-        public void setContainerFormatName(String containerFormatName)
-        {
-            _containerFormatName = containerFormatName;
-        }
-
-        @Override
-        public void setEncEngineName(String encEngineName)
-        {
-            _encEngineName = encEngineName;
-        }
-
-        @Override
-        public void setHashFuncName(String hashFuncName)
-        {
-            _hashFuncName = hashFuncName;
-        }
-
-        @Override
-        public String getContainerFormatName()
-        {
-            return _containerFormatName;
-        }
-
-        @Override
-        public String getEncEngineName()
-        {
-            return _encEngineName;
-        }
-
-        @Override
-        public String getHashFuncName()
-        {
-            return _hashFuncName;
-        }
-
-        @Override
-        public void saveToJSONObject(JSONObject jo) throws JSONException
-        {
-            super.saveToJSONObject(jo);
-            jo.put(SETTINGS_CONTAINER_FORMAT, _containerFormatName);
-            jo.put(SETTINGS_ENC_ENGINE, _encEngineName);
-            jo.put(SETTINGS_HASH_FUNC, _hashFuncName);
-        }
-
-        @Override
-        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
-        {
-            super.loadFromJSONOjbect(jo);
-            _containerFormatName = jo.optString(SETTINGS_CONTAINER_FORMAT, null);
-            _encEngineName = jo.optString(SETTINGS_ENC_ENGINE, null);
-            _hashFuncName = jo.optString(SETTINGS_HASH_FUNC, null);
-        }
-
-        private static final String SETTINGS_CONTAINER_FORMAT = "container_format";
-        private static final String SETTINGS_ENC_ENGINE = "encryption_engine";
-        private static final String SETTINGS_HASH_FUNC = "hash_func";
-        private String _containerFormatName, _hashFuncName, _encEngineName;
-    }
+    public static final int MAX_PASSWORD_LENGTH = 64;
 
     public ContainerBasedLocation(Uri uri, LocationsManagerBase lm, Context context, Settings settings) throws Exception
     {
@@ -132,6 +55,17 @@ public class ContainerBasedLocation extends CryptoLocationBase implements Contai
     {
         super(settings, new SharedData(getLocationId(containerLocation), createInternalSettings(), containerLocation, context));
         getSharedData().container = cont;
+    }
+
+    public static String getLocationId(LocationsManagerBase lm, Uri locationUri) throws Exception
+    {
+        Location containerLocation = getContainerLocationFromUri(locationUri, lm);
+        return getLocationId(containerLocation);
+    }
+
+    public static String getLocationId(Location containerLocation)
+    {
+        return SimpleCrypto.calcStringMD5(containerLocation.getLocationUri().toString());
     }
 
     @Override
@@ -161,16 +95,13 @@ public class ContainerBasedLocation extends CryptoLocationBase implements Contai
             String name = getExternalSettings().getEncEngineName();
             if (name != null && !name.isEmpty())
                 cnt.setEncryptionEngineHint((FileEncryptionEngine) VolumeLayoutBase.findEncEngineByName(vl.getSupportedEncryptionEngines(), name));
-
             name = getExternalSettings().getHashFuncName();
             if (name != null && !name.isEmpty())
                 cnt.setHashFuncHint(VolumeLayoutBase.findHashFunc(vl.getSupportedHashFuncs(), name));
         }
-
         int numKDFIterations = getSelectedKDFIterations();
         if (numKDFIterations > 0)
             cnt.setNumKDFIterations(numKDFIterations);
-
         byte[] pass = getFinalPassword();
         try
         {
@@ -265,18 +196,6 @@ public class ContainerBasedLocation extends CryptoLocationBase implements Contai
         return Container.getSupportedFormats();
     }
 
-    protected static class SharedData extends CryptoLocationBase.SharedData
-    {
-        public SharedData(String id, CryptoLocationBase.InternalSettings settings, Location location, Context context)
-        {
-            super(id, settings, location, context);
-        }
-
-        public Container container;
-    }
-
-    public static final int MAX_PASSWORD_LENGTH = 64;
-
     @Override
     protected SharedData getSharedData()
     {
@@ -330,5 +249,81 @@ public class ContainerBasedLocation extends CryptoLocationBase implements Contai
     protected FileSystem createBaseFS(boolean readOnly) throws IOException, UserException
     {
         return getSharedData().container.getEncryptedFS(readOnly);
+    }
+
+    public static class ExternalSettings extends CryptoLocationBase.ExternalSettings implements ContainerLocation.ExternalSettings
+    {
+        private static final String SETTINGS_CONTAINER_FORMAT = "container_format";
+        private static final String SETTINGS_ENC_ENGINE = "encryption_engine";
+        private static final String SETTINGS_HASH_FUNC = "hash_func";
+        private String _containerFormatName, _hashFuncName, _encEngineName;
+
+        public ExternalSettings()
+        {
+        }
+
+        @Override
+        public String getContainerFormatName()
+        {
+            return _containerFormatName;
+        }
+
+        @Override
+        public void setContainerFormatName(String containerFormatName)
+        {
+            _containerFormatName = containerFormatName;
+        }
+
+        @Override
+        public String getEncEngineName()
+        {
+            return _encEngineName;
+        }
+
+        @Override
+        public void setEncEngineName(String encEngineName)
+        {
+            _encEngineName = encEngineName;
+        }
+
+        @Override
+        public String getHashFuncName()
+        {
+            return _hashFuncName;
+        }
+
+        @Override
+        public void setHashFuncName(String hashFuncName)
+        {
+            _hashFuncName = hashFuncName;
+        }
+
+        @Override
+        public void saveToJSONObject(JSONObject jo) throws JSONException
+        {
+            super.saveToJSONObject(jo);
+            jo.put(SETTINGS_CONTAINER_FORMAT, _containerFormatName);
+            jo.put(SETTINGS_ENC_ENGINE, _encEngineName);
+            jo.put(SETTINGS_HASH_FUNC, _hashFuncName);
+        }
+
+        @Override
+        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
+        {
+            super.loadFromJSONOjbect(jo);
+            _containerFormatName = jo.optString(SETTINGS_CONTAINER_FORMAT, null);
+            _encEngineName = jo.optString(SETTINGS_ENC_ENGINE, null);
+            _hashFuncName = jo.optString(SETTINGS_HASH_FUNC, null);
+        }
+    }
+
+    protected static class SharedData extends CryptoLocationBase.SharedData
+    {
+        public Container container;
+
+        public SharedData(String id, CryptoLocationBase.InternalSettings settings, Location location, Context context)
+        {
+            super(id, settings, location, context);
+        }
     }
 }

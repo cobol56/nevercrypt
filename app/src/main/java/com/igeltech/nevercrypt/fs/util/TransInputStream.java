@@ -10,6 +10,11 @@ import java.io.InputStream;
 public abstract class TransInputStream extends InputStream implements DataInput
 {
     public static boolean ENABLE_DEBUG_LOG = false;
+    protected final InputStream _base;
+    protected final int _bufferSize;
+    protected byte[] _buffer;
+    protected long _currentPosition;
+    protected int _bytesLeft;
 
     public TransInputStream(InputStream base, int bufferSize)
     {
@@ -52,12 +57,6 @@ public abstract class TransInputStream extends InputStream implements DataInput
         if (closeBase)
             _base.close();
     }
-
-    protected final InputStream _base;
-    protected final int _bufferSize;
-    protected byte[] _buffer;
-    protected long _currentPosition;
-    protected int _bytesLeft;
 
     protected abstract int transformBufferFromBase(byte[] baseBuffer, int offset, int count, long bufferPosition, byte[] dstBuffer) throws IOException;
 

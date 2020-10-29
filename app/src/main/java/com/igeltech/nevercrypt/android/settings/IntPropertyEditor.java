@@ -9,15 +9,15 @@ public abstract class IntPropertyEditor extends TextPropertyEditor
         super(host, titleResId, descResId, hostFragmentTag);
     }
 
-    public void setCurrentValue(int value)
-    {
-        onTextChanged(String.valueOf(value));
-    }
-
     public int getCurrentValue()
     {
         String s = _selectedValueTextView.getText().toString();
         return s.length() > 0 ? Integer.valueOf(s) : 0;
+    }
+
+    public void setCurrentValue(int value)
+    {
+        onTextChanged(String.valueOf(value));
     }
 
     protected abstract int loadValue();

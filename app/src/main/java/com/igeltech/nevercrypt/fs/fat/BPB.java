@@ -15,6 +15,7 @@ class BPB
     public static String FAT12_LABEL = "FAT12";
     public static String FAT16_LABEL = "FAT16";
     public static String FAT32_LABEL = "FAT32";
+    protected long _clusterOffsetStart;
     int bytesPerSector;
     int sectorsPerCluster;
     int reservedSectors;
@@ -88,8 +89,6 @@ class BPB
         _clusterOffsetStart = bytesPerSector * (reservedSectors + sectorsPerFat * numberOfFATs) + rootDirEntries * 32;
     }
 
-    protected long _clusterOffsetStart;
-
     protected void readCommonPart(RandomAccessIO input) throws IOException
     {
         physicalDriveNumber = Util.readUnsignedByte(input);
@@ -136,7 +135,6 @@ class BPB16 extends BPB
         super.read(input);
         readCommonPart(input);
         checkEndingSignature(input);
-
         calcParams();
     }
 

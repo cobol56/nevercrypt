@@ -6,6 +6,8 @@ import com.igeltech.nevercrypt.fs.encfs.NameCodecInfo;
 
 public abstract class NameCodecInfoBase implements NameCodecInfo
 {
+    private Config _config;
+
     @Override
     public boolean useChainedNamingIV()
     {
@@ -24,8 +26,6 @@ public abstract class NameCodecInfoBase implements NameCodecInfo
     {
         return _config;
     }
-
-    private Config _config;
 
     protected abstract NameCodecInfoBase createNew();
 }

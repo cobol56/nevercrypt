@@ -23,22 +23,19 @@ import java.util.Collections;
 public abstract class LocationFormatterBase
 {
     public static final String FORMAT_ENCFS = "EncFs";
+    protected boolean _disableDefaultSettings, _dontReg;
+    protected SecureBuffer _password;
+    protected ProgressReporter _progressReporter;
+    protected Context _context;
 
     public LocationFormatterBase()
     {
-
     }
 
     protected LocationFormatterBase(Parcel in)
     {
         _disableDefaultSettings = in.readByte() != 0;
         _password = in.readParcelable(ClassLoader.getSystemClassLoader());
-    }
-
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeByte((byte) (_disableDefaultSettings ? 1 : 0));
-        dest.writeParcelable(_password, 0);
     }
 
     public static String makeTitle(CryptoLocation cont, LocationsManager lm)
@@ -64,19 +61,29 @@ public abstract class LocationFormatterBase
         return title;
     }
 
-    public interface ProgressReporter
+    private static boolean checkExistingTitle(String title, LocationsManager lm, CryptoLocation ignore)
     {
-        boolean report(byte prc);
+        Uri igUri = ignore.getLocation().getLocationUri();
+        for (CryptoLocation cnt : lm.getLoadedCryptoLocations(true))
+            if (cnt != ignore && !cnt.getLocation().getLocationUri().equals(igUri) && cnt.getTitle().equals(title))
+                return true;
+        return false;
     }
 
-    public void setContext(Context context)
+    public void writeToParcel(Parcel dest, int flags)
     {
-        _context = context;
+        dest.writeByte((byte) (_disableDefaultSettings ? 1 : 0));
+        dest.writeParcelable(_password, 0);
     }
 
     public Context getContext()
     {
         return _context;
+    }
+
+    public void setContext(Context context)
+    {
+        _context = context;
     }
 
     public Settings getSettings()
@@ -117,11 +124,6 @@ public abstract class LocationFormatterBase
         _dontReg = dontReg;
     }
 
-    protected boolean _disableDefaultSettings, _dontReg;
-    protected SecureBuffer _password;
-    protected ProgressReporter _progressReporter;
-    protected Context _context;
-
     protected abstract CryptoLocation createLocation(Location location) throws IOException, ApplicationException, UserException;
 
     protected void addLocationToList(CryptoLocation loc) throws Exception
@@ -161,7 +163,6 @@ public abstract class LocationFormatterBase
         String title = makeTitle(loc, lm);
         loc.getExternalSettings().setTitle(title);
         loc.getExternalSettings().setVisibleToUser(true);
-
         if (_context == null || !UserSettings.getSettings(_context).neverSaveHistory())
             loc.saveExternalSettings();
     }
@@ -181,12 +182,8 @@ public abstract class LocationFormatterBase
         return _progressReporter == null || _progressReporter.report(prc);
     }
 
-    private static boolean checkExistingTitle(String title, LocationsManager lm, CryptoLocation ignore)
+    public interface ProgressReporter
     {
-        Uri igUri = ignore.getLocation().getLocationUri();
-        for (CryptoLocation cnt : lm.getLoadedCryptoLocations(true))
-            if (cnt != ignore && !cnt.getLocation().getLocationUri().equals(igUri) && cnt.getTitle().equals(title))
-                return true;
-        return false;
+        boolean report(byte prc);
     }
 }

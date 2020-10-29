@@ -12,9 +12,20 @@ import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragmen
 
 public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
 {
+    private static Drawable _icon;
+
     public DrawerSelectContentProviderMenuItem(DrawerControllerBase drawerController)
     {
         super(drawerController);
+    }
+
+    private synchronized static Drawable getIcon(Context context)
+    {
+        if (_icon == null)
+        {
+            _icon = context.getResources().getDrawable(R.drawable.ic_storage, context.getTheme());
+        }
+        return _icon;
     }
 
     @Override
@@ -33,7 +44,6 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
         i.addCategory(Intent.CATEGORY_OPENABLE);
         //if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && !getDrawerController().getMainActivity().isSingleSelectionMode())
         //    i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-
         FileListViewFragment f = getDrawerController().getMainActivity().getFileListViewFragment();
         if (f != null)
             f.startActivityForResult(i, FileListViewFragment.REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER);
@@ -65,15 +75,4 @@ public class DrawerSelectContentProviderMenuItem extends DrawerMenuItemBase
     {
         return getIcon(getDrawerController().getMainActivity());
     }
-
-    private synchronized static Drawable getIcon(Context context)
-    {
-        if (_icon == null)
-        {
-            _icon = context.getResources().getDrawable(R.drawable.ic_storage, context.getTheme());
-        }
-        return _icon;
-    }
-
-    private static Drawable _icon;
 }

@@ -47,19 +47,22 @@ import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.IMAGE_
 
 public class PreviewFragment extends RxFragment implements FileManagerFragment
 {
-    public interface Host
-    {
-        NavigableSet<? extends CachedPathInfo> getCurrentFiles();
-
-        Location getLocation();
-
-        Object getFilesListSync();
-
-        void onToggleFullScreen();
-    }
-
     public static final String TAG = "PreviewFragment";
     public static final String STATE_CURRENT_PATH = "com.igeltech.nevercrypt.android.CURRENT_PATH";
+    public static Subject<Boolean> TEST_LOAD_IMAGE_TASK_OBSERVABLE;
+
+    static
+    {
+        if (GlobalConfig.isTest())
+            TEST_LOAD_IMAGE_TASK_OBSERVABLE = PublishSubject.create();
+    }
+
+    private final Rect _viewRect = new Rect();
+    private final Subject<Boolean> _imageViewPrepared = BehaviorSubject.create();
+    private GestureImageViewWithFullScreenMode _mainImageView;
+    private ViewSwitcher _viewSwitcher;
+    private Path _currentImagePath, _prevImagePath, _nextImagePath;
+    private boolean _isFullScreen, _isOptimSupported;
 
     public static PreviewFragment newInstance(Path currentImagePath)
     {
@@ -104,7 +107,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
     public static int calcSampleSize(Rect viewRect, Rect regionRect)
     {
         int inSampleSize = 1;
-
         if (regionRect.height() > viewRect.height() || regionRect.width() > viewRect.width())
         {
             inSampleSize = Math.max(Math.round((float) regionRect.height() / (float) viewRect.height()), Math.round((float) regionRect.width() / (float) viewRect.width()));
@@ -217,7 +219,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
             _mainImageView.getViewRect().round(_viewRect);
             _imageViewPrepared.onNext(_viewRect.width() > 0 && _viewRect.height() > 0);
         });
-
         if (UserSettings.getSettings(getActivity()).isImageViewerFullScreenModeEnabled())
             _mainImageView.setFullscreenMode(true);
         return view;
@@ -312,13 +313,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
             _mainImageView.setFullscreenMode(true);
     }
 
-    private GestureImageViewWithFullScreenMode _mainImageView;
-    private ViewSwitcher _viewSwitcher;
-    private Path _currentImagePath, _prevImagePath, _nextImagePath;
-    private final Rect _viewRect = new Rect();
-    private boolean _isFullScreen, _isOptimSupported;
-    private final Subject<Boolean> _imageViewPrepared = BehaviorSubject.create();
-
     private void loadImagePaths()
     {
         _prevImagePath = _nextImagePath = null;
@@ -349,7 +343,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
     {
         _isFullScreen = !_isFullScreen;
         UserSettings.getSettings(getActivity()).getSharedPreferences().edit().putBoolean(IMAGE_VIEWER_FULL_SCREEN_ENABLED, _isFullScreen).commit();
-
         if (_mainImageView != null)
             _mainImageView.setFullscreenMode(_isFullScreen);
         getPreviewFragmentHost().onToggleFullScreen();
@@ -509,7 +502,6 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
                     doOnSubscribe(sub -> TEST_LOAD_IMAGE_TASK_OBSERVABLE.onNext(true)).
                     doFinally(() -> TEST_LOAD_IMAGE_TASK_OBSERVABLE.onNext(false));
         }
-
         loadImageTaskObservable.subscribe(res -> {
             if (regionRect == null)
             {
@@ -525,11 +517,14 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
         });
     }
 
-    static
+    public interface Host
     {
-        if (GlobalConfig.isTest())
-            TEST_LOAD_IMAGE_TASK_OBSERVABLE = PublishSubject.create();
-    }
+        NavigableSet<? extends CachedPathInfo> getCurrentFiles();
 
-    public static Subject<Boolean> TEST_LOAD_IMAGE_TASK_OBSERVABLE;
+        Location getLocation();
+
+        Object getFilesListSync();
+
+        void onToggleFullScreen();
+    }
 }

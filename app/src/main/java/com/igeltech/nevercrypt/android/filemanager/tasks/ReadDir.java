@@ -16,6 +16,11 @@ import java.util.Collection;
 
 public class ReadDir extends ReadDirBase
 {
+    ReadDir(Context context, Location targetLocation, Collection<Path> selectedFiles, DirectorySettings dirSettings, boolean showRootFolderLink)
+    {
+        super(context, targetLocation, selectedFiles, dirSettings, showRootFolderLink);
+    }
+
     static BrowserRecord createBrowserRecordFromFile(Context context, Location loc, Path path, DirectorySettings directorySettings) throws IOException
     {
         if (directorySettings != null)
@@ -35,12 +40,6 @@ public class ReadDir extends ReadDirBase
                         return null;
                 }
         }
-
         return path.isDirectory() ? new FolderRecord(context) : new ExecutableFileRecord(context);
-    }
-
-    ReadDir(Context context, Location targetLocation, Collection<Path> selectedFiles, DirectorySettings dirSettings, boolean showRootFolderLink)
-    {
-        super(context, targetLocation, selectedFiles, dirSettings, showRootFolderLink);
     }
 }

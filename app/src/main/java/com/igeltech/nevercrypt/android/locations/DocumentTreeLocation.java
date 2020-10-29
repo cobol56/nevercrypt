@@ -22,6 +22,16 @@ public class DocumentTreeLocation extends LocationBase
 {
     public static final String URI_SCHEME = "doc-tree";
 
+    public DocumentTreeLocation(Context context, Uri treeUri)
+    {
+        super(UserSettings.getSettings(context), new SharedData(getId(treeUri), context, treeUri));
+    }
+
+    public DocumentTreeLocation(DocumentTreeLocation sibling)
+    {
+        super(sibling);
+    }
+
     public static String getLocationId(Uri locationUri)
     {
         return getId(getDocumentUri(locationUri));
@@ -56,16 +66,6 @@ public class DocumentTreeLocation extends LocationBase
         return loc;
     }
 
-    public DocumentTreeLocation(Context context, Uri treeUri)
-    {
-        super(UserSettings.getSettings(context), new SharedData(getId(treeUri), context, treeUri));
-    }
-
-    public DocumentTreeLocation(DocumentTreeLocation sibling)
-    {
-        super(sibling);
-    }
-
     @Override
     public void loadFromUri(Uri uri)
     {
@@ -94,7 +94,6 @@ public class DocumentTreeLocation extends LocationBase
         {
             getSharedData().fs = new DocumentTreeFS(getContext(), getTreeUri());
         }
-
         return (DocumentTreeFS) getSharedData().fs;
     }
 
@@ -177,14 +176,14 @@ public class DocumentTreeLocation extends LocationBase
 
     protected static class SharedData extends LocationBase.SharedData
     {
+        public final Context context;
+        public final Uri treeUri;
+
         protected SharedData(String id, Context ctx, Uri treeUri)
         {
             super(id);
             context = ctx;
             this.treeUri = treeUri;
         }
-
-        public final Context context;
-        public final Uri treeUri;
     }
 }

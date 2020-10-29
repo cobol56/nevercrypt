@@ -7,6 +7,17 @@ import java.io.IOException;
 
 public class CmdRunner extends Thread
 {
+    private final Object[] _command;
+    private final TextShell _exec;
+    private Throwable _error;
+    private String _result;
+
+    public CmdRunner(TextShell exec, Object... command)
+    {
+        _exec = exec;
+        _command = command;
+    }
+
     public static String executeCommand(int timeout, TextShell exec, Object... command) throws ApplicationException
     {
         CmdRunner cmr = new CmdRunner(exec, command);
@@ -33,12 +44,6 @@ public class CmdRunner extends Thread
         }
     }
 
-    public CmdRunner(TextShell exec, Object... command)
-    {
-        _exec = exec;
-        _command = command;
-    }
-
     public String getResult() throws Throwable
     {
         if (_error != null)
@@ -59,9 +64,4 @@ public class CmdRunner extends Thread
             _error = e;
         }
     }
-
-    private Throwable _error;
-    private String _result;
-    private final Object[] _command;
-    private final TextShell _exec;
 }

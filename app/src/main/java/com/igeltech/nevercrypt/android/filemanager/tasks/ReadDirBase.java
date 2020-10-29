@@ -28,6 +28,29 @@ import io.reactivex.subjects.Subject;
 
 public abstract class ReadDirBase
 {
+    public static Subject<Boolean> TEST_READING_OBSERVABLE;
+
+    static
+    {
+        if (GlobalConfig.isTest())
+            TEST_READING_OBSERVABLE = BehaviorSubject.createDefault(false);
+    }
+
+    private final Context _context;
+    private final Location _targetLocation;
+    private final Set<Path> _selectedFiles;
+    private final DirectorySettings _directorySettings;
+    private final boolean _showFolderLinks;
+
+    ReadDirBase(Context context, Location targetLocation, Collection<Path> selectedFiles, DirectorySettings dirSettings, boolean showRootFolderLink)
+    {
+        _context = context;
+        _targetLocation = targetLocation;
+        _selectedFiles = selectedFiles == null ? null : new HashSet<>(selectedFiles);
+        _directorySettings = dirSettings;
+        _showFolderLinks = showRootFolderLink;
+    }
+
     public static Observable<BrowserRecord> createObservable(Context context, Location targetLocation, Collection<Path> selectedFiles, DirectorySettings dirSettings, boolean showRootFolderLink)
     {
         Observable<BrowserRecord> observable = Observable.create(em -> {
@@ -40,14 +63,6 @@ public abstract class ReadDirBase
                     doFinally(() -> TEST_READING_OBSERVABLE.onNext(false));
         return observable;
     }
-
-    static
-    {
-        if (GlobalConfig.isTest())
-            TEST_READING_OBSERVABLE = BehaviorSubject.createDefault(false);
-    }
-
-    public static Subject<Boolean> TEST_READING_OBSERVABLE;
 
     public static BrowserRecord getBrowserRecordFromFsRecord(Context context, Location loc, Path path, DirectorySettings directorySettings) throws IOException, ApplicationException
     {
@@ -91,15 +106,6 @@ public abstract class ReadDirBase
         }
     }
 
-    ReadDirBase(Context context, Location targetLocation, Collection<Path> selectedFiles, DirectorySettings dirSettings, boolean showRootFolderLink)
-    {
-        _context = context;
-        _targetLocation = targetLocation;
-        _selectedFiles = selectedFiles == null ? null : new HashSet<>(selectedFiles);
-        _directorySettings = dirSettings;
-        _showFolderLinks = showRootFolderLink;
-    }
-
     void readDir(ObservableEmitter<BrowserRecord> em) throws IOException
     {
         Path targetPath = _targetLocation.getCurrentPath();
@@ -110,7 +116,6 @@ public abstract class ReadDirBase
             em.onComplete();
             return;
         }
-
         int count = 0;
         Path basePath = targetPath.getParentPath();
         if (basePath != null && !em.isDisposed())
@@ -120,7 +125,6 @@ public abstract class ReadDirBase
             procRecord(br, count++);
             em.onNext(br);
         }
-
         if (targetPath.isRootDirectory() && _showFolderLinks && !em.isDisposed())
         {
             BrowserRecord br = new LocRootDirRecord(_context);
@@ -128,7 +132,6 @@ public abstract class ReadDirBase
             procRecord(br, count++);
             em.onNext(br);
         }
-
         Directory.Contents dirReader = targetPath.getDirectory().list();
         if (dirReader == null)
         {
@@ -142,7 +145,6 @@ public abstract class ReadDirBase
             {
                 if (em.isDisposed())
                     break;
-
                 BrowserRecord record = getBrowserRecordFromFsRecord(_targetLocation, path, _directorySettings);
                 if (record == null)
                     continue;
@@ -175,10 +177,4 @@ public abstract class ReadDirBase
         if (_selectedFiles != null && _selectedFiles.contains(rec.getPath()))
             rec.setSelected(true);
     }
-
-    private final Context _context;
-    private final Location _targetLocation;
-    private final Set<Path> _selectedFiles;
-    private final DirectorySettings _directorySettings;
-    private final boolean _showFolderLinks;
 }

@@ -11,9 +11,20 @@ import com.igeltech.nevercrypt.settings.GlobalConfig;
 
 public class DrawerHelpMenuItem extends DrawerMenuItemBase
 {
+    private static Drawable _icon;
+
     public DrawerHelpMenuItem(DrawerControllerBase drawerController)
     {
         super(drawerController);
+    }
+
+    private synchronized static Drawable getIcon(Context context)
+    {
+        if (_icon == null)
+        {
+            _icon = context.getResources().getDrawable(R.drawable.ic_help, context.getTheme());
+        }
+        return _icon;
     }
 
     @Override
@@ -34,15 +45,4 @@ public class DrawerHelpMenuItem extends DrawerMenuItemBase
     {
         return getIcon(getDrawerController().getMainActivity());
     }
-
-    private synchronized static Drawable getIcon(Context context)
-    {
-        if (_icon == null)
-        {
-            _icon = context.getResources().getDrawable(R.drawable.ic_help, context.getTheme());
-        }
-        return _icon;
-    }
-
-    private static Drawable _icon;
 }

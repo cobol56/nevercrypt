@@ -12,6 +12,31 @@ import java.util.Arrays;
 
 public class MACFile extends TransRandomAccessIO
 {
+    private final byte[] _transBuffer;
+    private final MACCalculator _macCalc;
+    private final int _macBytes, _randBytes, _overhead;
+    private final boolean _forceDecode;
+    private final SecureRandom _random;
+
+    public MACFile(RandomAccessIO base, MACCalculator macCalc, int blockSize, int macBytes, int randBytes, boolean forceDecode) throws FileNotFoundException
+    {
+        super(base, blockSize - macBytes - randBytes);
+        _macCalc = macCalc;
+        _macBytes = macBytes;
+        _randBytes = randBytes;
+        _overhead = macBytes + randBytes;
+        _forceDecode = forceDecode;
+        _random = _randBytes > 0 ? new SecureRandom() : null;
+        _transBuffer = new byte[_bufferSize + _overhead];
+        try
+        {
+            _length = calcVirtPosition(base.length());
+        }
+        catch (IOException ignored)
+        {
+        }
+    }
+
     public static long calcVirtPosition(long realPos, int blockSize, int overhead)
     {
         int blockSizeWithOverhead = blockSize + overhead;
@@ -54,26 +79,6 @@ public class MACFile extends TransRandomAccessIO
             byte[] mac = macCalc.calcChecksum(baseBuffer, offset + macBytes, count + randBytes);
             for (int i = 0; i < macBytes; i++)
                 baseBuffer[offset + i] = mac[macBytes - i - 1];
-        }
-    }
-
-    public MACFile(RandomAccessIO base, MACCalculator macCalc, int blockSize, int macBytes, int randBytes, boolean forceDecode) throws FileNotFoundException
-    {
-        super(base, blockSize - macBytes - randBytes);
-        _macCalc = macCalc;
-        _macBytes = macBytes;
-        _randBytes = randBytes;
-        _overhead = macBytes + randBytes;
-        _forceDecode = forceDecode;
-        _random = _randBytes > 0 ? new SecureRandom() : null;
-        _transBuffer = new byte[_bufferSize + _overhead];
-        try
-        {
-            _length = calcVirtPosition(base.length());
-        }
-        catch (IOException ignored)
-        {
-
         }
     }
 
@@ -132,10 +137,4 @@ public class MACFile extends TransRandomAccessIO
     {
         makeMACCheckedBuffer(buf, offset, count, baseBuffer, _macCalc, _macBytes, _randBytes, _random);
     }
-
-    private final byte[] _transBuffer;
-    private final MACCalculator _macCalc;
-    private final int _macBytes, _randBytes, _overhead;
-    private final boolean _forceDecode;
-    private final SecureRandom _random;
 }

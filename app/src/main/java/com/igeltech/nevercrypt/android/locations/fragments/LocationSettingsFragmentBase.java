@@ -39,12 +39,9 @@ import java.util.Collection;
 
 public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBase implements LocationOpenerBaseFragment.LocationOpenerResultReceiver, PropertiesHostWithLocation, PasswordDialog.PasswordReceiver
 {
-    public static class LocationInfo
-    {
-        public String pathToLocation;
-        public long totalSpace;
-        public long freeSpace;
-    }
+    protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
+    protected CryptoLocation _location;
+    protected LocationInfo _locationInfo;
 
     public CryptoLocation getLocation()
     {
@@ -68,7 +65,6 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
 
     public void onTargetLocationNotOpened(Bundle openerArgs)
     {
-
     }
 
     @Override
@@ -144,36 +140,6 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
             pr.onPasswordNotEntered(dlg);
     }
 
-    class LoadLocationInfoTaskCallbacks extends ProgressDialogTaskFragmentCallbacks
-    {
-        LoadLocationInfoTaskCallbacks()
-        {
-            super(getActivity(), R.string.loading);
-        }
-
-        @Override
-        public void onCompleted(Bundle args, TaskFragment.Result result)
-        {
-            super.onCompleted(args, result);
-            try
-            {
-                _locationInfo = (LocationInfo) result.getResult();
-                _propertiesView.setPropertyState(R.string.path_to_container, true);
-                _propertiesView.setPropertyState(R.string.uri_of_the_container, true);
-                _propertiesView.setPropertiesState(Arrays.asList(R.string.free_space, R.string.total_space), _location.isOpenOrMounted());
-                _propertiesView.loadProperties(Arrays.asList(R.string.path_to_container, R.string.uri_of_the_container, R.string.free_space, R.string.total_space), null);
-            }
-            catch (Throwable e)
-            {
-                Logger.showAndLog(_context, e);
-            }
-        }
-    }
-
-    protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
-    protected CryptoLocation _location;
-    protected LocationInfo _locationInfo;
-
     protected abstract LocationOpenerBaseFragment getLocationOpener();
 
     protected LoadLocationInfoTask initLoadLocationInfoTask()
@@ -228,7 +194,6 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
                 showInternalSettings();
             else
                 hideInternalSettings();
-
             _propertiesView.setPropertyState(R.string.path_to_container, false);
             _propertiesView.setPropertyState(R.string.save_password, _location.hasPassword());
             _propertiesView.setPropertyState(R.string.remember_kdf_iterations_multiplier, _location.hasCustomKDFIterations());
@@ -351,5 +316,38 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
         _propertiesView.setPropertyState(R.string.total_space, enabled && _locationInfo != null);
         _propertiesView.setPropertyState(R.string.change_container_password, enabled);
         _propertiesView.setPropertyState(R.string.internal_container_settings, !enabled);
+    }
+
+    public static class LocationInfo
+    {
+        public String pathToLocation;
+        public long totalSpace;
+        public long freeSpace;
+    }
+
+    class LoadLocationInfoTaskCallbacks extends ProgressDialogTaskFragmentCallbacks
+    {
+        LoadLocationInfoTaskCallbacks()
+        {
+            super(getActivity(), R.string.loading);
+        }
+
+        @Override
+        public void onCompleted(Bundle args, TaskFragment.Result result)
+        {
+            super.onCompleted(args, result);
+            try
+            {
+                _locationInfo = (LocationInfo) result.getResult();
+                _propertiesView.setPropertyState(R.string.path_to_container, true);
+                _propertiesView.setPropertyState(R.string.uri_of_the_container, true);
+                _propertiesView.setPropertiesState(Arrays.asList(R.string.free_space, R.string.total_space), _location.isOpenOrMounted());
+                _propertiesView.loadProperties(Arrays.asList(R.string.path_to_container, R.string.uri_of_the_container, R.string.free_space, R.string.total_space), null);
+            }
+            catch (Throwable e)
+            {
+                Logger.showAndLog(_context, e);
+            }
+        }
     }
 }

@@ -24,6 +24,9 @@ import java.util.concurrent.CancellationException;
 public class LocationCloserBaseFragment extends AppCompatDialogFragment
 {
     public static final String ARG_FORCE_CLOSE = "com.igeltech.nevercrypt.android.FORCE_CLOSE";
+    public static final String PARAM_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment.RECEIVER_FRAGMENT_TAG";
+    private static final String TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment";
+    protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
 
     public static String getCloserTag(Location location)
     {
@@ -35,84 +38,9 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         return CloseLocationTaskFragment.TAG + location.getId();
     }
 
-    public interface CloseLocationReceiver
-    {
-        void onTargetLocationClosed(Location location, Bundle closeTaskArgs);
-
-        void onTargetLocationNotClosed(Location location, Bundle closeTaskArgs);
-    }
-
     public static LocationCloserBaseFragment getDefaultCloserForLocation(Location location)
     {
         return ClosersRegistry.getDefaultCloserForLocation(location);
-    }
-
-    public static final String PARAM_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment.RECEIVER_FRAGMENT_TAG";
-
-    public static class CloseLocationTaskFragment extends TaskFragment
-    {
-        public static final String ARG_CLOSER_TAG = "com.igeltech.nevercrypt.android.CLOSER_TAG";
-        protected Context _context;
-        protected LocationsManager _locationsManager;
-
-        @Override
-        protected void initTask(FragmentActivity activity)
-        {
-            _context = activity.getApplicationContext();
-            _locationsManager = LocationsManager.getLocationsManager(_context);
-        }
-
-        @Override
-        protected void doWork(TaskState taskState) throws Exception
-        {
-            PowerManager pm = (PowerManager) _context.getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wl = pm == null ? null : pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, toString());
-            if (wl != null)
-                wl.acquire(30000);
-            try
-            {
-                Uri locationUri = getArguments().getParcelable(LocationsManager.PARAM_LOCATION_URI);
-                Location location = _locationsManager.getLocation(locationUri);
-                procLocation(taskState, location);
-                taskState.setResult(location);
-            }
-            finally
-            {
-                if (wl != null)
-                    wl.release();
-            }
-        }
-
-        @Override
-        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
-        {
-            LocationCloserBaseFragment f = (LocationCloserBaseFragment) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_CLOSER_TAG));
-            return f == null ? null : f.getCloseLocationTaskCallbacks();
-        }
-
-        protected void procLocation(TaskState state, Location location) throws Exception
-        {
-            LocationsManager.broadcastLocationChanged(_context, location);
-        }
-
-        @Override
-        protected void detachTask()
-        {
-            FragmentManager fm = getFragmentManager();
-            if (fm != null)
-            {
-                FragmentTransaction trans = fm.beginTransaction();
-                trans.remove(this);
-                LocationCloserBaseFragment f = (LocationCloserBaseFragment) fm.findFragmentByTag(getArguments().getString(ARG_CLOSER_TAG));
-                if (f != null)
-                    trans.remove(f);
-                trans.commitAllowingStateLoss();
-                Logger.debug(String.format("TaskFragment %s has been removed from the fragment manager", this));
-                onEvent(EventType.Removed, this);
-            }
-        }
-
-        private static final String TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment.CloseLocationTaskFragment";
     }
 
     @Override
@@ -141,53 +69,6 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
     {
         return new CloseLocationTaskCallbacks();
     }
-
-    protected class CloseLocationTaskCallbacks implements TaskFragment.TaskCallbacks
-    {
-        @Override
-        public void onPrepare(Bundle args)
-        {
-
-        }
-
-        @Override
-        public void onResumeUI(Bundle args)
-        {
-            FragmentActivity activity = getActivity();
-            _dialog = new ProgressDialog(activity);
-            _dialog.setMessage(activity.getText(R.string.closing));
-            _dialog.setIndeterminate(true);
-            _dialog.setCancelable(false);
-            _dialog.setOnCancelListener(dialog -> {
-                CloseLocationTaskFragment f = (CloseLocationTaskFragment) getFragmentManager().findFragmentByTag(CloseLocationTaskFragment.TAG);
-                if (f != null)
-                    f.cancel();
-            });
-            _dialog.show();
-        }
-
-        @Override
-        public void onSuspendUI(Bundle args)
-        {
-            _dialog.dismiss();
-        }
-
-        @Override
-        public void onCompleted(Bundle args, TaskFragment.Result result)
-        {
-            procCloseLocationTaskResult(args, result);
-        }
-
-        @Override
-        public void onUpdateUI(Object state)
-        {
-
-        }
-
-        private ProgressDialog _dialog;
-    }
-
-    protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
 
     protected TaskFragment getCloseLocationTask()
     {
@@ -258,7 +139,6 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         }
         catch (CancellationException ignored)
         {
-
         }
         catch (Throwable e)
         {
@@ -283,5 +163,118 @@ public class LocationCloserBaseFragment extends AppCompatDialogFragment
         getFragmentManager().beginTransaction().add(f, getCloseLocationTaskTag()).commit();
     }
 
-    private static final String TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment";
+    public interface CloseLocationReceiver
+    {
+        void onTargetLocationClosed(Location location, Bundle closeTaskArgs);
+
+        void onTargetLocationNotClosed(Location location, Bundle closeTaskArgs);
+    }
+
+    public static class CloseLocationTaskFragment extends TaskFragment
+    {
+        public static final String ARG_CLOSER_TAG = "com.igeltech.nevercrypt.android.CLOSER_TAG";
+        private static final String TAG = "com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment.CloseLocationTaskFragment";
+        protected Context _context;
+        protected LocationsManager _locationsManager;
+
+        @Override
+        protected void initTask(FragmentActivity activity)
+        {
+            _context = activity.getApplicationContext();
+            _locationsManager = LocationsManager.getLocationsManager(_context);
+        }
+
+        @Override
+        protected void doWork(TaskState taskState) throws Exception
+        {
+            PowerManager pm = (PowerManager) _context.getSystemService(Context.POWER_SERVICE);
+            PowerManager.WakeLock wl = pm == null ? null : pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, toString());
+            if (wl != null)
+                wl.acquire(30000);
+            try
+            {
+                Uri locationUri = getArguments().getParcelable(LocationsManager.PARAM_LOCATION_URI);
+                Location location = _locationsManager.getLocation(locationUri);
+                procLocation(taskState, location);
+                taskState.setResult(location);
+            }
+            finally
+            {
+                if (wl != null)
+                    wl.release();
+            }
+        }
+
+        @Override
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
+        {
+            LocationCloserBaseFragment f = (LocationCloserBaseFragment) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_CLOSER_TAG));
+            return f == null ? null : f.getCloseLocationTaskCallbacks();
+        }
+
+        protected void procLocation(TaskState state, Location location) throws Exception
+        {
+            LocationsManager.broadcastLocationChanged(_context, location);
+        }
+
+        @Override
+        protected void detachTask()
+        {
+            FragmentManager fm = getFragmentManager();
+            if (fm != null)
+            {
+                FragmentTransaction trans = fm.beginTransaction();
+                trans.remove(this);
+                LocationCloserBaseFragment f = (LocationCloserBaseFragment) fm.findFragmentByTag(getArguments().getString(ARG_CLOSER_TAG));
+                if (f != null)
+                    trans.remove(f);
+                trans.commitAllowingStateLoss();
+                Logger.debug(String.format("TaskFragment %s has been removed from the fragment manager", this));
+                onEvent(EventType.Removed, this);
+            }
+        }
+    }
+
+    protected class CloseLocationTaskCallbacks implements TaskFragment.TaskCallbacks
+    {
+        private ProgressDialog _dialog;
+
+        @Override
+        public void onPrepare(Bundle args)
+        {
+        }
+
+        @Override
+        public void onResumeUI(Bundle args)
+        {
+            FragmentActivity activity = getActivity();
+            _dialog = new ProgressDialog(activity);
+            _dialog.setMessage(activity.getText(R.string.closing));
+            _dialog.setIndeterminate(true);
+            _dialog.setCancelable(false);
+            _dialog.setOnCancelListener(dialog -> {
+                CloseLocationTaskFragment f = (CloseLocationTaskFragment) getFragmentManager().findFragmentByTag(CloseLocationTaskFragment.TAG);
+                if (f != null)
+                    f.cancel();
+            });
+            _dialog.show();
+        }
+
+        @Override
+        public void onSuspendUI(Bundle args)
+        {
+            _dialog.dismiss();
+        }
+
+        @Override
+        public void onCompleted(Bundle args, TaskFragment.Result result)
+        {
+            procCloseLocationTaskResult(args, result);
+        }
+
+        @Override
+        public void onUpdateUI(Object state)
+        {
+        }
+    }
 }

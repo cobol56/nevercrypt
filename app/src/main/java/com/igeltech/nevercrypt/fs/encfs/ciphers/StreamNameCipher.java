@@ -12,6 +12,11 @@ import java.util.Arrays;
 
 public class StreamNameCipher implements NameCodec
 {
+    private final EncryptionEngine _cipher;
+    private final MACCalculator _hmac;
+    private byte[] _iv;
+    private byte[] _chainedIV;
+
     public StreamNameCipher(EncryptionEngine cipher, MACCalculator mac)
     {
         _cipher = cipher;
@@ -106,12 +111,6 @@ public class StreamNameCipher implements NameCodec
     }
 
     @Override
-    public void setIV(byte[] iv)
-    {
-        _iv = iv;
-    }
-
-    @Override
     public byte[] getChainedIV(String plaintextName)
     {
         if (_chainedIV == null)
@@ -126,15 +125,16 @@ public class StreamNameCipher implements NameCodec
     }
 
     @Override
+    public void setIV(byte[] iv)
+    {
+        _iv = iv;
+    }
+
+    @Override
     public int getIVSize()
     {
         return 8;
     }
-
-    private final EncryptionEngine _cipher;
-    private final MACCalculator _hmac;
-    private byte[] _iv;
-    private byte[] _chainedIV;
 
     /*private int calcLengthIncBlocs(int plainLength)
     {

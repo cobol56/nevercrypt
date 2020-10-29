@@ -11,13 +11,9 @@ import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.CURREN
 
 public abstract class AppInitHelperBase
 {
-    public static Completable createObservable(RxAppCompatActivity activity)
-    {
-        return Completable.create(emitter -> {
-            AppInitHelper initHelper = new AppInitHelper(activity, emitter);
-            initHelper.startInitSequence();
-        });
-    }
+    protected final UserSettings _settings;
+    final RxAppCompatActivity _activity;
+    final CompletableEmitter _initFinished;
 
     AppInitHelperBase(RxAppCompatActivity activity, CompletableEmitter emitter)
     {
@@ -26,21 +22,23 @@ public abstract class AppInitHelperBase
         _initFinished = emitter;
     }
 
-    final RxAppCompatActivity _activity;
-    protected final UserSettings _settings;
-    final CompletableEmitter _initFinished;
+    public static Completable createObservable(RxAppCompatActivity activity)
+    {
+        return Completable.create(emitter -> {
+            AppInitHelper initHelper = new AppInitHelper(activity, emitter);
+            initHelper.startInitSequence();
+        });
+    }
 
     void convertLegacySettings()
     {
         int curSettingsVersion = _settings.getCurrentSettingsVersion();
         if (curSettingsVersion >= Settings.VERSION)
             return;
-
         if (curSettingsVersion < 0)
         {
             _settings.getSharedPreferences().edit().putInt(CURRENT_SETTINGS_VERSION, Settings.VERSION).commit();
         }
-
         _settings.
                 getSharedPreferences().
                 edit().

@@ -5,6 +5,9 @@ import java.util.List;
 
 public class ActivityResultHandler
 {
+    private final List<Runnable> _receivers = new ArrayList<Runnable>();
+    private boolean _isResumed;
+
     public void addResult(Runnable r)
     {
         if (_isResumed)
@@ -30,7 +33,4 @@ public class ActivityResultHandler
     {
         _receivers.clear();
     }
-
-    private final List<Runnable> _receivers = new ArrayList<Runnable>();
-    private boolean _isResumed;
 }

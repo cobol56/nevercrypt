@@ -2,9 +2,14 @@ package com.igeltech.nevercrypt.exceptions;
 
 public class ApplicationException extends Exception
 {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private int _code;
+
     public ApplicationException()
     {
-
     }
 
     public ApplicationException(String msg, Throwable cause)
@@ -26,10 +31,4 @@ public class ApplicationException extends Exception
     {
         _code = code;
     }
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    private int _code;
 }

@@ -47,7 +47,6 @@ public abstract class AddExistingContainerTaskFragmentBase extends AddExistingCr
         }
         else
             throw new UserException("Wrong path", R.string.wrong_path);
-
         if (isEncFs)
             return new EncFsLocation(locationLocation, _context);
         else

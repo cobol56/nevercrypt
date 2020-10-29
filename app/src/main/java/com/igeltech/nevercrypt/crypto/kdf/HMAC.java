@@ -8,6 +8,9 @@ import java.util.Arrays;
 
 public class HMAC
 {
+    protected final MessageDigest _md;
+    protected final byte[] _digest, _block, _key;
+
     public HMAC(byte[] key, MessageDigest md, int blockSize)
     {
         _md = md;
@@ -27,11 +30,9 @@ public class HMAC
         for (int i = 0; i < _key.length; i++)
             _block[i] = (byte) (_key[i] ^ 0x36);
         Arrays.fill(_block, _key.length, _block.length, (byte) 0x36);
-
         _md.update(_block);
         _md.update(data, dataOffset, dataLen);
         _md.digest(_digest, 0, _digest.length);
-
         for (int i = 0; i < _key.length; i++)
             _block[i] = (byte) (_key[i] ^ 0x5C);
         Arrays.fill(_block, _key.length, _block.length, (byte) 0x5C);
@@ -48,7 +49,4 @@ public class HMAC
         Arrays.fill(_digest, (byte) 0);
         Arrays.fill(_block, (byte) 0);
     }
-
-    protected final MessageDigest _md;
-    protected final byte[] _digest, _block, _key;
 }

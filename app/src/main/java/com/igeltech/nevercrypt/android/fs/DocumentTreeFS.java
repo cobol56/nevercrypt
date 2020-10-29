@@ -37,10 +37,32 @@ import java.util.NoSuchElementException;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class DocumentTreeFS implements FileSystem
 {
+    private final Context _context;
+    private final DocumentPath _rootPath;
+    private final Map<Path, Path> _parentsCache = new HashMap<>();
+
     public DocumentTreeFS(Context context, Uri rootUri)
     {
         _context = context;
         _rootPath = new DocumentPath(DocumentsContract.buildDocumentUriUsingTree(rootUri, DocumentsContract.getTreeDocumentId(rootUri)));
+    }
+
+    private static void closeQuietly(AutoCloseable closeable)
+    {
+        if (closeable != null)
+        {
+            try
+            {
+                closeable.close();
+            }
+            catch (RuntimeException rethrown)
+            {
+                throw rethrown;
+            }
+            catch (Exception ignored)
+            {
+            }
+        }
     }
 
     @Override
@@ -73,8 +95,54 @@ public class DocumentTreeFS implements FileSystem
         return false;
     }
 
+    private Path getParentPath(Path path) throws IOException
+    {
+        if (path.isRootDirectory())
+            return null;
+        synchronized (_parentsCache)
+        {
+            Path parentPath = _parentsCache.get(path);
+            if (parentPath == null)
+            {
+                parentPath = findParentPath(_rootPath, path);
+                if (parentPath == null)
+                    throw new IOException("Couldn't find parent path for " + path.getPathString());
+                _parentsCache.put(path, parentPath);
+            }
+            return parentPath;
+        }
+    }
+
+    private Path findParentPath(Path startSearchPath, Path targetPath) throws IOException
+    {
+        if (!startSearchPath.isDirectory())
+            return null;
+        try (com.igeltech.nevercrypt.fs.Directory.Contents dc = startSearchPath.getDirectory().list())
+        {
+            for (Path p : dc)
+            {
+                if (p.equals(targetPath))
+                    return startSearchPath;
+                if (p.isDirectory())
+                {
+                    Path res = findParentPath(p, targetPath);
+                    if (res != null)
+                        return res;
+                }
+            }
+        }
+        return null;
+    }
+
+    private interface ResultReceiver
+    {
+        boolean nextResult(Cursor c);
+    }
+
     public class File implements com.igeltech.nevercrypt.fs.File
     {
+        private DocumentPath _path;
+
         public File(DocumentPath path)
         {
             _path = path;
@@ -170,12 +238,12 @@ public class DocumentTreeFS implements FileSystem
         {
             Util.copyFileFromInputStream(input, this, offset, count, progressInfo);
         }
-
-        private DocumentPath _path;
     }
 
     public class Directory implements com.igeltech.nevercrypt.fs.Directory
     {
+        private DocumentPath _path;
+
         public Directory(DocumentPath path)
         {
             _path = path;
@@ -267,10 +335,11 @@ public class DocumentTreeFS implements FileSystem
                 {
                     return new Iterator<Path>()
                     {
+                        private boolean _hasNext = cursor != null && cursor.moveToFirst();
+
                         @Override
                         public void remove()
                         {
-
                         }
 
                         @Override
@@ -294,8 +363,6 @@ public class DocumentTreeFS implements FileSystem
                         {
                             return _hasNext;
                         }
-
-                        private boolean _hasNext = cursor != null && cursor.moveToFirst();
                     };
                 }
             };
@@ -312,12 +379,12 @@ public class DocumentTreeFS implements FileSystem
         {
             return _rootPath.getBytesAvailable();
         }
-
-        private DocumentPath _path;
     }
 
     public class DocumentPath implements Path
     {
+        private final Uri _documentUri;
+
         public DocumentPath(Uri uri)
         {
             _documentUri = uri;
@@ -381,7 +448,6 @@ public class DocumentTreeFS implements FileSystem
             catch (IOException ignored)
             {
             }
-
             final Uri newUri = DocumentsContract.renameDocument(_context.getContentResolver(), getDocumentUri(), newName);
             if (newUri == null)
                 throw new IOException("Rename failed");
@@ -542,36 +608,6 @@ public class DocumentTreeFS implements FileSystem
             return _documentUri.compareTo(((DocumentPath) another)._documentUri);
         }
 
-        private final Uri _documentUri;
-
-        private class ChildUriReceiver implements ResultReceiver
-        {
-            public ChildUriReceiver(String childName)
-            {
-                _childName = childName;
-            }
-
-            @Override
-            public boolean nextResult(Cursor c)
-            {
-                if (!c.isNull(1) && _childName.equals(c.getString(1)))
-                {
-                    final String documentId = c.getString(0);
-                    _uri = DocumentsContract.buildDocumentUriUsingTree(_documentUri, documentId);
-                    return false;
-                }
-                return true;
-            }
-
-            public Uri getChildUri()
-            {
-                return _uri;
-            }
-
-            private final String _childName;
-            private Uri _uri;
-        }
-
         private synchronized Uri resolveDocumentUri(final String childName)
         {
             ChildUriReceiver rec = new ChildUriReceiver(childName);
@@ -661,70 +697,32 @@ public class DocumentTreeFS implements FileSystem
                 closeQuietly(c);
             }
         }
-    }
 
-    private interface ResultReceiver
-    {
-        boolean nextResult(Cursor c);
-    }
-
-    private final Context _context;
-    private final DocumentPath _rootPath;
-    private final Map<Path, Path> _parentsCache = new HashMap<>();
-
-    private Path getParentPath(Path path) throws IOException
-    {
-        if (path.isRootDirectory())
-            return null;
-        synchronized (_parentsCache)
+        private class ChildUriReceiver implements ResultReceiver
         {
-            Path parentPath = _parentsCache.get(path);
-            if (parentPath == null)
+            private final String _childName;
+            private Uri _uri;
+
+            public ChildUriReceiver(String childName)
             {
-                parentPath = findParentPath(_rootPath, path);
-                if (parentPath == null)
-                    throw new IOException("Couldn't find parent path for " + path.getPathString());
-                _parentsCache.put(path, parentPath);
+                _childName = childName;
             }
-            return parentPath;
-        }
-    }
 
-    private Path findParentPath(Path startSearchPath, Path targetPath) throws IOException
-    {
-        if (!startSearchPath.isDirectory())
-            return null;
-        try (com.igeltech.nevercrypt.fs.Directory.Contents dc = startSearchPath.getDirectory().list())
-        {
-            for (Path p : dc)
+            @Override
+            public boolean nextResult(Cursor c)
             {
-                if (p.equals(targetPath))
-                    return startSearchPath;
-                if (p.isDirectory())
+                if (!c.isNull(1) && _childName.equals(c.getString(1)))
                 {
-                    Path res = findParentPath(p, targetPath);
-                    if (res != null)
-                        return res;
+                    final String documentId = c.getString(0);
+                    _uri = DocumentsContract.buildDocumentUriUsingTree(_documentUri, documentId);
+                    return false;
                 }
+                return true;
             }
-        }
-        return null;
-    }
 
-    private static void closeQuietly(AutoCloseable closeable)
-    {
-        if (closeable != null)
-        {
-            try
+            public Uri getChildUri()
             {
-                closeable.close();
-            }
-            catch (RuntimeException rethrown)
-            {
-                throw rethrown;
-            }
-            catch (Exception ignored)
-            {
+                return _uri;
             }
         }
     }

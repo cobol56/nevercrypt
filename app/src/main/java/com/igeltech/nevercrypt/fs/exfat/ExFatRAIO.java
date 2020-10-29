@@ -7,6 +7,12 @@ import java.io.IOException;
 
 class ExFatRAIO implements RandomAccessIO
 {
+    private final byte[] _obBuf = new byte[1];
+    private final ExFat _exfat;
+    private final File.AccessMode _mode;
+    private long _fileHandle;
+    private long _position;
+
     ExFatRAIO(ExFat exfat, long fileHandle, long startPosition, File.AccessMode mode)
     {
         _exfat = exfat;
@@ -125,10 +131,4 @@ class ExFatRAIO implements RandomAccessIO
             }
         }
     }
-
-    private final byte[] _obBuf = new byte[1];
-    private final ExFat _exfat;
-    private long _fileHandle;
-    private final File.AccessMode _mode;
-    private long _position;
 }

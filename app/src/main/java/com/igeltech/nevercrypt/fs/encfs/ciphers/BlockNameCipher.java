@@ -12,6 +12,12 @@ import java.util.Arrays;
 
 public class BlockNameCipher implements NameCodec
 {
+    private final FileEncryptionEngine _cipher;
+    private final MACCalculator _hmac;
+    private final boolean _caseSensitive;
+    private byte[] _iv;
+    private byte[] _chainedIV;
+
     public BlockNameCipher(FileEncryptionEngine cipher, MACCalculator mac, boolean caseSensitive)
     {
         _cipher = cipher;
@@ -100,7 +106,6 @@ public class BlockNameCipher implements NameCodec
             int finalSize = buf.length - padding - 2;
             if (padding > _cipher.getEncryptionBlockSize() || finalSize < 0)
                 throw new IllegalArgumentException("Failed decoding name. Wrong padding. Name=" + encodedName);
-
             _hmac.setChainedIV(_iv);
             short mac2 = _hmac.calc16(buf, 2, buf.length - 2);
             _chainedIV = _hmac.getChainedIV();
@@ -137,12 +142,6 @@ public class BlockNameCipher implements NameCodec
     }
 
     @Override
-    public void setIV(byte[] iv)
-    {
-        _iv = iv;
-    }
-
-    @Override
     public byte[] getChainedIV(String plaintextName)
     {
         if (_chainedIV == null)
@@ -157,16 +156,16 @@ public class BlockNameCipher implements NameCodec
     }
 
     @Override
+    public void setIV(byte[] iv)
+    {
+        _iv = iv;
+    }
+
+    @Override
     public int getIVSize()
     {
         return 8;
     }
-
-    private final FileEncryptionEngine _cipher;
-    private final MACCalculator _hmac;
-    private final boolean _caseSensitive;
-    private byte[] _iv;
-    private byte[] _chainedIV;
 
     /*private int calcLengthIncBlocs(int plainLength)
     {

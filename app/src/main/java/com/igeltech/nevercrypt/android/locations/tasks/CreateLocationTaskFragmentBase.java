@@ -27,6 +27,8 @@ public abstract class CreateLocationTaskFragmentBase extends com.igeltech.neverc
     public static final String ARG_CIPHER_NAME = "com.igeltech.nevercrypt.android.CIPHER_NAME";
     public static final String ARG_OVERWRITE = "com.igeltech.nevercrypt.android.OVERWRITE";
     public static final int RESULT_REQUEST_OVERWRITE = 1;
+    protected Context _context;
+    protected LocationsManager _locationsManager;
 
     @Override
     public void initTask(FragmentActivity activity)
@@ -34,9 +36,6 @@ public abstract class CreateLocationTaskFragmentBase extends com.igeltech.neverc
         _context = activity.getApplicationContext();
         _locationsManager = LocationsManager.getLocationsManager(_context);
     }
-
-    protected Context _context;
-    protected LocationsManager _locationsManager;
 
     @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
@@ -50,7 +49,6 @@ public abstract class CreateLocationTaskFragmentBase extends com.igeltech.neverc
     {
         state.setResult(0);
         Location location = _locationsManager.getLocation(getArguments().getParcelable(ARG_LOCATION));
-
         if (!checkParams(state, location))
             return;
         PowerManager pm = (PowerManager) _context.getSystemService(Context.POWER_SERVICE);

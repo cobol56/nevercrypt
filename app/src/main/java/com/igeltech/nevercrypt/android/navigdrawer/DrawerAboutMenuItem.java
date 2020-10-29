@@ -9,9 +9,20 @@ import com.igeltech.nevercrypt.android.dialogs.AboutDialog;
 
 public class DrawerAboutMenuItem extends DrawerMenuItemBase
 {
+    private static Drawable _icon;
+
     public DrawerAboutMenuItem(DrawerControllerBase drawerController)
     {
         super(drawerController);
+    }
+
+    private synchronized static Drawable getIcon(Context context)
+    {
+        if (_icon == null)
+        {
+            _icon = context.getResources().getDrawable(R.drawable.ic_about, context.getTheme());
+        }
+        return _icon;
     }
 
     @Override
@@ -32,15 +43,4 @@ public class DrawerAboutMenuItem extends DrawerMenuItemBase
     {
         return getIcon(getDrawerController().getMainActivity());
     }
-
-    private synchronized static Drawable getIcon(Context context)
-    {
-        if (_icon == null)
-        {
-            _icon = context.getResources().getDrawable(R.drawable.ic_about, context.getTheme());
-        }
-        return _icon;
-    }
-
-    private static Drawable _icon;
 }

@@ -7,6 +7,8 @@ import com.igeltech.nevercrypt.crypto.modes.CTR;
 
 public class AESCTR extends CTR
 {
+    private final int _keySize;
+
     public AESCTR()
     {
         this(32);
@@ -42,8 +44,6 @@ public class AESCTR extends CTR
     {
         return _keySize;
     }
-
-    private final int _keySize;
 }
 
     

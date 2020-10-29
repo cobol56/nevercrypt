@@ -28,6 +28,24 @@ import java.util.List;
 
 public abstract class ContainerBase implements Closeable
 {
+    public static final short COMPATIBLE_TC_VERSION = 0x700;
+    protected final Path _pathToContainer;
+    protected FileSystem _fileSystem;
+    protected RandomAccessIO _encryptedFile;
+    protected int _numKDFIterations;
+    protected VolumeLayout _layout;
+    protected ContainerFormatInfo _containerFormat;
+    protected ContainerOpeningProgressReporter _progressReporter;
+    protected FileEncryptionEngine _encryptionEngine;
+    protected MessageDigest _messageDigest;
+
+    public ContainerBase(Path path, ContainerFormatInfo containerFormat, VolumeLayout layout)
+    {
+        _pathToContainer = path;
+        _layout = layout;
+        _containerFormat = containerFormat;
+    }
+
     public static ContainerFormatInfo findFormatByName(List<ContainerFormatInfo> supportedFormats, String name)
     {
         if (name != null)
@@ -61,21 +79,11 @@ public abstract class ContainerBase implements Closeable
         {
             return new ExFat(io, isReadOnly);
         }
-
         FatFS fs = FatFS.getFat(io);
         if (isReadOnly)
             fs.setReadOnlyMode(true);
         return fs;
     }
-
-    public ContainerBase(Path path, ContainerFormatInfo containerFormat, VolumeLayout layout)
-    {
-        _pathToContainer = path;
-        _layout = layout;
-        _containerFormat = containerFormat;
-    }
-
-    public static final short COMPATIBLE_TC_VERSION = 0x700;
 
     public synchronized void open(byte[] password) throws IOException, ApplicationException
     {
@@ -93,7 +101,6 @@ public abstract class ContainerBase implements Closeable
                     return;
             }
         }
-
         throw new WrongFileFormatException();
     }
 
@@ -127,13 +134,11 @@ public abstract class ContainerBase implements Closeable
             _fileSystem.close(true);
             _fileSystem = null;
         }
-
         if (_encryptedFile != null)
         {
             _encryptedFile.close();
             _encryptedFile = null;
         }
-
         if (_layout != null)
         {
             _layout.close();
@@ -188,16 +193,6 @@ public abstract class ContainerBase implements Closeable
         return _encryptedFile;
     }
 
-    protected FileSystem _fileSystem;
-    protected RandomAccessIO _encryptedFile;
-    protected int _numKDFIterations;
-    protected VolumeLayout _layout;
-    protected ContainerFormatInfo _containerFormat;
-    protected final Path _pathToContainer;
-    protected ContainerOpeningProgressReporter _progressReporter;
-    protected FileEncryptionEngine _encryptionEngine;
-    protected MessageDigest _messageDigest;
-
     protected abstract List<ContainerFormatInfo> getFormats();
 
     protected RandomAccessIO openFile() throws IOException
@@ -210,7 +205,6 @@ public abstract class ContainerBase implements Closeable
         List<ContainerFormatInfo> cfs = getFormats();
         if (cfs.size() > 1)
             Collections.sort(cfs, (lhs, rhs) -> Integer.valueOf(lhs.getOpeningPriority()).compareTo(rhs.getOpeningPriority()));
-
         for (ContainerFormatInfo cf : cfs)
         {
             //Don't try too slow container formats
@@ -238,7 +232,6 @@ public abstract class ContainerBase implements Closeable
             vl.setEngine(_encryptionEngine);
         if (_messageDigest != null)
             vl.setHashFunc(_messageDigest);
-
         vl.setPassword(cutPassword(password, cf.getMaxPasswordLength()));
         if (cf.hasCustomKDFIterationsSupport() && _numKDFIterations > 0)
             vl.setNumKDFIterations(_numKDFIterations);

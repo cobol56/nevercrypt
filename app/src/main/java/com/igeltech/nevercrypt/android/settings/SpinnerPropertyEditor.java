@@ -10,6 +10,8 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class SpinnerPropertyEditor extends PropertyEditorBase
 {
+    protected Spinner _spinner;
+
     public SpinnerPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId)
     {
         super(host, R.layout.settings_spinner_editor, titleResId, descResId);
@@ -63,8 +65,6 @@ public abstract class SpinnerPropertyEditor extends PropertyEditorBase
         if (!isInstantSave() && _spinner != null)
             b.putInt(getBundleKey(), _spinner.getSelectedItemPosition());
     }
-
-    protected Spinner _spinner;
 
     protected abstract int loadValue();
 

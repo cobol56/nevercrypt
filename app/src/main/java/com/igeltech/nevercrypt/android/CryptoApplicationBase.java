@@ -34,6 +34,10 @@ import static com.igeltech.nevercrypt.android.settings.UserSettings.getSettings;
 public class CryptoApplicationBase extends Application
 {
     public static final String BROADCAST_EXIT = "com.igeltech.nevercrypt.android.BROADCAST_EXIT";
+    private static final String MIME_TYPES_PATH = "mime.types";
+    private static SecureBuffer _masterPass;
+    private static Map<String, String> _mimeTypes;
+    private static long _lastActivityTime;
 
     public static void stopProgramBase(Context context, boolean removeNotifications)
     {
@@ -51,7 +55,6 @@ public class CryptoApplicationBase extends Application
         {
             Logger.log(e);
         }
-
         try
         {
             ClipboardManager cm = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
@@ -82,27 +85,6 @@ public class CryptoApplicationBase extends Application
                 }
             }
         }, 4000);
-    }
-
-    public void onCreate()
-    {
-        super.onCreate();
-
-        SystemConfig.setInstance(new com.igeltech.nevercrypt.android.settings.SystemConfig(getApplicationContext()));
-
-        UserSettings us;
-        try
-        {
-            us = getSettings(getApplicationContext());
-        }
-        catch (Throwable e)
-        {
-            e.printStackTrace();
-            Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
-            return;
-        }
-        init(us);
-        Logger.debug("Android sdk version is " + Build.VERSION.SDK_INT);
     }
 
     public synchronized static SecureBuffer getMasterPassword()
@@ -155,27 +137,6 @@ public class CryptoApplicationBase extends Application
         _lastActivityTime = SystemClock.elapsedRealtime();
     }
 
-    protected void init(UserSettings settings)
-    {
-        try
-        {
-            if (settings.disableDebugLog())
-                Logger.disableLog(true);
-            else
-                Logger.initLogger();
-        }
-        catch (Throwable e)
-        {
-            e.printStackTrace();
-            Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private static SecureBuffer _masterPass;
-    private static Map<String, String> _mimeTypes;
-    private static long _lastActivityTime;
-    private static final String MIME_TYPES_PATH = "mime.types";
-
     private static Map<String, String> loadMimeTypes(Context context) throws IOException
     {
         Pattern p = Pattern.compile("^([^\\s/]+/[^\\s/]+)\\s+(.+)$");
@@ -196,6 +157,41 @@ public class CryptoApplicationBase extends Application
                 }
             }
             return map;
+        }
+    }
+
+    public void onCreate()
+    {
+        super.onCreate();
+        SystemConfig.setInstance(new com.igeltech.nevercrypt.android.settings.SystemConfig(getApplicationContext()));
+        UserSettings us;
+        try
+        {
+            us = getSettings(getApplicationContext());
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+            Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
+            return;
+        }
+        init(us);
+        Logger.debug("Android sdk version is " + Build.VERSION.SDK_INT);
+    }
+
+    protected void init(UserSettings settings)
+    {
+        try
+        {
+            if (settings.disableDebugLog())
+                Logger.disableLog(true);
+            else
+                Logger.initLogger();
+        }
+        catch (Throwable e)
+        {
+            e.printStackTrace();
+            Toast.makeText(this, Logger.getExceptionMessage(this, e), Toast.LENGTH_LONG).show();
         }
     }
 }

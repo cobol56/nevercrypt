@@ -4,6 +4,13 @@ import java.util.Iterator;
 
 public abstract class IteratorConverter<S, T> implements Iterator<T>
 {
+    private final Iterator<? extends S> _srcIterator;
+
+    protected IteratorConverter(Iterator<? extends S> srcIterator)
+    {
+        _srcIterator = srcIterator;
+    }
+
     @Override
     public boolean hasNext()
     {
@@ -27,12 +34,5 @@ public abstract class IteratorConverter<S, T> implements Iterator<T>
         return _srcIterator;
     }
 
-    protected IteratorConverter(Iterator<? extends S> srcIterator)
-    {
-        _srcIterator = srcIterator;
-    }
-
     protected abstract T convert(S src);
-
-    private final Iterator<? extends S> _srcIterator;
 }

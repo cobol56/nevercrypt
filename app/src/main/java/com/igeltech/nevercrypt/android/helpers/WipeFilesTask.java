@@ -11,11 +11,11 @@ import java.util.Random;
 
 public class WipeFilesTask
 {
-    public interface ITask
-    {
-        boolean cancel();
+    protected final boolean _wipe;
 
-        void progress(int sizeInc);
+    public WipeFilesTask(boolean wipe)
+    {
+        _wipe = wipe;
     }
 
     static public void wipeFileRnd(File file) throws IOException
@@ -91,19 +91,12 @@ public class WipeFilesTask
         }
     }
 
-    public WipeFilesTask(boolean wipe)
-    {
-        _wipe = wipe;
-    }
-
     protected static void updStatus(ITask task, long sizeInc)
     {
         if (task == null)
             return;
         task.progress((int) sizeInc);
     }
-
-    protected final boolean _wipe;
 
     protected ITask getITask()
     {
@@ -118,7 +111,6 @@ public class WipeFilesTask
             @Override
             public void progress(int sizeInc)
             {
-
             }
         };
     }
@@ -126,5 +118,12 @@ public class WipeFilesTask
     protected void doWork(SrcDstCollection... records) throws Exception
     {
         wipeFilesRnd(getITask(), null, _wipe, records);
+    }
+
+    public interface ITask
+    {
+        boolean cancel();
+
+        void progress(int sizeInc);
     }
 }

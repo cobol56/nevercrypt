@@ -21,6 +21,14 @@ import java.util.regex.Pattern;
 
 public abstract class StorageOptionsBase
 {
+    private static List<StorageInfo> _storagesList;
+    private final Context _context;
+
+    StorageOptionsBase(Context context)
+    {
+        _context = context;
+    }
+
     private static String readMounts()
     {
         try
@@ -32,15 +40,6 @@ public abstract class StorageOptionsBase
             Logger.log(e);
         }
         return "";
-    }
-
-    public static class StorageInfo
-    {
-        public String label;
-        public String path;
-        public String dev;
-        public String type;
-        public boolean isExternal;
     }
 
     public static synchronized List<StorageInfo> getStoragesList(Context context)
@@ -69,11 +68,29 @@ public abstract class StorageOptionsBase
         return !getStoragesList(context).isEmpty() ? getStoragesList(context).get(0) : null;
     }
 
-    private static List<StorageInfo> _storagesList;
-
-    StorageOptionsBase(Context context)
+    private static boolean isStorageAdded(Collection<StorageInfo> storages, String devPath, String mountPath)
     {
-        _context = context;
+        StringPathUtil dpu = new StringPathUtil(devPath);
+        StringPathUtil mpu = new StringPathUtil(mountPath);
+        for (StorageInfo si : storages)
+        {
+            StringPathUtil spu = new StringPathUtil(si.path);
+            if (spu.equals(mpu) || spu.equals(dpu))
+                return true;
+            if (((mountPath.startsWith("/mnt/media_rw/") && si.path.startsWith("/storage/")) || (si.path.startsWith("/mnt/media_rw/") && mountPath.startsWith("/storage/"))) && spu.getFileName().equals(mpu.getFileName()))
+                return true;
+        }
+        return false;
+    }
+
+    static String readMountsStd() throws IOException
+    {
+        Logger.debug("StorageOptions: trying to get mounts using std fs.");
+        FileInputStream finp = new FileInputStream("/proc/mounts");
+        try (InputStream inp = new BufferedInputStream(finp))
+        {
+            return com.igeltech.nevercrypt.fs.util.Util.readFromFile(inp);
+        }
     }
 
     public final Context getContext()
@@ -101,21 +118,6 @@ public abstract class StorageOptionsBase
         return parseMountsFile(readMountsFile());
     }
 
-    private static boolean isStorageAdded(Collection<StorageInfo> storages, String devPath, String mountPath)
-    {
-        StringPathUtil dpu = new StringPathUtil(devPath);
-        StringPathUtil mpu = new StringPathUtil(mountPath);
-        for (StorageInfo si : storages)
-        {
-            StringPathUtil spu = new StringPathUtil(si.path);
-            if (spu.equals(mpu) || spu.equals(dpu))
-                return true;
-            if (((mountPath.startsWith("/mnt/media_rw/") && si.path.startsWith("/storage/")) || (si.path.startsWith("/mnt/media_rw/") && mountPath.startsWith("/storage/"))) && spu.getFileName().equals(mpu.getFileName()))
-                return true;
-        }
-        return false;
-    }
-
     private StorageInfo getDefaultStorage()
     {
         String defPathState = Environment.getExternalStorageState();
@@ -138,16 +140,6 @@ public abstract class StorageOptionsBase
     protected String readMountsFile()
     {
         return readMounts();
-    }
-
-    static String readMountsStd() throws IOException
-    {
-        Logger.debug("StorageOptions: trying to get mounts using std fs.");
-        FileInputStream finp = new FileInputStream("/proc/mounts");
-        try (InputStream inp = new BufferedInputStream(finp))
-        {
-            return com.igeltech.nevercrypt.fs.util.Util.readFromFile(inp);
-        }
     }
 
     private int addFromMountsFile(Collection<StorageInfo> storages, int extCounter)
@@ -203,5 +195,12 @@ public abstract class StorageOptionsBase
         return true;
     }
 
-    private final Context _context;
+    public static class StorageInfo
+    {
+        public String label;
+        public String path;
+        public String dev;
+        public String type;
+        public boolean isExternal;
+    }
 }

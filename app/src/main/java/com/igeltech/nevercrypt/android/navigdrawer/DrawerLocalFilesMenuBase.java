@@ -16,11 +16,7 @@ import java.util.List;
 
 public abstract class DrawerLocalFilesMenuBase extends DrawerSubMenuBase
 {
-    @Override
-    public String getTitle()
-    {
-        return getContext().getString(R.string.local_files);
-    }
+    protected boolean _allowDeviceLocations, _allowDocumentTree;
 
     public DrawerLocalFilesMenuBase(DrawerControllerBase drawerController)
     {
@@ -31,6 +27,12 @@ public abstract class DrawerLocalFilesMenuBase extends DrawerSubMenuBase
     }
 
     @Override
+    public String getTitle()
+    {
+        return getContext().getString(R.string.local_files);
+    }
+
+    @Override
     protected Collection<DrawerMenuItemBase> getSubItems()
     {
         ArrayList<DrawerMenuItemBase> res = new ArrayList<>();
@@ -38,17 +40,12 @@ public abstract class DrawerLocalFilesMenuBase extends DrawerSubMenuBase
         Intent i = act.getIntent();
         for (Location loc : LocationsManager.getLocationsManager(act).getLoadedLocations(true))
             addLocationMenuItem(res, loc);
-
         if (act.isSelectAction() && i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS, false))
             res.add(new DrawerSelectContentProviderMenuItem(getDrawerController()));
-
         if (_allowDocumentTree)
             res.add(new DrawerManageLocalStorages(getDrawerController()));
-
         return res;
     }
-
-    protected boolean _allowDeviceLocations, _allowDocumentTree;
 
     protected void addLocationMenuItem(List<DrawerMenuItemBase> list, Location loc)
     {

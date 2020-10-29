@@ -27,12 +27,6 @@ public class NullNameCipher implements NameCodec
     }
 
     @Override
-    public void setIV(byte[] iv)
-    {
-
-    }
-
-    @Override
     public byte[] getChainedIV(String plaintextName)
     {
         return null;
@@ -42,6 +36,11 @@ public class NullNameCipher implements NameCodec
     public byte[] getIV()
     {
         return null;
+    }
+
+    @Override
+    public void setIV(byte[] iv)
+    {
     }
 
     @Override

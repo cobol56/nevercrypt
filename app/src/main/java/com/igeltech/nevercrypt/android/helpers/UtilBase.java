@@ -74,7 +74,6 @@ public class UtilBase
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
-
         if (height > reqHeight || width > reqWidth)
         {
             inSampleSize = Math.max(Math.round((float) height / (float) reqHeight), Math.round((float) width / (float) reqWidth));

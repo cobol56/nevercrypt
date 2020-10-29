@@ -9,6 +9,8 @@ import java.io.OutputStream;
 
 public class RandomAccessOutputStream extends OutputStream implements DataOutput, RandomStorageAccess
 {
+    private final RandomAccessIO _io;
+
     public RandomAccessOutputStream(RandomAccessIO io) throws IOException
     {
         _io = io;
@@ -45,6 +47,4 @@ public class RandomAccessOutputStream extends OutputStream implements DataOutput
     {
         return _io.length();
     }
-
-    private final RandomAccessIO _io;
 }

@@ -6,6 +6,9 @@ import com.igeltech.nevercrypt.crypto.FileEncryptionEngine;
 
 public class BlockAndStreamCipher implements FileEncryptionEngine
 {
+    private final FileEncryptionEngine _blockCipher;
+    private final EncryptionEngine _streamCipher;
+
     public BlockAndStreamCipher(FileEncryptionEngine blockCipher, EncryptionEngine streamCipher)
     {
         _blockCipher = blockCipher;
@@ -56,16 +59,16 @@ public class BlockAndStreamCipher implements FileEncryptionEngine
     }
 
     @Override
+    public byte[] getIV()
+    {
+        return _streamCipher.getIV();
+    }
+
+    @Override
     public void setIV(byte[] iv)
     {
         _blockCipher.setIV(iv);
         _streamCipher.setIV(iv);
-    }
-
-    @Override
-    public byte[] getIV()
-    {
-        return _streamCipher.getIV();
     }
 
     @Override
@@ -75,16 +78,16 @@ public class BlockAndStreamCipher implements FileEncryptionEngine
     }
 
     @Override
+    public byte[] getKey()
+    {
+        return _blockCipher.getKey();
+    }
+
+    @Override
     public void setKey(byte[] key)
     {
         _blockCipher.setKey(key);
         _streamCipher.setKey(key);
-    }
-
-    @Override
-    public byte[] getKey()
-    {
-        return _blockCipher.getKey();
     }
 
     @Override
@@ -111,7 +114,4 @@ public class BlockAndStreamCipher implements FileEncryptionEngine
     {
         return _blockCipher.getCipherModeName();
     }
-
-    private final FileEncryptionEngine _blockCipher;
-    private final EncryptionEngine _streamCipher;
 }

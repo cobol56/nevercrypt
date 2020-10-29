@@ -5,6 +5,14 @@ import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
 
 public class GOST implements BlockCipherNative
 {
+    static
+    {
+        System.loadLibrary("cryptgost");
+    }
+
+    private long _contextPtr;
+    private boolean _useTestSubstMask;
+
     @Override
     public void init(byte[] key) throws EncryptionEngineException
     {
@@ -61,14 +69,6 @@ public class GOST implements BlockCipherNative
     {
         _useTestSubstMask = val;
     }
-
-    static
-    {
-        System.loadLibrary("cryptgost");
-    }
-
-    private long _contextPtr;
-    private boolean _useTestSubstMask;
 
     private native long initContext(byte[] key);
 

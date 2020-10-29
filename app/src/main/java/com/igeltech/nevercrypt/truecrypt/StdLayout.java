@@ -28,6 +28,16 @@ import java.util.zip.CRC32;
 public class StdLayout extends VolumeLayoutBase
 {
     public static final int HEADER_SIZE = 64 * 1024;
+    protected static final int RESERVED_HEADER_SIZE = 4 * HEADER_SIZE; //header + hidden volume header + backup header + backup hidden volume header
+    protected static final short MIN_ALLOWED_HEADER_VERSION = 3;
+    protected static final short CURRENT_HEADER_VERSION = 5;
+    protected static final short HEADER_CRC_OFFSET = 252;
+    protected static final short DATA_KEY_AREA_MAX_SIZE = 256;
+    protected static final short DATA_AREA_KEY_OFFSET = 256;
+    protected static final int SALT_SIZE = 64;
+    protected static final int VOLUME_SIZE_OFFSET = 116;
+    protected static final byte[] TC_SIG = {'T', 'R', 'U', 'E'};
+    protected long _encryptedAreaStart, _volumeSize, _inputSize;
 
     public StdLayout()
     {
@@ -130,40 +140,6 @@ public class StdLayout extends VolumeLayoutBase
         _inputSize = containerSize;
         _volumeSize = calcVolumeSize(containerSize);
     }
-
-    protected static class KeyHolder
-    {
-        public byte[] getKey()
-        {
-            return _key;
-        }
-
-        public void setKey(byte[] key)
-        {
-            if (key != null)
-                close();
-            _key = key;
-        }
-
-        public void close()
-        {
-            if (_key != null)
-                Arrays.fill(_key, (byte) 0);
-        }
-
-        private byte[] _key;
-    }
-
-    protected static final int RESERVED_HEADER_SIZE = 4 * HEADER_SIZE; //header + hidden volume header + backup header + backup hidden volume header
-    protected static final short MIN_ALLOWED_HEADER_VERSION = 3;
-    protected static final short CURRENT_HEADER_VERSION = 5;
-    protected static final short HEADER_CRC_OFFSET = 252;
-    protected static final short DATA_KEY_AREA_MAX_SIZE = 256;
-    protected static final short DATA_AREA_KEY_OFFSET = 256;
-    protected static final int SALT_SIZE = 64;
-    protected static final int VOLUME_SIZE_OFFSET = 116;
-    protected static final byte[] TC_SIG = {'T', 'R', 'U', 'E'};
-    protected long _encryptedAreaStart, _volumeSize, _inputSize;
 
     protected void prepareEncryptionEngineForPayload() throws EncryptionEngineException
     {
@@ -276,7 +252,6 @@ public class StdLayout extends VolumeLayoutBase
             decryptedHeader = decryptHeader(encryptedHeader, ee, key);
             if (decryptedHeader == null)
                 return false;
-
             if (_masterKey != null)
                 Arrays.fill(_masterKey, (byte) 0);
             _masterKey = new byte[ee.getKeySize()];
@@ -384,13 +359,11 @@ public class StdLayout extends VolumeLayoutBase
         bb.put(getHeaderSignature());
         bb.putShort(CURRENT_HEADER_VERSION);
         bb.putShort(getMinCompatibleProgramVersion());
-
         byte[] mk = new byte[DATA_KEY_AREA_MAX_SIZE];
         System.arraycopy(_masterKey, 0, mk, 0, _masterKey.length);
         CRC32 crc = new CRC32();
         crc.update(mk);
         bb.putInt((int) crc.getValue());
-
         bb.position(bb.position() + 16);
         bb.putLong(calcHiddenVolumeSize(_volumeSize));
         bb.putLong(_volumeSize);
@@ -399,7 +372,6 @@ public class StdLayout extends VolumeLayoutBase
         //write flags
         bb.putInt(0);
         bb.putInt(SECTOR_SIZE);
-
         crc.reset();
         crc.update(bb.array(), encPartOffset, HEADER_CRC_OFFSET - encPartOffset);
         bb.position(HEADER_CRC_OFFSET);
@@ -407,7 +379,6 @@ public class StdLayout extends VolumeLayoutBase
         bb.position(DATA_AREA_KEY_OFFSET);
         bb.put(mk);
         Arrays.fill(mk, (byte) 0);
-
         return bb.array();
     }
 
@@ -438,17 +409,14 @@ public class StdLayout extends VolumeLayoutBase
         short headerVersion = bb.getShort();
         if (headerVersion < MIN_ALLOWED_HEADER_VERSION || headerVersion > CURRENT_HEADER_VERSION)
             throw new WrongContainerVersionException();
-
         CRC32 crc = new CRC32();
         crc.update(data, encPartOffset, HEADER_CRC_OFFSET - encPartOffset);
         if ((int) crc.getValue() != bb.getInt(HEADER_CRC_OFFSET))
             throw new HeaderCRCException();
-
         //offset 70
         int programVer = bb.getShort();
         if (programVer > Container.COMPATIBLE_TC_VERSION)
             throw new WrongContainerVersionException();
-
         //offset 72
         int volumeKeyAreaCRC32 = bb.getInt();
         //offset+=4;
@@ -498,5 +466,28 @@ public class StdLayout extends VolumeLayoutBase
     protected int getEffectiveHeaderSize()
     {
         return 512;
+    }
+
+    protected static class KeyHolder
+    {
+        private byte[] _key;
+
+        public byte[] getKey()
+        {
+            return _key;
+        }
+
+        public void setKey(byte[] key)
+        {
+            if (key != null)
+                close();
+            _key = key;
+        }
+
+        public void close()
+        {
+            if (_key != null)
+                Arrays.fill(_key, (byte) 0);
+        }
     }
 }

@@ -38,61 +38,16 @@ import java.util.List;
 public abstract class LocationListBaseFragment extends ListFragment
 {
     public static final String TAG = "LocationListBaseFragment";
-
-    public class LocationInfo
+    private final BroadcastReceiver _reloadLocationsReceiver = new BroadcastReceiver()
     {
-        public Location location;
-        boolean isSelected;
-
-        public boolean hasSettings()
-        {
-            return false;
-        }
-
-        public Drawable getIcon()
-        {
-            return null;
-        }
-
-        boolean allowRemove()
-        {
-            return true;
-        }
-    }
-
-    public class ListViewAdapter extends ArrayAdapter<LocationInfo>
-    {
-        ListViewAdapter(Context context, List<LocationInfo> backingList)
-        {
-            super(context, R.layout.locations_list_row, backingList);
-        }
-
-        @NonNull
         @Override
-        public View getView(final int position, View convertView, @NonNull ViewGroup parent)
+        public void onReceive(Context context, Intent intent)
         {
-            View v;
-            if (convertView == null)
-            {
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                v = inflater.inflate(R.layout.locations_list_row, null);
-            }
-            else
-                v = convertView;
-
-            final LocationInfo item = getItem(position);
-            v.setTag(item);
-            if (item == null)
-                return v;
-
-            AppCompatTextView tv = v.findViewById(android.R.id.text1);
-            tv.setText(item.location.getTitle());
-            AppCompatImageView iv = v.findViewById(android.R.id.icon);
-            if (iv != null)
-                iv.setImageDrawable(item.getIcon());
-            return v;
+            loadLocations();
         }
-    }
+    };
+    protected ListViewAdapter _locationsList;
+    private ActionMode _actionMode;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
@@ -104,10 +59,8 @@ public abstract class LocationListBaseFragment extends ListFragment
         loadLocations();
         if (savedInstanceState != null)
             restoreSelection(savedInstanceState);
-
         if (haveSelectedLocations())
             startSelectionMode();
-
         initListView();
         setListShown(true);
     }
@@ -168,14 +121,6 @@ public abstract class LocationListBaseFragment extends ListFragment
         LocationsManager.getLocationsManager(getActivity()).removeLocation(loc);
         UserSettings.getSettings(getActivity()).setLocationSettingsString(loc.getId(), null);
         LocationsManager.broadcastLocationRemoved(getActivity(), loc);
-    }
-
-    protected ListViewAdapter _locationsList;
-
-    protected static class MenuHandlerInfo
-    {
-        int menuItemId;
-        boolean clearSelection;
     }
 
     protected abstract void loadLocations();
@@ -314,16 +259,6 @@ public abstract class LocationListBaseFragment extends ListFragment
         startActivity(i);
     }
 
-    private final BroadcastReceiver _reloadLocationsReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            loadLocations();
-        }
-    };
-    private ActionMode _actionMode;
-
     private void openSelectedLocationSettings()
     {
         openLocationSettings(getSelectedLocationInfo());
@@ -407,7 +342,6 @@ public abstract class LocationListBaseFragment extends ListFragment
         final ListView lv = getListView();
         lv.setChoiceMode(ListView.CHOICE_MODE_NONE);
         lv.setItemsCanFocus(true);
-
         lv.setOnItemLongClickListener((adapterView, view, pos, itemId) -> {
             LocationInfo rec = (LocationInfo) adapterView.getItemAtPosition(pos);
             if (rec != null)
@@ -459,7 +393,6 @@ public abstract class LocationListBaseFragment extends ListFragment
                 boolean res = handleMenu(mhi);
                 if (res && mhi.clearSelection)
                     mode.finish();
-
                 return res;
             }
 
@@ -493,5 +426,64 @@ public abstract class LocationListBaseFragment extends ListFragment
         Intent i = new Intent(getActivity(), LocationSettingsActivity.class);
         LocationsManager.storePathsInIntent(i, li.location, null);
         startActivity(i);
+    }
+
+    protected static class MenuHandlerInfo
+    {
+        int menuItemId;
+        boolean clearSelection;
+    }
+
+    public class LocationInfo
+    {
+        public Location location;
+        boolean isSelected;
+
+        public boolean hasSettings()
+        {
+            return false;
+        }
+
+        public Drawable getIcon()
+        {
+            return null;
+        }
+
+        boolean allowRemove()
+        {
+            return true;
+        }
+    }
+
+    public class ListViewAdapter extends ArrayAdapter<LocationInfo>
+    {
+        ListViewAdapter(Context context, List<LocationInfo> backingList)
+        {
+            super(context, R.layout.locations_list_row, backingList);
+        }
+
+        @NonNull
+        @Override
+        public View getView(final int position, View convertView, @NonNull ViewGroup parent)
+        {
+            View v;
+            if (convertView == null)
+            {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                v = inflater.inflate(R.layout.locations_list_row, null);
+            }
+            else
+                v = convertView;
+            final LocationInfo item = getItem(position);
+            v.setTag(item);
+            if (item == null)
+                return v;
+            AppCompatTextView tv = v.findViewById(android.R.id.text1);
+            tv.setText(item.location.getTitle());
+            AppCompatImageView iv = v.findViewById(android.R.id.icon);
+            if (iv != null)
+                iv.setImageDrawable(item.getIcon());
+            return v;
+        }
     }
 }

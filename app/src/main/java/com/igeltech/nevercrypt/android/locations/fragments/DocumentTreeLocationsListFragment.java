@@ -18,6 +18,9 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
 {
+    private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
+    private static Drawable _icon;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -34,7 +37,6 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
                 {
                     Logger.log(e);
                 }
-
                 DocumentTreeLocation loc = new DocumentTreeLocation(getActivity().getApplicationContext(), treeUri);
                 loc.getExternalSettings().setVisibleToUser(true);
                 loc.saveExternalSettings();
@@ -91,6 +93,15 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
         startActivityForResult(intent, REQUEST_CODE_ADD_LOCATION);
     }
 
+    private synchronized Drawable getLoadedIcon()
+    {
+        if (_icon == null)
+        {
+            _icon = getResources().getDrawable(R.drawable.ic_ext_storage);
+        }
+        return _icon;
+    }
+
     private class LocationInfo extends LocationListBaseFragment.LocationInfo
     {
         public LocationInfo(DocumentTreeLocation l)
@@ -103,17 +114,5 @@ public class DocumentTreeLocationsListFragment extends LocationListBaseFragment
         {
             return getLoadedIcon();
         }
-    }
-
-    private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
-    private static Drawable _icon;
-
-    private synchronized Drawable getLoadedIcon()
-    {
-        if (_icon == null)
-        {
-            _icon = getResources().getDrawable(R.drawable.ic_ext_storage);
-        }
-        return _icon;
     }
 }

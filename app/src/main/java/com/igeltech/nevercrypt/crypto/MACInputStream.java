@@ -9,6 +9,12 @@ import java.util.Arrays;
 
 public class MACInputStream extends TransInputStream
 {
+    private final byte[] _transBuffer;
+    private final MACCalculator _macCalc;
+    private final int _macBytes, _randBytes, _overhead;
+    private final boolean _forceDecode;
+    protected boolean _allowEmptyParts = true;
+
     public MACInputStream(InputStream base, MACCalculator macCalc, int blockSize, int macBytes, int randBytes, boolean forceDecode)
     {
         super(base, blockSize - macBytes - randBytes);
@@ -31,12 +37,6 @@ public class MACInputStream extends TransInputStream
     {
         _allowEmptyParts = val;
     }
-
-    private final byte[] _transBuffer;
-    private final MACCalculator _macCalc;
-    private final int _macBytes, _randBytes, _overhead;
-    private final boolean _forceDecode;
-    protected boolean _allowEmptyParts = true;
 
     @Override
     protected int readFromBaseAndTransformBuffer(byte[] buf, int offset, int count, long bufferPosition) throws IOException

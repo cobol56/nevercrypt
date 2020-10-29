@@ -12,6 +12,8 @@ import com.igeltech.nevercrypt.locations.LocationsManagerBase;
 
 public class MediaMountedReceiver extends BroadcastReceiver
 {
+    private final LocationsManagerBase _lm;
+
     public MediaMountedReceiver(LocationsManagerBase lm)
     {
         _lm = lm;
@@ -63,6 +65,4 @@ public class MediaMountedReceiver extends BroadcastReceiver
                 break;
         }
     }
-
-    private final LocationsManagerBase _lm;
 }

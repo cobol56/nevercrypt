@@ -8,6 +8,14 @@ import java.util.Arrays;
 
 public abstract class ECB implements FileEncryptionEngine
 {
+    protected final BlockCipher _cipher;
+    protected byte[] _key;
+
+    protected ECB(BlockCipher cipher)
+    {
+        _cipher = cipher;
+    }
+
     @Override
     public synchronized void init() throws EncryptionEngineException
     {
@@ -24,33 +32,25 @@ public abstract class ECB implements FileEncryptionEngine
     }
 
     @Override
-    public void setIV(byte[] iv)
-    {
-    }
-
-    @Override
     public byte[] getIV()
     {
         return null;
     }
 
     @Override
+    public void setIV(byte[] iv)
+    {
+    }
+
+    @Override
     public void setIncrementIV(boolean val)
     {
-
     }
 
     @Override
     public int getIVSize()
     {
         return 0;
-    }
-
-    @Override
-    public void setKey(byte[] key)
-    {
-        clearKey();
-        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
     }
 
     @Override
@@ -110,6 +110,13 @@ public abstract class ECB implements FileEncryptionEngine
     }
 
     @Override
+    public void setKey(byte[] key)
+    {
+        clearKey();
+        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
+    }
+
+    @Override
     public String getCipherModeName()
     {
         return "ecb";
@@ -119,14 +126,6 @@ public abstract class ECB implements FileEncryptionEngine
     public int getEncryptionBlockSize()
     {
         return _cipher.getBlockSize();
-    }
-
-    protected byte[] _key;
-    protected final BlockCipher _cipher;
-
-    protected ECB(BlockCipher cipher)
-    {
-        _cipher = cipher;
     }
 
     protected void closeCipher()

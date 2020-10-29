@@ -14,6 +14,12 @@ import java.util.List;
 
 public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
 {
+    private final String _hostFragmentTag;
+    protected int _selectedEntry = -1;
+    protected AppCompatTextView _selectedItems;
+    private List<String> _entries;
+    private AppCompatButton _selectButton;
+
     public ChoiceDialogPropertyEditor(Host host, int titleResId, int descResId, String hostFragmentTag)
     {
         super(host, R.layout.settings_choice_dialog_editor, titleResId, descResId);
@@ -38,17 +44,17 @@ public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
         return view;
     }
 
+    public int getSelectedEntry()
+    {
+        return _selectedEntry;
+    }
+
     public void setSelectedEntry(int val)
     {
         _selectedEntry = val;
         updateSelectionText();
         if (_host.getPropertiesView().isInstantSave())
             save();
-    }
-
-    public int getSelectedEntry()
-    {
-        return _selectedEntry;
     }
 
     @Override
@@ -90,17 +96,11 @@ public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
             b.putInt(getBundleKey(), _selectedEntry);
     }
 
-    protected int _selectedEntry = -1;
-
     protected abstract int loadValue();
 
     protected abstract void saveValue(int value);
 
     protected abstract List<String> getEntries();
-
-    protected AppCompatTextView _selectedItems;
-    private List<String> _entries;
-    private AppCompatButton _selectButton;
 
     private void updateSelectionText()
     {
@@ -114,6 +114,4 @@ public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
     {
         ChoiceDialog.showDialog(_host.getFragmentManager(), getId(), _title != null ? _title : _host.getContext().getString(_titleResId), _entries, _hostFragmentTag);
     }
-
-    private final String _hostFragmentTag;
 }

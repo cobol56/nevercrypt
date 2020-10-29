@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class CheckDupIterator<T> extends FilteredIterator<T>
 {
+    private final Set<T> _previousItems = new HashSet<>();
+
     public CheckDupIterator(Iterator<T> base)
     {
         super(base);
@@ -19,6 +21,4 @@ public class CheckDupIterator<T> extends FilteredIterator<T>
         _previousItems.add(item);
         return true;
     }
-
-    private final Set<T> _previousItems = new HashSet<>();
 }

@@ -89,7 +89,6 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
                 getActivity().invalidateOptionsMenu();
             }
         }
-
         super.showCreateNewLocationProperties();
         _propertiesView.setPropertyState(R.string.container_format, true);
     }

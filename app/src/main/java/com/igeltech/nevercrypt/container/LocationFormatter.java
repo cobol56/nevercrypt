@@ -6,7 +6,6 @@ public abstract class LocationFormatter extends LocationFormatterBase
 {
     public LocationFormatter()
     {
-
     }
 
     protected LocationFormatter(Parcel in)

@@ -24,6 +24,13 @@ import static com.igeltech.nevercrypt.android.providers.ContainersDocumentProvid
 
 public class DocumentRootsCursor extends AbstractCursor
 {
+    private final LocationsManager _lm;
+    private final String[] _projection;
+    private final Context _context;
+    private final List<CryptoLocation> _locations = new ArrayList<>();
+    private Single<LocationInfo> _request;
+    private LocationInfo _current;
+
     public DocumentRootsCursor(Context context, LocationsManager lm, @NotNull String[] projection)
     {
         _context = context;
@@ -104,21 +111,6 @@ public class DocumentRootsCursor extends AbstractCursor
         _current = null;
         return super.requery();
     }
-
-    private final LocationsManager _lm;
-    private final String[] _projection;
-    private final Context _context;
-    private final List<CryptoLocation> _locations = new ArrayList<>();
-
-    private static class LocationInfo
-    {
-        Location location;
-        long freeSpace, totalSpace;
-        String title, documentId;
-    }
-
-    private Single<LocationInfo> _request;
-    private LocationInfo _current;
 
     private void fillList()
     {
@@ -229,5 +221,12 @@ public class DocumentRootsCursor extends AbstractCursor
             flags |= DocumentsContract.Root.FLAG_SUPPORTS_CREATE;
         flags |= DocumentsContract.Root.FLAG_SUPPORTS_IS_CHILD;
         return flags;
+    }
+
+    private static class LocationInfo
+    {
+        Location location;
+        long freeSpace, totalSpace;
+        String title, documentId;
     }
 }

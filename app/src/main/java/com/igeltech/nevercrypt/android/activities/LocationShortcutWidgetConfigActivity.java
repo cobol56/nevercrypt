@@ -27,33 +27,24 @@ import java.io.IOException;
 
 public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidgetConfigActivityBase
 {
+    @Override
+    public void onCreate(Bundle icicle)
+    {
+        super.onCreate(icicle);
+        setResult(RESULT_CANCELED);
+    }
+
+    @Override
+    protected Fragment getSettingsFragment()
+    {
+        return new MainFragment();
+    }
+
     public static class MainFragment extends PropertiesFragmentBase
     {
-        public class TargetPathPropertyEditor extends PathPropertyEditor
-        {
-            public TargetPathPropertyEditor()
-            {
-                super(MainFragment.this, R.string.target_path, 0, getTag());
-            }
-
-            @Override
-            protected String loadText()
-            {
-                return _state.getString(ARG_URI);
-            }
-
-            @Override
-            protected void saveText(String text) throws Exception
-            {
-                _state.putString(ARG_URI, text);
-            }
-
-            @Override
-            protected Intent getSelectPathIntent() throws IOException
-            {
-                return FileManagerActivity.getSelectPathIntent(getContext(), null, false, true, true, false, true, true);
-            }
-        }
+        private static final String ARG_TITLE = "title";
+        private static final String ARG_URI = "uri";
+        private final Bundle _state = new Bundle();
 
         @Override
         public void onCreate(Bundle savedInstanceState)
@@ -99,10 +90,6 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
             return super.onOptionsItemSelected(menuItem);
         }
 
-        private static final String ARG_TITLE = "title";
-        private static final String ARG_URI = "uri";
-        private final Bundle _state = new Bundle();
-
         protected PropertyEditor getPathPE()
         {
             return new TargetPathPropertyEditor();
@@ -117,9 +104,7 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
                 String path = _state.getString(ARG_URI);
                 if (title == null || title.trim().isEmpty() || path == null || path.trim().isEmpty())
                     return;
-
                 initWidgetFields(title, path);
-
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, getWidgetId());
                 getActivity().setResult(RESULT_OK, resultValue);
@@ -146,18 +131,31 @@ public class LocationShortcutWidgetConfigActivity extends LocationShortcutWidget
         {
             return getActivity().getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
-    }
 
-    @Override
-    public void onCreate(Bundle icicle)
-    {
-        super.onCreate(icicle);
-        setResult(RESULT_CANCELED);
-    }
+        public class TargetPathPropertyEditor extends PathPropertyEditor
+        {
+            public TargetPathPropertyEditor()
+            {
+                super(MainFragment.this, R.string.target_path, 0, getTag());
+            }
 
-    @Override
-    protected Fragment getSettingsFragment()
-    {
-        return new MainFragment();
+            @Override
+            protected String loadText()
+            {
+                return _state.getString(ARG_URI);
+            }
+
+            @Override
+            protected void saveText(String text) throws Exception
+            {
+                _state.putString(ARG_URI, text);
+            }
+
+            @Override
+            protected Intent getSelectPathIntent() throws IOException
+            {
+                return FileManagerActivity.getSelectPathIntent(getContext(), null, false, true, true, false, true, true);
+            }
+        }
     }
 }

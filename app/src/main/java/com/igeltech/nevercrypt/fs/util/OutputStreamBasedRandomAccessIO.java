@@ -7,6 +7,9 @@ import java.io.OutputStream;
 
 public class OutputStreamBasedRandomAccessIO implements RandomAccessIO
 {
+    private final OutputStream _base;
+    private long _curPos;
+
     public OutputStreamBasedRandomAccessIO(OutputStream base)
     {
         _base = base;
@@ -73,7 +76,4 @@ public class OutputStreamBasedRandomAccessIO implements RandomAccessIO
     {
         return _curPos;
     }
-
-    private final OutputStream _base;
-    private long _curPos;
 }

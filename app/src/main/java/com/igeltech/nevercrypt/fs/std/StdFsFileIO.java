@@ -38,6 +38,5 @@ public class StdFsFileIO extends RandomAccessFile implements RandomAccessIO
     @Override
     public void flush() throws IOException
     {
-
     }
 }

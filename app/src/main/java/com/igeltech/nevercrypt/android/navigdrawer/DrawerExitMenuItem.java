@@ -17,6 +17,46 @@ import java.util.Iterator;
 
 public class DrawerExitMenuItem extends DrawerMenuItemBase
 {
+    private static Drawable _icon;
+
+    public DrawerExitMenuItem(DrawerControllerBase drawerController)
+    {
+        super(drawerController);
+    }
+
+    private synchronized static Drawable getIcon(Context context)
+    {
+        if (_icon == null)
+        {
+            _icon = context.getResources().getDrawable(R.drawable.ic_exit, context.getTheme());
+        }
+        return _icon;
+    }
+
+    @Override
+    public String getTitle()
+    {
+        return getDrawerController().getMainActivity().getString(R.string.stop_service_and_exit);
+    }
+
+    @Override
+    public void onClick(View view, int position)
+    {
+        super.onClick(view, position);
+        getDrawerController().
+                getMainActivity().
+                getSupportFragmentManager().
+                beginTransaction().
+                add(new ExitFragment(), ExitFragment.TAG).
+                commit();
+    }
+
+    @Override
+    public Drawable getIcon()
+    {
+        return getIcon(getDrawerController().getMainActivity());
+    }
+
     public static class ExitFragment extends Fragment implements LocationCloserBaseFragment.CloseLocationReceiver
     {
         public static final String TAG = "com.igeltech.nevercrypt.android.ExitFragment";
@@ -37,7 +77,6 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
         @Override
         public void onTargetLocationNotClosed(Location location, Bundle closeTaskArgs)
         {
-
         }
 
         private void closeNextOrExit()
@@ -65,44 +104,4 @@ public class DrawerExitMenuItem extends DrawerMenuItemBase
             getActivity().finish();
         }
     }
-
-    public DrawerExitMenuItem(DrawerControllerBase drawerController)
-    {
-        super(drawerController);
-    }
-
-    @Override
-    public String getTitle()
-    {
-        return getDrawerController().getMainActivity().getString(R.string.stop_service_and_exit);
-    }
-
-    @Override
-    public void onClick(View view, int position)
-    {
-        super.onClick(view, position);
-        getDrawerController().
-                getMainActivity().
-                getSupportFragmentManager().
-                beginTransaction().
-                add(new ExitFragment(), ExitFragment.TAG).
-                commit();
-    }
-
-    @Override
-    public Drawable getIcon()
-    {
-        return getIcon(getDrawerController().getMainActivity());
-    }
-
-    private synchronized static Drawable getIcon(Context context)
-    {
-        if (_icon == null)
-        {
-            _icon = context.getResources().getDrawable(R.drawable.ic_exit, context.getTheme());
-        }
-        return _icon;
-    }
-
-    private static Drawable _icon;
 }

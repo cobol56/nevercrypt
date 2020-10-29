@@ -8,6 +8,10 @@ import java.util.Arrays;
 
 public class TransRandomAccessIO extends BufferedRandomAccessIO
 {
+    protected byte[] _buffer;
+    protected boolean _allowSkip = false, _isBufferLoaded, _isBufferChanged;
+    private long _bufferPosition;
+
     public TransRandomAccessIO(RandomAccessIO base, int bufferSize) throws FileNotFoundException
     {
         super(base, bufferSize);
@@ -54,9 +58,6 @@ public class TransRandomAccessIO extends BufferedRandomAccessIO
     {
         _allowSkip = val;
     }
-
-    protected byte[] _buffer;
-    protected boolean _allowSkip = false, _isBufferLoaded, _isBufferChanged;
 
     @Override
     protected void setCurrentBufferWritten(int numBytes)
@@ -124,7 +125,6 @@ public class TransRandomAccessIO extends BufferedRandomAccessIO
 
     protected void transformBufferToBase(byte[] buf, int offset, int count, long bufferPosition, byte[] baseBuffer) throws IOException
     {
-
     }
 
     protected int transformBufferFromBase(byte[] baseBuffer, int offset, int count, long bufferPosition, byte[] dstBuffer) throws IOException
@@ -186,8 +186,6 @@ public class TransRandomAccessIO extends BufferedRandomAccessIO
         for (long bp = getBufferPosition(); pos < bp; pos += _bufferSize)
             transformBufferAndWriteToBase(tbuf, 0, _bufferSize, pos);
     }
-
-    private long _bufferPosition;
 
     private long calcBufferPosition()
     {

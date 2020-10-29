@@ -9,6 +9,13 @@ import java.io.IOException;
 
 public abstract class PathBase implements Path
 {
+    private final FileSystem _fs;
+
+    protected PathBase(FileSystem fs)
+    {
+        _fs = fs;
+    }
+
     @Override
     public FileSystem getFileSystem()
     {
@@ -42,10 +49,8 @@ public abstract class PathBase implements Path
             StringPathUtil opu = ((PathBase) o).getPathUtil();
             return /*((Path)o).getFileSystem().equals(getFileSystem()) && */((pu == null && opu == null) || (pu != null && pu.equals(opu)));
         }
-
         if (o instanceof String || o instanceof StringPathUtil)
             return pu.equals(o);
-
         return super.equals(o);
     }
 
@@ -79,11 +84,4 @@ public abstract class PathBase implements Path
     {
         return new StringPathUtil(getPathString());
     }
-
-    protected PathBase(FileSystem fs)
-    {
-        _fs = fs;
-    }
-
-    private final FileSystem _fs;
 }

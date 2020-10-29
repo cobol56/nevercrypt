@@ -44,6 +44,29 @@ public abstract class FileOpsServiceBase extends IntentService
     public static final String ARG_NOTIFICATION_ID = "com.igeltech.nevercrypt.NOTIFICATION_ID";
     public static final String ARG_TASK_COMPLETED = "com.igeltech.nevercrypt.android.TASK_COMPLETED";
     public static final String ARG_ORIG_INTENT = "com.igeltech.nevercrypt.android.ORIG_INTENT";
+    public static final String ACTION_COPY = "copy";
+    public static final String ACTION_MOVE = "move";
+    public static final String ACTION_RECEIVE = "receive";
+    public static final String ACTION_DELETE = "delete";
+    public static final String ACTION_WIPE = "wipe";
+    public static final String ACTION_SAVE_CHANGED_FILE = "save_changed_file";
+    public static final String ACTION_PREPARE_TEMP_FILE = "prepare_temp_file";
+    public static final String ACTION_CLEAR_TEMP_FOLDER = "clear_temp_folder";
+    protected static final String TAG = "FileOpsService";
+    protected static final String ACTION_START_TEMP_FILE = "start_temp_file";
+    protected static final String ACTION_SEND_TASK = "send";
+    protected static final String ACTION_CANCEL_TASK = "cancel_task";
+    protected static final String ACTION_CLOSE_CONTAINER = "close_container";
+    static final String ARG_RECORDS = "src_dst_records";
+    static final String ARG_OVERWRITE = "overwrite";
+    public static int NOTIFICATION_COUNTER = 1000;
+    protected boolean _taskCancelled;
+    private Task _currentTask;
+
+    public FileOpsServiceBase()
+    {
+        super(TAG);
+    }
 
     public static Location getSecTempFolderLocation(String workDir, Context context) throws IOException
     {
@@ -72,7 +95,6 @@ public abstract class FileOpsServiceBase extends IntentService
             res = new DeviceBasedLocation(UserSettings.getSettings(context), extDir.getAbsolutePath());
         }
         res.setCurrentPath(PathUtil.getDirectory(res.getCurrentPath(), "temp").getPath());
-
         return res;
     }
 
@@ -168,7 +190,6 @@ public abstract class FileOpsServiceBase extends IntentService
         );
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         //	intent.setClipData(ClipData.newUri(context.getContentResolver(), "", uri));
-
         try
         {
             context.startActivity(intent);
@@ -291,11 +312,6 @@ public abstract class FileOpsServiceBase extends IntentService
         context.startService(i);
     }
 
-    public FileOpsServiceBase()
-    {
-        super(TAG);
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
@@ -328,7 +344,6 @@ public abstract class FileOpsServiceBase extends IntentService
         }
         _taskCancelled = false;
         Task task = getTask(intent);
-
         if (task == null)
             Logger.log("Unsupported action: " + intent.getAction());
         else
@@ -380,25 +395,6 @@ public abstract class FileOpsServiceBase extends IntentService
             }
         }
     }
-
-    protected static final String TAG = "FileOpsService";
-    public static final String ACTION_COPY = "copy";
-    public static final String ACTION_MOVE = "move";
-    public static final String ACTION_RECEIVE = "receive";
-    public static final String ACTION_DELETE = "delete";
-    public static final String ACTION_WIPE = "wipe";
-    protected static final String ACTION_START_TEMP_FILE = "start_temp_file";
-    public static final String ACTION_SAVE_CHANGED_FILE = "save_changed_file";
-    public static final String ACTION_PREPARE_TEMP_FILE = "prepare_temp_file";
-    protected static final String ACTION_SEND_TASK = "send";
-    protected static final String ACTION_CANCEL_TASK = "cancel_task";
-    public static final String ACTION_CLEAR_TEMP_FOLDER = "clear_temp_folder";
-    protected static final String ACTION_CLOSE_CONTAINER = "close_container";
-    static final String ARG_RECORDS = "src_dst_records";
-    static final String ARG_OVERWRITE = "overwrite";
-    public static int NOTIFICATION_COUNTER = 1000;
-    private Task _currentTask;
-    protected boolean _taskCancelled;
 
     protected Task getTask(Intent intent)
     {

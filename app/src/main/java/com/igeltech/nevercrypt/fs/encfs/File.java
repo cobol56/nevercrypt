@@ -32,6 +32,11 @@ import java.security.SecureRandom;
 
 public class File extends FileWrapper
 {
+    private final boolean _enableIVHeader, _allowEmptyParts, _forceDecode;
+    private final DataCodecInfo _encryptionInfo;
+    private final byte[] _encryptionKey, _externalIV;
+    private final int _macBytes, _randBytes, _fileBlockSize;
+
     public File(Path path, com.igeltech.nevercrypt.fs.File realFile, DataCodecInfo encryptionInfo, byte[] encryptionKey, byte[] externalIV, int fileBlockSize, boolean enableHeader, boolean allowEmptyParts, int macBytes, int randBytes, boolean forceDecode) throws IOException
     {
         super(path, realFile);
@@ -157,7 +162,6 @@ public class File extends FileWrapper
             size -= Header.SIZE;
         if (_randBytes > 0 || _macBytes > 0)
             size = MACFile.calcVirtPosition(size, _fileBlockSize - _randBytes - _macBytes, _randBytes + _macBytes);
-
         return size;
     }
 
@@ -230,94 +234,6 @@ public class File extends FileWrapper
         }
         return ef;
     }
-
-    private static class Header
-    {
-        static final int SIZE = 8;
-
-        public void load(byte[] data)
-        {
-            _iv = data;
-        }
-
-        public byte[] save()
-        {
-            return _iv.clone();
-        }
-
-        public void initNew()
-        {
-            _iv = new byte[8];
-            SecureRandom sr = new SecureRandom();
-            sr.nextBytes(_iv);
-        }
-
-        public byte[] getIV()
-        {
-            return _iv;
-        }
-
-        public void setIV(byte[] iv)
-        {
-            _iv = iv;
-        }
-
-        private byte[] _iv;
-    }
-
-    private static class FileLayout implements EncryptedFileLayout
-    {
-        public FileLayout(FileEncryptionEngine dataEncDec, int encryptedDataOffset, byte[] fileIV)
-        {
-            _encryptedDataOffset = encryptedDataOffset;
-            _dataEncDec = dataEncDec;
-            _fileIV = fileIV;
-        }
-
-        @Override
-        public long getEncryptedDataOffset()
-        {
-            return _encryptedDataOffset;
-        }
-
-        @Override
-        public long getEncryptedDataSize(long fileSize)
-        {
-            return fileSize - _encryptedDataOffset;
-        }
-
-        @Override
-        public FileEncryptionEngine getEngine()
-        {
-            return _dataEncDec;
-        }
-
-        @Override
-        public void setEncryptionEngineIV(FileEncryptionEngine eng, long decryptedVolumeOffset)
-        {
-            byte[] iv = new byte[eng.getIVSize()];
-            ByteBuffer.wrap(iv).order(ByteOrder.BIG_ENDIAN).putLong(decryptedVolumeOffset / _dataEncDec.getFileBlockSize());
-            if (_fileIV != null)
-                for (int i = 0; i < _fileIV.length; i++)
-                    iv[i] ^= _fileIV[i];
-            eng.setIV(iv);
-        }
-
-        @Override
-        public void close() throws IOException
-        {
-            _dataEncDec.close();
-        }
-
-        private final int _encryptedDataOffset;
-        private final FileEncryptionEngine _dataEncDec;
-        private final byte[] _fileIV;
-    }
-
-    private final boolean _enableIVHeader, _allowEmptyParts, _forceDecode;
-    private final DataCodecInfo _encryptionInfo;
-    private final byte[] _encryptionKey, _externalIV;
-    private final int _macBytes, _randBytes, _fileBlockSize;
 
     private FileLayout initFileLayout(OutputStream out) throws IOException, ApplicationException
     {
@@ -398,5 +314,87 @@ public class File extends FileWrapper
             ee.close();
         }
         output.write(data);
+    }
+
+    private static class Header
+    {
+        static final int SIZE = 8;
+        private byte[] _iv;
+
+        public void load(byte[] data)
+        {
+            _iv = data;
+        }
+
+        public byte[] save()
+        {
+            return _iv.clone();
+        }
+
+        public void initNew()
+        {
+            _iv = new byte[8];
+            SecureRandom sr = new SecureRandom();
+            sr.nextBytes(_iv);
+        }
+
+        public byte[] getIV()
+        {
+            return _iv;
+        }
+
+        public void setIV(byte[] iv)
+        {
+            _iv = iv;
+        }
+    }
+
+    private static class FileLayout implements EncryptedFileLayout
+    {
+        private final int _encryptedDataOffset;
+        private final FileEncryptionEngine _dataEncDec;
+        private final byte[] _fileIV;
+
+        public FileLayout(FileEncryptionEngine dataEncDec, int encryptedDataOffset, byte[] fileIV)
+        {
+            _encryptedDataOffset = encryptedDataOffset;
+            _dataEncDec = dataEncDec;
+            _fileIV = fileIV;
+        }
+
+        @Override
+        public long getEncryptedDataOffset()
+        {
+            return _encryptedDataOffset;
+        }
+
+        @Override
+        public long getEncryptedDataSize(long fileSize)
+        {
+            return fileSize - _encryptedDataOffset;
+        }
+
+        @Override
+        public FileEncryptionEngine getEngine()
+        {
+            return _dataEncDec;
+        }
+
+        @Override
+        public void setEncryptionEngineIV(FileEncryptionEngine eng, long decryptedVolumeOffset)
+        {
+            byte[] iv = new byte[eng.getIVSize()];
+            ByteBuffer.wrap(iv).order(ByteOrder.BIG_ENDIAN).putLong(decryptedVolumeOffset / _dataEncDec.getFileBlockSize());
+            if (_fileIV != null)
+                for (int i = 0; i < _fileIV.length; i++)
+                    iv[i] ^= _fileIV[i];
+            eng.setIV(iv);
+        }
+
+        @Override
+        public void close() throws IOException
+        {
+            _dataEncDec.close();
+        }
     }
 }

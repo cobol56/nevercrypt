@@ -31,47 +31,8 @@ import java.util.TreeSet;
 public class ImageViewerActivity extends AppCompatActivity implements PreviewFragment.Host
 {
     public static final String INTENT_PARAM_CURRENT_PATH = "current_path";
-
-    public static class RestorePathsTask extends TaskFragment
-    {
-        public static final String TAG = "RestorePathsTask";
-
-        public static RestorePathsTask newInstance()
-        {
-            return new RestorePathsTask();
-        }
-
-        protected void initTask(AppCompatActivity activity)
-        {
-            _loc = ((ImageViewerActivity) activity).getLocation();
-            _pathStrings = activity.getIntent().getStringArrayListExtra(LocationsManager.PARAM_PATHS);
-            _settings = UserSettings.getSettings(activity);
-        }
-
-        @Override
-        protected void doWork(TaskState state) throws Exception
-        {
-            ArrayList<Path> paths = Util.restorePaths(_loc.getFS(), _pathStrings);
-            TreeSet<CachedPathInfo> res = new TreeSet(FileListDataFragment.getComparator(_settings));
-            for (Path p : paths)
-            {
-                CachedPathInfoBase cpi = new CachedPathInfoBase();
-                cpi.init(p);
-                res.add(cpi);
-            }
-            state.setResult(res);
-        }
-
-        @Override
-        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
-        {
-            return ((ImageViewerActivity) activity).getRestorePathsTaskCallbacks();
-        }
-
-        private Location _loc;
-        private ArrayList<String> _pathStrings;
-        private Settings _settings;
-    }
+    private TreeSet<CachedPathInfo> _files;
+    private Location _location;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -141,9 +102,6 @@ public class ImageViewerActivity extends AppCompatActivity implements PreviewFra
             pf.updateImageViewFullScreen();
     }
 
-    private TreeSet<CachedPathInfo> _files;
-    private Location _location;
-
     private PreviewFragment getPreviewFragment()
     {
         return (PreviewFragment) getSupportFragmentManager().findFragmentByTag(PreviewFragment.TAG);
@@ -160,5 +118,45 @@ public class ImageViewerActivity extends AppCompatActivity implements PreviewFra
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         invalidateOptionsMenu();
+    }
+
+    public static class RestorePathsTask extends TaskFragment
+    {
+        public static final String TAG = "RestorePathsTask";
+        private Location _loc;
+        private ArrayList<String> _pathStrings;
+        private Settings _settings;
+
+        public static RestorePathsTask newInstance()
+        {
+            return new RestorePathsTask();
+        }
+
+        protected void initTask(AppCompatActivity activity)
+        {
+            _loc = ((ImageViewerActivity) activity).getLocation();
+            _pathStrings = activity.getIntent().getStringArrayListExtra(LocationsManager.PARAM_PATHS);
+            _settings = UserSettings.getSettings(activity);
+        }
+
+        @Override
+        protected void doWork(TaskState state) throws Exception
+        {
+            ArrayList<Path> paths = Util.restorePaths(_loc.getFS(), _pathStrings);
+            TreeSet<CachedPathInfo> res = new TreeSet(FileListDataFragment.getComparator(_settings));
+            for (Path p : paths)
+            {
+                CachedPathInfoBase cpi = new CachedPathInfoBase();
+                cpi.init(p);
+                res.add(cpi);
+            }
+            state.setResult(res);
+        }
+
+        @Override
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
+        {
+            return ((ImageViewerActivity) activity).getRestorePathsTaskCallbacks();
+        }
     }
 }

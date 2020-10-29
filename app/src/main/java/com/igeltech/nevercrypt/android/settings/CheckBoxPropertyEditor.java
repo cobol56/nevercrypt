@@ -10,6 +10,9 @@ import com.igeltech.nevercrypt.android.R;
 
 public abstract class CheckBoxPropertyEditor extends PropertyEditorBase
 {
+    protected AppCompatCheckBox _checkBox;
+    protected boolean _loadingValue;
+
     public CheckBoxPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId)
     {
         super(host, R.layout.settings_checkbox_editor, titleResId, descResId);
@@ -81,9 +84,6 @@ public abstract class CheckBoxPropertyEditor extends PropertyEditorBase
     {
         _checkBox.setChecked(!_checkBox.isChecked());
     }
-
-    protected AppCompatCheckBox _checkBox;
-    protected boolean _loadingValue;
 
     protected abstract boolean loadValue();
 

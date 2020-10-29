@@ -11,6 +11,8 @@ import java.io.IOException;
 
 class ExFatPath extends PathBase implements Path
 {
+    private final String _pathString;
+
     ExFatPath(ExFat fs, String pathString)
     {
         super(fs);
@@ -60,8 +62,6 @@ class ExFatPath extends PathBase implements Path
     {
         return (ExFat) super.getFileSystem();
     }
-
-    private final String _pathString;
 
     FileStat getAttr() throws IOException
     {

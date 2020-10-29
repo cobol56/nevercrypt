@@ -6,6 +6,8 @@ import java.io.File;
 
 public abstract class SystemConfigCommon extends com.igeltech.nevercrypt.settings.SystemConfig
 {
+    protected final Context _context;
+
     public SystemConfigCommon(Context context)
     {
         _context = context;
@@ -34,6 +36,4 @@ public abstract class SystemConfigCommon extends com.igeltech.nevercrypt.setting
     {
         return new File(_context.getFilesDir(), "fsm");
     }
-
-    protected final Context _context;
 }

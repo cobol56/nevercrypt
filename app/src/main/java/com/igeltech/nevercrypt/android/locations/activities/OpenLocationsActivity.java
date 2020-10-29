@@ -18,9 +18,37 @@ import java.util.concurrent.CancellationException;
 
 public class OpenLocationsActivity extends RxAppCompatActivity
 {
+    @Override
+    protected void onCreate(final Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setResult(RESULT_CANCELED);
+        AppInitHelper.
+                createObservable(this).
+                compose(bindToLifecycle()).
+                subscribe(this::addMainFragment, err -> {
+                    if (!(err instanceof CancellationException))
+                        Logger.log(err);
+                });
+    }
+
+    protected MainFragment createFragment()
+    {
+        return new MainFragment();
+    }
+
+    protected void addMainFragment()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.findFragmentByTag(MainFragment.TAG) == null)
+            fm.beginTransaction().add(createFragment(), MainFragment.TAG).commit();
+    }
+
     public static class MainFragment extends Fragment implements LocationOpenerBaseFragment.LocationOpenerResultReceiver
     {
         public static final String TAG = "com.igeltech.nevercrypt.android.locations.activities.OpenLocationsActivity.MainFragment";
+        private ArrayList<Location> _targetLocations;
+        private LocationsManager _locationsManager;
 
         @Override
         public void onCreate(Bundle state)
@@ -72,9 +100,6 @@ public class OpenLocationsActivity extends RxAppCompatActivity
             openNextLocation();
         }
 
-        private ArrayList<Location> _targetLocations;
-        private LocationsManager _locationsManager;
-
         private void openNextLocation()
         {
             if (_targetLocations.isEmpty())
@@ -108,31 +133,5 @@ public class OpenLocationsActivity extends RxAppCompatActivity
             args.putString(LocationOpenerBaseFragment.PARAM_RECEIVER_FRAGMENT_TAG, getTag());
             LocationsManager.storePathsInBundle(args, loc, null);
         }
-    }
-
-    @Override
-    protected void onCreate(final Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setResult(RESULT_CANCELED);
-        AppInitHelper.
-                createObservable(this).
-                compose(bindToLifecycle()).
-                subscribe(this::addMainFragment, err -> {
-                    if (!(err instanceof CancellationException))
-                        Logger.log(err);
-                });
-    }
-
-    protected MainFragment createFragment()
-    {
-        return new MainFragment();
-    }
-
-    protected void addMainFragment()
-    {
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.findFragmentByTag(MainFragment.TAG) == null)
-            fm.beginTransaction().add(createFragment(), MainFragment.TAG).commit();
     }
 }

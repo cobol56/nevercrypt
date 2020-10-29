@@ -9,6 +9,9 @@ import java.util.Date;
 
 public abstract class FSRecordWrapper implements FSRecord
 {
+    private final FSRecord _base;
+    private Path _path;
+
     public FSRecordWrapper(Path path, FSRecord base)
     {
         _base = base;
@@ -19,6 +22,11 @@ public abstract class FSRecordWrapper implements FSRecord
     public Path getPath()
     {
         return _path;
+    }
+
+    protected void setPath(Path path)
+    {
+        _path = path;
     }
 
     @Override
@@ -65,12 +73,4 @@ public abstract class FSRecordWrapper implements FSRecord
     }
 
     protected abstract Path getPathFromBasePath(Path basePath) throws IOException;
-
-    protected void setPath(Path path)
-    {
-        _path = path;
-    }
-
-    private final FSRecord _base;
-    private Path _path;
 }

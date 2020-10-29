@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public abstract class FileSystemWrapper implements FileSystem
 {
+    private final FileSystem _base;
+
     public FileSystemWrapper(FileSystem base)
     {
         _base = base;
@@ -39,6 +41,4 @@ public abstract class FileSystemWrapper implements FileSystem
     {
         return getBase().isClosed();
     }
-
-    private final FileSystem _base;
 }

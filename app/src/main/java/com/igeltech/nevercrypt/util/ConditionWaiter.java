@@ -2,9 +2,16 @@ package com.igeltech.nevercrypt.util;
 
 public class ConditionWaiter extends Thread
 {
-    public interface ICondition
+    private final Object _syncer;
+    private final ICondition _condition;
+    private int _timeout = 5000, _sleepTimeout = 200, _numRetries;
+    private boolean _fin;
+    private boolean _result;
+
+    public ConditionWaiter(ICondition condition, Object syncer)
     {
-        boolean isTrue();
+        _condition = condition;
+        _syncer = syncer;
     }
 
     public static boolean waitFor(ICondition condition)
@@ -17,7 +24,6 @@ public class ConditionWaiter extends Thread
         Object syncer = new Object();
         ConditionWaiter waiter = new ConditionWaiter(condition, syncer);
         waiter.setTimeout(timeout);
-
         synchronized (syncer)
         {
             waiter.start();
@@ -40,7 +46,6 @@ public class ConditionWaiter extends Thread
         waiter.setTimeout(0);
         waiter.setSleepTimeout(sleepTimeout);
         waiter.setNumRetries(numRetries);
-
         synchronized (syncer)
         {
             waiter.start();
@@ -54,12 +59,6 @@ public class ConditionWaiter extends Thread
             }
         }
         return waiter.getResult();
-    }
-
-    public ConditionWaiter(ICondition condition, Object syncer)
-    {
-        _condition = condition;
-        _syncer = syncer;
     }
 
     public void setTimeout(int timeout)
@@ -121,9 +120,8 @@ public class ConditionWaiter extends Thread
         _fin = true;
     }
 
-    private int _timeout = 5000, _sleepTimeout = 200, _numRetries;
-    private boolean _fin;
-    private final Object _syncer;
-    private final ICondition _condition;
-    private boolean _result;
+    public interface ICondition
+    {
+        boolean isTrue();
+    }
 }

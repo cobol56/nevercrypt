@@ -6,10 +6,37 @@ import java.io.IOException;
 
 public class FDRandomAccessIO implements RandomAccessIO
 {
+    static
+    {
+        System.loadLibrary("fdraio");
+    }
+
+    private int _fd = -1;
+
     public FDRandomAccessIO(int fd)
     {
         setFD(fd);
     }
+
+    protected FDRandomAccessIO()
+    {
+    }
+
+    private static native void flush(int fd);
+
+    private static native long getSize(int fd);
+
+    private static native void close(int fd);
+
+    private static native long getPosition(int fd);
+
+    private static native void seek(int fd, long newPosition);
+
+    private static native int ftruncate(int fd, long newLength);
+
+    private static native int read(int fd, byte[] buf, int off, int len);
+
+    private static native int write(int fd, byte[] buf, int off, int len);
 
     @Override
     public void close() throws IOException
@@ -26,12 +53,16 @@ public class FDRandomAccessIO implements RandomAccessIO
         return _fd;
     }
 
+    protected void setFD(int fd)
+    {
+        _fd = fd;
+    }
+
     @Override
     public void seek(long position) throws IOException
     {
         if (_fd < 0)
             throw new IOException("File is closed");
-
         seek(_fd, position);
     }
 
@@ -40,7 +71,6 @@ public class FDRandomAccessIO implements RandomAccessIO
     {
         if (_fd < 0)
             throw new IOException("File is closed");
-
         return getPosition(_fd);
     }
 
@@ -49,7 +79,6 @@ public class FDRandomAccessIO implements RandomAccessIO
     {
         if (_fd < 0)
             throw new IOException("File is closed");
-
         return getSize(_fd);
     }
 
@@ -65,10 +94,8 @@ public class FDRandomAccessIO implements RandomAccessIO
     {
         if (off + len > b.length)
             throw new IndexOutOfBoundsException();
-
         if (_fd < 0)
             throw new IOException("File is closed");
-
         int res = read(_fd, b, off, len);
         if (res < 0)
             throw new IOException("Failed reading data");
@@ -88,10 +115,8 @@ public class FDRandomAccessIO implements RandomAccessIO
     {
         if (off + len > b.length)
             throw new IndexOutOfBoundsException();
-
         if (_fd < 0)
             throw new IOException("File is closed");
-
         if (write(_fd, b, off, len) != 0)
             throw new IOException("Failed writing data");
     }
@@ -109,47 +134,12 @@ public class FDRandomAccessIO implements RandomAccessIO
     {
         if (_fd < 0)
             throw new IOException("File is closed");
-
         if (newLength < 0)
             throw new IllegalArgumentException("newLength < 0");
-
         if (ftruncate(_fd, newLength) != 0)
             throw new IOException("Failed truncating file");
-
         long filePointer = getFilePointer();
         if (filePointer > newLength)
             seek(newLength);
     }
-
-    protected FDRandomAccessIO()
-    {
-    }
-
-    protected void setFD(int fd)
-    {
-        _fd = fd;
-    }
-
-    static
-    {
-        System.loadLibrary("fdraio");
-    }
-
-    private static native void flush(int fd);
-
-    private static native long getSize(int fd);
-
-    private static native void close(int fd);
-
-    private static native long getPosition(int fd);
-
-    private static native void seek(int fd, long newPosition);
-
-    private static native int ftruncate(int fd, long newLength);
-
-    private static native int read(int fd, byte[] buf, int off, int len);
-
-    private static native int write(int fd, byte[] buf, int off, int len);
-
-    private int _fd = -1;
 }

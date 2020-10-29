@@ -19,18 +19,21 @@ public class GestureImageView extends AppCompatImageView
     //private static final float MIN_NAVIG_VELOCITY = 300;
     private static final float MIN_SCALE = 0.1f;
     private static final float MAX_SCALE = 10f;
-
-    public interface OptimImageRequiredListener
-    {
-        void onOptimImageRequired(Rect srcImageRect);
-    }
-
-    public interface NavigListener
-    {
-        void onNext();
-
-        void onPrev();
-    }
+    private static final int INVALID_POINTER_ID = -1;
+    private static final float[] SCALE_FACTORS = new float[]{0.1f, 0.2f, 0.4f, 0.8f, 1f, 2f, 4f, 8f, 10f};
+    private final RectF _imageRect = new RectF(), _viewRect = new RectF();
+    private final ScaleGestureDetector _scaleDetector;
+    private final GestureDetector _flingDetector;
+    private final Matrix _imageMatrix = new Matrix(), _optimImageMatrix = new Matrix();
+    private NavigListener _navigListener;
+    private float _scaleFactorX, _scaleFactorY, _posX, _posY, _lastTouchX, _lastTouchY, _scaleX, _scaleY;
+    private int _activePointerId = INVALID_POINTER_ID;
+    private boolean _allowNavig, _autoZoom, _flipX, _flipY, _inited;
+    private int _rotation;
+    private Bitmap _originalImage, _optimImage;
+    private int _originalSampleSize;
+    private Runnable _onSizeChangedListener;
+    private OptimImageRequiredListener _onLoadOptimImageListener;
 
     public GestureImageView(Context context, AttributeSet attr)
     {
@@ -55,7 +58,6 @@ public class GestureImageView extends AppCompatImageView
                 float sf = Math.abs(_scaleFactorX) * detector.getScaleFactor();
                 // Don't let the object get too small or too large.
                 sf = Math.max(MIN_SCALE, Math.min(sf, MAX_SCALE));
-
                 _scaleFactorX = sf;
                 _scaleFactorY = sf;
                 moveAndScale();
@@ -73,7 +75,6 @@ public class GestureImageView extends AppCompatImageView
                         _navigListener.onNext();
                     else
                         _navigListener.onPrev();
-
                     return true;
                 }
                 return false;
@@ -93,7 +94,6 @@ public class GestureImageView extends AppCompatImageView
         // Let the ScaleGestureDetector inspect all events.
         _scaleDetector.onTouchEvent(ev);
         _flingDetector.onTouchEvent(ev);
-
         final int action = ev.getAction();
         switch (action & MotionEvent.ACTION_MASK)
         {
@@ -101,51 +101,42 @@ public class GestureImageView extends AppCompatImageView
             {
                 final float x = ev.getX();
                 final float y = ev.getY();
-
                 _lastTouchX = x;
                 _lastTouchY = y;
                 _activePointerId = ev.getPointerId(0);
                 break;
             }
-
             case MotionEvent.ACTION_MOVE:
             {
                 final int pointerIndex = ev.findPointerIndex(_activePointerId);
                 final float x = ev.getX(pointerIndex);
                 final float y = ev.getY(pointerIndex);
-
                 // Only move if the ScaleGestureDetector isn't processing a gesture.
                 if (!_scaleDetector.isInProgress())
                 {
                     if (getDrawable() == null)
                         break;
-
                     final float dx = x - _lastTouchX;
                     final float dy = y - _lastTouchY;
                     _posX += dx;
                     _posY += dy;
                     moveAndScale();
                 }
-
                 _lastTouchX = x;
                 _lastTouchY = y;
-
                 break;
             }
-
             case MotionEvent.ACTION_UP:
             {
                 _activePointerId = INVALID_POINTER_ID;
                 onTouchUp();
                 break;
             }
-
             case MotionEvent.ACTION_CANCEL:
             {
                 _activePointerId = INVALID_POINTER_ID;
                 break;
             }
-
             case MotionEvent.ACTION_POINTER_UP:
             {
                 final int pointerIndex = (ev.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
@@ -162,7 +153,6 @@ public class GestureImageView extends AppCompatImageView
                 break;
             }
         }
-
         return true;
     }
 
@@ -213,7 +203,6 @@ public class GestureImageView extends AppCompatImageView
             _optimImage.recycle();
             _optimImage = null;
         }
-
         if (_originalImage != null)
             _originalImage.recycle();
         _originalImage = bm;
@@ -315,22 +304,6 @@ public class GestureImageView extends AppCompatImageView
         startOptimImageLoad();
     }
 
-    private static final int INVALID_POINTER_ID = -1;
-    private static final float[] SCALE_FACTORS = new float[]{0.1f, 0.2f, 0.4f, 0.8f, 1f, 2f, 4f, 8f, 10f};
-    private NavigListener _navigListener;
-    private final RectF _imageRect = new RectF(), _viewRect = new RectF();
-    private final ScaleGestureDetector _scaleDetector;
-    private final GestureDetector _flingDetector;
-    private final Matrix _imageMatrix = new Matrix(), _optimImageMatrix = new Matrix();
-    private float _scaleFactorX, _scaleFactorY, _posX, _posY, _lastTouchX, _lastTouchY, _scaleX, _scaleY;
-    private int _activePointerId = INVALID_POINTER_ID;
-    private boolean _allowNavig, _autoZoom, _flipX, _flipY, _inited;
-    private int _rotation;
-    private Bitmap _originalImage, _optimImage;
-    private int _originalSampleSize;
-    private Runnable _onSizeChangedListener;
-    private OptimImageRequiredListener _onLoadOptimImageListener;
-
     private void showOriginalImage()
     {
         super.setImageBitmap(_originalImage);
@@ -378,7 +351,6 @@ public class GestureImageView extends AppCompatImageView
     {
         if (_onLoadOptimImageListener == null)
             return;
-
         if (_originalSampleSize > 1)
         {
             RectF rf = new RectF(_imageRect);
@@ -405,7 +377,6 @@ public class GestureImageView extends AppCompatImageView
     {
         if (_imageRect.width() == 0 || _imageRect.height() == 0 || _viewRect.width() == 0 || _viewRect.height() == 0)
             return;
-
         _scaleX = _scaleY = 0;
         _posX = _posY = 0;
         _scaleFactorX = _scaleFactorY = 1.f;
@@ -415,13 +386,11 @@ public class GestureImageView extends AppCompatImageView
             applyTrans();
             _imageMatrix.mapRect(imageRect);
         }
-
         float scaleFactor;
         if (imageRect.width() <= _viewRect.width() && imageRect.height() <= _viewRect.height() && !_autoZoom)
             scaleFactor = 1.f;
         else
             scaleFactor = Math.min(_viewRect.height() / imageRect.height(), _viewRect.width() / imageRect.width());
-
         _scaleFactorX = _flipX ? -scaleFactor : scaleFactor;
         _scaleFactorY = _flipY ? -scaleFactor : scaleFactor;
         _imageMatrix.reset();
@@ -445,7 +414,6 @@ public class GestureImageView extends AppCompatImageView
     {
         PointF delta = new PointF();
         validate(_imageRect, _imageMatrix, delta);
-
         if (delta.x != 0 || delta.y != 0)
         {
             _posX += delta.x;
@@ -459,21 +427,30 @@ public class GestureImageView extends AppCompatImageView
         float deltaX = 0, deltaY = 0;
         RectF imageRect = new RectF(curImageRect);
         curImageMatrix.mapRect(imageRect);
-
         if (imageRect.height() <= _viewRect.height())
             deltaY = (_viewRect.height() - imageRect.height()) / 2 - imageRect.top;
         else if (imageRect.top > 0)
             deltaY = -imageRect.top;
         else if (imageRect.bottom < _viewRect.height())
             deltaY = _viewRect.height() - imageRect.bottom;
-
         if (imageRect.width() <= _viewRect.width())
             deltaX = (_viewRect.width() - imageRect.width()) / 2 - imageRect.left;
         else if (imageRect.left > 0)
             deltaX = -imageRect.left;
         else if (imageRect.right < _viewRect.width())
             deltaX = _viewRect.width() - imageRect.right;
-
         outDelta.offset(deltaX, deltaY);
+    }
+
+    public interface OptimImageRequiredListener
+    {
+        void onOptimImageRequired(Rect srcImageRect);
+    }
+
+    public interface NavigListener
+    {
+        void onNext();
+
+        void onPrev();
     }
 }

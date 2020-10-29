@@ -16,6 +16,8 @@ import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 public class RenameFileDialog extends DialogFragment
 {
     public static final String TAG = "RenameFileDialog";
+    private static final String ARG_CURRENT_PATH = "com.igeltech.nevercrypt.android.PATH";
+    private static final String ARG_FILENAME = "com.igeltech.nevercrypt.android.FILENAME";
 
     public static void showDialog(FragmentManager fm, String currentPath, String fileName)
     {
@@ -33,7 +35,6 @@ public class RenameFileDialog extends DialogFragment
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
         alert.setMessage(getString(R.string.enter_new_file_name));
-
         // Set an EditText view to get user input
         final String filename = getArguments().getString(ARG_FILENAME);
         final EditText input = new EditText(getActivity());
@@ -45,18 +46,12 @@ public class RenameFileDialog extends DialogFragment
         if (fnWoExt.length() > 0)
             input.setSelection(0, fnWoExt.length());
         alert.setView(input);
-
         alert.setPositiveButton(getString(android.R.string.ok), (dialog, whichButton) -> renameFile(input.getText().toString()));
-
         alert.setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
             // Canceled.
         });
-
         return alert.create();
     }
-
-    private static final String ARG_CURRENT_PATH = "com.igeltech.nevercrypt.android.PATH";
-    private static final String ARG_FILENAME = "com.igeltech.nevercrypt.android.FILENAME";
 
     private void renameFile(String newName)
     {

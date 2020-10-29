@@ -15,76 +15,19 @@ import java.util.NoSuchElementException;
 
 public class ExecuteExternalProgram implements TextShell
 {
+    protected Process _process;
+    protected InputStream _procInputStream;
+    protected OutputStream _procOutputStream;
+    protected boolean _redirectErrorStream = true;
+    protected String[] _currentArgs;
+
+    public ExecuteExternalProgram()
+    {
+    }
+
     public static void makeExecutable(String path) throws ApplicationException
     {
         executeAndReadString("chmod", "0700", path);
-    }
-
-    public static class OutputLinesIterator implements Iterator<String>, Iterable<String>
-    {
-        public OutputLinesIterator(Reader input)
-        {
-            _input = input;
-        }
-
-        public boolean hasNext()
-        {
-            if (!_isLineRead)
-                readLine();
-            return _line != null;
-        }
-
-        public String next()
-        {
-            if (!hasNext())
-                throw new NoSuchElementException();
-            _isLineRead = false;
-            return _line;
-        }
-
-        public void remove()
-        {
-            throw new UnsupportedOperationException();
-        }
-
-        public Iterator<String> iterator()
-        {
-            return this;
-        }
-
-        private final Reader _input;
-        private String _line;
-        private boolean _isLineRead;
-        private boolean _eof;
-
-        private void readLine()
-        {
-            _line = null;
-            _isLineRead = true;
-            if (_eof)
-                return;
-            StringWriter out = new StringWriter();
-            try
-            {
-                for (; ; )
-                {
-                    int n = _input.read();
-                    if (n < 0 || n == '\n')
-                    {
-                        if (n < 0)
-                            _eof = true;
-                        _line = out.toString();
-                        break;
-                    }
-                    if (n != '\r')
-                        out.write(n);
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
 
     public static Iterable<String> executeAndReadLines(String... commands) throws ApplicationException
@@ -157,9 +100,53 @@ public class ExecuteExternalProgram implements TextShell
         return strArgs;
     }
 
-    public ExecuteExternalProgram()
+    protected static Iterable<String> executeAndReadLines(ExecuteExternalProgram exec, String... command) throws ApplicationException
     {
+        return new OutputLinesIterator(new StringReader(executeAndReadString(exec, 0, command)));
+    }
 
+    protected static void execute(ExecuteExternalProgram exec, String... command) throws ApplicationException
+    {
+        try
+        {
+            exec.executeCommand(command);
+            int res = exec.waitProcess();
+            if (res != 0)
+                throw new ExternalProgramFailedException(res, "", command);
+        }
+        catch (IOException e)
+        {
+            throw new ApplicationException("Failed executing external program", e);
+        }
+    }
+
+    protected static String executeAndReadString(final ExecuteExternalProgram exec, int timeout, final String... command) throws ApplicationException
+    {
+        try
+        {
+            if (timeout > 0)
+                return CmdRunner.executeCommand(timeout, exec, (Object[]) command);
+            else
+            {
+                exec.executeCommand(command);
+                return exec.waitResult();
+            }
+        }
+        catch (IOException e)
+        {
+            throw new ApplicationException("Failed executing external program", e);
+        }
+    }
+
+    public static String readAll(InputStream inp) throws IOException
+    {
+        InputStreamReader reader = new InputStreamReader(inp);
+        StringWriter sw = new StringWriter();
+        char[] buf = new char[512];
+        int n;
+        while ((n = reader.read(buf)) >= 0)
+            sw.write(buf, 0, n);
+        return sw.toString();
     }
 
     @Override
@@ -175,7 +162,6 @@ public class ExecuteExternalProgram implements TextShell
         String out = readAll(getProcInputStream());
         if (res != 0)
             throw new ExternalProgramFailedException(res, out + "\n" + out, _currentArgs);
-
         return out;
     }
 
@@ -258,7 +244,6 @@ public class ExecuteExternalProgram implements TextShell
             {
                 e.printStackTrace();
             }
-
             try
             {
                 closeProcOutputStream();
@@ -278,60 +263,71 @@ public class ExecuteExternalProgram implements TextShell
         }
     }
 
-    protected static Iterable<String> executeAndReadLines(ExecuteExternalProgram exec, String... command) throws ApplicationException
+    public static class OutputLinesIterator implements Iterator<String>, Iterable<String>
     {
+        private final Reader _input;
+        private String _line;
+        private boolean _isLineRead;
+        private boolean _eof;
 
-        return new OutputLinesIterator(new StringReader(executeAndReadString(exec, 0, command)));
-    }
-
-    protected static void execute(ExecuteExternalProgram exec, String... command) throws ApplicationException
-    {
-        try
+        public OutputLinesIterator(Reader input)
         {
-            exec.executeCommand(command);
-            int res = exec.waitProcess();
-            if (res != 0)
-                throw new ExternalProgramFailedException(res, "", command);
+            _input = input;
         }
-        catch (IOException e)
-        {
-            throw new ApplicationException("Failed executing external program", e);
-        }
-    }
 
-    protected static String executeAndReadString(final ExecuteExternalProgram exec, int timeout, final String... command) throws ApplicationException
-    {
-        try
+        public boolean hasNext()
         {
-            if (timeout > 0)
-                return CmdRunner.executeCommand(timeout, exec, (Object[]) command);
-            else
+            if (!_isLineRead)
+                readLine();
+            return _line != null;
+        }
+
+        public String next()
+        {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            _isLineRead = false;
+            return _line;
+        }
+
+        public void remove()
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        public Iterator<String> iterator()
+        {
+            return this;
+        }
+
+        private void readLine()
+        {
+            _line = null;
+            _isLineRead = true;
+            if (_eof)
+                return;
+            StringWriter out = new StringWriter();
+            try
             {
-                exec.executeCommand(command);
-                return exec.waitResult();
+                for (; ; )
+                {
+                    int n = _input.read();
+                    if (n < 0 || n == '\n')
+                    {
+                        if (n < 0)
+                            _eof = true;
+                        _line = out.toString();
+                        break;
+                    }
+                    if (n != '\r')
+                        out.write(n);
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
             }
         }
-        catch (IOException e)
-        {
-            throw new ApplicationException("Failed executing external program", e);
-        }
     }
-
-    public static String readAll(InputStream inp) throws IOException
-    {
-        InputStreamReader reader = new InputStreamReader(inp);
-        StringWriter sw = new StringWriter();
-        char[] buf = new char[512];
-        int n;
-        while ((n = reader.read(buf)) >= 0)
-            sw.write(buf, 0, n);
-        return sw.toString();
-    }
-
-    protected Process _process;
-    protected InputStream _procInputStream;
-    protected OutputStream _procOutputStream;
-    protected boolean _redirectErrorStream = true;
-    protected String[] _currentArgs;
 }
 

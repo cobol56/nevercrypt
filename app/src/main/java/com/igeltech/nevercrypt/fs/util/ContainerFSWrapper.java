@@ -10,6 +10,8 @@ import java.util.HashMap;
 
 public class ContainerFSWrapper extends ActivityTrackingFSWrapper
 {
+    private final HashMap<com.igeltech.nevercrypt.fs.Path, DirectorySettings> _dirSettingsCache = new HashMap<>();
+
     public ContainerFSWrapper(FileSystem baseFs)
     {
         super(baseFs);
@@ -39,6 +41,4 @@ public class ContainerFSWrapper extends ActivityTrackingFSWrapper
         _dirSettingsCache.put(path, ds);
         return ds;
     }
-
-    private final HashMap<com.igeltech.nevercrypt.fs.Path, DirectorySettings> _dirSettingsCache = new HashMap<>();
 }

@@ -18,16 +18,6 @@ import java.util.Arrays;
 
 public abstract class EncFsLocationBase extends CryptoLocationBase
 {
-    public static String getLocationId(LocationsManagerBase lm, Uri locationUri) throws Exception
-    {
-        return getId(getContainerLocationFromUri(locationUri, lm));
-    }
-
-    public static String getId(Location containerLocation)
-    {
-        return SimpleCrypto.calcStringMD5(containerLocation.getLocationUri().toString());
-    }
-
     public static final String URI_SCHEME = "encfs";
 
     public EncFsLocationBase(Uri uri, LocationsManagerBase lm, Context context, Settings settings) throws Exception
@@ -45,6 +35,16 @@ public abstract class EncFsLocationBase extends CryptoLocationBase
     public EncFsLocationBase(EncFsLocationBase sibling)
     {
         super(sibling);
+    }
+
+    public static String getLocationId(LocationsManagerBase lm, Uri locationUri) throws Exception
+    {
+        return getId(getContainerLocationFromUri(locationUri, lm));
+    }
+
+    public static String getId(Location containerLocation)
+    {
+        return SimpleCrypto.calcStringMD5(containerLocation.getLocationUri().toString());
     }
 
     @Override
@@ -68,7 +68,6 @@ public abstract class EncFsLocationBase extends CryptoLocationBase
             Location encfsLocation = getSharedData().containerLocation;//Mounter.getNonEmulatedDeviceLocationIfNeeded(_globalSettings, _context, _location);
             //if(encfsLocation == null)
             //	encfsLocation = _location;
-
             getSharedData().encFs = new FS(encfsLocation.getCurrentPath(), pass, (ContainerOpeningProgressReporter) _openingProgressReporter);
         }
         finally
@@ -107,16 +106,6 @@ public abstract class EncFsLocationBase extends CryptoLocationBase
         return !_globalSettings.dontUseContentProvider() ? MainContentProvider.getContentUriFromLocation(this, path) : null;
     }
 
-    protected static class SharedData extends CryptoLocationBase.SharedData
-    {
-        public SharedData(String id, InternalSettings settings, Location location, Context ctx)
-        {
-            super(id, settings, location, ctx);
-        }
-
-        FS encFs;
-    }
-
     @Override
     protected SharedData getSharedData()
     {
@@ -129,5 +118,15 @@ public abstract class EncFsLocationBase extends CryptoLocationBase
         if (getSharedData().encFs == null)
             throw new RuntimeException("File system is closed");
         return getSharedData().encFs;
+    }
+
+    protected static class SharedData extends CryptoLocationBase.SharedData
+    {
+        FS encFs;
+
+        public SharedData(String id, InternalSettings settings, Location location, Context ctx)
+        {
+            super(id, settings, location, ctx);
+        }
     }
 }

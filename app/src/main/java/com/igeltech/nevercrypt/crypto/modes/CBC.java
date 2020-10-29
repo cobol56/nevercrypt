@@ -12,21 +12,41 @@ public abstract class CBC implements FileEncryptionEngine
 {
     public static final String NAME = "cbc-plain";
 
+    static
+    {
+        System.loadLibrary("cryptcbc");
+    }
+
+    protected final CipherFactory _cf;
+    protected final ArrayList<BlockCipherNative> _blockCiphers = new ArrayList<>();
+    private final int _fileBlockSize;
+    protected byte[] _iv;
+    protected byte[] _key;
+    private long _cbcContextPointer;
+    private boolean _incrementIV = true;
+
+    protected CBC(CipherFactory cf)
+    {
+        this(cf, 512);
+    }
+
+    protected CBC(CipherFactory cf, int fileBlockSize)
+    {
+        _cf = cf;
+        _fileBlockSize = fileBlockSize;
+    }
+
     @Override
     public synchronized void init() throws EncryptionEngineException
     {
         closeCiphers();
         closeContext();
-
         _cbcContextPointer = initContext();
         if (_cbcContextPointer == 0)
             throw new EncryptionEngineException("CBC context initialization failed");
-
         addBlockCiphers(_cf);
-
         if (_key == null)
             throw new EncryptionEngineException("Encryption key is not set");
-
         int keyOffset = 0;
         for (BlockCipherNative p : _blockCiphers)
         {
@@ -59,28 +79,21 @@ public abstract class CBC implements FileEncryptionEngine
     }
 
     @Override
-    public void setIV(byte[] iv)
-    {
-        _iv = iv;
-    }
-
-    @Override
     public byte[] getIV()
     {
         return _iv;
     }
 
     @Override
-    public int getIVSize()
+    public void setIV(byte[] iv)
     {
-        return 16;
+        _iv = iv;
     }
 
     @Override
-    public void setKey(byte[] key)
+    public int getIVSize()
     {
-        clearKey();
-        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
+        return 16;
     }
 
     @Override
@@ -117,7 +130,6 @@ public abstract class CBC implements FileEncryptionEngine
             throw new EncryptionEngineException("Engine is closed");
         if (len % getEncryptionBlockSize() != 0 || (offset + len) > data.length)
             throw new EncryptionEngineException("Wrong buffer length");
-
         if (decrypt(data, offset, len, _iv, _cbcContextPointer, _incrementIV) != 0)
             throw new EncryptionEngineException("Failed decrypting data");
     }
@@ -126,6 +138,13 @@ public abstract class CBC implements FileEncryptionEngine
     public byte[] getKey()
     {
         return _key;
+    }
+
+    @Override
+    public void setKey(byte[] key)
+    {
+        clearKey();
+        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
     }
 
     @Override
@@ -138,27 +157,6 @@ public abstract class CBC implements FileEncryptionEngine
     public void setIncrementIV(boolean val)
     {
         _incrementIV = val;
-    }
-
-    static
-    {
-        System.loadLibrary("cryptcbc");
-    }
-
-    protected byte[] _iv;
-    protected byte[] _key;
-    protected final CipherFactory _cf;
-    protected final ArrayList<BlockCipherNative> _blockCiphers = new ArrayList<>();
-
-    protected CBC(CipherFactory cf)
-    {
-        this(cf, 512);
-    }
-
-    protected CBC(CipherFactory cf, int fileBlockSize)
-    {
-        _cf = cf;
-        _fileBlockSize = fileBlockSize;
     }
 
     protected void closeCiphers()
@@ -176,10 +174,6 @@ public abstract class CBC implements FileEncryptionEngine
             _cbcContextPointer = 0;
         }
     }
-
-    private long _cbcContextPointer;
-    private boolean _incrementIV = true;
-    private final int _fileBlockSize;
 
     private native long initContext();
 

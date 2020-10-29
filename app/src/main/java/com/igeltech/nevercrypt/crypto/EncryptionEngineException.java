@@ -11,7 +11,6 @@ public class EncryptionEngineException extends ApplicationException
 
     public EncryptionEngineException()
     {
-
     }
 
     public EncryptionEngineException(String msg, Throwable cause)

@@ -27,6 +27,7 @@ public class MasterPasswordDialog extends PasswordDialog
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog";
     public static final String ARG_IS_OBSERVABLE = "com.igeltech.nevercrypt.android.IS_OBSERVABLE";
+    private final Subject<Boolean> _passwordCheckSubject = BehaviorSubject.create();
 
     public static Single<Boolean> getObservable(RxAppCompatActivity activity)
     {
@@ -160,6 +161,4 @@ public class MasterPasswordDialog extends PasswordDialog
         else
             super.onPasswordNotEntered();
     }
-
-    private final Subject<Boolean> _passwordCheckSubject = BehaviorSubject.create();
 }

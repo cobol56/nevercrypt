@@ -29,112 +29,16 @@ import java.util.Collection;
 public abstract class CryptoLocationBase extends OMLocationBase implements Cloneable, CryptoLocation
 {
     public static final String INTERNAL_SETTINGS_FILE_NAME = ".settings";
+    protected static final String LOCATION_URI_PARAM = "location";
 
-    public static class ExternalSettings extends OMLocationBase.ExternalSettings implements CryptoLocation.ExternalSettings
+    protected CryptoLocationBase(CryptoLocationBase sibling)
     {
-        public ExternalSettings()
-        {
-
-        }
-
-        @Override
-        public boolean shouldOpenReadOnly()
-        {
-            return _openReadOnly;
-        }
-
-        @Override
-        public void setOpenReadOnly(boolean val)
-        {
-            _openReadOnly = val;
-        }
-
-        @Override
-        public int getAutoCloseTimeout()
-        {
-            return _autoCloseTimeout;
-        }
-
-        @Override
-        public void setAutoCloseTimeout(int timeout)
-        {
-            _autoCloseTimeout = timeout;
-        }
-
-        @Override
-        public void saveToJSONObject(JSONObject jo) throws JSONException
-        {
-            super.saveToJSONObject(jo);
-            jo.put(SETTINGS_OPEN_READ_ONLY, shouldOpenReadOnly());
-            if (_autoCloseTimeout > 0)
-                jo.put(SETTINGS_AUTO_CLOSE_TIMEOUT, _autoCloseTimeout);
-            else
-                jo.remove(SETTINGS_AUTO_CLOSE_TIMEOUT);
-        }
-
-        @Override
-        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
-        {
-            super.loadFromJSONOjbect(jo);
-            setOpenReadOnly(jo.optBoolean(SETTINGS_OPEN_READ_ONLY, false));
-            _autoCloseTimeout = jo.optInt(SETTINGS_AUTO_CLOSE_TIMEOUT, 0);
-        }
-
-        private static final String SETTINGS_OPEN_READ_ONLY = "read_only";
-        private static final String SETTINGS_AUTO_CLOSE_TIMEOUT = "auto_close_timeout";
-        private boolean _openReadOnly;
-        private int _autoCloseTimeout;
+        super(sibling);
     }
 
-    public static class InternalSettings implements CryptoLocation.InternalSettings
+    protected CryptoLocationBase(Settings settings, SharedData sharedData)
     {
-        public InternalSettings()
-        {
-
-        }
-
-        public String save()
-        {
-            JSONObject jo = new JSONObject();
-            try
-            {
-                save(jo);
-            }
-            catch (JSONException e)
-            {
-                throw new RuntimeException(e);
-            }
-            return jo.toString();
-        }
-
-        public void load(String data)
-        {
-            JSONObject jo;
-            try
-            {
-                jo = new JSONObject(data);
-            }
-            catch (JSONException e)
-            {
-                jo = new JSONObject();
-            }
-            load(jo);
-        }
-
-        @Override
-        public String toString()
-        {
-            return save();
-        }
-
-        protected void save(JSONObject jo) throws JSONException
-        {
-        }
-
-        protected void load(JSONObject jo)
-        {
-
-        }
+        super(settings, sharedData);
     }
 
     public static Location getContainerLocationFromUri(Uri locationUri, LocationsManagerBase lm) throws Exception
@@ -146,14 +50,9 @@ public abstract class CryptoLocationBase extends OMLocationBase implements Clone
         return lm.getLocation(Uri.parse(uriString));
     }
 
-    protected CryptoLocationBase(CryptoLocationBase sibling)
+    protected static InternalSettings createInternalSettings()
     {
-        super(sibling);
-    }
-
-    protected CryptoLocationBase(Settings settings, SharedData sharedData)
-    {
-        super(settings, sharedData);
+        return new InternalSettings();
     }
 
     @Override
@@ -286,7 +185,6 @@ public abstract class CryptoLocationBase extends OMLocationBase implements Clone
     @Override
     public void applyInternalSettings() throws IOException
     {
-
     }
 
     @Override
@@ -306,23 +204,6 @@ public abstract class CryptoLocationBase extends OMLocationBase implements Clone
     {
         return getSharedData().context;
     }
-
-    protected static class SharedData extends OMLocationBase.SharedData
-    {
-        public SharedData(String id, InternalSettings settings, Location location, Context ctx)
-        {
-            super(id);
-            internalSettings = settings;
-            containerLocation = location;
-            context = ctx;
-        }
-
-        public final InternalSettings internalSettings;
-        public final Location containerLocation;
-        public final Context context;
-    }
-
-    protected static final String LOCATION_URI_PARAM = "location";
 
     protected abstract FileSystem createBaseFS(boolean readOnly) throws IOException, UserException;
 
@@ -374,8 +255,122 @@ public abstract class CryptoLocationBase extends OMLocationBase implements Clone
         return new ContainerFSWrapper(baseFS);
     }
 
-    protected static InternalSettings createInternalSettings()
+    public static class ExternalSettings extends OMLocationBase.ExternalSettings implements CryptoLocation.ExternalSettings
     {
-        return new InternalSettings();
+        private static final String SETTINGS_OPEN_READ_ONLY = "read_only";
+        private static final String SETTINGS_AUTO_CLOSE_TIMEOUT = "auto_close_timeout";
+        private boolean _openReadOnly;
+        private int _autoCloseTimeout;
+
+        public ExternalSettings()
+        {
+        }
+
+        @Override
+        public boolean shouldOpenReadOnly()
+        {
+            return _openReadOnly;
+        }
+
+        @Override
+        public void setOpenReadOnly(boolean val)
+        {
+            _openReadOnly = val;
+        }
+
+        @Override
+        public int getAutoCloseTimeout()
+        {
+            return _autoCloseTimeout;
+        }
+
+        @Override
+        public void setAutoCloseTimeout(int timeout)
+        {
+            _autoCloseTimeout = timeout;
+        }
+
+        @Override
+        public void saveToJSONObject(JSONObject jo) throws JSONException
+        {
+            super.saveToJSONObject(jo);
+            jo.put(SETTINGS_OPEN_READ_ONLY, shouldOpenReadOnly());
+            if (_autoCloseTimeout > 0)
+                jo.put(SETTINGS_AUTO_CLOSE_TIMEOUT, _autoCloseTimeout);
+            else
+                jo.remove(SETTINGS_AUTO_CLOSE_TIMEOUT);
+        }
+
+        @Override
+        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
+        {
+            super.loadFromJSONOjbect(jo);
+            setOpenReadOnly(jo.optBoolean(SETTINGS_OPEN_READ_ONLY, false));
+            _autoCloseTimeout = jo.optInt(SETTINGS_AUTO_CLOSE_TIMEOUT, 0);
+        }
+    }
+
+    public static class InternalSettings implements CryptoLocation.InternalSettings
+    {
+        public InternalSettings()
+        {
+        }
+
+        public String save()
+        {
+            JSONObject jo = new JSONObject();
+            try
+            {
+                save(jo);
+            }
+            catch (JSONException e)
+            {
+                throw new RuntimeException(e);
+            }
+            return jo.toString();
+        }
+
+        public void load(String data)
+        {
+            JSONObject jo;
+            try
+            {
+                jo = new JSONObject(data);
+            }
+            catch (JSONException e)
+            {
+                jo = new JSONObject();
+            }
+            load(jo);
+        }
+
+        @Override
+        public String toString()
+        {
+            return save();
+        }
+
+        protected void save(JSONObject jo) throws JSONException
+        {
+        }
+
+        protected void load(JSONObject jo)
+        {
+        }
+    }
+
+    protected static class SharedData extends OMLocationBase.SharedData
+    {
+        public final InternalSettings internalSettings;
+        public final Location containerLocation;
+        public final Context context;
+
+        public SharedData(String id, InternalSettings settings, Location location, Context ctx)
+        {
+            super(id);
+            internalSettings = settings;
+            containerLocation = location;
+            context = ctx;
+        }
     }
 }

@@ -7,6 +7,8 @@ import com.igeltech.nevercrypt.crypto.modes.CFB;
 
 public class AESCFB extends CFB
 {
+    private final int _keySize;
+
     public AESCFB(final int keySize)
     {
         super(new CipherFactory()
@@ -37,8 +39,6 @@ public class AESCFB extends CFB
     {
         return _keySize;
     }
-
-    private final int _keySize;
 }
 
     

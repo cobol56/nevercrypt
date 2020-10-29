@@ -14,33 +14,9 @@ import java.util.concurrent.CancellationException;
 
 public abstract class FileOperationTaskBase extends ServiceTaskWithNotificationBase
 {
-    public static class FileOperationParam
-    {
-        FileOperationParam(Intent i)
-        {
-            _intent = i;
-        }
-
-        SrcDstCollection getRecords()
-        {
-            if (_records == null)
-                _records = loadRecords(_intent);
-            return _records;
-        }
-
-        protected SrcDstCollection loadRecords(Intent i)
-        {
-            return i.getParcelableExtra(FileOpsService.ARG_RECORDS);
-        }
-
-        protected Intent getIntent()
-        {
-            return _intent;
-        }
-
-        private SrcDstCollection _records;
-        private final Intent _intent;
-    }
+    FilesOperationStatus _currentStatus;
+    private FileOperationParam _param;
+    private Throwable _error;
 
     @Override
     public Object doWork(Context context, Intent i) throws Throwable
@@ -61,8 +37,6 @@ public abstract class FileOperationTaskBase extends ServiceTaskWithNotificationB
         super.onCompleted(result);
         broadcastCompleted();
     }
-
-    FilesOperationStatus _currentStatus;
 
     abstract protected FilesOperationStatus initStatus(SrcDstCollection records);
 
@@ -152,6 +126,31 @@ public abstract class FileOperationTaskBase extends ServiceTaskWithNotificationB
         return _param;
     }
 
-    private FileOperationParam _param;
-    private Throwable _error;
+    public static class FileOperationParam
+    {
+        private final Intent _intent;
+        private SrcDstCollection _records;
+
+        FileOperationParam(Intent i)
+        {
+            _intent = i;
+        }
+
+        SrcDstCollection getRecords()
+        {
+            if (_records == null)
+                _records = loadRecords(_intent);
+            return _records;
+        }
+
+        protected SrcDstCollection loadRecords(Intent i)
+        {
+            return i.getParcelableExtra(FileOpsService.ARG_RECORDS);
+        }
+
+        protected Intent getIntent()
+        {
+            return _intent;
+        }
+    }
 }

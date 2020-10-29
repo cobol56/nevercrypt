@@ -31,19 +31,17 @@ public abstract class PasswordDialogBase extends RxDialogFragment
     public static final String ARG_VERIFY_PASSWORD = "com.igeltech.nevercrypt.android.VERIFY_PASSWORD";
     public static final String ARG_HAS_PASSWORD = "com.igeltech.nevercrypt.android.HAS_PASSWORD";
     public static final String ARG_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.RECEIVER_FRAGMENT_TAG";
-
-    public interface PasswordReceiver
-    {
-        void onPasswordEntered(PasswordDialog dlg);
-
-        void onPasswordNotEntered(PasswordDialog dlg);
-    }
+    protected static final int REQUEST_OPTIONS = 1;
+    protected AppCompatTextView _labelTextView;
+    protected AppCompatEditText _passwordEditText, _repeatPasswordEditText;
+    protected Openable _location;
+    protected Bundle _options;
+    protected SecureBuffer _passwordResult, _repeatPasswordSB;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         _location = (Openable) LocationsManager.
                 getLocationsManager(getActivity()).
                 getFromBundle(getArguments(), null);
@@ -68,7 +66,6 @@ public abstract class PasswordDialogBase extends RxDialogFragment
         }
         _passwordEditText = v.findViewById(R.id.password_et);
         _repeatPasswordEditText = v.findViewById(R.id.repeat_password_et);
-
         if (_passwordEditText != null)
         {
             if (hasPassword())
@@ -83,11 +80,9 @@ public abstract class PasswordDialogBase extends RxDialogFragment
         }
         else
             _passwordResult = null;
-
         if (_repeatPasswordEditText != null)
         {
             TextInputLayout _layout = v.findViewById(R.id.repeat_password_til);
-
             if (hasPassword() && isPasswordVerificationRequired())
             {
                 _repeatPasswordEditText.setVisibility(View.VISIBLE);
@@ -102,7 +97,6 @@ public abstract class PasswordDialogBase extends RxDialogFragment
         }
         else
             _repeatPasswordSB = null;
-
         View passwordLayout = v.findViewById(R.id.password_layout);
         if (passwordLayout != null)
         {
@@ -122,11 +116,9 @@ public abstract class PasswordDialogBase extends RxDialogFragment
             else
                 passwordLayout.setVisibility(hasPassword() ? View.VISIBLE : View.GONE);
         }
-
         AppCompatButton b = v.findViewById(android.R.id.button1);
         if (b != null)
             b.setOnClickListener(view -> confirm());
-
         AppCompatImageButton ib = v.findViewById(R.id.settings);
         if (ib != null)
         {
@@ -198,13 +190,6 @@ public abstract class PasswordDialogBase extends RxDialogFragment
         return _options;
     }
 
-    protected static final int REQUEST_OPTIONS = 1;
-    protected AppCompatTextView _labelTextView;
-    protected AppCompatEditText _passwordEditText, _repeatPasswordEditText;
-    protected Openable _location;
-    protected Bundle _options;
-    protected SecureBuffer _passwordResult, _repeatPasswordSB;
-
     protected String loadLabel()
     {
         Bundle args = getArguments();
@@ -250,7 +235,6 @@ public abstract class PasswordDialogBase extends RxDialogFragment
     {
         if (!checkInput())
             return;
-
         onPasswordEntered();
         dismiss();
     }
@@ -290,5 +274,12 @@ public abstract class PasswordDialogBase extends RxDialogFragment
             if (act instanceof PasswordReceiver)
                 ((PasswordReceiver) act).onPasswordNotEntered((PasswordDialog) this);
         }
+    }
+
+    public interface PasswordReceiver
+    {
+        void onPasswordEntered(PasswordDialog dlg);
+
+        void onPasswordNotEntered(PasswordDialog dlg);
     }
 }

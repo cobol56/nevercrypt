@@ -12,15 +12,32 @@ import java.util.Collection;
 
 public class ExFat implements FileSystem
 {
+    private static final byte[] EXFAT_SIGN = new byte[]{'E', 'X', 'F', 'A', 'T', ' ', ' ', ' '};
+    private static final int MIN_COMPATIBLE_NATIVE_MODULE_VERSION = 1001;
+
+    static
+    {
+        System.loadLibrary("fsexfat");
+    }
+
+    final Object _sync = new Object();
+    private final RandomAccessIO _exfatImageFile;
+    private long _exfatPtr;
+
+    public ExFat(RandomAccessIO exFatImage, boolean readOnly) throws IOException
+    {
+        _exfatImageFile = exFatImage;
+        _exfatPtr = openFS(readOnly);
+        if (_exfatPtr == 0)
+            throw new IOException("Failed opening exfat file system");
+    }
+
     public static boolean isExFATImage(RandomAccessIO img) throws IOException
     {
         byte[] buf = new byte[8];
         img.seek(3);
         return Util.readBytes(img, buf) == buf.length && Arrays.equals(EXFAT_SIGN, buf);
     }
-
-    private static final byte[] EXFAT_SIGN = new byte[]{'E', 'X', 'F', 'A', 'T', ' ', ' ', ' '};
-    private static final int MIN_COMPATIBLE_NATIVE_MODULE_VERSION = 1001;
 
     public static void makeNewFS(RandomAccessIO img) throws IOException
     {
@@ -33,13 +50,9 @@ public class ExFat implements FileSystem
             throw new IOException("Failed formatting an ExFAT image");
     }
 
-    public ExFat(RandomAccessIO exFatImage, boolean readOnly) throws IOException
-    {
-        _exfatImageFile = exFatImage;
-        _exfatPtr = openFS(readOnly);
-        if (_exfatPtr == 0)
-            throw new IOException("Failed opening exfat file system");
-    }
+    private static native int makeFS(RandomAccessIO raio, String label, int volumeSerial, long firstSector, int sectorsPerCluster);
+
+    native static int getVersion();
 
     @Override
     public Path getRootPath() throws IOException
@@ -84,17 +97,6 @@ public class ExFat implements FileSystem
             throw new IOException("Failed overwriting the free space. code " + res);
     }
 
-    static
-    {
-        System.loadLibrary("fsexfat");
-    }
-
-    private long _exfatPtr;
-    private final RandomAccessIO _exfatImageFile;
-    final Object _sync = new Object();
-
-    private static native int makeFS(RandomAccessIO raio, String label, int volumeSerial, long firstSector, int sectorsPerCluster);
-
     native int readDir(String path, Collection<String> files);
 
     native int getAttr(FileStat stat, String path);
@@ -136,6 +138,4 @@ public class ExFat implements FileSystem
     native int randFreeSpace();
 
     native int updateTime(String path, long time);
-
-    native static int getVersion();
 }

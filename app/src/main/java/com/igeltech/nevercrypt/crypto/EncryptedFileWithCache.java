@@ -15,6 +15,8 @@ public class EncryptedFileWithCache extends EncryptedFile
 {
     private static final int DEFAULT_NUM_CACHED_BUFFERS = 25;
     private static final int DEFAULT_BUFFER_SIZE_IN_BLOCKS = 40;
+    private final int _maxNumberCachedBuffers;
+    private final SparseArray<CachedSectorInfo> _cache;
 
     public EncryptedFileWithCache(Path pathToFile, AccessMode mode, VolumeLayout layout) throws IOException
     {
@@ -88,7 +90,6 @@ public class EncryptedFileWithCache extends EncryptedFile
         }
         else
             ci.refCount++;
-
         System.arraycopy(ci.buffer, 0, _buffer, 0, _bufferSize);
         _isBufferChanged = false;
         _isBufferLoaded = true;
@@ -104,22 +105,6 @@ public class EncryptedFileWithCache extends EncryptedFile
         ci.isChanged = true;
         _isBufferChanged = false;
     }
-
-    private static class CachedSectorInfo
-    {
-        public CachedSectorInfo(int bufSize)
-        {
-            buffer = new byte[bufSize];
-            refCount = 1;
-        }
-
-        public int refCount;
-        public final byte[] buffer;
-        public boolean isChanged;
-    }
-
-    private final int _maxNumberCachedBuffers;
-    private final SparseArray<CachedSectorInfo> _cache;
 
     private int getBufferIndex()
     {
@@ -153,7 +138,6 @@ public class EncryptedFileWithCache extends EncryptedFile
             _cache.put(bufIndex, ci);
             return ci;
         }
-
         int minRefsBufIndex = -1;
         int minRefs = 0;
         for (int i = 0; i < cs; i++)
@@ -173,5 +157,18 @@ public class EncryptedFileWithCache extends EncryptedFile
         ci.refCount = 1;
         _cache.put(bufIndex, ci);
         return ci;
+    }
+
+    private static class CachedSectorInfo
+    {
+        public final byte[] buffer;
+        public int refCount;
+        public boolean isChanged;
+
+        public CachedSectorInfo(int bufSize)
+        {
+            buffer = new byte[bufSize];
+            refCount = 1;
+        }
     }
 }

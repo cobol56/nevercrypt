@@ -48,6 +48,8 @@ import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.WORK_D
 
 public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase implements MasterPasswordDialog.PasswordReceiver
 {
+    protected UserSettings _settings;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -72,7 +74,6 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
         char[] data = dlg.getPassword();
         if (data != null && data.length == 0)
             data = null;
-
         CryptoApplication.setMasterPassword(data == null ? null : new SecureBuffer(data));
         try
         {
@@ -87,10 +88,7 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
     @Override
     public void onPasswordNotEntered(PasswordDialog dlg)
     {
-
     }
-
-    protected UserSettings _settings;
 
     @Override
     protected void createProperties()

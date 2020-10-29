@@ -12,23 +12,6 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 public class LocationOpenerFragment extends LocationOpenerFragmentCommon implements LocationOpenerBaseFragment.LocationOpenerResultReceiver
 {
-    public static class OpenLocationTaskFragment extends LocationOpenerFragmentCommon.OpenLocationTaskFragment
-    {
-        @Override
-        protected void openLocation(Openable location, Bundle param) throws Exception
-        {
-            if (!location.isOpen())
-            {
-                super.openLocation(location, param);
-                if (location instanceof CryptoLocation)
-                {
-                    LocationsService.registerInactiveContainerCheck(_context, (CryptoLocation) location);
-                    ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(_context);
-                }
-            }
-        }
-    }
-
     @Override
     public void onTargetLocationOpened(Bundle openerArgs, Location location)
     {
@@ -69,5 +52,22 @@ public class LocationOpenerFragment extends LocationOpenerFragmentCommon impleme
     protected TaskFragment getOpenLocationTask()
     {
         return new OpenLocationTaskFragment();
+    }
+
+    public static class OpenLocationTaskFragment extends LocationOpenerFragmentCommon.OpenLocationTaskFragment
+    {
+        @Override
+        protected void openLocation(Openable location, Bundle param) throws Exception
+        {
+            if (!location.isOpen())
+            {
+                super.openLocation(location, param);
+                if (location instanceof CryptoLocation)
+                {
+                    LocationsService.registerInactiveContainerCheck(_context, (CryptoLocation) location);
+                    ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(_context);
+                }
+            }
+        }
     }
 }

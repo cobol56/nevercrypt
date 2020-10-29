@@ -30,7 +30,6 @@ public class ChangeEncFsPasswordTask extends ChangeLocationPasswordTask
         byte[] pd = sb.getDataArray();
         try
         {
-
             loc.getEncFs().encryptVolumeKeyAndWriteConfig(pd);
         }
         finally

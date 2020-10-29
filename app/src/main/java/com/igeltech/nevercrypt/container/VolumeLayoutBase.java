@@ -22,6 +22,15 @@ import java.util.concurrent.CancellationException;
 
 public abstract class VolumeLayoutBase implements VolumeLayout
 {
+    protected static final int SECTOR_SIZE = 512;
+    protected FileEncryptionEngine _encEngine;
+    protected MessageDigest _hashFunc;
+    protected byte[] _masterKey;
+    protected byte[] _password;
+    protected ContainerOpeningProgressReporter _openingProgressReporter;
+    private Random _sr;
+    private boolean _invertIV;
+
     public static EncryptionEngine findCipher(Iterable<? extends EncryptionEngine> engines, String cipherName, String modeName)
     {
         for (EncryptionEngine eng : engines)
@@ -81,12 +90,6 @@ public abstract class VolumeLayoutBase implements VolumeLayout
     }
 
     @Override
-    public void setHashFunc(MessageDigest hf)
-    {
-        _hashFunc = hf;
-    }
-
-    @Override
     public void setPassword(byte[] password)
     {
         if (_password != null)
@@ -97,7 +100,6 @@ public abstract class VolumeLayoutBase implements VolumeLayout
     @Override
     public void setNumKDFIterations(int num)
     {
-
     }
 
     @Override
@@ -107,18 +109,24 @@ public abstract class VolumeLayoutBase implements VolumeLayout
     }
 
     @Override
-    public MessageDigest getHashFunc()
-    {
-        return _hashFunc;
-    }
-
-    @Override
     public void setEngine(FileEncryptionEngine engine)
     {
         if (_encEngine != null)
             _encEngine.close();
         _encEngine = engine;
         _invertIV = _encEngine != null && CBC.NAME.equalsIgnoreCase(_encEngine.getCipherModeName());
+    }
+
+    @Override
+    public MessageDigest getHashFunc()
+    {
+        return _hashFunc;
+    }
+
+    @Override
+    public void setHashFunc(MessageDigest hf)
+    {
+        _hashFunc = hf;
     }
 
     @Override
@@ -172,22 +180,12 @@ public abstract class VolumeLayoutBase implements VolumeLayout
         return findHashFunc(getSupportedHashFuncs(), name);
     }
 
-    protected static final int SECTOR_SIZE = 512;
-    protected FileEncryptionEngine _encEngine;
-    protected MessageDigest _hashFunc;
-    protected byte[] _masterKey;
-    protected byte[] _password;
-    protected ContainerOpeningProgressReporter _openingProgressReporter;
-
     protected synchronized Random getRandom()
     {
         if (_sr == null)
             _sr = new SecureRandom();
         return _sr;
     }
-
-    private Random _sr;
-    private boolean _invertIV;
 
     protected byte[] deriveKey(int keySize, MessageDigest hashFunc, byte[] password, byte[] salt, int numIterations) throws ApplicationException
     {

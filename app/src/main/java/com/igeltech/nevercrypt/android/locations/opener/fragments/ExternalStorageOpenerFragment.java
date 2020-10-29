@@ -26,106 +26,23 @@ import static com.igeltech.nevercrypt.android.locations.opener.fragments.Locatio
 
 public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
 {
-    public static class CheckLocationWritableTaskFragment extends TaskFragment
+    private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
+
+    private static DocumentTreeLocation getDocTreeLocation(LocationsManager lm, ExternalStorageLocation extLoc)
     {
-        enum ResultType
-        {
-            OK, AskPermission, DontAskPermission
-        }
-
-        public static final String TAG = "CheckLocationWritableTaskFragment";
-
-        @Override
-        protected void initTask(FragmentActivity activity)
-        {
-            _lm = LocationsManager.getLocationsManager(activity);
-        }
-
-        @Override
-        protected void doWork(TaskState state) throws Throwable
-        {
-            ExternalStorageLocation loc = getTargetLocation();
-            DocumentTreeLocation docTreeLocation = getDocTreeLocation(_lm, loc);
-            if (docTreeLocation != null && docTreeLocation.getFS().getRootPath().exists())
-                state.setResult(ResultType.OK);
-            else
-                state.setResult(isWritable(loc) ? ResultType.DontAskPermission : ResultType.AskPermission);
-        }
-
-        private boolean isWritable(ExternalStorageLocation loc)
+        String docUri = extLoc.getExternalSettings().getDocumentsAPIUriString();
+        if (docUri != null)
         {
             try
             {
-                File res = File.createTempFile("crypto", null, new File(loc.getRootPath()));
-                res.delete();
-                return true;
+                return (DocumentTreeLocation) lm.getLocation(Uri.parse(docUri));
             }
-            catch (IOException ignored)
+            catch (Exception e)
             {
+                Logger.log(e);
             }
-            return false;
         }
-
-        @Override
-        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
-        {
-            final ExternalStorageOpenerFragment f = (ExternalStorageOpenerFragment) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_OPENER_TAG));
-            return f == null ? null : new TaskCallbacks()
-            {
-                @Override
-                public void onPrepare(Bundle args)
-                {
-
-                }
-
-                @Override
-                public void onUpdateUI(Object state)
-                {
-
-                }
-
-                @Override
-                public void onResumeUI(Bundle args)
-                {
-
-                }
-
-                @Override
-                public void onSuspendUI(Bundle args)
-                {
-
-                }
-
-                @Override
-                public void onCompleted(Bundle args, Result result)
-                {
-                    try
-                    {
-                        if (result.getResult() == ResultType.OK)
-                            f.openLocation();
-                        else if (result.getResult() == ResultType.AskPermission)
-                        {
-                            f.askWritePermission();
-                            return;
-                        }
-                    }
-                    catch (Throwable e)
-                    {
-                        Logger.log(e);
-                    }
-                    f.setDontAskPermission();
-                    f.openLocation();
-                }
-            };
-        }
-
-        private ExternalStorageLocation getTargetLocation() throws Exception
-        {
-            Uri locationUri = getArguments().getParcelable(LocationsManager.PARAM_LOCATION_URI);
-            return (ExternalStorageLocation) _lm.getLocation(locationUri);
-        }
-
-        private LocationsManager _lm;
+        return null;
     }
 
     private void setDontAskPermission()
@@ -172,7 +89,6 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
                     {
                         Logger.log(e);
                     }
-
                     DocumentTreeLocation loc = new DocumentTreeLocation(getActivity().getApplicationContext(), treeUri);
                     loc.getExternalSettings().setVisibleToUser(false);
                     loc.saveExternalSettings();
@@ -226,23 +142,6 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         return CheckLocationWritableTaskFragment.TAG + loc.getId();
     }
 
-    private static DocumentTreeLocation getDocTreeLocation(LocationsManager lm, ExternalStorageLocation extLoc)
-    {
-        String docUri = extLoc.getExternalSettings().getDocumentsAPIUriString();
-        if (docUri != null)
-        {
-            try
-            {
-                return (DocumentTreeLocation) lm.getLocation(Uri.parse(docUri));
-            }
-            catch (Exception e)
-            {
-                Logger.log(e);
-            }
-        }
-        return null;
-    }
-
     private void startCheckWritableTask(Location loc)
     {
         Bundle args = new Bundle();
@@ -258,5 +157,100 @@ public class ExternalStorageOpenerFragment extends LocationOpenerBaseFragment
         AskExtStorageWritePermissionDialog.showDialog(getFragmentManager(), getTag());
     }
 
-    private static final int REQUEST_CODE_ADD_LOCATION = AppCompatActivity.RESULT_FIRST_USER;
+    public static class CheckLocationWritableTaskFragment extends TaskFragment
+    {
+        public static final String TAG = "CheckLocationWritableTaskFragment";
+        private LocationsManager _lm;
+
+        @Override
+        protected void initTask(FragmentActivity activity)
+        {
+            _lm = LocationsManager.getLocationsManager(activity);
+        }
+
+        @Override
+        protected void doWork(TaskState state) throws Throwable
+        {
+            ExternalStorageLocation loc = getTargetLocation();
+            DocumentTreeLocation docTreeLocation = getDocTreeLocation(_lm, loc);
+            if (docTreeLocation != null && docTreeLocation.getFS().getRootPath().exists())
+                state.setResult(ResultType.OK);
+            else
+                state.setResult(isWritable(loc) ? ResultType.DontAskPermission : ResultType.AskPermission);
+        }
+
+        private boolean isWritable(ExternalStorageLocation loc)
+        {
+            try
+            {
+                File res = File.createTempFile("crypto", null, new File(loc.getRootPath()));
+                res.delete();
+                return true;
+            }
+            catch (IOException ignored)
+            {
+            }
+            return false;
+        }
+
+        @Override
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
+        {
+            final ExternalStorageOpenerFragment f = (ExternalStorageOpenerFragment) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_OPENER_TAG));
+            return f == null ? null : new TaskCallbacks()
+            {
+                @Override
+                public void onPrepare(Bundle args)
+                {
+                }
+
+                @Override
+                public void onUpdateUI(Object state)
+                {
+                }
+
+                @Override
+                public void onResumeUI(Bundle args)
+                {
+                }
+
+                @Override
+                public void onSuspendUI(Bundle args)
+                {
+                }
+
+                @Override
+                public void onCompleted(Bundle args, Result result)
+                {
+                    try
+                    {
+                        if (result.getResult() == ResultType.OK)
+                            f.openLocation();
+                        else if (result.getResult() == ResultType.AskPermission)
+                        {
+                            f.askWritePermission();
+                            return;
+                        }
+                    }
+                    catch (Throwable e)
+                    {
+                        Logger.log(e);
+                    }
+                    f.setDontAskPermission();
+                    f.openLocation();
+                }
+            };
+        }
+
+        private ExternalStorageLocation getTargetLocation() throws Exception
+        {
+            Uri locationUri = getArguments().getParcelable(LocationsManager.PARAM_LOCATION_URI);
+            return (ExternalStorageLocation) _lm.getLocation(locationUri);
+        }
+
+        enum ResultType
+        {
+            OK, AskPermission, DontAskPermission
+        }
+    }
 }

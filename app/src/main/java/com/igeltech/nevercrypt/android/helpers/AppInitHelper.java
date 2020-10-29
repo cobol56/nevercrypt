@@ -26,7 +26,6 @@ public class AppInitHelper extends AppInitHelperBase
                         return ExtStorageWritePermisisonCheckFragment.getObservable(_activity);
                     throw new UserException(_activity, R.string.invalid_master_password);
                 }).
-
                 compose(_activity.bindToLifecycle()).
                 subscribe(() -> {
                     convertLegacySettings();

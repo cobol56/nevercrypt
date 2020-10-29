@@ -9,6 +9,9 @@ import java.util.Date;
 
 abstract class ExFatRecord implements FSRecord
 {
+    final ExFat _exFat;
+    protected ExFatPath _path;
+
     ExFatRecord(ExFat exFat, ExFatPath path)
     {
         _exFat = exFat;
@@ -60,7 +63,4 @@ abstract class ExFatRecord implements FSRecord
             throw new IOException("moveTo failed. Error code = " + res);
         _path = new ExFatPath(_exFat, newPath.toString());
     }
-
-    final ExFat _exFat;
-    protected ExFatPath _path;
 }

@@ -11,6 +11,15 @@ import java.util.Arrays;
 
 public class CipherBase implements EncryptionEngine
 {
+    private final EncryptionEngine _base;
+    private byte[] _key, _keyPart, _ivPart;
+    private HMAC _hmac;
+
+    public CipherBase(EncryptionEngine base)
+    {
+        _base = base;
+    }
+
     private static byte[] getIVFromBuf(byte[] buf, int keySize)
     {
         byte[] res = new byte[buf.length - keySize];
@@ -23,11 +32,6 @@ public class CipherBase implements EncryptionEngine
         byte[] res = new byte[keySize];
         System.arraycopy(buf, 0, res, 0, res.length);
         return res;
-    }
-
-    public CipherBase(EncryptionEngine base)
-    {
-        _base = base;
     }
 
     @Override
@@ -58,6 +62,12 @@ public class CipherBase implements EncryptionEngine
     }
 
     @Override
+    public byte[] getIV()
+    {
+        return getIVFromBuf();
+    }
+
+    @Override
     public void setIV(byte[] iv)
     {
         byte[] buf = Arrays.copyOf(_ivPart, _ivPart.length + 8);
@@ -80,15 +90,15 @@ public class CipherBase implements EncryptionEngine
     }
 
     @Override
-    public byte[] getIV()
-    {
-        return getIVFromBuf();
-    }
-
-    @Override
     public int getIVSize()
     {
         return _base.getIVSize();
+    }
+
+    @Override
+    public byte[] getKey()
+    {
+        return _key;
     }
 
     @Override
@@ -102,12 +112,6 @@ public class CipherBase implements EncryptionEngine
             _ivPart = getIVFromBuf();
             _base.setKey(_keyPart);
         }
-    }
-
-    @Override
-    public byte[] getKey()
-    {
-        return _key;
     }
 
     @Override
@@ -139,10 +143,6 @@ public class CipherBase implements EncryptionEngine
     {
         return _base;
     }
-
-    private final EncryptionEngine _base;
-    private byte[] _key, _keyPart, _ivPart;
-    private HMAC _hmac;
 
     private void clearAll()
     {

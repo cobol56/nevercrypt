@@ -11,6 +11,8 @@ import java.util.Iterator;
 
 class StdDirRecord extends StdFsRecord implements Directory
 {
+    private final StdFs _stdFs;
+
     public StdDirRecord(StdFs stdFs, StdFsPath path) throws IOException
     {
         super(path);
@@ -70,7 +72,6 @@ class StdDirRecord extends StdFsRecord implements Directory
         if (files != null)
             for (File f : files)
                 res.add(_stdFs.getPath(f));
-
         return new Contents()
         {
             @Override
@@ -85,6 +86,4 @@ class StdDirRecord extends StdFsRecord implements Directory
             }
         };
     }
-
-    private final StdFs _stdFs;
 }

@@ -18,6 +18,15 @@ import java.util.Collection;
 
 public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
 {
+    private static final String STATE_EXPANDED_POSITION = "com.igeltech.nevercrypt.android.navigdrawer.DrawerSubMenuBase.EXPANDED_POSITION";
+    private boolean _isExpanded;
+    private Collection<? extends DrawerMenuItemBase> _subItems;
+
+    protected DrawerSubMenuBase(DrawerControllerBase drawerController)
+    {
+        super(drawerController);
+    }
+
     @Override
     public void onClick(View view, int position)
     {
@@ -130,11 +139,6 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
         }
     }
 
-    protected DrawerSubMenuBase(DrawerControllerBase drawerController)
-    {
-        super(drawerController);
-    }
-
     protected abstract Collection<DrawerMenuItemBase> getSubItems();
 
     @Override
@@ -188,10 +192,6 @@ public abstract class DrawerSubMenuBase extends DrawerMenuItemBase
                     adapter.insert(sub, ++pos);
         }
     }
-
-    private static final String STATE_EXPANDED_POSITION = "com.igeltech.nevercrypt.android.navigdrawer.DrawerSubMenuBase.EXPANDED_POSITION";
-    private boolean _isExpanded;
-    private Collection<? extends DrawerMenuItemBase> _subItems;
 
     private void rotateExpandedIcons()
     {

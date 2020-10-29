@@ -2,6 +2,15 @@ package com.igeltech.nevercrypt.fs.encfs;
 
 public class B64
 {
+    // character set for ascii b64:
+    // ",-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    // a standard base64 (eg a64l doesn't use ',-' but uses './'.  We don't
+    // do that because '/' is a reserved character, and it is useful not to have
+    // '.' included in the encrypted names, so that it can be reserved for files
+    // with special meaning.
+    private static final char[] B642AsciiTable = ",-0123456789".toCharArray();
+    private static final char[] Ascii2B64Table = "                                            01  23456789:;       ".toCharArray();
+
     public static int B256ToB64Bytes(int numB256Bytes)
     {
         return (numB256Bytes * 8 + 5) / 6;  // round up
@@ -35,7 +44,6 @@ public class B64
             outLoc = src;
             outOffset = offset;
         }
-
         // copy the new bits onto the high bits of the stream.
         // The bits that fall off the low end are the output bits.
         while (srcLen > 0 && workBits < dst2Pow)
@@ -44,12 +52,10 @@ public class B64
             workBits += src2Pow;
             --srcLen;
         }
-
         // we have at least one value that can be output
         byte outVal = (byte) (work & mask);
         work >>= dst2Pow;
         workBits -= dst2Pow;
-
         if (srcLen > 0)
         {
             // more input left, so recurse
@@ -72,14 +78,6 @@ public class B64
             }
         }
     }
-
-    // character set for ascii b64:
-    // ",-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    // a standard base64 (eg a64l doesn't use ',-' but uses './'.  We don't
-    // do that because '/' is a reserved character, and it is useful not to have
-    // '.' included in the encrypted names, so that it can be reserved for files
-    // with special meaning.
-    private static final char[] B642AsciiTable = ",-0123456789".toCharArray();
 
     public static String B64ToString(byte[] in, int offset, int count)
     {
@@ -111,7 +109,6 @@ public class B64
                 ch += 'A';
             else
                 ch += '2' - 26;
-
             sb.append((char) ch);
         }
         return sb.toString();
@@ -132,8 +129,6 @@ public class B64
         }
         return res;
     }
-
-    private static final char[] Ascii2B64Table = "                                            01  23456789:;       ".toCharArray();
 
     public static byte[] StringToB64(String s)
     {

@@ -15,13 +15,13 @@ import java.util.concurrent.CancellationException;
 
 class WipeFilesTask extends DeleteFilesTask
 {
+    private final boolean _wipe;
+    private TempFilesMonitor _mon;
+
     WipeFilesTask(boolean wipe)
     {
         _wipe = wipe;
     }
-
-    private final boolean _wipe;
-    private TempFilesMonitor _mon;
 
     @Override
     public Object doWork(Context context, Intent i) throws Throwable
@@ -39,7 +39,6 @@ class WipeFilesTask extends DeleteFilesTask
         }
         catch (CancellationException ignored)
         {
-
         }
         catch (Throwable e)
         {

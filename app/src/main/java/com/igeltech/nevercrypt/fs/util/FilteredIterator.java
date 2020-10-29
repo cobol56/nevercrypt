@@ -5,6 +5,10 @@ import java.util.NoSuchElementException;
 
 public abstract class FilteredIterator<T> implements Iterator<T>
 {
+    private final Iterator<? extends T> _base;
+    private boolean _hasNext;
+    private T _nextItem;
+
     public FilteredIterator(Iterator<? extends T> base)
     {
         _base = base;
@@ -63,10 +67,6 @@ public abstract class FilteredIterator<T> implements Iterator<T>
     }
 
     protected abstract boolean isValidItem(T item);
-
-    private boolean _hasNext;
-    private T _nextItem;
-    private final Iterator<? extends T> _base;
 
     private void setNext()
     {

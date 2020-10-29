@@ -14,6 +14,7 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 public class LoadLocationInfoTask extends TaskFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.tasks.LoadLocationInfoTask";
+    protected Context _context;
 
     public static LoadLocationInfoTask newInstance(CryptoLocation location)
     {
@@ -61,6 +62,4 @@ public class LoadLocationInfoTask extends TaskFragment
             info.freeSpace = location.getCurrentPath().getDirectory().getFreeSpace();
         }
     }
-
-    protected Context _context;
 }

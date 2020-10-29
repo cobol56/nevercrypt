@@ -20,7 +20,6 @@ class StartTempFileTask extends PrepareTempFilesTask
         }
         catch (CancellationException ignored)
         {
-
         }
         catch (Throwable e)
         {

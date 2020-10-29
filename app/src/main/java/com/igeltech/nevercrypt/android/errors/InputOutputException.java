@@ -6,6 +6,11 @@ import com.igeltech.nevercrypt.android.R;
 
 public class InputOutputException extends UserException
 {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public InputOutputException(Context context)
     {
         super(context, R.string.err_input_output);
@@ -15,9 +20,4 @@ public class InputOutputException extends UserException
     {
         super(context, R.string.err_input_output, cause);
     }
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
 }

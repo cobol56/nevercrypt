@@ -12,9 +12,9 @@ public interface NameCodec
 
     void close();
 
-    void setIV(byte[] iv);
-
     byte[] getIV();
+
+    void setIV(byte[] iv);
 
     int getIVSize();
 }

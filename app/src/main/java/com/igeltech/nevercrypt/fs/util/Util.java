@@ -189,7 +189,6 @@ public class Util
         }
         else
             pos = 0;
-
         RandomAccessIO res = path.getFile().getRandomAccessIO(AccessMode.ReadWrite);
         res.seek(pos);
         return res;
@@ -211,7 +210,6 @@ public class Util
             res = baseName + (i++) + ext;
             testPath = PathUtil.buildPath(baseDir.getPath(), res);
         } while (testPath != null && testPath.exists());
-
         return res;
     }
 
@@ -237,11 +235,6 @@ public class Util
                 res.add(p);
         }
         return res;
-    }
-
-    public interface DirProcessor
-    {
-        boolean procPath(Path path) throws IOException;
     }
 
     public static void procDir(Directory dir, DirProcessor dirProc) throws IOException
@@ -344,7 +337,6 @@ public class Util
     {
         if (!src.exists())
             throw new IOException("copyFiles: Can not find source: " + src.getPathString());
-
         if (src.isDirectory())
         {
             Directory newDir = dest.createDirectory(src.getDirectory().getName());
@@ -429,10 +421,8 @@ public class Util
         // Check to ensure that the source is valid...
         if (!src.exists())
             return;
-
         if (!src.canRead())
             throw new IOException("deleteFiles: No right to source: " + src.getAbsolutePath() + ".");
-
         // is this a directory copy?
         if (src.isDirectory())
         {
@@ -458,7 +448,6 @@ public class Util
     {
         if (!path.exists())
             return;
-
         if (path.isDirectory())
         {
             Directory dir = path.getDirectory();
@@ -738,7 +727,6 @@ public class Util
         if (is != null)
         {
             final Writer writer = new StringWriter();
-
             final char[] buffer = new char[1024];
             try
             {
@@ -809,8 +797,29 @@ public class Util
         }
     }
 
+    public static long countFolderSize(Directory dir) throws IOException
+    {
+        long res = 0;
+        Directory.Contents dc = dir.list();
+        for (Path p : dc)
+        {
+            if (p.isFile())
+                res += p.getFile().getSize();
+            else
+                res += countFolderSize(p.getDirectory());
+        }
+        return res;
+    }
+
+    public interface DirProcessor
+    {
+        boolean procPath(Path path) throws IOException;
+    }
+
     public static class CancellableProgressInfo implements com.igeltech.nevercrypt.fs.File.ProgressInfo, Cancellable
     {
+        private boolean _isCancelled;
+
         @Override
         public void setProcessed(long num)
         {
@@ -827,21 +836,5 @@ public class Util
         {
             _isCancelled = true;
         }
-
-        private boolean _isCancelled;
-    }
-
-    public static long countFolderSize(Directory dir) throws IOException
-    {
-        long res = 0;
-        Directory.Contents dc = dir.list();
-        for (Path p : dc)
-        {
-            if (p.isFile())
-                res += p.getFile().getSize();
-            else
-                res += countFolderSize(p.getDirectory());
-        }
-        return res;
     }
 }

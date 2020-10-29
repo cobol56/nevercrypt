@@ -36,6 +36,7 @@ public class SrcDstGroup implements SrcDstCollection
             return new SrcDstGroup[size];
         }
     };
+    private final Collection<? extends SrcDstCollection> _srcDsts;
 
     public SrcDstGroup(Collection<? extends SrcDstCollection> srcDsts)
     {
@@ -47,6 +48,11 @@ public class SrcDstGroup implements SrcDstCollection
     {
         return new Iterator<SrcDst>()
         {
+            private final Iterator<? extends SrcDstCollection> _cols = _srcDsts.iterator();
+            private boolean _hasNext;
+            private SrcDst _next;
+            private Iterator<SrcDst> _curCol;
+
             public void remove()
             {
                 throw new UnsupportedOperationException();
@@ -64,7 +70,6 @@ public class SrcDstGroup implements SrcDstCollection
             {
                 if (_hasNext)
                     return true;
-
                 while (_curCol == null || !_curCol.hasNext())
                 {
                     if (!_cols.hasNext())
@@ -75,11 +80,6 @@ public class SrcDstGroup implements SrcDstCollection
                 _hasNext = true;
                 return true;
             }
-
-            private boolean _hasNext;
-            private SrcDst _next;
-            private Iterator<SrcDst> _curCol;
-            private final Iterator<? extends SrcDstCollection> _cols = _srcDsts.iterator();
         };
     }
 
@@ -97,6 +97,4 @@ public class SrcDstGroup implements SrcDstCollection
         for (SrcDstCollection c : _srcDsts)
             dest.writeParcelable(c, flags);
     }
-
-    private final Collection<? extends SrcDstCollection> _srcDsts;
 }

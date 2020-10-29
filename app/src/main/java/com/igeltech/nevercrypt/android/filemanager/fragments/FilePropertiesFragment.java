@@ -34,6 +34,50 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
     public static final String TAG = "FilePropertiesFragment";
 
     public static final String ARG_CURRENT_PATH = "current_path";
+    private AppCompatTextView _sizeTextView, _numberOfFilesTextView, _fullPathTextView, _modDateTextView;
+    private FilesInfo _lastInfo;
+    private final TaskFragment.TaskCallbacks _calcPropertiesCallbacks = new TaskCallbacks()
+    {
+        @Override
+        public void onUpdateUI(Object state)
+        {
+            _lastInfo = (FilesInfo) state;
+            updateUI(_lastInfo, false);
+        }
+
+        @Override
+        public void onSuspendUI(Bundle args)
+        {
+        }
+
+        @Override
+        public void onResumeUI(Bundle args)
+        {
+        }
+
+        @Override
+        public void onPrepare(Bundle args)
+        {
+        }
+
+        @Override
+        public void onCompleted(Bundle args, Result result)
+        {
+            try
+            {
+                if (!result.isCancelled())
+                {
+                    _lastInfo = (FilesInfo) result.getResult();
+                    updateUI(_lastInfo, true);
+                }
+            }
+            catch (Throwable e)
+            {
+                Logger.showAndLog(getActivity(), e);
+            }
+        }
+
+    };
 
     public static FilePropertiesFragment newInstance(Path currentPath)
     {
@@ -43,110 +87,6 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
         FilePropertiesFragment f = new FilePropertiesFragment();
         f.setArguments(args);
         return f;
-    }
-
-    public static class CalcPropertiesTaskFragment extends TaskFragment
-    {
-        public static final String TAG = "CalcPropertiesTaskFragment";
-
-        public static CalcPropertiesTaskFragment newInstance(Bundle args)
-        {
-            CalcPropertiesTaskFragment f = new CalcPropertiesTaskFragment();
-            f.setArguments(args);
-            return f;
-        }
-
-        @Override
-        public void initTask(FragmentActivity activity)
-        {
-            try
-            {
-                FileListDataFragment df = (FileListDataFragment) getFragmentManager().findFragmentByTag(FileListDataFragment.TAG);
-                if (df != null && df.isAdded())
-                    _paths = new ArrayList<>(df.getSelectedPaths());
-                else
-                    _paths = new ArrayList<>();
-                if (df != null && _paths.size() == 0 && getArguments().containsKey(ARG_CURRENT_PATH))
-                    _paths.add(df.getLocation().getFS().getPath(getArguments().getString(ARG_CURRENT_PATH)));
-            }
-            catch (Exception e)
-            {
-                Logger.showAndLog(activity, e);
-            }
-        }
-
-        @Override
-        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
-        {
-            FragmentManager fm = getFragmentManager();
-            if (fm == null)
-                return null;
-            FilePropertiesFragment f = (FilePropertiesFragment) fm.findFragmentByTag(FilePropertiesFragment.TAG);
-            if (f == null)
-                return null;
-            return f.getCalcPropertiesCallbacks();
-        }
-
-        @Override
-        protected void doWork(TaskState state) throws Exception
-        {
-            FilesInfo info = new FilesInfo();
-            Iterator<Path> pathsIterator = _paths.iterator();
-            while (pathsIterator.hasNext())
-            {
-                if (state.isTaskCancelled())
-                    break;
-                Path p = pathsIterator.next();
-                calcPath(state, info, p);
-                pathsIterator.remove();
-
-            }
-            state.setResult(info);
-        }
-
-        private ArrayList<Path> _paths;
-
-        private long _lastUpdate;
-
-        private void calcPath(final TaskState state, final FilesInfo info, Path rec)
-        {
-            info.filesCount++;
-            if (info.path == null)
-                info.path = rec.getPathDesc();
-            else if (!info.path.endsWith(", ..."))
-                info.path += ", ...";
-            try
-            {
-                if (rec.isFile())
-                {
-                    info.totalSize += rec.getFile().getSize();
-                    Date mdt = rec.getFile().getLastModified();
-                    if (info.lastModDate == null || mdt.after(info.lastModDate))
-                        info.lastModDate = mdt;
-                }
-                else if (rec.isDirectory())
-                {
-                    try (Directory.Contents dc = rec.getDirectory().list())
-                    {
-                        for (Path p : dc)
-                        {
-                            if (state.isTaskCancelled())
-                                break;
-                            calcPath(state, info, p);
-                        }
-                    }
-                }
-            }
-            catch (IOException ignored)
-            {
-            }
-            long curTime = System.currentTimeMillis();
-            if (curTime - _lastUpdate > 500)
-            {
-                state.updateUI(info.copy());
-                _lastUpdate = curTime;
-            }
-        }
     }
 
     @Override
@@ -207,99 +147,6 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
             _lastInfo.save(outState);
     }
 
-    private static class FilesInfo implements Cloneable
-    {
-        public String path;
-        public int filesCount;
-        public long totalSize;
-        public Date lastModDate;
-
-        public void save(Bundle b)
-        {
-            b.putString("path", path);
-            b.putInt("count", filesCount);
-            b.putLong("size", totalSize);
-            if (lastModDate != null)
-                b.putString("mod_date", SimpleDateFormat.getDateTimeInstance().format(lastModDate));
-        }
-
-        public void load(Bundle b)
-        {
-            path = b.getString("path");
-            filesCount = b.getInt("count");
-            totalSize = b.getLong("size");
-            try
-            {
-                String s = b.getString("mod_date");
-                if (s != null)
-                    lastModDate = SimpleDateFormat.getDateTimeInstance().parse(s);
-            }
-            catch (ParseException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        public FilesInfo copy()
-        {
-            try
-            {
-                return (FilesInfo) clone();
-            }
-            catch (CloneNotSupportedException e)
-            {
-                return null;
-            }
-        }
-
-    }
-
-    private AppCompatTextView _sizeTextView, _numberOfFilesTextView, _fullPathTextView, _modDateTextView;
-    private FilesInfo _lastInfo;
-
-    private final TaskFragment.TaskCallbacks _calcPropertiesCallbacks = new TaskCallbacks()
-    {
-        @Override
-        public void onUpdateUI(Object state)
-        {
-            _lastInfo = (FilesInfo) state;
-            updateUI(_lastInfo, false);
-        }
-
-        @Override
-        public void onSuspendUI(Bundle args)
-        {
-        }
-
-        @Override
-        public void onResumeUI(Bundle args)
-        {
-        }
-
-        @Override
-        public void onPrepare(Bundle args)
-        {
-        }
-
-        @Override
-        public void onCompleted(Bundle args, Result result)
-        {
-            try
-            {
-                if (!result.isCancelled())
-                {
-                    _lastInfo = (FilesInfo) result.getResult();
-                    updateUI(_lastInfo, true);
-                }
-            }
-            catch (Throwable e)
-            {
-                Logger.showAndLog(getActivity(), e);
-            }
-        }
-
-    };
-
     private TaskFragment.TaskCallbacks getCalcPropertiesCallbacks()
     {
         return _calcPropertiesCallbacks;
@@ -348,5 +195,154 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
         FragmentManager fm = getFragmentManager();
         if (fm != null)
             fm.beginTransaction().add(CalcPropertiesTaskFragment.newInstance(getArguments()), CalcPropertiesTaskFragment.TAG).commit();
+    }
+
+    public static class CalcPropertiesTaskFragment extends TaskFragment
+    {
+        public static final String TAG = "CalcPropertiesTaskFragment";
+        private ArrayList<Path> _paths;
+        private long _lastUpdate;
+
+        public static CalcPropertiesTaskFragment newInstance(Bundle args)
+        {
+            CalcPropertiesTaskFragment f = new CalcPropertiesTaskFragment();
+            f.setArguments(args);
+            return f;
+        }
+
+        @Override
+        public void initTask(FragmentActivity activity)
+        {
+            try
+            {
+                FileListDataFragment df = (FileListDataFragment) getFragmentManager().findFragmentByTag(FileListDataFragment.TAG);
+                if (df != null && df.isAdded())
+                    _paths = new ArrayList<>(df.getSelectedPaths());
+                else
+                    _paths = new ArrayList<>();
+                if (df != null && _paths.size() == 0 && getArguments().containsKey(ARG_CURRENT_PATH))
+                    _paths.add(df.getLocation().getFS().getPath(getArguments().getString(ARG_CURRENT_PATH)));
+            }
+            catch (Exception e)
+            {
+                Logger.showAndLog(activity, e);
+            }
+        }
+
+        @Override
+        protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
+        {
+            FragmentManager fm = getFragmentManager();
+            if (fm == null)
+                return null;
+            FilePropertiesFragment f = (FilePropertiesFragment) fm.findFragmentByTag(FilePropertiesFragment.TAG);
+            if (f == null)
+                return null;
+            return f.getCalcPropertiesCallbacks();
+        }
+
+        @Override
+        protected void doWork(TaskState state) throws Exception
+        {
+            FilesInfo info = new FilesInfo();
+            Iterator<Path> pathsIterator = _paths.iterator();
+            while (pathsIterator.hasNext())
+            {
+                if (state.isTaskCancelled())
+                    break;
+                Path p = pathsIterator.next();
+                calcPath(state, info, p);
+                pathsIterator.remove();
+
+            }
+            state.setResult(info);
+        }
+
+        private void calcPath(final TaskState state, final FilesInfo info, Path rec)
+        {
+            info.filesCount++;
+            if (info.path == null)
+                info.path = rec.getPathDesc();
+            else if (!info.path.endsWith(", ..."))
+                info.path += ", ...";
+            try
+            {
+                if (rec.isFile())
+                {
+                    info.totalSize += rec.getFile().getSize();
+                    Date mdt = rec.getFile().getLastModified();
+                    if (info.lastModDate == null || mdt.after(info.lastModDate))
+                        info.lastModDate = mdt;
+                }
+                else if (rec.isDirectory())
+                {
+                    try (Directory.Contents dc = rec.getDirectory().list())
+                    {
+                        for (Path p : dc)
+                        {
+                            if (state.isTaskCancelled())
+                                break;
+                            calcPath(state, info, p);
+                        }
+                    }
+                }
+            }
+            catch (IOException ignored)
+            {
+            }
+            long curTime = System.currentTimeMillis();
+            if (curTime - _lastUpdate > 500)
+            {
+                state.updateUI(info.copy());
+                _lastUpdate = curTime;
+            }
+        }
+    }
+
+    private static class FilesInfo implements Cloneable
+    {
+        public String path;
+        public int filesCount;
+        public long totalSize;
+        public Date lastModDate;
+
+        public void save(Bundle b)
+        {
+            b.putString("path", path);
+            b.putInt("count", filesCount);
+            b.putLong("size", totalSize);
+            if (lastModDate != null)
+                b.putString("mod_date", SimpleDateFormat.getDateTimeInstance().format(lastModDate));
+        }
+
+        public void load(Bundle b)
+        {
+            path = b.getString("path");
+            filesCount = b.getInt("count");
+            totalSize = b.getLong("size");
+            try
+            {
+                String s = b.getString("mod_date");
+                if (s != null)
+                    lastModDate = SimpleDateFormat.getDateTimeInstance().parse(s);
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        public FilesInfo copy()
+        {
+            try
+            {
+                return (FilesInfo) clone();
+            }
+            catch (CloneNotSupportedException e)
+            {
+                return null;
+            }
+        }
+
     }
 }

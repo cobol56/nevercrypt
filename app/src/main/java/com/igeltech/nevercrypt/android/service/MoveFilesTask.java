@@ -22,6 +22,34 @@ import java.util.List;
 
 class MoveFilesTask extends CopyFilesTask
 {
+    private final List<Directory> _foldersToDelete = new ArrayList<>();
+    /*
+        protected boolean deleteEmptyDirsRec(Directory startDir) throws IOException
+        {
+            Directory.Contents dc = startDir.list();
+            try
+            {
+                for(Path p: dc)
+                {
+                    if(p.isDirectory())
+                    {
+                        if(!deleteEmptyDirsRec(p.getDirectory()))
+                            return false;
+                    }
+                    else
+                        return false;
+                }
+            }
+            finally
+            {
+                dc.close();
+            }
+            startDir.delete();
+            return true;
+        }
+    */
+    private boolean _wipe;
+
     @Override
     protected String getErrorMessage(Throwable ex)
     {
@@ -164,32 +192,4 @@ class MoveFilesTask extends CopyFilesTask
         startDir.delete();
         return true;
     }
-
-    /*
-        protected boolean deleteEmptyDirsRec(Directory startDir) throws IOException
-        {
-            Directory.Contents dc = startDir.list();
-            try
-            {
-                for(Path p: dc)
-                {
-                    if(p.isDirectory())
-                    {
-                        if(!deleteEmptyDirsRec(p.getDirectory()))
-                            return false;
-                    }
-                    else
-                        return false;
-                }
-            }
-            finally
-            {
-                dc.close();
-            }
-            startDir.delete();
-            return true;
-        }
-    */
-    private boolean _wipe;
-    private final List<Directory> _foldersToDelete = new ArrayList<>();
 }

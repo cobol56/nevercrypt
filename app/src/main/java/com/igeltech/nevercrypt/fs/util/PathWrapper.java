@@ -11,6 +11,9 @@ import java.io.IOException;
 
 public abstract class PathWrapper implements Path
 {
+    private final FileSystem _fs;
+    private final Path _base;
+
     public PathWrapper(FileSystem fs, Path path)
     {
         _fs = fs;
@@ -127,7 +130,4 @@ public abstract class PathWrapper implements Path
     }
 
     protected abstract Path getPathFromBasePath(Path basePath) throws IOException;
-
-    private final FileSystem _fs;
-    private final Path _base;
 }

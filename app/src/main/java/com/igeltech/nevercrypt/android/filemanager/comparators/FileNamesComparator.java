@@ -9,6 +9,8 @@ import java.util.Comparator;
 
 public class FileNamesComparator<T extends CachedPathInfo> implements Comparator<T>
 {
+    protected int _asc;
+
     public FileNamesComparator(boolean asc)
     {
         _asc = asc ? 1 : -1;
@@ -31,8 +33,6 @@ public class FileNamesComparator<T extends CachedPathInfo> implements Comparator
             return 0;
         }
     }
-
-    protected int _asc;
 
     protected int compareDirs(T o1, T o2) throws IOException
     {

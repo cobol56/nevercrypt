@@ -6,21 +6,6 @@ import java.io.IOException;
 
 public interface CryptoLocation extends OMLocation
 {
-    interface ExternalSettings extends OMLocation.ExternalSettings
-    {
-        boolean shouldOpenReadOnly();
-
-        void setOpenReadOnly(boolean val);
-
-        int getAutoCloseTimeout();
-
-        void setAutoCloseTimeout(int timeout);
-    }
-
-    interface InternalSettings
-    {
-    }
-
     @Override
     ExternalSettings getExternalSettings();
 
@@ -41,4 +26,19 @@ public interface CryptoLocation extends OMLocation
 
     @Override
     CryptoLocation copy();
+
+    interface ExternalSettings extends OMLocation.ExternalSettings
+    {
+        boolean shouldOpenReadOnly();
+
+        void setOpenReadOnly(boolean val);
+
+        int getAutoCloseTimeout();
+
+        void setAutoCloseTimeout(int timeout);
+    }
+
+    interface InternalSettings
+    {
+    }
 }

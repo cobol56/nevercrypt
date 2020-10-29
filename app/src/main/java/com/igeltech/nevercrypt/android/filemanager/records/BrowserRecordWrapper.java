@@ -13,6 +13,14 @@ import java.util.Date;
 
 public class BrowserRecordWrapper implements BrowserRecord
 {
+    private final BrowserRecord _base;
+    private FileManagerActivity _host;
+
+    protected BrowserRecordWrapper(BrowserRecord base)
+    {
+        _base = base;
+    }
+
     @Override
     public void init(Location location, Path path) throws IOException
     {
@@ -155,12 +163,4 @@ public class BrowserRecordWrapper implements BrowserRecord
     {
         return _host;
     }
-
-    protected BrowserRecordWrapper(BrowserRecord base)
-    {
-        _base = base;
-    }
-
-    private final BrowserRecord _base;
-    private FileManagerActivity _host;
 }

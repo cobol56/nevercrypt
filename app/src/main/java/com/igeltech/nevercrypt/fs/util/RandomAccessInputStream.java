@@ -9,6 +9,8 @@ import java.io.InputStream;
 
 public class RandomAccessInputStream extends InputStream implements DataInput, RandomStorageAccess
 {
+    private final RandomAccessIO _io;
+
     public RandomAccessInputStream(RandomAccessIO io)
     {
         _io = io;
@@ -58,6 +60,4 @@ public class RandomAccessInputStream extends InputStream implements DataInput, R
         seek(pos + n);
         return n;
     }
-
-    private final RandomAccessIO _io;
 }

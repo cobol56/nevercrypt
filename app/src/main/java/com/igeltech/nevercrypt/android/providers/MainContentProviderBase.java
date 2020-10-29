@@ -70,6 +70,35 @@ public abstract class MainContentProviderBase extends ContentProvider
     public static final String MIME_TYPE_SELECTION = "vnd.android.cursor.dir/selection";
     public static final String OPTION_OFFSET = "offset";
     public static final String OPTION_NUM_BYTES = "num_bytes";
+    protected static final String[] ALL_SELECTION_COLUMNS = {COLUMN_LOCATION};
+    protected static final String META_PATH = "fs";
+    protected static final int META_PATH_CODE = 10;
+    protected static final Uri META_URI = Uri.parse("content://" + MainContentProvider.AUTHORITY + "/" + META_PATH);
+    protected static final String CONTENT_PATH = "content";
+    protected static final int CONTENT_PATH_CODE = 20;
+    protected static final Uri CONTENT_URI = Uri.parse("content://" + MainContentProvider.AUTHORITY + "/" + CONTENT_PATH);
+    protected static final String CURRENT_SELECTION_PATH = "selection";
+
+    /*
+    public static Uri getCurrentSelectionUri()
+    {
+        return CURRENT_SELECTION_URI;
+    }
+    */
+    protected static final int CURRENT_SELECTION_PATH_CODE = 30;
+    protected static final Uri CURRENT_SELECTION_URI = Uri.parse("content://" + MainContentProvider.AUTHORITY + "/" + CURRENT_SELECTION_PATH);
+    private static final UriMatcher _uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private static final String[] ALL_META_COLUMNS = {COLUMN_ID, COLUMN_NAME, COLUMN_TITLE, COLUMN_SIZE, COLUMN_LAST_MODIFIED, COLUMN_IS_FOLDER, COLUMN_PATH};
+    private static final Cursor _emptyMetaCursor = new MatrixCursor(ALL_META_COLUMNS, 0);
+
+    static
+    {
+        _uriMatcher.addURI(MainContentProvider.AUTHORITY, META_PATH + "/*", META_PATH_CODE);
+        _uriMatcher.addURI(MainContentProvider.AUTHORITY, CONTENT_PATH + "/*", CONTENT_PATH_CODE);
+        _uriMatcher.addURI(MainContentProvider.AUTHORITY, CURRENT_SELECTION_PATH, CURRENT_SELECTION_PATH_CODE);
+    }
+
+    private PathsStore _currentSelection;
 
     public static boolean hasSelectionInClipboard(ClipboardManager clipboard)
     {
@@ -85,7 +114,6 @@ public abstract class MainContentProviderBase extends ContentProvider
                 Logger.debug(String.format("hasSelectionInClipboard: clip = %s", clip));
             return clip.getItemCount() > 0 && MainContentProvider.isClipboardUri(clip.getItemAt(0).getUri());
         }
-
         Logger.debug("hasSelectionInClipboard: clip = null");
         return false;
     }
@@ -148,7 +176,6 @@ public abstract class MainContentProviderBase extends ContentProvider
                         return readFromPipe(f, opts == null ? new Bundle() : opts);
                 }
             }
-
             Path parentPath = loc.getCurrentPath();
             try
             {
@@ -183,7 +210,6 @@ public abstract class MainContentProviderBase extends ContentProvider
     {
         if (!srcLoc.getCurrentPath().exists() && (mode & ParcelFileDescriptor.MODE_CREATE) == 0)
             throw new IOException("File doesn't exist");
-
         final Location tmpLocation = TempFilesMonitor.getTmpLocation(srcLoc, parentPath, cp.getContext(), UserSettings.getSettings(cp.getContext()).getWorkDir(), mode != ParcelFileDescriptor.MODE_READ_ONLY);
         File dst = null;
         Path dstFilePath = PathUtil.buildPath(tmpLocation.getCurrentPath(), srcFile.getName());
@@ -211,7 +237,6 @@ public abstract class MainContentProviderBase extends ContentProvider
         Uri u = tmpLocation.getDeviceAccessibleUri(dst.getPath());
         if (u == null || !ContentResolver.SCHEME_FILE.equalsIgnoreCase(u.getScheme()))
             TempFilesMonitor.getMonitor(cp.getContext()).addFileToMonitor(srcLoc, srcFolderLocation, tmpLocation, mode == ParcelFileDescriptor.MODE_READ_ONLY);
-
         return tmpLocation;
     }
 
@@ -252,13 +277,6 @@ public abstract class MainContentProviderBase extends ContentProvider
                 }, Logger::log);
         return pfds[0];
     }
-
-    /*
-    public static Uri getCurrentSelectionUri()
-    {
-        return CURRENT_SELECTION_URI;
-    }
-    */
 
     public static Uri getContentUriFromLocation(Location loc, Path path)
     {
@@ -303,6 +321,11 @@ public abstract class MainContentProviderBase extends ContentProvider
     public static void appendLocationUriToProviderUri(Uri.Builder ub, Uri locationUri)
     {
         ub.appendPath(Base64.encodeToString(locationUri.toString().getBytes(), Base64.NO_WRAP | Base64.NO_PADDING | Base64.URL_SAFE));
+    }
+
+    public static Cursor getEmptyMetaCursor()
+    {
+        return _emptyMetaCursor;
     }
 
     @Override
@@ -424,7 +447,6 @@ public abstract class MainContentProviderBase extends ContentProvider
         // If the MIME type is supported
         if (mimeTypes != null)
             return getAssetFileDescriptor(loc, "r", opts == null ? new Bundle() : opts);
-
         // If the MIME type is not supported, return a read-only handle to the file.
         return super.openTypedAssetFile(uri, mimeTypeFilter, opts);
     }
@@ -454,32 +476,6 @@ public abstract class MainContentProviderBase extends ContentProvider
         }
         throw new IllegalArgumentException("Unsupported uri: " + uri);
     }
-
-    public static Cursor getEmptyMetaCursor()
-    {
-        return _emptyMetaCursor;
-    }
-
-    protected static final String[] ALL_SELECTION_COLUMNS = {COLUMN_LOCATION};
-    protected static final String META_PATH = "fs";
-    protected static final int META_PATH_CODE = 10;
-    protected static final Uri META_URI = Uri.parse("content://" + MainContentProvider.AUTHORITY + "/" + META_PATH);
-    protected static final String CONTENT_PATH = "content";
-    protected static final int CONTENT_PATH_CODE = 20;
-    protected static final Uri CONTENT_URI = Uri.parse("content://" + MainContentProvider.AUTHORITY + "/" + CONTENT_PATH);
-    protected static final String CURRENT_SELECTION_PATH = "selection";
-    protected static final int CURRENT_SELECTION_PATH_CODE = 30;
-    protected static final Uri CURRENT_SELECTION_URI = Uri.parse("content://" + MainContentProvider.AUTHORITY + "/" + CURRENT_SELECTION_PATH);
-    private static final UriMatcher _uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-
-    static
-    {
-        _uriMatcher.addURI(MainContentProvider.AUTHORITY, META_PATH + "/*", META_PATH_CODE);
-        _uriMatcher.addURI(MainContentProvider.AUTHORITY, CONTENT_PATH + "/*", CONTENT_PATH_CODE);
-        _uriMatcher.addURI(MainContentProvider.AUTHORITY, CURRENT_SELECTION_PATH, CURRENT_SELECTION_PATH_CODE);
-    }
-
-    private PathsStore _currentSelection;
 
     protected AssetFileDescriptor getAssetFileDescriptor(Location loc, String accessMode, Bundle opts)
     {
@@ -549,7 +545,6 @@ public abstract class MainContentProviderBase extends ContentProvider
 
     protected void setCurrentSelection(ContentValues contentValues)
     {
-
         LocationsManager lm = LocationsManager.getLocationsManager(getContext(), true);
         PathsStore selection = _currentSelection;
         if (selection == null)
@@ -660,7 +655,4 @@ public abstract class MainContentProviderBase extends ContentProvider
     {
         return getLocationFromProviderUri(getContext(), providerUri);
     }
-
-    private static final String[] ALL_META_COLUMNS = {COLUMN_ID, COLUMN_NAME, COLUMN_TITLE, COLUMN_SIZE, COLUMN_LAST_MODIFIED, COLUMN_IS_FOLDER, COLUMN_PATH};
-    private static final Cursor _emptyMetaCursor = new MatrixCursor(ALL_META_COLUMNS, 0);
 }

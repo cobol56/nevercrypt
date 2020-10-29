@@ -10,21 +10,33 @@ import java.util.Arrays;
 
 public abstract class CFB implements EncryptionEngine
 {
+    static
+    {
+        System.loadLibrary("cryptcfb");
+    }
+
+    protected final CipherFactory _cf;
+    protected final ArrayList<BlockCipherNative> _blockCiphers = new ArrayList<>();
+    protected byte[] _iv;
+    protected byte[] _key;
+    private long _cfbContextPointer;
+
+    protected CFB(CipherFactory cf)
+    {
+        _cf = cf;
+    }
+
     @Override
     public synchronized void init() throws EncryptionEngineException
     {
         closeCiphers();
         closeContext();
-
         _cfbContextPointer = initContext();
         if (_cfbContextPointer == 0)
             throw new EncryptionEngineException("CFB context initialization failed");
-
         addBlockCiphers(_cf);
-
         if (_key == null)
             throw new EncryptionEngineException("Encryption key is not set");
-
         int keyOffset = 0;
         for (BlockCipherNative p : _blockCiphers)
         {
@@ -45,28 +57,21 @@ public abstract class CFB implements EncryptionEngine
     }
 
     @Override
-    public void setIV(byte[] iv)
-    {
-        _iv = iv;
-    }
-
-    @Override
     public byte[] getIV()
     {
         return _iv;
     }
 
     @Override
-    public int getIVSize()
+    public void setIV(byte[] iv)
     {
-        return 16;
+        _iv = iv;
     }
 
     @Override
-    public void setKey(byte[] key)
+    public int getIVSize()
     {
-        clearKey();
-        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
+        return 16;
     }
 
     @Override
@@ -107,7 +112,6 @@ public abstract class CFB implements EncryptionEngine
             return;
         if ((offset + len) > data.length)
             throw new IllegalArgumentException("Wrong length or offset");
-
         if (decrypt(data, offset, len, _iv, _cfbContextPointer) != 0)
             throw new EncryptionEngineException("Failed decrypting data");
     }
@@ -119,24 +123,16 @@ public abstract class CFB implements EncryptionEngine
     }
 
     @Override
+    public void setKey(byte[] key)
+    {
+        clearKey();
+        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
+    }
+
+    @Override
     public String getCipherModeName()
     {
         return "cfb-plain";
-    }
-
-    static
-    {
-        System.loadLibrary("cryptcfb");
-    }
-
-    protected byte[] _iv;
-    protected byte[] _key;
-    protected final CipherFactory _cf;
-    protected final ArrayList<BlockCipherNative> _blockCiphers = new ArrayList<>();
-
-    protected CFB(CipherFactory cf)
-    {
-        _cf = cf;
     }
 
     protected void closeCiphers()
@@ -154,8 +150,6 @@ public abstract class CFB implements EncryptionEngine
             _cfbContextPointer = 0;
         }
     }
-
-    private long _cfbContextPointer;
 
     private native long initContext();
 

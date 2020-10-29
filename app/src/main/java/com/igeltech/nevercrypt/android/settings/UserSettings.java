@@ -7,11 +7,18 @@ import com.igeltech.nevercrypt.settings.Settings;
 
 public class UserSettings extends UserSettingsCommon implements Settings
 {
+    private static final Settings _defaultSettings = new DefaultSettings();
+    private static UserSettings _instance;
+
+    public UserSettings(Context context)
+    {
+        super(context, _defaultSettings);
+    }
+
     public static synchronized UserSettings getSettings(Context context)
     {
         if (_instance == null)
             _instance = new UserSettings(context);
-
         return _instance;
     }
 
@@ -21,12 +28,4 @@ public class UserSettings extends UserSettingsCommon implements Settings
             _instance.clearSettingsProtectionKey();
         _instance = null;
     }
-
-    public UserSettings(Context context)
-    {
-        super(context, _defaultSettings);
-    }
-
-    private static final Settings _defaultSettings = new DefaultSettings();
-    private static UserSettings _instance;
 }

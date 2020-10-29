@@ -14,44 +14,6 @@ import com.igeltech.nevercrypt.locations.Openable;
 
 public class LocationOpenerFragmentCommon extends LocationOpenerBaseFragment implements PasswordDialog.PasswordReceiver
 {
-    public static class OpenLocationTaskFragment extends LocationOpenerBaseFragment.OpenLocationTaskFragment
-    {
-        @Override
-        protected void procLocation(TaskState state, Location location, Bundle param) throws Exception
-        {
-            try
-            {
-                openLocation((Openable) location, param);
-                regLocation((Openable) location);
-            }
-            catch (WrongPasswordException e)
-            {
-                throw new WrongPasswordOrBadContainerException(_context);
-            }
-            super.procLocation(state, location, param);
-        }
-
-        protected void openLocation(Openable location, Bundle param) throws Exception
-        {
-            if (location.isOpen())
-                return;
-
-            location.setOpeningProgressReporter(_openingProgressReporter);
-
-            if (param.containsKey(Openable.PARAM_PASSWORD))
-                location.setPassword(param.getParcelable(Openable.PARAM_PASSWORD));
-            if (param.containsKey(Openable.PARAM_KDF_ITERATIONS))
-                location.setNumKDFIterations(param.getInt(Openable.PARAM_KDF_ITERATIONS));
-
-            location.open();
-        }
-
-        protected void regLocation(Openable location)
-        {
-            _locationsManager.regOpenedLocation(location);
-        }
-    }
-
     @Override
     public void onPasswordEntered(PasswordDialog dlg)
     {
@@ -158,5 +120,40 @@ public class LocationOpenerFragmentCommon extends LocationOpenerBaseFragment imp
         res.putAll(pd.getOptions());
         res.putParcelable(Openable.PARAM_PASSWORD, new SecureBuffer(pd.getPassword()));
         return res;
+    }
+
+    public static class OpenLocationTaskFragment extends LocationOpenerBaseFragment.OpenLocationTaskFragment
+    {
+        @Override
+        protected void procLocation(TaskState state, Location location, Bundle param) throws Exception
+        {
+            try
+            {
+                openLocation((Openable) location, param);
+                regLocation((Openable) location);
+            }
+            catch (WrongPasswordException e)
+            {
+                throw new WrongPasswordOrBadContainerException(_context);
+            }
+            super.procLocation(state, location, param);
+        }
+
+        protected void openLocation(Openable location, Bundle param) throws Exception
+        {
+            if (location.isOpen())
+                return;
+            location.setOpeningProgressReporter(_openingProgressReporter);
+            if (param.containsKey(Openable.PARAM_PASSWORD))
+                location.setPassword(param.getParcelable(Openable.PARAM_PASSWORD));
+            if (param.containsKey(Openable.PARAM_KDF_ITERATIONS))
+                location.setNumKDFIterations(param.getInt(Openable.PARAM_KDF_ITERATIONS));
+            location.open();
+        }
+
+        protected void regLocation(Openable location)
+        {
+            _locationsManager.regOpenedLocation(location);
+        }
     }
 }

@@ -25,6 +25,12 @@ import java.util.Set;
 
 public class PropertiesView extends LinearLayout
 {
+    private static int _ID_COUNTER = 1;
+    private final Map<Integer, PropertyInfo> _properties = new HashMap<>();
+    private final List<PropertyEditor> _propertiesToLoad = new ArrayList<>();
+    private final Comparator<PropertyEditor> _comparator = (lhs, rhs) -> Integer.valueOf(lhs.getStartPosition()).compareTo(rhs.getStartPosition());
+    private boolean _isLoadingProperties, _instantSave;
+
     public PropertiesView(Context context)
     {
         super(context);
@@ -221,14 +227,14 @@ public class PropertiesView extends LinearLayout
             commitProperties();
     }
 
-    public void setInstantSave(boolean val)
-    {
-        _instantSave = val;
-    }
-
     public boolean isInstantSave()
     {
         return _instantSave;
+    }
+
+    public void setInstantSave(boolean val)
+    {
+        _instantSave = val;
     }
 
     public boolean isLoadingProperties()
@@ -257,18 +263,6 @@ public class PropertiesView extends LinearLayout
                 loadProperties(b);
         }
     }
-
-    private static class PropertyInfo
-    {
-        PropertyEditor property;
-        boolean isEnabled;
-    }
-
-    private static int _ID_COUNTER = 1;
-    private boolean _isLoadingProperties, _instantSave;
-    private final Map<Integer, PropertyInfo> _properties = new HashMap<>();
-    private final List<PropertyEditor> _propertiesToLoad = new ArrayList<>();
-    private final Comparator<PropertyEditor> _comparator = (lhs, rhs) -> Integer.valueOf(lhs.getStartPosition()).compareTo(rhs.getStartPosition());
 
     private void setPropertyState(PropertyInfo pi, boolean enabled)
     {
@@ -324,5 +318,11 @@ public class PropertiesView extends LinearLayout
         v.setTag(pe);
         v.setOnClickListener(v1 -> pe.onClick());
         addView(v, pos);
+    }
+
+    private static class PropertyInfo
+    {
+        PropertyEditor property;
+        boolean isEnabled;
     }
 }

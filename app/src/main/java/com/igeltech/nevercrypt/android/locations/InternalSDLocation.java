@@ -11,6 +11,7 @@ import com.igeltech.nevercrypt.locations.DeviceBasedLocation;
 public class InternalSDLocation extends DeviceBasedLocation
 {
     public static final String URI_SCHEME = "intmem";
+    private final Context _context;
 
     public InternalSDLocation(Context context)
     {
@@ -45,6 +46,4 @@ public class InternalSDLocation extends DeviceBasedLocation
     {
         return new InternalSDLocation(_context, getTitle(), getRootPath(), _currentPathString);
     }
-
-    private final Context _context;
 }

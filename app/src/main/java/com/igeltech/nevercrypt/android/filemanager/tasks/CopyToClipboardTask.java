@@ -24,6 +24,7 @@ import java.util.Iterator;
 public class CopyToClipboardTask extends TaskFragment
 {
     public static final String TAG = "CopyToClipboardTask";
+    protected Context _context;
 
     public static CopyToClipboardTask newInstance(Location loc, Collection<? extends Path> paths)
     {
@@ -55,8 +56,6 @@ public class CopyToClipboardTask extends TaskFragment
     {
         _context = activity.getApplicationContext();
     }
-
-    protected Context _context;
 
     @Override
     protected void doWork(TaskState state) throws Exception

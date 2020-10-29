@@ -21,6 +21,11 @@ import java.util.List;
 
 public abstract class DrawerControllerBase
 {
+    private final FileManagerActivity _activity;
+    private ListView _drawerListView;
+    private DrawerLayout _drawerLayout;
+    private ActionBarDrawerToggle _drawerToggle;
+
     public DrawerControllerBase(FileManagerActivity activity)
     {
         _activity = activity;
@@ -30,18 +35,14 @@ public abstract class DrawerControllerBase
     {
         _drawerLayout = _activity.findViewById(R.id.drawer_layout);
         _drawerListView = _activity.findViewById(R.id.left_drawer);
-
         _drawerToggle = new ActionBarDrawerToggle(_activity,                  /* host Activity */
                 _drawerLayout,         /* DrawerLayout object */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */);
         _drawerLayout.addDrawerListener(_drawerToggle);
         _activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         List<DrawerMenuItemBase> list = fillDrawer();
-
         _drawerListView.setChoiceMode(ListView.CHOICE_MODE_NONE);
-
         if (savedState != null)
         {
             ArrayList<DrawerMenuItemBase> copy = new ArrayList<>(list);
@@ -75,7 +76,6 @@ public abstract class DrawerControllerBase
     {
         if (_drawerLayout == null)
             return false;
-
         if (item.getItemId() == android.R.id.home)
         {
             if (_drawerLayout.isDrawerOpen(_drawerListView))
@@ -192,6 +192,16 @@ public abstract class DrawerControllerBase
         return list;
     }
 
+    private void saveState(Bundle outState)
+    {
+        for (int i = 0; i < _drawerListView.getCount(); i++)
+        {
+            DrawerMenuItemBase item = (DrawerMenuItemBase) _drawerListView.getItemAtPosition(i);
+            if (item != null)
+                item.saveState(outState);
+        }
+    }
+
     protected class DrawerAdapter extends ArrayAdapter<DrawerMenuItemBase>
     {
         DrawerAdapter(List<DrawerMenuItemBase> itemsList)
@@ -227,21 +237,6 @@ public abstract class DrawerControllerBase
                 v = rec.createView(position, parent);
             v.setTag(rec);
             return v;
-        }
-    }
-
-    private final FileManagerActivity _activity;
-    private ListView _drawerListView;
-    private DrawerLayout _drawerLayout;
-    private ActionBarDrawerToggle _drawerToggle;
-
-    private void saveState(Bundle outState)
-    {
-        for (int i = 0; i < _drawerListView.getCount(); i++)
-        {
-            DrawerMenuItemBase item = (DrawerMenuItemBase) _drawerListView.getItemAtPosition(i);
-            if (item != null)
-                item.saveState(outState);
         }
     }
 }

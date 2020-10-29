@@ -7,6 +7,8 @@ import com.igeltech.nevercrypt.crypto.modes.CBC;
 
 public class AESCBC extends CBC
 {
+    private final int _keySize;
+
     public AESCBC()
     {
         this(32, 512);
@@ -42,8 +44,6 @@ public class AESCBC extends CBC
     {
         return _keySize;
     }
-
-    private final int _keySize;
 }
 
     

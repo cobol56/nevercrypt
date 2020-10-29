@@ -12,6 +12,10 @@ import io.reactivex.functions.Predicate;
 
 class SelectionCheckerBase implements Predicate<CachedPathInfo>
 {
+    private static final SearchFilter[] ALL_FILTERS = new SearchFilter[]{};
+    protected final Location _location;
+    final List<Predicate<CachedPathInfo>> _filters = new ArrayList<>();
+
     SelectionCheckerBase(Location location, String selectionString, String[] selectionArgs)
     {
         _location = location;
@@ -41,10 +45,6 @@ class SelectionCheckerBase implements Predicate<CachedPathInfo>
                 return false;
         return true;
     }
-
-    protected final Location _location;
-    final List<Predicate<CachedPathInfo>> _filters = new ArrayList<>();
-    private static final SearchFilter[] ALL_FILTERS = new SearchFilter[]{};
 
     protected Collection<SearchFilter> getAllFilters()
     {

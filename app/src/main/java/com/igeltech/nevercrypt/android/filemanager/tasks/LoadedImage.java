@@ -28,6 +28,21 @@ import static com.igeltech.nevercrypt.android.filemanager.fragments.PreviewFragm
 
 public class LoadedImage
 {
+    private final Path _imagePath;
+    private final Rect _viewRect;
+    private Rect _regionRect;
+    private boolean _isOptimSupported;
+    private Bitmap _image;
+    private boolean _flipX, _flipY;
+    private int _sampleSize, _rotation;
+
+    private LoadedImage(Path imagePath, Rect viewRect, Rect regionRect)
+    {
+        _imagePath = imagePath;
+        _viewRect = viewRect;
+        _regionRect = regionRect;
+    }
+
     public static Single<LoadedImage> createObservable(Context context, Path imagePath, Rect viewRect, Rect regionRect)
     {
         return Single.create(emitter -> {
@@ -84,21 +99,6 @@ public class LoadedImage
         return _isOptimSupported;
     }
 
-    private LoadedImage(Path imagePath, Rect viewRect, Rect regionRect)
-    {
-        _imagePath = imagePath;
-        _viewRect = viewRect;
-        _regionRect = regionRect;
-    }
-
-    private final Path _imagePath;
-    private final Rect _viewRect;
-    private Rect _regionRect;
-    private boolean _isOptimSupported;
-    private Bitmap _image;
-    private boolean _flipX, _flipY;
-    private int _sampleSize, _rotation;
-
     private void loadImage() throws IOException
     {
         BitmapFactory.Options params = loadImageParams(_imagePath);
@@ -131,7 +131,6 @@ public class LoadedImage
                     _image = loadDownsampledImage(_imagePath, _sampleSize);
                 else
                     _image = CompatHelper.loadBitmapRegion(_imagePath, _sampleSize, _regionRect);
-
                 _flipX = _flipY = false;
                 _rotation = 0;
                 if (isJpg)
@@ -160,7 +159,6 @@ public class LoadedImage
             try (InputStream s = imagePath.getFile().getInputStream())
             {
                 Metadata m = ImageMetadataReader.readMetadata(s);
-
                 for (Directory directory : m.getDirectories())
                     if (directory.containsTag(ExifSubIFDDirectory.TAG_ORIENTATION))
                     {

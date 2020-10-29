@@ -18,9 +18,23 @@ import java.util.ArrayList;
 
 public class CloseLocationsActivity extends AppCompatActivity
 {
+    @Override
+    protected void onCreate(final Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setResult(RESULT_CANCELED);
+        if (savedInstanceState == null)
+            getSupportFragmentManager().beginTransaction().add(new MainFragment(), MainFragment.TAG).commit();
+    }
+
     public static class MainFragment extends Fragment implements LocationCloserBaseFragment.CloseLocationReceiver, MasterPasswordDialog.PasswordReceiver
     {
         public static final String TAG = "com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity.MainFragment";
+        private static final String ARG_FAILED_TO_CLOSE_ALL = "com.igeltech.nevercrypt.android.FAILED_TO_CLOSE";
+        private final ActivityResultHandler _resHandler = new ActivityResultHandler();
+        private ArrayList<Location> _targetLocations;
+        private LocationsManager _locationsManager;
+        private boolean _failedToClose;
 
         @Override
         public void onCreate(Bundle state)
@@ -70,12 +84,6 @@ public class CloseLocationsActivity extends AppCompatActivity
             super.onResume();
             _resHandler.handle();
         }
-
-        private static final String ARG_FAILED_TO_CLOSE_ALL = "com.igeltech.nevercrypt.android.FAILED_TO_CLOSE";
-        private final ActivityResultHandler _resHandler = new ActivityResultHandler();
-        private ArrayList<Location> _targetLocations;
-        private LocationsManager _locationsManager;
-        private boolean _failedToClose;
 
         private void startClosingLocations(Bundle state)
         {
@@ -144,14 +152,5 @@ public class CloseLocationsActivity extends AppCompatActivity
             else
                 getActivity().finish();
         }
-    }
-
-    @Override
-    protected void onCreate(final Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setResult(RESULT_CANCELED);
-        if (savedInstanceState == null)
-            getSupportFragmentManager().beginTransaction().add(new MainFragment(), MainFragment.TAG).commit();
     }
 }

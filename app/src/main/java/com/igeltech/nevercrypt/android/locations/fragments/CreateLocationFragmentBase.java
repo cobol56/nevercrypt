@@ -33,6 +33,8 @@ import java.util.concurrent.CancellationException;
 public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase implements PropertiesHostWithStateBundle
 {
     public static final String ARG_ADD_EXISTING_LOCATION = "com.igeltech.nevercrypt.android.ADD_EXISTING_CONTAINER";
+    protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
+    protected final Bundle _state = new Bundle();
 
     @Override
     public void onCreate(Bundle state)
@@ -198,7 +200,6 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
                 }
                 catch (CancellationException ignored)
                 {
-
                 }
                 catch (Throwable e)
                 {
@@ -213,19 +214,59 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         return new CreateLocationTaskCallbacks();
     }
 
-    protected final ActivityResultHandler _resHandler = new ActivityResultHandler();
-    protected final Bundle _state = new Bundle();
-
     protected abstract TaskFragment createAddExistingLocationTask();
 
     protected abstract TaskFragment createCreateLocationTask();
 
+    @Override
+    protected void createProperties()
+    {
+        createStartProperties();
+        createNewLocationProperties();
+        createExtProperties();
+        if (_state.containsKey(ARG_ADD_EXISTING_LOCATION))
+        {
+            if (_state.getBoolean(ARG_ADD_EXISTING_LOCATION))
+                showAddExistingLocationProperties();
+            else
+                showCreateNewLocationProperties();
+        }
+        else
+            showAddExistingLocationRequestProperties();
+    }
+
+    protected void createStartProperties()
+    {
+        _propertiesView.addProperty(new ExistingContainerPropertyEditor(this));
+    }
+
+    protected void createNewLocationProperties()
+    {
+    }
+
+    protected void createExtProperties()
+    {
+    }
+
+    protected boolean checkParams()
+    {
+        Uri loc = _state.containsKey(CreateContainerTaskFragmentBase.ARG_LOCATION) ? (Uri) _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION) : null;
+        return loc != null && !loc.toString().isEmpty();
+    }
+
+    protected void showAddExistingLocationRequestProperties()
+    {
+        _propertiesView.setPropertiesState(false);
+        _propertiesView.setPropertyState(R.string.create_new_container_or_add_existing_container, true);
+    }
+
     protected class CreateLocationTaskCallbacks implements TaskFragment.TaskCallbacks
     {
+        private ProgressDialog _dialog;
+
         @Override
         public void onPrepare(Bundle args)
         {
-
         }
 
         @Override
@@ -274,53 +315,6 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         @Override
         public void onUpdateUI(Object state)
         {
-
         }
-
-        private ProgressDialog _dialog;
-    }
-
-    @Override
-    protected void createProperties()
-    {
-        createStartProperties();
-        createNewLocationProperties();
-        createExtProperties();
-
-        if (_state.containsKey(ARG_ADD_EXISTING_LOCATION))
-        {
-            if (_state.getBoolean(ARG_ADD_EXISTING_LOCATION))
-                showAddExistingLocationProperties();
-            else
-                showCreateNewLocationProperties();
-        }
-        else
-            showAddExistingLocationRequestProperties();
-    }
-
-    protected void createStartProperties()
-    {
-        _propertiesView.addProperty(new ExistingContainerPropertyEditor(this));
-    }
-
-    protected void createNewLocationProperties()
-    {
-    }
-
-    protected void createExtProperties()
-    {
-
-    }
-
-    protected boolean checkParams()
-    {
-        Uri loc = _state.containsKey(CreateContainerTaskFragmentBase.ARG_LOCATION) ? (Uri) _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION) : null;
-        return loc != null && !loc.toString().isEmpty();
-    }
-
-    protected void showAddExistingLocationRequestProperties()
-    {
-        _propertiesView.setPropertiesState(false);
-        _propertiesView.setPropertyState(R.string.create_new_container_or_add_existing_container, true);
     }
 }

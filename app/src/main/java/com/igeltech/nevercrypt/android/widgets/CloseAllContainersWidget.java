@@ -25,7 +25,6 @@ public class CloseAllContainersWidget extends AppWidgetProvider
         //context.getTheme().resolveAttribute(haveOpenContainers ? R.attr.widgetUnlockedAllIcon : R.attr.widgetLockedAllIcon, typedValue, true);
         //views.setImageViewResource(R.id.widgetLockImageButton, typedValue.resourceId);
         views.setImageViewResource(R.id.containersClosedImageButton, haveOpenContainers ? R.drawable.widget_unlocked_all : R.drawable.widget_locked_all);
-
         Intent i;
         if (haveOpenContainers)
         {
@@ -37,7 +36,6 @@ public class CloseAllContainersWidget extends AppWidgetProvider
             i = new Intent(context, FileManagerActivity.class);
             i.setAction(Intent.ACTION_MAIN);
         }
-
         PendingIntent pendingIntent = PendingIntent.getActivity(context, widgetId, i, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.containersClosedImageButton, pendingIntent);
         appWidgetManager.updateAppWidget(widgetId, views);

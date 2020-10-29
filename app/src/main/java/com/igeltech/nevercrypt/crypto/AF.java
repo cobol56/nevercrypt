@@ -9,17 +9,19 @@ import java.security.SecureRandom;
 public class AF
 {
     public static final int SECTOR_SIZE = 512;
-
-    public static int calcNumRequiredSectors(int blocksize, int numBlocks)
-    {
-        int afSize = blocksize * numBlocks;
-        return (afSize + (SECTOR_SIZE - 1)) / SECTOR_SIZE;
-    }
+    private final MessageDigest _hash;
+    private final int _blockSize;
 
     public AF(MessageDigest hash, int blockSize)
     {
         _hash = hash;
         _blockSize = blockSize;
+    }
+
+    public static int calcNumRequiredSectors(int blocksize, int numBlocks)
+    {
+        int afSize = blocksize * numBlocks;
+        return (afSize + (SECTOR_SIZE - 1)) / SECTOR_SIZE;
     }
 
     public void split(byte[] src, int srcOffset, byte[] dest, int destOffset, int blockNumber) throws DigestException
@@ -53,9 +55,6 @@ public class AF
         return calcNumRequiredSectors(_blockSize, numBlocks);
     }
 
-    private final MessageDigest _hash;
-    private final int _blockSize;
-
     private void xorBlock(byte[] src, int srcOffset, byte[] dst, int dstOffset, byte[] xorBlock)
     {
         for (int i = 0; i < xorBlock.length; i++)
@@ -67,7 +66,6 @@ public class AF
         int ds = _hash.getDigestLength();
         int blocks = len / ds;
         int padding = len % ds;
-
         for (int i = 0; i < blocks; i++)
             hashBuf(src, srcOffset + ds * i, dst, dstOffset + ds * i, ds, i);
         if (padding > 0)

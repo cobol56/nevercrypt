@@ -19,6 +19,11 @@ public class ClearTempFolderTask extends WipeFilesTask
 {
     public static final String ARG_EXIT_PROGRAM = "com.igeltech.nevercrypt.android.EXIT_PROGRAM";
 
+    public ClearTempFolderTask()
+    {
+        super(true);
+    }
+
     public static SrcDstCollection getMirrorFiles(Context context) throws IOException
     {
         Location loc = FileOpsService.getSecTempFolderLocation(UserSettings.getSettings(context).getWorkDir(), context);
@@ -30,42 +35,6 @@ public class ClearTempFolderTask extends WipeFilesTask
         }
         else
             return new SrcDstPlain();
-    }
-
-    public static class Param extends FileOperationTaskBase.FileOperationParam
-    {
-        public Param(Intent i, Context context)
-        {
-            super(i);
-            _context = context;
-        }
-
-        public boolean shouldExitProgram()
-        {
-            return getIntent().getBooleanExtra(ARG_EXIT_PROGRAM, false);
-        }
-
-        @Override
-        protected SrcDstCollection loadRecords(Intent i)
-        {
-            try
-            {
-                return getMirrorFiles(_context);
-            }
-            catch (IOException e)
-            {
-                Logger.log(e);
-            }
-
-            return null;
-        }
-
-        private final Context _context;
-    }
-
-    public ClearTempFolderTask()
-    {
-        super(true);
     }
 
     @Override
@@ -102,5 +71,35 @@ public class ClearTempFolderTask extends WipeFilesTask
         }
         else
             super.onCompleted(result);
+    }
+
+    public static class Param extends FileOperationTaskBase.FileOperationParam
+    {
+        private final Context _context;
+
+        public Param(Intent i, Context context)
+        {
+            super(i);
+            _context = context;
+        }
+
+        public boolean shouldExitProgram()
+        {
+            return getIntent().getBooleanExtra(ARG_EXIT_PROGRAM, false);
+        }
+
+        @Override
+        protected SrcDstCollection loadRecords(Intent i)
+        {
+            try
+            {
+                return getMirrorFiles(_context);
+            }
+            catch (IOException e)
+            {
+                Logger.log(e);
+            }
+            return null;
+        }
     }
 }

@@ -69,7 +69,6 @@ public class CreateEncFsTaskFragment extends CreateLocationTaskFragment
                 return false;
             }
         }
-
         return true;
     }
 }

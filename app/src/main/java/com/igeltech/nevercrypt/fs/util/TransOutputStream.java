@@ -10,6 +10,11 @@ import java.io.OutputStream;
 public abstract class TransOutputStream extends OutputStream implements DataOutput
 {
     public static boolean ENABLE_DEBUG_LOG = false;
+    protected final OutputStream _base;
+    protected final int _bufferSize;
+    protected byte[] _buffer;
+    protected long _bufferPosition;
+    protected int _bytesWritten;
 
     public TransOutputStream(OutputStream base, int bufferSize)
     {
@@ -59,12 +64,6 @@ public abstract class TransOutputStream extends OutputStream implements DataOutp
         if (closeBase)
             _base.close();
     }
-
-    protected final OutputStream _base;
-    protected final int _bufferSize;
-    protected byte[] _buffer;
-    protected long _bufferPosition;
-    protected int _bytesWritten;
 
     protected abstract void transformBufferToBase(byte[] buf, int offset, int count, long bufferPosition, byte[] baseBuffer) throws IOException;
 

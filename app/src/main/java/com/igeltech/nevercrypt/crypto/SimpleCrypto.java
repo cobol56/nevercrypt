@@ -13,6 +13,10 @@ import java.util.Arrays;
 
 public class SimpleCrypto
 {
+    private static final int SALT_SIZE = 8;
+    private static final int IV_SIZE = 16;
+    private final static String HEX = "0123456789ABCDEF";
+
     public static byte[] getStrongKeyBytes(byte[] srcKey, byte[] salt)
     {
         //PBKDF2WithHmacSHA1 is not available on the GALAXY Tab.
@@ -207,10 +211,6 @@ public class SimpleCrypto
     {
         return new String(toHex(buf));
     }
-
-    private static final int SALT_SIZE = 8;
-    private static final int IV_SIZE = 16;
-    private final static String HEX = "0123456789ABCDEF";
 
     private static EncryptionEngine getCipher() throws Exception
     {

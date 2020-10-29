@@ -10,6 +10,9 @@ import java.util.Arrays;
 
 public class SHA1MACCalculator extends MACCalculator
 {
+    private final int _keySize;
+    private HMACSHA1 _hmac;
+
     public SHA1MACCalculator(int keySize)
     {
         _keySize = keySize;
@@ -73,7 +76,4 @@ public class SHA1MACCalculator extends MACCalculator
             Arrays.fill(data, (byte) 0);
         }
     }
-
-    private final int _keySize;
-    private HMACSHA1 _hmac;
 }

@@ -17,6 +17,7 @@ public class RenameFileTask extends TaskFragment
 {
     public static final String TAG = "RenameFileTask";
     public static final String ARG_NEW_NAME = "com.igeltech.nevercrypt.android.NEW_NAME";
+    private Context _context;
 
     public static RenameFileTask newInstance(Location target, String newName)
     {
@@ -86,6 +87,4 @@ public class RenameFileTask extends TaskFragment
             }
         };
     }
-
-    private Context _context;
 }

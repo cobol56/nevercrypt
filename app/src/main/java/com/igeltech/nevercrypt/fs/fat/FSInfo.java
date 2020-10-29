@@ -8,21 +8,20 @@ import java.util.zip.DataFormatException;
 
 class FSInfo
 {
+    private final BPB32 _bpb;
+    int freeCount = -1;
+    int lastAllocatedCluster = -1;
+
     FSInfo(BPB32 bpb)
     {
         _bpb = bpb;
     }
 
-    int freeCount = -1;
-    int lastAllocatedCluster = -1;
-
     void read(RandomAccessIO input) throws IOException, DataFormatException
     {
         input.seek(_bpb.bytesPerSector * _bpb.FSInfoSector);
-
         if (Util.readDoubleWordLE(input) != 0x41615252)
             throw new DataFormatException("Wrong file system information structure signature");
-
         input.seek(input.getFilePointer() + 480);
         if (Util.readDoubleWordLE(input) != 0x61417272)
             throw new DataFormatException("Wrong file system information structure signature");
@@ -46,6 +45,4 @@ class FSInfo
             output.write(0);
         Util.writeDoubleWordLE(output, 0xAA550000);
     }
-
-    private final BPB32 _bpb;
 }

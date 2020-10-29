@@ -16,14 +16,14 @@ import java.util.List;
 
 public class EncryptionAlgorithmPropertyEditor extends ChoiceDialogPropertyEditor
 {
-    public static String getEncEngineName(EncryptionEngine eng)
-    {
-        return EncryptionEnginesRegistry.getEncEngineName(eng);
-    }
-
     public EncryptionAlgorithmPropertyEditor(CreateContainerFragmentBase createContainerFragment)
     {
         super(createContainerFragment, R.string.encryption_algorithm, 0, createContainerFragment.getTag());
+    }
+
+    public static String getEncEngineName(EncryptionEngine eng)
+    {
+        return EncryptionEnginesRegistry.getEncEngineName(eng);
     }
 
     @Override

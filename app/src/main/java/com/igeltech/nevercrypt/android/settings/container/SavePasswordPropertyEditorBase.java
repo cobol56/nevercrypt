@@ -35,7 +35,6 @@ public class SavePasswordPropertyEditorBase extends SwitchPropertyEditor impleme
     @Override
     protected void saveValue(boolean value)
     {
-
     }
 
     @Override

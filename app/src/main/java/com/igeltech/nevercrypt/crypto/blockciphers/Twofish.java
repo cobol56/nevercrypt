@@ -5,6 +5,13 @@ import com.igeltech.nevercrypt.crypto.EncryptionEngineException;
 
 public class Twofish implements BlockCipherNative
 {
+    static
+    {
+        System.loadLibrary("crypttwofish");
+    }
+
+    private long _contextPtr;
+
     @Override
     public void init(byte[] key) throws EncryptionEngineException
     {
@@ -56,13 +63,6 @@ public class Twofish implements BlockCipherNative
     {
         return 16;
     }
-
-    static
-    {
-        System.loadLibrary("crypttwofish");
-    }
-
-    private long _contextPtr;
 
     private native long initContext(byte[] key);
 

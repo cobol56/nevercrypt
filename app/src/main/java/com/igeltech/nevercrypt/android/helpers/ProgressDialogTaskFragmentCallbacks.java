@@ -12,6 +12,51 @@ import com.igeltech.nevercrypt.android.fragments.TaskFragment.TaskCallbacks;
 
 public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
 {
+    protected final FragmentActivity _context;
+    private final int _dialogTextResId;
+    private DialogFragment _dialog;
+
+    public ProgressDialogTaskFragmentCallbacks(FragmentActivity context, int dialogTextResId)
+    {
+        _context = context;
+        _dialogTextResId = dialogTextResId;
+    }
+
+    @Override
+    public void onPrepare(Bundle args)
+    {
+    }
+
+    @Override
+    public void onResumeUI(Bundle args)
+    {
+        _dialog = initDialog(args);
+        if (_dialog != null)
+            _dialog.show(_context.getFragmentManager(), Dialog.TAG);
+    }
+
+    @Override
+    public void onSuspendUI(Bundle args)
+    {
+        if (_dialog != null)
+            _dialog.dismissAllowingStateLoss();
+    }
+
+    @Override
+    public void onUpdateUI(Object state)
+    {
+    }
+
+    @Override
+    public void onCompleted(Bundle args, Result result)
+    {
+    }
+
+    protected DialogFragment initDialog(Bundle args)
+    {
+        return Dialog.newInstance(_context.getText(_dialogTextResId).toString());
+    }
+
     public static class Dialog extends DialogFragment
     {
         public static final String TAG = "ProgressDialog";
@@ -37,53 +82,4 @@ public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
             return dialog;
         }
     }
-
-    public ProgressDialogTaskFragmentCallbacks(FragmentActivity context, int dialogTextResId)
-    {
-        _context = context;
-        _dialogTextResId = dialogTextResId;
-    }
-
-    @Override
-    public void onPrepare(Bundle args)
-    {
-
-    }
-
-    @Override
-    public void onResumeUI(Bundle args)
-    {
-        _dialog = initDialog(args);
-        if (_dialog != null)
-            _dialog.show(_context.getFragmentManager(), Dialog.TAG);
-    }
-
-    @Override
-    public void onSuspendUI(Bundle args)
-    {
-        if (_dialog != null)
-            _dialog.dismissAllowingStateLoss();
-    }
-
-    @Override
-    public void onUpdateUI(Object state)
-    {
-
-    }
-
-    @Override
-    public void onCompleted(Bundle args, Result result)
-    {
-
-    }
-
-    protected final FragmentActivity _context;
-
-    protected DialogFragment initDialog(Bundle args)
-    {
-        return Dialog.newInstance(_context.getText(_dialogTextResId).toString());
-    }
-
-    private DialogFragment _dialog;
-    private final int _dialogTextResId;
 }

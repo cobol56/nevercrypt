@@ -61,7 +61,6 @@ public abstract class AboutDialogBase extends DialogFragment
         String verName = getVersionName(getActivity());
         String aboutMessage = String.format("%s v%s\n%s", getResources().getString(R.string.app_name), verName, getResources().getString(R.string.about_message));
         ((AppCompatTextView) v.findViewById(R.id.about_text_view)).setText(aboutMessage);
-
         v.findViewById(R.id.homepage_button).setOnClickListener(v12 -> {
             try
             {
@@ -146,11 +145,9 @@ public abstract class AboutDialogBase extends DialogFragment
         Intent actionIntent = new Intent(Intent.ACTION_SEND);
         actionIntent.setType("text/plain");
         actionIntent.putExtra(Intent.EXTRA_STREAM, uri);
-
         ClipData cp = ClipData.newUri(ctx.getContentResolver(), ctx.getString(R.string.get_program_log), uri);
         actionIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         actionIntent.setClipData(cp);
-
         Intent startIntent = Intent.createChooser(actionIntent, ctx.getString(R.string.save_log_file_to));
         startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(startIntent);

@@ -9,6 +9,8 @@ import com.igeltech.nevercrypt.locations.LocationsManager;
 
 public class ContainerListFragmentBase extends LocationListBaseFragment
 {
+    private static Drawable _openedContainerIcon, _closedContainerIcon;
+
     @Override
     protected void loadLocations()
     {
@@ -21,6 +23,24 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     protected String getDefaultLocationType()
     {
         return ContainerBasedLocation.URI_SCHEME;
+    }
+
+    private synchronized Drawable getOpenedContainerIcon()
+    {
+        if (_openedContainerIcon == null)
+        {
+            _openedContainerIcon = getResources().getDrawable(R.drawable.ic_lock_open);
+        }
+        return _openedContainerIcon;
+    }
+
+    private synchronized Drawable getClosedContainerIcon()
+    {
+        if (_closedContainerIcon == null)
+        {
+            _closedContainerIcon = getResources().getDrawable(R.drawable.ic_lock);
+        }
+        return _closedContainerIcon;
     }
 
     private class ContainerInfo extends LocationInfo
@@ -41,25 +61,5 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
         {
             return ((CryptoLocation) location).isOpenOrMounted() ? getOpenedContainerIcon() : getClosedContainerIcon();
         }
-    }
-
-    private static Drawable _openedContainerIcon, _closedContainerIcon;
-
-    private synchronized Drawable getOpenedContainerIcon()
-    {
-        if (_openedContainerIcon == null)
-        {
-            _openedContainerIcon = getResources().getDrawable(R.drawable.ic_lock_open);
-        }
-        return _openedContainerIcon;
-    }
-
-    private synchronized Drawable getClosedContainerIcon()
-    {
-        if (_closedContainerIcon == null)
-        {
-            _closedContainerIcon = getResources().getDrawable(R.drawable.ic_lock);
-        }
-        return _closedContainerIcon;
     }
 }

@@ -58,12 +58,17 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
         lm.unregOpenedLocation(loc);
         if (loc instanceof CryptoLocation)
             ContainersDocumentProviderBase.notifyOpenedLocationsListChanged(context);
-
         if (!lm.hasOpenLocations())
         {
             lm.broadcastAllContainersClosed();
             LocationsService.stopService(context);
         }
+    }
+
+    @Override
+    protected TaskFragment getCloseLocationTask()
+    {
+        return new CloseLocationTaskFragment();
     }
 
     public static class CloseLocationTaskFragment extends LocationCloserBaseFragment.CloseLocationTaskFragment
@@ -84,11 +89,5 @@ public class OpenableLocationCloserFragment extends LocationCloserBaseFragment
                     throw e;
             }
         }
-    }
-
-    @Override
-    protected TaskFragment getCloseLocationTask()
-    {
-        return new CloseLocationTaskFragment();
     }
 }

@@ -11,21 +11,36 @@ import java.util.Arrays;
 
 public abstract class XTS implements FileEncryptionEngine
 {
+    private static final int SECTOR_SIZE = 512;
+
+    static
+    {
+        System.loadLibrary("cryptxts");
+    }
+
+    protected final CipherFactory _cf;
+    protected final ArrayList<CipherPair> _blockCiphers = new ArrayList<>();
+    protected long _iv;
+    protected byte[] _key;
+    protected boolean _incrementIV = false;
+    private long _xtsContextPointer;
+
+    protected XTS(CipherFactory cf)
+    {
+        _cf = cf;
+    }
+
     @Override
     public synchronized void init() throws EncryptionEngineException
     {
         closeCiphers();
         closeContext();
-
         _xtsContextPointer = initContext();
         if (_xtsContextPointer == 0)
             throw new EncryptionEngineException("XTS context initialization failed");
-
         addBlockCiphers(_cf);
-
         if (_key == null)
             throw new EncryptionEngineException("Encryption key is not set");
-
         int keyOffset = 0;
         int eeKeySize = getKeySize() / 2;
         for (CipherPair p : _blockCiphers)
@@ -55,28 +70,21 @@ public abstract class XTS implements FileEncryptionEngine
     }
 
     @Override
-    public void setIV(byte[] iv)
-    {
-        _iv = ByteBuffer.wrap(iv).getLong();
-    }
-
-    @Override
     public byte[] getIV()
     {
         return ByteBuffer.allocate(getIVSize()).putLong(_iv).array();
     }
 
     @Override
-    public int getIVSize()
+    public void setIV(byte[] iv)
     {
-        return 16;
+        _iv = ByteBuffer.wrap(iv).getLong();
     }
 
     @Override
-    public void setKey(byte[] key)
+    public int getIVSize()
     {
-        clearKey();
-        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
+        return 16;
     }
 
     @Override
@@ -122,7 +130,6 @@ public abstract class XTS implements FileEncryptionEngine
             throw new EncryptionEngineException("Engine is closed");
         if (len % getEncryptionBlockSize() != 0 || (offset + len) > data.length)
             throw new EncryptionEngineException("Wrong buffer length");
-
         if (decrypt(data, offset, len, _iv, _xtsContextPointer) != 0)
             throw new EncryptionEngineException("Failed decrypting data");
         if (_incrementIV)
@@ -133,6 +140,13 @@ public abstract class XTS implements FileEncryptionEngine
     public byte[] getKey()
     {
         return _key;
+    }
+
+    @Override
+    public void setKey(byte[] key)
+    {
+        clearKey();
+        _key = key == null ? null : Arrays.copyOf(key, getKeySize());
     }
 
     @Override
@@ -150,36 +164,6 @@ public abstract class XTS implements FileEncryptionEngine
     public int getEncryptionBlockSize()
     {
         return 16;
-    }
-
-    private static final int SECTOR_SIZE = 512;
-
-    static
-    {
-        System.loadLibrary("cryptxts");
-    }
-
-    protected static class CipherPair
-    {
-        public CipherPair(BlockCipherNative a, BlockCipherNative b)
-        {
-            cipherA = a;
-            cipherB = b;
-        }
-
-        public BlockCipherNative cipherA;
-        public BlockCipherNative cipherB;
-    }
-
-    protected long _iv;
-    protected byte[] _key;
-    protected final CipherFactory _cf;
-    protected final ArrayList<CipherPair> _blockCiphers = new ArrayList<>();
-    protected boolean _incrementIV = false;
-
-    protected XTS(CipherFactory cf)
-    {
-        _cf = cf;
     }
 
     protected void closeCiphers()
@@ -200,8 +184,6 @@ public abstract class XTS implements FileEncryptionEngine
             _xtsContextPointer = 0;
         }
     }
-
-    private long _xtsContextPointer;
 
     private native long initContext();
 
@@ -230,6 +212,18 @@ public abstract class XTS implements FileEncryptionEngine
         {
             Arrays.fill(_key, (byte) 0);
             _key = null;
+        }
+    }
+
+    protected static class CipherPair
+    {
+        public BlockCipherNative cipherA;
+        public BlockCipherNative cipherB;
+
+        public CipherPair(BlockCipherNative a, BlockCipherNative b)
+        {
+            cipherA = a;
+            cipherB = b;
         }
     }
 }

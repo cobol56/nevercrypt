@@ -24,7 +24,6 @@ class DeleteFilesTask extends FileOperationTaskBase
         }
         catch (CancellationException ignored)
         {
-
         }
         catch (Throwable e)
         {

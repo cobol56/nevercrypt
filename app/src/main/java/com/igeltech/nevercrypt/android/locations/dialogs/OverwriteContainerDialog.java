@@ -14,6 +14,8 @@ import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragmen
 
 public class OverwriteContainerDialog extends DialogFragment
 {
+    private static final String ARG_REQUEST_RES_ID = "com.igeltech.nevercrypt.android.TEXT_ID";
+
     public static void showDialog(FragmentManager fm)
     {
         showDialog(fm, 0);
@@ -54,6 +56,4 @@ public class OverwriteContainerDialog extends DialogFragment
             f.startCreateLocationTask();
         }
     }
-
-    private static final String ARG_REQUEST_RES_ID = "com.igeltech.nevercrypt.android.TEXT_ID";
 }

@@ -4,6 +4,15 @@ import java.security.MessageDigest;
 
 public class RIPEMD160 extends MessageDigest
 {
+    private static final int DIGEST_LENGTH = 20;
+
+    static
+    {
+        System.loadLibrary("cryptripemd160");
+    }
+
+    private long _contextPtr;
+
     public RIPEMD160()
     {
         super("ripemd160");
@@ -58,14 +67,6 @@ public class RIPEMD160 extends MessageDigest
     {
         updateDigest(_contextPtr, input, offset, len);
     }
-
-    static
-    {
-        System.loadLibrary("cryptripemd160");
-    }
-
-    private static final int DIGEST_LENGTH = 20;
-    private long _contextPtr;
 
     private native long initContext();
 

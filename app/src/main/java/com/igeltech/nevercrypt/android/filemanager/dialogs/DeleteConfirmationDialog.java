@@ -46,17 +46,14 @@ public class DeleteConfirmationDialog extends AppCompatDialogFragment
         ArrayList<Path> paths = new ArrayList<>();
         Location loc = LocationsManager.getLocationsManager(getActivity()).getFromBundle(args, paths);
         boolean wipe = args.getBoolean(FileListViewFragmentBase.ARG_WIPE_FILES, true);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = (LayoutInflater) builder.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (inflater == null)
             throw new RuntimeException("Inflater is null");
-
         View v = inflater.inflate(R.layout.delete_confirmation_dialog, null);
         AppCompatTextView tv = v.findViewById(android.R.id.text1);
         tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, "..."));
         builder.setView(v);
-
         builder
                 //.setMessage(getActivity().getString(R.string.do_you_really_want_to_delete_selected_files, fn))
                 .setCancelable(true).setPositiveButton(R.string.yes, (dialog, id) -> {
@@ -65,7 +62,6 @@ public class DeleteConfirmationDialog extends AppCompatDialogFragment
                 frag.deleteFiles(loc, paths, wipe);
             dialog.dismiss();
         }).setNegativeButton(R.string.no, (dialog, id) -> dialog.cancel());
-
         Single.<String>create(c -> {
             String fn = "";
             if (loc != null)

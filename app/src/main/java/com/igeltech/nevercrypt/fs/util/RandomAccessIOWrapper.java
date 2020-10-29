@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public class RandomAccessIOWrapper implements RandomAccessIO
 {
+    private final RandomAccessIO _base;
+
     public RandomAccessIOWrapper(RandomAccessIO base)
     {
         _base = base;
@@ -75,6 +77,4 @@ public class RandomAccessIOWrapper implements RandomAccessIO
     {
         return _base;
     }
-
-    private final RandomAccessIO _base;
 }

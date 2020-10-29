@@ -15,10 +15,10 @@ public class DirectorySettings
 {
     public static final String FILE_NAME = ".crypto";
     public static final String PARAM_HIDDEN_FILES = "hidden_files_masks";
+    private ArrayList<String> _hiddenFilesList;
 
     public DirectorySettings()
     {
-
     }
 
     public DirectorySettings(String storedSettings) throws JSONException
@@ -30,39 +30,6 @@ public class DirectorySettings
     {
         _hiddenFilesList = getArrayParam(settings, PARAM_HIDDEN_FILES);
     }
-
-    public ArrayList<String> getHiddenFilesMasks()
-    {
-        return _hiddenFilesList;
-    }
-
-    public void setHiddenFilesMasks(Collection<? extends String> masks)
-    {
-        _hiddenFilesList = new ArrayList<>();
-        _hiddenFilesList.addAll(masks);
-    }
-
-    public String saveToString()
-    {
-        try
-        {
-            JSONObject jo = new JSONObject();
-            if (_hiddenFilesList != null)
-                jo.put(PARAM_HIDDEN_FILES, new JSONArray(_hiddenFilesList));
-            return jo.toString();
-        }
-        catch (JSONException e)
-        {
-            return "";
-        }
-    }
-
-    public void saveToDir(Directory dir) throws IOException
-    {
-        Util.writeToFile(dir, DirectorySettings.FILE_NAME, saveToString());
-    }
-
-    private ArrayList<String> _hiddenFilesList;
 
     private static ArrayList<String> getArrayParam(JSONObject o, String name)
     {
@@ -102,5 +69,36 @@ public class DirectorySettings
         {
             return defaultValue;
         }
+    }
+
+    public ArrayList<String> getHiddenFilesMasks()
+    {
+        return _hiddenFilesList;
+    }
+
+    public void setHiddenFilesMasks(Collection<? extends String> masks)
+    {
+        _hiddenFilesList = new ArrayList<>();
+        _hiddenFilesList.addAll(masks);
+    }
+
+    public String saveToString()
+    {
+        try
+        {
+            JSONObject jo = new JSONObject();
+            if (_hiddenFilesList != null)
+                jo.put(PARAM_HIDDEN_FILES, new JSONArray(_hiddenFilesList));
+            return jo.toString();
+        }
+        catch (JSONException e)
+        {
+            return "";
+        }
+    }
+
+    public void saveToDir(Directory dir) throws IOException
+    {
+        Util.writeToFile(dir, DirectorySettings.FILE_NAME, saveToString());
     }
 }

@@ -10,6 +10,22 @@ import com.igeltech.nevercrypt.android.locations.activities.LocationListActivity
 
 public abstract class DrawerManageLocationMenuItem extends DrawerMenuItemBase
 {
+    private static Drawable _icon;
+
+    protected DrawerManageLocationMenuItem(DrawerControllerBase drawerController)
+    {
+        super(drawerController);
+    }
+
+    private synchronized static Drawable getIcon(Context context)
+    {
+        if (_icon == null)
+        {
+            _icon = context.getResources().getDrawable(R.drawable.ic_manage_locations, context.getTheme());
+        }
+        return _icon;
+    }
+
     @Override
     public void onClick(View view, int position)
     {
@@ -37,21 +53,5 @@ public abstract class DrawerManageLocationMenuItem extends DrawerMenuItemBase
         return R.layout.drawer_folder_item;
     }
 
-    protected DrawerManageLocationMenuItem(DrawerControllerBase drawerController)
-    {
-        super(drawerController);
-    }
-
     protected abstract String getLocationType();
-
-    private static Drawable _icon;
-
-    private synchronized static Drawable getIcon(Context context)
-    {
-        if (_icon == null)
-        {
-            _icon = context.getResources().getDrawable(R.drawable.ic_manage_locations, context.getTheme());
-        }
-        return _icon;
-    }
 }

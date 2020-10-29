@@ -9,6 +9,9 @@ import java.util.Arrays;
 
 public class EncryptedInputStream extends TransInputStream
 {
+    protected final EncryptedFileLayout _layout;
+    protected boolean _allowEmptyParts = true;
+
     public EncryptedInputStream(InputStream base, EncryptedFileLayout layout)
     {
         super(base, layout.getEngine().getFileBlockSize());
@@ -32,9 +35,6 @@ public class EncryptedInputStream extends TransInputStream
     {
         _allowEmptyParts = val;
     }
-
-    protected final EncryptedFileLayout _layout;
-    protected boolean _allowEmptyParts = true;
 
     @Override
     protected int transformBufferFromBase(byte[] baseBuffer, int offset, int count, long bufferPosition, byte[] dstBuffer) throws IOException

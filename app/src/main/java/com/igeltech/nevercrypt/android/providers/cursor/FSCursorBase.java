@@ -29,6 +29,14 @@ public abstract class FSCursorBase extends AbstractCursor
     public static final String COLUMN_LAST_MODIFIED = MediaStore.MediaColumns.DATE_MODIFIED;
     public static final String COLUMN_IS_FOLDER = "is_folder";
     public static final String COLUMN_PATH = "path";
+    final Location _location;
+    final String _selection;
+    final String[] _selectionArgs;
+    final boolean _listDir;
+    private final String[] _projection;
+    private final Context _context;
+    private Observable<CachedPathInfo> _request;
+    private CachedPathInfo _current;
 
     public FSCursorBase(Context context, Location location, @NotNull String[] projection, String selection, String[] selectionArgs, boolean listDir)
     {
@@ -115,15 +123,6 @@ public abstract class FSCursorBase extends AbstractCursor
         }
         return _current != null;
     }
-
-    final Location _location;
-    final String _selection;
-    final String[] _selectionArgs;
-    private final String[] _projection;
-    private final Context _context;
-    final boolean _listDir;
-    private Observable<CachedPathInfo> _request;
-    private CachedPathInfo _current;
 
     private Observable<CachedPathInfo> getObservable()
     {

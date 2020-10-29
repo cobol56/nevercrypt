@@ -12,9 +12,20 @@ import java.io.IOException;
 
 public class FolderRecord extends FsBrowserRecord
 {
+    private static Drawable _folderIcon;
+
     public FolderRecord(Context context) throws IOException
     {
         super(context);
+    }
+
+    private static synchronized Drawable getFolderIcon(Context context)
+    {
+        if (_folderIcon == null && context != null)
+        {
+            _folderIcon = context.getResources().getDrawable(R.drawable.ic_folder, context.getTheme());
+        }
+        return _folderIcon;
     }
 
     @Override
@@ -28,7 +39,6 @@ public class FolderRecord extends FsBrowserRecord
     {
         if (_host == null)
             return null;
-
         LayoutInflater inflater = (LayoutInflater) _host.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.fs_browser_folder_row, parent, false);
         ((ViewGroup) v).setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
@@ -61,16 +71,5 @@ public class FolderRecord extends FsBrowserRecord
     protected Drawable getDefaultIcon()
     {
         return getFolderIcon(_host);
-    }
-
-    private static Drawable _folderIcon;
-
-    private static synchronized Drawable getFolderIcon(Context context)
-    {
-        if (_folderIcon == null && context != null)
-        {
-            _folderIcon = context.getResources().getDrawable(R.drawable.ic_folder, context.getTheme());
-        }
-        return _folderIcon;
     }
 }

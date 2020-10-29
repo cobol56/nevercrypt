@@ -25,6 +25,18 @@ import java.util.TreeMap;
 
 public class TempFilesMonitor
 {
+    private static TempFilesMonitor _instance;
+    private final Object _syncObject;
+    private final TreeMap<Uri, OpenFileInfo> _openedFiles = new TreeMap<>();
+    private final Context _context;
+    private ModificationCheckingTask _modCheckTask;
+
+    private TempFilesMonitor(Context context)
+    {
+        _context = context;
+        _syncObject = new Object();
+    }
+
     public static void deleteRecWithWiping(Path path, boolean wipe) throws IOException
     {
         if (!path.exists())
@@ -68,16 +80,7 @@ public class TempFilesMonitor
     {
         if (_instance == null)
             _instance = new TempFilesMonitor(context);
-
         return _instance;
-    }
-
-    private static TempFilesMonitor _instance;
-
-    private TempFilesMonitor(Context context)
-    {
-        _context = context;
-        _syncObject = new Object();
     }
 
     public Object getSyncObject()
@@ -168,8 +171,28 @@ public class TempFilesMonitor
         _modCheckTask = null;
     }
 
+    private void decryptAndStartFile(Location srcLocation) throws IOException, UserException
+    {
+        if (_context == null)
+            return;
+        FileOpsService.startTempFile(_context, srcLocation);
+    }
+
+    private void saveChangedFile(Location srcLocation, Location tmpPath) throws IOException, UserException
+    {
+        FileOpsService.saveChangedFile(_context, new SrcDstSingle(tmpPath, srcLocation));
+    }
+
+    private boolean isTempDirWriteable()
+    {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
     private class ModificationCheckingTask extends Thread
     {
+        private static final int POLLING_INTERVAL = 3000;
+        private boolean _stop;
+
         @Override
         public void run()
         {
@@ -219,30 +242,5 @@ public class TempFilesMonitor
         {
             _stop = true;
         }
-
-        private static final int POLLING_INTERVAL = 3000;
-        private boolean _stop;
-    }
-
-    private final Object _syncObject;
-    private final TreeMap<Uri, OpenFileInfo> _openedFiles = new TreeMap<>();
-    private final Context _context;
-    private ModificationCheckingTask _modCheckTask;
-
-    private void decryptAndStartFile(Location srcLocation) throws IOException, UserException
-    {
-        if (_context == null)
-            return;
-        FileOpsService.startTempFile(_context, srcLocation);
-    }
-
-    private void saveChangedFile(Location srcLocation, Location tmpPath) throws IOException, UserException
-    {
-        FileOpsService.saveChangedFile(_context, new SrcDstSingle(tmpPath, srcLocation));
-    }
-
-    private boolean isTempDirWriteable()
-    {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 }

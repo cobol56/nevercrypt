@@ -13,6 +13,8 @@ import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 
 public class FileListViewAdapter extends ArrayAdapter<BrowserRecord>
 {
+    private String _currentLocationId;
+
     public FileListViewAdapter(Context context)
     {
         super(context.getApplicationContext(), R.layout.fs_browser_row);
@@ -45,7 +47,6 @@ public class FileListViewAdapter extends ArrayAdapter<BrowserRecord>
             return new View(getContext());
         if (rec.needLoadExtendedInfo() && _currentLocationId != null)
             ExtendedFileInfoLoader.getInstance().requestExtendedInfo(_currentLocationId, rec);
-
         View v;
         if (convertView != null)
         {
@@ -57,6 +58,4 @@ public class FileListViewAdapter extends ArrayAdapter<BrowserRecord>
         v.setTag(rec);
         return v;
     }
-
-    private String _currentLocationId;
 }

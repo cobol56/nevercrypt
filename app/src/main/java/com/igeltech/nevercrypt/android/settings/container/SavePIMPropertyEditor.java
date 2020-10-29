@@ -47,7 +47,6 @@ public class SavePIMPropertyEditor extends SwitchPropertyEditor implements TextE
     @Override
     protected void saveValue(boolean value)
     {
-
     }
 
     @Override

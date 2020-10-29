@@ -4,6 +4,15 @@ import java.security.MessageDigest;
 
 public class Whirlpool extends MessageDigest
 {
+    private static final int DIGEST_LENGTH = 64;
+
+    static
+    {
+        System.loadLibrary("cryptwhirlpool");
+    }
+
+    private long _contextPtr;
+
     public Whirlpool()
     {
         super("whirlpool");
@@ -58,14 +67,6 @@ public class Whirlpool extends MessageDigest
     {
         updateDigest(_contextPtr, input, offset, len);
     }
-
-    static
-    {
-        System.loadLibrary("cryptwhirlpool");
-    }
-
-    private static final int DIGEST_LENGTH = 64;
-    private long _contextPtr;
 
     private native long initContext();
 

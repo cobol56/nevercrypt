@@ -87,6 +87,23 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment";
     public static final int REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER = AppCompatActivity.RESULT_FIRST_USER;
     public static final String ARG_SCROLL_POSITION = "com.igeltech.nevercrypt.android.SCROLL_POSITION";
+    public static final String ARG_WIPE_FILES = "com.igeltech.nevercrypt.android.WIPE_FILES";
+    public static Subject<Boolean> TEST_READING_OBSERVABLE;
+
+    static
+    {
+        if (GlobalConfig.isTest())
+            TEST_READING_OBSERVABLE = BehaviorSubject.createDefault(false);
+    }
+
+    protected EditText _selectedFileEditText;
+    protected AppCompatTextView _currentPathTextView;
+    protected LocationsManager _locationsManager;
+    protected ActionMode _actionMode;
+    protected boolean _isReadingLocation, _changingSelectedFileText, _cleanSelectionOnModeFinish;
+    private ListView _listView;
+    private Disposable _locationLoadingObserver, _loadingRecordObserver;
+    private int _scrollPosition;
 
     public static ArrayList<Path> getPathsFromRecords(List<? extends BrowserRecord> records)
     {
@@ -94,6 +111,49 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         for (BrowserRecord rec : records)
             res.add(rec.getPath());
         return res;
+    }
+
+    private static SrcDstCollection getSrcDstsFromClip(LocationsManager lm, ClipData clip, Location dstLocation, boolean move) throws Exception
+    {
+        ArrayList<SrcDstCollection> cols = new ArrayList<>();
+        for (int i = 0; i < clip.getItemCount(); i++)
+            addSrcDstsFromClipItem(lm, clip.getItemAt(i), dstLocation, cols, move);
+        return cols.isEmpty() ? null : new SrcDstGroup(cols);
+    }
+
+    private static void addSrcDstsFromClipItem(LocationsManager lm, ClipData.Item item, Location dstLocation, Collection<SrcDstCollection> cols, boolean move) throws Exception
+    {
+        Uri uri = item.getUri();
+        if (uri == null || !MainContentProvider.isClipboardUri(uri))
+            return;
+        Location srcLoc = lm.getLocation(MainContentProvider.getLocationUriFromProviderUri(uri));
+        if (move && srcLoc.getFS() == dstLocation.getFS())
+            cols.add(new SrcDstSingle(srcLoc, dstLocation));
+        else
+        {
+            SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(srcLoc, dstLocation));
+            sdr.setIsDirLast(false);//move);
+            cols.add(sdr);
+        }
+        /*Cursor cur = cr.query(uri, null, null, null, null);
+        if(cur!=null)
+        {
+            try
+            {
+                int ci = cur.getColumnIndex(MainContentProvider.COLUMN_LOCATION);
+                while (cur.moveToNext())
+                {
+                    Location srcLoc = lm.getTargetLocation(Uri.parse(cur.getString(ci)));
+                    SrcDstRec sdr = new SrcDstRec(srcLoc, dstLocation);
+                    sdr.setIsDirLast(isDirLast);
+                    cols.add(sdr);
+                }
+            }
+            finally
+            {
+                cur.close();
+            }
+        }*/
     }
 
     @Override
@@ -196,7 +256,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     public void onStop()
     {
         Logger.debug(TAG + " onStop");
-
         getListView().setAdapter(null);
         if (_locationLoadingObserver != null)
         {
@@ -230,11 +289,9 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         boolean hasInClipboard = hasSelectionInClipboard();
         boolean isSelectAction = isSelectAction();
         Logger.debug(String.format("onPrepareOptionsMenu: isReading=%b isSendAction=%b hasInClipboard=%b isSelectAction=%b", isReading, isSendAction, hasInClipboard, isSelectAction));
-
         menu.findItem(R.id.progressbar).setVisible(isReading);
         menu.findItem(R.id.copy).setVisible(!isReading && !isSelectAction && (isSendAction || hasInClipboard));
         menu.findItem(R.id.move).setVisible(!isReading && !isSelectAction && hasInClipboard);
-
         menu.findItem(R.id.new_file).setVisible(!isReading && !isSendAction && allowCreateNewFile() && (!isSelectAction || getFileManagerActivity().allowFileSelect()));
         menu.findItem(R.id.new_dir).setVisible(!isReading && allowCreateNewFolder());
         menu.findItem(R.id.select_all).setVisible((!isSelectAction || !isSingleSelectionMode()) && !getSelectableFiles().isEmpty());
@@ -435,16 +492,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         getFileManagerActivity().invalidateOptionsMenu();
     }
 
-    public static final String ARG_WIPE_FILES = "com.igeltech.nevercrypt.android.WIPE_FILES";
-    protected EditText _selectedFileEditText;
-    protected AppCompatTextView _currentPathTextView;
-    protected LocationsManager _locationsManager;
-    protected ActionMode _actionMode;
-    private ListView _listView;
-    private Disposable _locationLoadingObserver, _loadingRecordObserver;
-    private int _scrollPosition;
-    protected boolean _isReadingLocation, _changingSelectedFileText, _cleanSelectionOnModeFinish;
-
     private boolean isLocSupportsRecFolderDelete(Location loc)
     {
         return loc instanceof DocumentTreeLocation;
@@ -508,14 +555,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         int scrollPosition = getListView().getLastVisiblePosition();
         goTo(getLocation(), scrollPosition, false);
     }
-
-    static
-    {
-        if (GlobalConfig.isTest())
-            TEST_READING_OBSERVABLE = BehaviorSubject.createDefault(false);
-    }
-
-    public static Subject<Boolean> TEST_READING_OBSERVABLE;
 
     private void setStartedLoading(FileListDataFragment.LoadLocationInfo loadInfo)
     {
@@ -664,13 +703,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     @Override
     public void onTargetLocationNotOpened(Bundle openerArgs)
     {
-
-    }
-
-    static class MenuHandlerInfo
-    {
-        int menuItemId;
-        boolean clearSelection;
     }
 
     protected FileListViewAdapter getAdapter()
@@ -690,7 +722,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         lv.setEmptyView(getView().findViewById(android.R.id.empty));
         lv.setChoiceMode(ListView.CHOICE_MODE_NONE);
         lv.setItemsCanFocus(true);
-
         lv.setOnItemLongClickListener((adapterView, view, pos, itemId) -> {
             BrowserRecord rec = (BrowserRecord) adapterView.getItemAtPosition(pos);
             if (rec != null && rec.allowSelect())
@@ -800,7 +831,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             {
                 ArrayList<BrowserRecord> selectedFiles = getSelectedFiles();
                 boolean hasSelectedFiles = (isSelectAction() && isSingleSelectionMode() && (allowCreateNewFile() || allowCreateNewFolder()) && !_selectedFileEditText.getText().toString().isEmpty()) || !selectedFiles.isEmpty();
-
                 boolean isSelectAction = isSelectAction();
                 menu.findItem(R.id.select).setVisible(isSelectAction && hasSelectedFiles && (!showSelectedFilenameEditText() || allowSelectedFileName()));
                 menu.findItem(R.id.rename).setVisible(!isSelectAction && selectedFiles.size() == 1);
@@ -823,7 +853,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                 boolean res = handleMenu(mhi);
                 if (res && mhi.clearSelection)
                     mode.finish();
-
                 return res;
             }
 
@@ -934,7 +963,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     //full version compat
     protected void newRecordCreated(BrowserRecord rec)
     {
-
     }
 
     protected FileManagerActivity getFileManagerActivity()
@@ -972,18 +1000,18 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         return getActivity().getIntent().getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_CREATE_NEW_FOLDER, true);
     }
 
-    protected boolean isSendAction()
-    {
-        String action = getActivity().getIntent().getAction();
-        return Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action);
-    }
-
     /*
     private void initContentValuesFromPath(ContentValues values, Path path)
     {
         values.put(MainContentProvider.COLUMN_LOCATION, getRealLocation().getLocationUri().toString());
         values.put(MainContentProvider.COLUMN_PATH, path.getPathString());
     }*/
+
+    protected boolean isSendAction()
+    {
+        String action = getActivity().getIntent().getAction();
+        return Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action);
+    }
 
     protected void chooseFilesForOperation()
     {
@@ -1048,7 +1076,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                 name = "";
             else
                 name = sr.get(0).getName();
-
             _changingSelectedFileText = true;
             try
             {
@@ -1197,50 +1224,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         }
     }
 
-    private static SrcDstCollection getSrcDstsFromClip(LocationsManager lm, ClipData clip, Location dstLocation, boolean move) throws Exception
-    {
-        ArrayList<SrcDstCollection> cols = new ArrayList<>();
-        for (int i = 0; i < clip.getItemCount(); i++)
-            addSrcDstsFromClipItem(lm, clip.getItemAt(i), dstLocation, cols, move);
-
-        return cols.isEmpty() ? null : new SrcDstGroup(cols);
-    }
-
-    private static void addSrcDstsFromClipItem(LocationsManager lm, ClipData.Item item, Location dstLocation, Collection<SrcDstCollection> cols, boolean move) throws Exception
-    {
-        Uri uri = item.getUri();
-        if (uri == null || !MainContentProvider.isClipboardUri(uri))
-            return;
-        Location srcLoc = lm.getLocation(MainContentProvider.getLocationUriFromProviderUri(uri));
-        if (move && srcLoc.getFS() == dstLocation.getFS())
-            cols.add(new SrcDstSingle(srcLoc, dstLocation));
-        else
-        {
-            SrcDstRec sdr = new SrcDstRec(new SrcDstSingle(srcLoc, dstLocation));
-            sdr.setIsDirLast(false);//move);
-            cols.add(sdr);
-        }
-        /*Cursor cur = cr.query(uri, null, null, null, null);
-        if(cur!=null)
-        {
-            try
-            {
-                int ci = cur.getColumnIndex(MainContentProvider.COLUMN_LOCATION);
-                while (cur.moveToNext())
-                {
-                    Location srcLoc = lm.getTargetLocation(Uri.parse(cur.getString(ci)));
-                    SrcDstRec sdr = new SrcDstRec(srcLoc, dstLocation);
-                    sdr.setIsDirLast(isDirLast);
-                    cols.add(sdr);
-                }
-            }
-            finally
-            {
-                cur.close();
-            }
-        }*/
-    }
-
     private SrcDstCollection getSrcDsts(Location srcLocation, boolean isDirLast, Collection<? extends Path> paths) throws IOException
     {
         return SrcDstRec.fromPaths(srcLocation, getRealLocation(), isDirLast, paths);
@@ -1318,5 +1301,11 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             opener.setArguments(openerArgs);
             fm.beginTransaction().add(opener, openerTag).commit();
         }
+    }
+
+    static class MenuHandlerInfo
+    {
+        int menuItemId;
+        boolean clearSelection;
     }
 }

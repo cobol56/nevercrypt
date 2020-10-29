@@ -33,6 +33,10 @@ import java.io.IOException;
 public class LocationsServiceBase extends Service
 {
     public static final int NOTIFICATION_RUNNING_SERVICE = 1;
+    public static final String ACTION_CHECK_INACTIVE_LOCATION = "com.igeltech.nevercrypt.android.CHECK_INACTIVE_LOCATION";
+    protected LocationsManager _locationsManager;
+    protected Settings _settings;
+    protected BroadcastReceiver _shutdownReceiver, _inactivityCheckReceiver;
 
     public static void startService(Context context)
     {
@@ -44,57 +48,8 @@ public class LocationsServiceBase extends Service
         context.stopService(new Intent(context, LocationsService.class));
     }
 
-    public static final String ACTION_CHECK_INACTIVE_LOCATION = "com.igeltech.nevercrypt.android.CHECK_INACTIVE_LOCATION";
-
-    public static class InactivityCheckReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            try
-            {
-                LocationsManager lm = LocationsManager.getLocationsManager(context, false);
-                if (lm == null)
-                    return;
-                Uri uri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
-                if (uri != null)
-                {
-                    CryptoLocation loc = (CryptoLocation) lm.getLocation(uri);
-                    closeIfInactive(context, loc);
-                }
-            }
-            catch (Throwable e)
-            {
-                Logger.log(e);
-            }
-        }
-
-        private void closeIfInactive(Context context, CryptoLocation loc)
-        {
-            int tm = loc.getExternalSettings().getAutoCloseTimeout();
-            Logger.debug("Checking if " + loc.getTitle() + " container is inactive");
-            if (tm <= 0)
-                return;
-            long ct = SystemClock.elapsedRealtime();
-            Logger.debug("Current time = " + ct);
-            if (loc.isOpenOrMounted())
-            {
-                long lastActivityTime = loc.getLastActivityTime();
-                Logger.debug("Container " + loc.getTitle() + " is open. Last activity time is " + lastActivityTime);
-                if (ct - lastActivityTime > tm)
-                {
-                    Logger.debug("Starting close container task for " + loc.getTitle() + " after inactivity timeout.");
-                    FileOpsService.closeContainer(context, loc);
-                    return;
-                }
-            }
-            registerInactiveContainerCheck(context, loc);
-        }
-    }
-
     public static void registerInactiveContainerCheck(Context context, CryptoLocation loc)
     {
-
         long triggerTime = loc.getExternalSettings().getAutoCloseTimeout();
         if (triggerTime == 0)
             return;
@@ -182,10 +137,6 @@ public class LocationsServiceBase extends Service
         super.onDestroy();
     }
 
-    protected LocationsManager _locationsManager;
-    protected Settings _settings;
-    protected BroadcastReceiver _shutdownReceiver, _inactivityCheckReceiver;
-
     private void deleteMirror()
     {
         try
@@ -214,5 +165,51 @@ public class LocationsServiceBase extends Service
         Notification n = builder.build();
         n.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_FOREGROUND_SERVICE;
         return n;
+    }
+
+    public static class InactivityCheckReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            try
+            {
+                LocationsManager lm = LocationsManager.getLocationsManager(context, false);
+                if (lm == null)
+                    return;
+                Uri uri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
+                if (uri != null)
+                {
+                    CryptoLocation loc = (CryptoLocation) lm.getLocation(uri);
+                    closeIfInactive(context, loc);
+                }
+            }
+            catch (Throwable e)
+            {
+                Logger.log(e);
+            }
+        }
+
+        private void closeIfInactive(Context context, CryptoLocation loc)
+        {
+            int tm = loc.getExternalSettings().getAutoCloseTimeout();
+            Logger.debug("Checking if " + loc.getTitle() + " container is inactive");
+            if (tm <= 0)
+                return;
+            long ct = SystemClock.elapsedRealtime();
+            Logger.debug("Current time = " + ct);
+            if (loc.isOpenOrMounted())
+            {
+                long lastActivityTime = loc.getLastActivityTime();
+                Logger.debug("Container " + loc.getTitle() + " is open. Last activity time is " + lastActivityTime);
+                if (ct - lastActivityTime > tm)
+                {
+                    Logger.debug("Starting close container task for " + loc.getTitle() + " after inactivity timeout.");
+                    FileOpsService.closeContainer(context, loc);
+                    return;
+                }
+            }
+            registerInactiveContainerCheck(context, loc);
+        }
     }
 }

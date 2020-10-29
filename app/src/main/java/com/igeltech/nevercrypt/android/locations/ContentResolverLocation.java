@@ -15,11 +15,6 @@ import java.io.IOException;
 
 public class ContentResolverLocation extends LocationBase
 {
-    public static String getLocationId()
-    {
-        return URI_SCHEME;
-    }
-
     public static final String URI_SCHEME = ContentResolver.SCHEME_CONTENT;
 
     public ContentResolverLocation(Context context)
@@ -36,6 +31,11 @@ public class ContentResolverLocation extends LocationBase
     public ContentResolverLocation(ContentResolverLocation sibling)
     {
         super(sibling);
+    }
+
+    public static String getLocationId()
+    {
+        return URI_SCHEME;
     }
 
     @Override
@@ -57,7 +57,6 @@ public class ContentResolverLocation extends LocationBase
     {
         if (getSharedData().fs == null)
             getSharedData().fs = new ContentResolverFs(getContext().getContentResolver());
-
         return (ContentResolverFs) getSharedData().fs;
     }
 
@@ -78,7 +77,6 @@ public class ContentResolverLocation extends LocationBase
     {
         if (_currentPathString != null)
             return Uri.parse(_currentPathString);
-
         Uri.Builder ub = new Uri.Builder();
         ub.scheme(URI_SCHEME);
         ub.path("/");
@@ -108,7 +106,6 @@ public class ContentResolverLocation extends LocationBase
     @Override
     public void saveExternalSettings()
     {
-
     }
 
     @Override
@@ -124,12 +121,12 @@ public class ContentResolverLocation extends LocationBase
 
     protected static class SharedData extends LocationBase.SharedData
     {
+        final Context context;
+
         protected SharedData(String id, Context context)
         {
             super(id);
             this.context = context;
         }
-
-        final Context context;
     }
 }

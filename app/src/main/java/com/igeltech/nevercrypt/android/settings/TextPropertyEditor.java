@@ -14,6 +14,9 @@ import com.igeltech.nevercrypt.android.settings.dialogs.TextEditDialog;
 
 public abstract class TextPropertyEditor extends PropertyEditorBase implements TextEditDialog.TextResultReceiver
 {
+    private final String _hostFragmentTag;
+    protected AppCompatTextView _selectedValueTextView;
+
     public TextPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId, String hostFragmentTag)
     {
         this(host, R.layout.settings_text_editor, titleResId, descResId, hostFragmentTag);
@@ -71,8 +74,6 @@ public abstract class TextPropertyEditor extends PropertyEditorBase implements T
         onTextChanged(value);
     }
 
-    protected AppCompatTextView _selectedValueTextView;
-
     protected abstract String loadText();
 
     protected abstract void saveText(String text) throws Exception;
@@ -115,6 +116,4 @@ public abstract class TextPropertyEditor extends PropertyEditorBase implements T
                 Logger.showAndLog(getHost().getContext(), e);
             }
     }
-
-    private final String _hostFragmentTag;
 }

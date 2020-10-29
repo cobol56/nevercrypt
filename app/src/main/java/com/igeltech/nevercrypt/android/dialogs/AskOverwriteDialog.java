@@ -33,9 +33,22 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AskOverwriteDialog extends RxAppCompatDialogFragment
 {
+    public static final String TAG = "com.igeltech.nevercrypt.android.dialogs.AskOverwriteDialog";
+    public static final String ARG_MOVE = "move";
+    public static final String ARG_PATHS = "paths";
+    private static final String ARG_SELECTED_PATHS = "selected_paths";
+    private static final String ARG_APPLY_TO_ALL = "apply_to_all";
+    private static final String ARG_NUM_PROC = "num_proc";
+    private SrcDstPlain _selectedPaths;
+    private Iterator<SrcDst> _pathsIter;
+    private int _numProc;
+    private boolean _applyToAll;
+    private AppCompatTextView _textView;
+    private SrcDst _next;
+    private Disposable _observer;
+
     public static void showDialog(FragmentManager fm, boolean move, SrcDstCollection records)
     {
-
         Bundle args = new Bundle();
         args.putBoolean(ARG_MOVE, move);
         args.putParcelable(ARG_PATHS, records);
@@ -48,8 +61,6 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
         d.setArguments(args);
         d.show(fm, TAG);
     }
-
-    public static final String TAG = "com.igeltech.nevercrypt.android.dialogs.AskOverwriteDialog";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -75,7 +86,6 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
         _pathsIter = paths.iterator();
         for (int i = 0; i < _numProc; i++)
             _next = _pathsIter.next();
-
         lifecycle().
                 filter(event -> event == FragmentEvent.RESUME).
                 firstElement().
@@ -100,18 +110,6 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
             Logger.showAndLog(getActivity(), e);
         }
     }
-
-    public static final String ARG_MOVE = "move";
-    public static final String ARG_PATHS = "paths";
-    private static final String ARG_SELECTED_PATHS = "selected_paths";
-    private static final String ARG_APPLY_TO_ALL = "apply_to_all";
-    private static final String ARG_NUM_PROC = "num_proc";
-    private SrcDstPlain _selectedPaths;
-    private Iterator<SrcDst> _pathsIter;
-    private int _numProc;
-    private boolean _applyToAll;
-    private AppCompatTextView _textView;
-    private SrcDst _next;
 
     private void overwriteRecord()
     {
@@ -144,7 +142,6 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
                     FileOpsService.moveFiles(getActivity(), _selectedPaths, true);
                 else
                     FileOpsService.copyFiles(getActivity(), _selectedPaths, true);
-
                 dismiss();
             }
             else
@@ -165,13 +162,6 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
     {
         _textView.setText(getString(R.string.file_already_exists, srcName, dstName));
     }
-
-    private static class Names
-    {
-        String srcName, dstName;
-    }
-
-    private Disposable _observer;
 
     private synchronized void cancelLoadTask()
     {
@@ -198,5 +188,10 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
                     if (!(err instanceof CancellationException))
                         Logger.showAndLog(context, err);
                 });
+    }
+
+    private static class Names
+    {
+        String srcName, dstName;
     }
 }

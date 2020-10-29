@@ -10,6 +10,12 @@ import java.util.Date;
 
 public class CachedPathInfoBase implements CachedPathInfo
 {
+    protected Path _path;
+    protected boolean _isFile, _isDirectory;
+    private Date _modDate;
+    private long _size;
+    private String _pathDesc, _name;
+
     @Override
     public Path getPath()
     {
@@ -26,6 +32,11 @@ public class CachedPathInfoBase implements CachedPathInfo
     public String getName()
     {
         return _name;
+    }
+
+    public void setName(String name)
+    {
+        _name = name;
     }
 
     @Override
@@ -60,11 +71,6 @@ public class CachedPathInfoBase implements CachedPathInfo
             updateCommonPathParams();
     }
 
-    public void setName(String name)
-    {
-        _name = name;
-    }
-
     public void updateCommonPathParams()
     {
         try
@@ -90,13 +96,6 @@ public class CachedPathInfoBase implements CachedPathInfo
         }
         catch (IOException ignored)
         {
-
         }
     }
-
-    protected Path _path;
-    protected boolean _isFile, _isDirectory;
-    private Date _modDate;
-    private long _size;
-    private String _pathDesc, _name;
 }

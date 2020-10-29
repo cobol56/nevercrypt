@@ -11,9 +11,20 @@ import java.util.Stack;
 
 public class DummyUpDirRecord extends FolderRecord
 {
+    private static Drawable _icon;
+
     public DummyUpDirRecord(Context context) throws IOException
     {
         super(context);
+    }
+
+    private static synchronized Drawable getIcon(Context context)
+    {
+        if (_icon == null && context != null)
+        {
+            _icon = context.getResources().getDrawable(R.drawable.ic_folder_up, context.getTheme());
+        }
+        return _icon;
     }
 
     @Override
@@ -54,16 +65,5 @@ public class DummyUpDirRecord extends FolderRecord
     protected Drawable getDefaultIcon()
     {
         return getIcon(_host);
-    }
-
-    private static Drawable _icon;
-
-    private static synchronized Drawable getIcon(Context context)
-    {
-        if (_icon == null && context != null)
-        {
-            _icon = context.getResources().getDrawable(R.drawable.ic_folder_up, context.getTheme());
-        }
-        return _icon;
     }
 }

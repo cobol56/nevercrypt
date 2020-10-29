@@ -18,72 +18,7 @@ import java.util.Collection;
 
 public abstract class OMLocationBase extends LocationBase implements OMLocation, Cloneable
 {
-    public static class ExternalSettings extends LocationBase.ExternalSettings implements OMLocation.ExternalSettings
-    {
-        public ExternalSettings()
-        {
-
-        }
-
-        @Override
-        public void setPassword(byte[] password)
-        {
-            _pass = password == null ? null : encryptAndEncode(password);
-        }
-
-        @Override
-        public byte[] getPassword()
-        {
-            return _pass == null ? null : decodeAndDecrypt(_pass);
-        }
-
-        @Override
-        public boolean hasPassword()
-        {
-            return _pass != null && _pass.length() > 0;
-        }
-
-        @Override
-        public void setCustomKDFIterations(int val)
-        {
-            _customKDFIterations = val;
-        }
-
-        @Override
-        public int getCustomKDFIterations()
-        {
-            return _customKDFIterations;
-        }
-
-        @Override
-        public void saveToJSONObject(JSONObject jo) throws JSONException
-        {
-            super.saveToJSONObject(jo);
-            if (_pass != null)
-                jo.put(SETTINGS_PASS, _pass);
-            if (_customKDFIterations >= 0)
-                storeProtectedField(jo, SETTINGS_CUSTOM_KDF_ITERATIONS, String.valueOf(_customKDFIterations));
-            else
-                jo.remove(SETTINGS_CUSTOM_KDF_ITERATIONS);
-        }
-
-        @Override
-        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
-        {
-            super.loadFromJSONOjbect(jo);
-            _pass = jo.optString(SETTINGS_PASS, null);
-            String iters = loadProtectedString(jo, SETTINGS_CUSTOM_KDF_ITERATIONS);
-            if (iters != null)
-                _customKDFIterations = Integer.valueOf(iters);
-            else
-                _customKDFIterations = -1;
-        }
-
-        private static final String SETTINGS_PASS = "pass";
-        private static final String SETTINGS_CUSTOM_KDF_ITERATIONS = "custom_kdf_iterations";
-        private String _pass;
-        private int _customKDFIterations;
-    }
+    protected ProgressReporter _openingProgressReporter;
 
     protected OMLocationBase(OMLocationBase sibling)
     {
@@ -105,22 +40,6 @@ public abstract class OMLocationBase extends LocationBase implements OMLocation,
             p.close();
             getSharedData().password = null;
         }
-    }
-
-    @Override
-    public synchronized void setPassword(SecureBuffer password)
-    {
-        SecureBuffer p = getPassword();
-        if (p != null && p != password)
-            p.close();
-
-        getSharedData().password = password;
-    }
-
-    @Override
-    public void setNumKDFIterations(int num)
-    {
-        getSharedData().numKDFIterations = num;
     }
 
     @Override
@@ -177,20 +96,6 @@ public abstract class OMLocationBase extends LocationBase implements OMLocation,
         getSharedData().isReadOnly = readOnly;
     }
 
-    protected ProgressReporter _openingProgressReporter;
-
-    protected static class SharedData extends LocationBase.SharedData
-    {
-        protected SharedData(String id)
-        {
-            super(id);
-        }
-
-        SecureBuffer password;
-        int numKDFIterations;
-        boolean isReadOnly;
-    }
-
     @Override
     protected SharedData getSharedData()
     {
@@ -202,9 +107,24 @@ public abstract class OMLocationBase extends LocationBase implements OMLocation,
         return getSharedData().password;
     }
 
+    @Override
+    public synchronized void setPassword(SecureBuffer password)
+    {
+        SecureBuffer p = getPassword();
+        if (p != null && p != password)
+            p.close();
+        getSharedData().password = password;
+    }
+
     protected int getNumKDFIterations()
     {
         return getSharedData().numKDFIterations;
+    }
+
+    @Override
+    public void setNumKDFIterations(int num)
+    {
+        getSharedData().numKDFIterations = num;
     }
 
     @Override
@@ -246,5 +166,83 @@ public abstract class OMLocationBase extends LocationBase implements OMLocation,
     protected byte[] getFinalPassword() throws IOException
     {
         return getSelectedPassword();
+    }
+
+    public static class ExternalSettings extends LocationBase.ExternalSettings implements OMLocation.ExternalSettings
+    {
+        private static final String SETTINGS_PASS = "pass";
+        private static final String SETTINGS_CUSTOM_KDF_ITERATIONS = "custom_kdf_iterations";
+        private String _pass;
+        private int _customKDFIterations;
+
+        public ExternalSettings()
+        {
+        }
+
+        @Override
+        public byte[] getPassword()
+        {
+            return _pass == null ? null : decodeAndDecrypt(_pass);
+        }
+
+        @Override
+        public void setPassword(byte[] password)
+        {
+            _pass = password == null ? null : encryptAndEncode(password);
+        }
+
+        @Override
+        public boolean hasPassword()
+        {
+            return _pass != null && _pass.length() > 0;
+        }
+
+        @Override
+        public int getCustomKDFIterations()
+        {
+            return _customKDFIterations;
+        }
+
+        @Override
+        public void setCustomKDFIterations(int val)
+        {
+            _customKDFIterations = val;
+        }
+
+        @Override
+        public void saveToJSONObject(JSONObject jo) throws JSONException
+        {
+            super.saveToJSONObject(jo);
+            if (_pass != null)
+                jo.put(SETTINGS_PASS, _pass);
+            if (_customKDFIterations >= 0)
+                storeProtectedField(jo, SETTINGS_CUSTOM_KDF_ITERATIONS, String.valueOf(_customKDFIterations));
+            else
+                jo.remove(SETTINGS_CUSTOM_KDF_ITERATIONS);
+        }
+
+        @Override
+        public void loadFromJSONOjbect(JSONObject jo) throws JSONException
+        {
+            super.loadFromJSONOjbect(jo);
+            _pass = jo.optString(SETTINGS_PASS, null);
+            String iters = loadProtectedString(jo, SETTINGS_CUSTOM_KDF_ITERATIONS);
+            if (iters != null)
+                _customKDFIterations = Integer.valueOf(iters);
+            else
+                _customKDFIterations = -1;
+        }
+    }
+
+    protected static class SharedData extends LocationBase.SharedData
+    {
+        SecureBuffer password;
+        int numKDFIterations;
+        boolean isReadOnly;
+
+        protected SharedData(String id)
+        {
+            super(id);
+        }
     }
 }

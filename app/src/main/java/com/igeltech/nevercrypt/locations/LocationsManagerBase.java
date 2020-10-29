@@ -55,10 +55,22 @@ public abstract class LocationsManagerBase
     public static final String BROADCAST_CLOSE_ALL = "com.igeltech.nevercrypt.CLOSE_ALL";
     public static final String BROADCAST_LOCATION_CHANGED = "com.igeltech.nevercrypt.android.BROADCAST_LOCATION_CHANGED";
 
-	/*public static synchronized LocationsManager getLocationsManager()
-	{
-		return getLocationsManager(null, false);
-	}*/
+    /*public static synchronized LocationsManager getLocationsManager()
+    {
+        return getLocationsManager(null, false);
+    }*/
+    private static LocationsManagerBase _instance;
+    protected final Settings _settings;
+    final List<LocationInfo> _currentLocations = new ArrayList<>();
+    private final Stack<String> _openedLocationsStack = new Stack<>();
+    private final Context _context;
+    private MediaMountedReceiver _mediaChangedReceiver;
+
+    protected LocationsManagerBase(Context context, Settings settings)
+    {
+        _settings = settings;
+        _context = context.getApplicationContext();
+    }
 
     public static synchronized LocationsManager getLocationsManager(Context context)
     {
@@ -91,8 +103,6 @@ public abstract class LocationsManagerBase
             closeLocationsManager();
         _instance = lm;
     }
-
-    private static LocationsManagerBase _instance;
 
     public static void storePathsInBundle(Bundle b, Location loc, Collection<? extends Path> paths)
     {
@@ -246,10 +256,30 @@ public abstract class LocationsManagerBase
         return res;
     }
 
-    protected LocationsManagerBase(Context context, Settings settings)
+    public static List<Uri> getStoredLocationUris(Settings settings)
     {
-        _settings = settings;
-        _context = context.getApplicationContext();
+        ArrayList<Uri> res = new ArrayList<>();
+        try
+        {
+            List<String> locationStrings = com.igeltech.nevercrypt.android.helpers.Util.loadStringArrayFromString(settings.getStoredLocations());
+            for (String p : locationStrings)
+            {
+                try
+                {
+                    res.add(Uri.parse(p));
+                }
+                catch (Exception e)
+                {
+                    Logger.log(e);
+                }
+            }
+        }
+        catch (JSONException e)
+        {
+            Logger.log(e);
+            return res;
+        }
+        return res;
     }
 
     private void startMountsMonitor()
@@ -368,7 +398,6 @@ public abstract class LocationsManagerBase
             throw new IllegalArgumentException("Unsupported location uri: " + locationUri);
         if (findExistingLocation(loc.getId()) == null)
             addNewLocation(loc, false);
-
         return loc;
     }
 
@@ -435,32 +464,6 @@ public abstract class LocationsManagerBase
         {
             _currentLocations.clear();
         }
-    }
-
-    public static List<Uri> getStoredLocationUris(Settings settings)
-    {
-        ArrayList<Uri> res = new ArrayList<>();
-        try
-        {
-            List<String> locationStrings = com.igeltech.nevercrypt.android.helpers.Util.loadStringArrayFromString(settings.getStoredLocations());
-            for (String p : locationStrings)
-            {
-                try
-                {
-                    res.add(Uri.parse(p));
-                }
-                catch (Exception e)
-                {
-                    Logger.log(e);
-                }
-            }
-        }
-        catch (JSONException e)
-        {
-            Logger.log(e);
-            return res;
-        }
-        return res;
     }
 
     public void loadStoredLocations()
@@ -562,7 +565,6 @@ public abstract class LocationsManagerBase
         Uri u = Uri.parse(path);
         if (u.getScheme() == null && !path.startsWith("/"))
             return new DeviceBasedLocation(_settings, StdFs.getStdFs().getPath(Environment.getExternalStorageDirectory().getPath()).combine(path));
-
         return u.getScheme() == null ? createDeviceLocation(u) : getLocation(u);
     }
 
@@ -598,7 +600,6 @@ public abstract class LocationsManagerBase
                 if (remove)
                     _currentLocations.remove(li);
             }
-
             for (Location loc : cur)
             {
                 boolean add = true;
@@ -717,63 +718,6 @@ public abstract class LocationsManagerBase
             default:
                 return null;
         }
-    }
-
-    protected final Settings _settings;
-    final List<LocationInfo> _currentLocations = new ArrayList<>();
-    private final Stack<String> _openedLocationsStack = new Stack<>();
-
-    class FilteredList<E> extends AbstractList<E>
-    {
-        @Override
-        public int size()
-        {
-            synchronized (_currentLocations)
-            {
-                int res = 0;
-                for (LocationInfo li : _currentLocations)
-                    if (isValid(li.location))
-                        res++;
-                return res;
-            }
-        }
-
-        @Override
-        public E get(int location)
-        {
-            int res = 0;
-            synchronized (_currentLocations)
-            {
-                for (LocationInfo li : _currentLocations)
-                {
-                    if (isValid(li.location))
-                    {
-                        if (res == location)
-                            return (E) li.location;
-                        res++;
-                    }
-                }
-            }
-            throw new IndexOutOfBoundsException();
-        }
-
-        protected boolean isValid(Location l)
-        {
-            return true;
-        }
-    }
-
-    protected static class LocationInfo
-    {
-        LocationInfo(Location location, boolean store)
-        {
-            this.location = location;
-            this.store = store;
-        }
-
-        Location location;
-        boolean store;
-        boolean isDevice;
     }
 
     protected Context getContext()
@@ -910,7 +854,6 @@ public abstract class LocationsManagerBase
 		)
 			return new InternalSDLocation(_context, pathString);
 		*/
-
         return new DeviceBasedLocation(_settings, locationUri);
     }
 
@@ -989,6 +932,56 @@ public abstract class LocationsManagerBase
         return res;
     }
 
-    private final Context _context;
-    private MediaMountedReceiver _mediaChangedReceiver;
+    protected static class LocationInfo
+    {
+        Location location;
+        boolean store;
+        boolean isDevice;
+
+        LocationInfo(Location location, boolean store)
+        {
+            this.location = location;
+            this.store = store;
+        }
+    }
+
+    class FilteredList<E> extends AbstractList<E>
+    {
+        @Override
+        public int size()
+        {
+            synchronized (_currentLocations)
+            {
+                int res = 0;
+                for (LocationInfo li : _currentLocations)
+                    if (isValid(li.location))
+                        res++;
+                return res;
+            }
+        }
+
+        @Override
+        public E get(int location)
+        {
+            int res = 0;
+            synchronized (_currentLocations)
+            {
+                for (LocationInfo li : _currentLocations)
+                {
+                    if (isValid(li.location))
+                    {
+                        if (res == location)
+                            return (E) li.location;
+                        res++;
+                    }
+                }
+            }
+            throw new IndexOutOfBoundsException();
+        }
+
+        protected boolean isValid(Location l)
+        {
+            return true;
+        }
+    }
 }

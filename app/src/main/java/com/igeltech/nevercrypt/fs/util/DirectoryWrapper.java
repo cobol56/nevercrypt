@@ -56,6 +56,8 @@ public abstract class DirectoryWrapper extends FSRecordWrapper implements Direct
 
     protected class ContentsWrapper implements Directory.Contents
     {
+        private final Directory.Contents _base;
+
         public ContentsWrapper(Directory.Contents base)
         {
             _base = base;
@@ -87,7 +89,5 @@ public abstract class DirectoryWrapper extends FSRecordWrapper implements Direct
                 }
             };
         }
-
-        private final Directory.Contents _base;
     }
 }

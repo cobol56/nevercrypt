@@ -9,6 +9,10 @@ import java.util.List;
 
 public class VolumeLayout extends StdLayout
 {
+    protected static final byte[] SIG = {'V', 'E', 'R', 'A'};
+    protected static final short COMPATIBLE_PROGRAM_VERSION = 0x010b;
+    private int _numIterations;
+
     public static int getKDFIterationsFromPIM(int pim)
     {
         return 15000 + pim * 1000;
@@ -41,9 +45,6 @@ public class VolumeLayout extends StdLayout
         return l;
     }
 
-    protected static final byte[] SIG = {'V', 'E', 'R', 'A'};
-    protected static final short COMPATIBLE_PROGRAM_VERSION = 0x010b;
-
     @Override
     protected byte[] getHeaderSignature()
     {
@@ -61,6 +62,4 @@ public class VolumeLayout extends StdLayout
     {
         return COMPATIBLE_PROGRAM_VERSION;
     }
-
-    private int _numIterations;
 }
