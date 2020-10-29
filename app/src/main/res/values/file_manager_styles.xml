@@ -1,39 +1,47 @@
 <resources>
+
     <style name="FileName">
-		<item name="android:textSize">@dimen/main_text</item>
+        <item name="android:textSize">@dimen/main_text</item>
         <item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="FileIcon">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:scaleType">center</item>
         <item name="android:contentDescription">@string/select_file</item>
     </style>
+
     <style name="FileDesc">
-    	<item name="android:textSize">10sp</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="MiniIcon">
         <item name="android:layout_width">10dp</item>
         <item name="android:layout_height">10dp</item>
         <item name="android:layout_marginLeft">2dp</item>
         <item name="android:layout_marginRight">2dp</item>
     </style>
+
     <style name="RowButton" />
+
     <style name="RowButton.Check">
         <item name="android:visibility">gone</item>
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text"/>
+        <item name="android:text" />
     </style>
+
     <style name="RowButton.Radio">
         <item name="android:visibility">gone</item>
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:text"/>
+        <item name="android:text" />
     </style>
+
     <style name="FileListRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/file_list_row_height</item>
@@ -41,20 +49,23 @@
         <item name="android:paddingRight">4dp</item>
         <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
     </style>
+
     <style name="SelectedFileEditText">
         <item name="android:textSize">@dimen/main_text</item>
-       	<item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
-       	<item name="android:inputType">text</item>
-       	<item name="android:lines">1</item>
-       	<item name="android:maxLines">1</item>
-       	<item name="android:layout_margin">2dp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_margin">2dp</item>
     </style>
+
     <style name="MainFrame">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">0.4</item>
     </style>
+
     <style name="SecondaryFrame">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>

@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/select" android:title="@string/select" android:icon="@drawable/ic_menu_done_enabled" app:showAsAction="always"/>
-    <item android:id="@+id/rename" android:title="@string/rename" android:icon="@drawable/ic_menu_rename" app:showAsAction="ifRoom"/>
-    <item android:id="@+id/choose_for_operation" android:title="@string/choose_files_to_copy_or_move" android:icon="@drawable/ic_menu_copy" app:showAsAction="ifRoom"/>
-    <item android:id="@+id/delete" android:title="@string/delete" android:icon="@drawable/ic_menu_delete" app:showAsAction="ifRoom" />
-    <item android:id="@+id/wipe" android:title="@string/overwrite_and_delete" android:icon="@drawable/ic_menu_wipe" app:showAsAction="ifRoom" />
-    <item android:id="@+id/open_as_container" android:title="@string/open_file_as_container" android:icon="@drawable/ic_menu_open_as_container" app:showAsAction="ifRoom" />
-    <item android:id="@+id/properties" android:title="@string/properties" android:icon="@drawable/ic_menu_info" app:showAsAction="ifRoom"/>
-    <item android:id="@+id/send" android:title="@string/send" android:icon="@drawable/ic_menu_share" app:showAsAction="ifRoom"/>
-    <item android:id="@+id/copy_to_temp" android:title="@string/decrypt_to_temp_folder" android:icon="@drawable/ic_menu_decrypt_to_temp"  app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/select"
+        android:icon="@drawable/ic_menu_done_enabled"
+        android:title="@string/select"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/rename"
+        android:icon="@drawable/ic_menu_rename"
+        android:title="@string/rename"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/choose_for_operation"
+        android:icon="@drawable/ic_menu_copy"
+        android:title="@string/choose_files_to_copy_or_move"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_menu_delete"
+        android:title="@string/delete"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/wipe"
+        android:icon="@drawable/ic_menu_wipe"
+        android:title="@string/overwrite_and_delete"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/open_as_container"
+        android:icon="@drawable/ic_menu_open_as_container"
+        android:title="@string/open_file_as_container"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/properties"
+        android:icon="@drawable/ic_menu_info"
+        android:title="@string/properties"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/send"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/send"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/copy_to_temp"
+        android:icon="@drawable/ic_menu_decrypt_to_temp"
+        android:title="@string/decrypt_to_temp_folder"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -1,10 +1,12 @@
 <resources>
+
     <style name="PropertyRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
         <item name="android:padding">4dp</item>
     </style>
+
     <style name="PropertyTitle" parent="TextAppearance.AppCompat.Medium">
         <item name="android:text">Title</item>
         <item name="android:layout_width">match_parent</item>
@@ -14,13 +16,15 @@
         <item name="android:textSize">@dimen/main_text</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="PropertyDesc"  parent="TextAppearance.AppCompat.Small">
+
+    <style name="PropertyDesc" parent="TextAppearance.AppCompat.Small">
         <item name="android:text">Description</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">4dp</item>
         <item name="android:textSize">13sp</item>
     </style>
+
     <style name="PropertyEditText" parent="TextAppearance.AppCompat.Medium">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -29,6 +33,7 @@
         <item name="android:inputType">text</item>
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="PropertyCategory" parent="TextAppearance.AppCompat.Medium">
         <item name="android:text">Title</item>
         <item name="android:layout_width">wrap_content</item>
@@ -37,6 +42,7 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="PropertyCategoryIcon">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>

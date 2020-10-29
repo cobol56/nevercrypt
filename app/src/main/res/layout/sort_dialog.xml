@@ -3,33 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="3dp" >
+    android:padding="3dp">
 
-    	<ListView
-    	    android:id="@android:id/list"
-    	    android:layout_width="match_parent"
-    	    android:layout_height="0dp"
-    	    android:layout_weight="1"
-    	    android:choiceMode="singleChoice"
-    	    android:entries="@array/sort_mode" />
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:choiceMode="singleChoice"
+        android:entries="@array/sort_mode" />
 
-    	<RadioGroup
-           android:id="@+id/sort_group"
-		   android:layout_width="match_parent"
-		   android:layout_height="wrap_content"
-		   android:orientation="horizontal" >
-		   		<RadioButton 
-		   		    android:id="@+id/sort_asc"
-		   		    android:layout_width="0dp"
-		   		    android:layout_height="wrap_content"
-		   		    android:layout_weight="0.5"
-		   		    android:text="@string/ascending" />
-		   		<RadioButton 
-		   		    android:id="@+id/sort_desc"
-		   		    android:layout_width="0dp"
-		   		    android:layout_height="wrap_content"
-		   		    android:layout_weight="0.5"
-		   		    android:text="@string/descending" />
-		   		
-		</RadioGroup>
+    <RadioGroup
+        android:id="@+id/sort_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/sort_asc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/ascending" />
+
+        <RadioButton
+            android:id="@+id/sort_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/descending" />
+
+    </RadioGroup>
 </LinearLayout>

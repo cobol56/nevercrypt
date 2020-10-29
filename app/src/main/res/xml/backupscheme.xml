@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
-    <include domain="sharedpref" path="com.igeltech.nevercrypt.PREFERENCES" />
-    <include domain="sharedpref" path="debug" />
+    <include
+        domain="sharedpref"
+        path="com.igeltech.nevercrypt.PREFERENCES" />
+    <include
+        domain="sharedpref"
+        path="debug" />
 </full-backup-content>
