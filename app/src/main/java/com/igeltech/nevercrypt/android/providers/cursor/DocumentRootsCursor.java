@@ -124,15 +124,14 @@ public class DocumentRootsCursor extends AbstractCursor
     {
         synchronized (this)
         {
-            if (_request == null)
-                try
-                {
-                    _request = createObservable(loc);
-                }
-                catch (Exception e)
-                {
-                    throw new RuntimeException(e);
-                }
+            try
+            {
+                _request = createObservable(loc);
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
             return _request;
         }
     }
