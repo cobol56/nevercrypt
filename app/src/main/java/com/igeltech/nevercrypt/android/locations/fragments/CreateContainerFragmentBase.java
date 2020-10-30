@@ -116,7 +116,7 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     {
         super.createProperties();
         if (!_state.containsKey(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT))
-            _state.putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, Container.getSupportedFormats().get(0).getFormatName());
+            _state.putString(CreateContainerTaskFragmentBase.ARG_CONTAINER_FORMAT, Container.getSupportedFormats().get(1).getFormatName());
     }
 
     @Override
