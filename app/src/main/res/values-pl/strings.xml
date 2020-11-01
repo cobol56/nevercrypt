@@ -54,7 +54,6 @@
     <string name="err_failed_creating_container">Błąd tworzenia kontenera</string>
     <string name="about">O programie</string>
     <string name="opening_container">Otwieranie…</string>
-    <string name="decrypt_to_temp_folder">Dekoduj do tymczasowego katalogu</string>
     <string name="container_file_name_is_not_specified">Nie określono nazwy pliku kontenera</string>
     <string name="do_you_want_to_overwrite_existing_file">Czy chcesz nadpisać istniejący plik?</string>
     <string name="enter_file_name">Podaj nazwę pliku</string>
@@ -102,13 +101,9 @@
     <string name="containers">Kontenery</string>
     <string name="close">Zamknij</string>
     <string name="target_path">Ścieżka docelowa</string>
-    <string name="device">Urządzenie</string>
     <string name="password">Hasło</string>
-    <string name="title">Nazwa</string>
     <string name="open">Otwórz</string>
     <string name="disable_wide_screen_layouts_desc">Ta opcja wyłącza podgląd paneli na dużych ekranach</string>
-    <string name="temp_data_path">Ścieżka danych tymczasowych</string>
-    <string name="temp_data_path_desc">Ta ścieżka będzie użyta jeśli kontener będzie otwarty w trybie nie montowania aby zapisać pliki tymczasowe. Zostaw puste aby użyć domyślnej ścieżki.</string>
     <string name="max_temporary_file_size_desc">Jeśli kontener jest otwarty w trybie nie montowania, wtedy aby otworzyć plik przez zewnętrzne narzędzie, ten plik będzie odkodowany w tymczasowym katalogu. Ta opcja ustawia maksymalny romiar pliku który będzie odkodowany automatycznie (w magabajtach).</string>
     <string name="overwrite_temp_files_with_random_data_desc">Jeśli ta opcja będzie włączona, wtedy plik tymczasowy będzie nadpisany losowymi danymi przed skasowaniem.</string>
     <string name="auto_close_container_desc">Automatycznie zamknij kontener jeśli żadne dane nie będa zapisywane/odczytywane przez określony czas (w minutach).</string>
@@ -149,19 +144,13 @@
     <string name="changing_password">Zmiana hasła</string>
     <string name="choose_files_to_copy_or_move">Wybierz pliki do skopiowania lub przeniesienia…</string>
     <string name="manage_containers">Zarządzanie kontenerami</string>
-    <string name="local_files">Pliki lokalne</string>
-    <string name="built_in_memory_card">Wbudowana pamięć wewnętrzna</string>
     <string name="force_close_request">Nie mogę zamknąć \"%s\". Czy chcesz wymusić zamknięcie?</string>
     <string name="debug_log">Dziennik debugowania</string>
     <string name="edit">Edycja</string>
-    <string name="external_storage">Zewnętrzna pamięć</string>
-    <string name="manage_local_storages">Zarządzanie lokalnym magazynem</string>
     <string formatted="false" name="container_info_summary">Wolna przestrzeń: %s; Całkowita przestrzeń: %s.</string>
     <string name="disable">Wyłącz</string>
     <string name="copy_here">Kopiuj tutaj</string>
     <string name="move_here">Przenieś tutaj</string>
-    <string name="storage_permission_desc">Wymagane jest zezwolenie na dostęp do pamięci na karcie zewnętrznej lub pamięci USB</string>
-    <string name="grant">Przyznaj</string>
     <string name="number_of_kdf_iterations_veracrypt_descr">Podaj mnożnik iteracji kdf. Im większą wartość wybierzesz, tym dłużej trwa otwarcie kontenera. Wpisz 0 aby użyć wartości domyślnej.</string>
     <string name="kdf_iterations_multiplier">Mnożnik iteracji KDF</string>
     <string name="container_format_is">&lt;p&gt;Kontener posiada format &lt;b&gt;%s&lt;/b&gt;.&lt;/p&gt;</string>

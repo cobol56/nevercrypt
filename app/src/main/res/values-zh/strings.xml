@@ -57,7 +57,6 @@
     <string name="about_message" translatable="false"><xliff:g id="copyright">\u00A9</xliff:g> 2012–2017, <xliff:g id="dev_name">sovworks</xliff:g></string>
     <string name="about">关于</string>
     <string name="opening_container">打开</string>
-    <string name="decrypt_to_temp_folder">解密到临时文件夹</string>
     <string name="container_file_name_is_not_specified">容器的文件名未指定</string>
     <string name="do_you_want_to_overwrite_existing_file">你要覆盖已存在的文件吗？</string>
     <string name="enter_file_name">输入文件名</string>
@@ -105,13 +104,9 @@
     <string name="containers">容器</string>
     <string name="close">关闭</string>
     <string name="target_path">目标路径</string>
-    <string name="device">设备</string>
     <string name="password">密码</string>
-    <string name="title">标题</string>
     <string name="open">打开</string>
     <string name="disable_wide_screen_layouts_desc">这个选项禁止在横向模式下预览面板</string>
-    <string name="temp_data_path">临时数据路径</string>
-    <string name="temp_data_path_desc">如果容器在非挂载模式下打开来存储临时文件，则将使用此路径。留空将使用默认路径。</string>
     <string name="max_temporary_file_size_desc">如果容器在非挂载模式下打开，然后使用外部工具打开一个文件，那么这个文件必须被解密到临时位置。该项用来设置一个可自动解密文件的最大值 (MB).</string>
     <string name="overwrite_temp_files_with_random_data_desc">如果启用此选项，则临时文件将在删除之前用随机数据覆盖.</string>
     <string name="auto_close_container">自动关闭容器</string>
@@ -153,21 +148,14 @@
     <string name="changing_password">正在更改密码</string>
     <string name="choose_files_to_copy_or_move">选取文件复制或移动…</string>
     <string name="manage_containers">容器管理</string>
-    <string name="local_files">本地文件</string>
-    <string name="built_in_memory_card">内置存储卡</string>
     <string name="force_close_request">不能关闭 <xliff:g id="path_to_container">\"%1$s\"</xliff:g>容器. 你要强行关闭吗?</string>
     <string name="debug_log">调试日志</string>
     <string name="edit">编辑</string>
-    <string name="external_storage">外部存储</string>
     <string name="content_provider" translatable="false">Content provider</string>
-    <string name="manage_local_storages">管理本地存储空间</string>
     <string name="container_info_summary">可用空间: <xliff:g id="free_space" example="10Mb">%1$s</xliff:g>; 总空间: <xliff:g id="total_space" example="100Mb">%2$s</xliff:g>.</string>
     <string name="disable">禁用</string>
     <string name="copy_here">复制到这里</string>
     <string name="move_here">移动到这里</string>
-    <string name="storage_permission_desc">需要存储空间访问权限，以便可以访问内存卡和USB存储空间</string>
-    <string name="ext_storage_write_permission_request">你要授予<xliff:g id="program_name">NeverCrypt</xliff:g>的外部存储写入权限吗?</string>
-    <string name="grant">授予</string>
     <string name="number_of_kdf_iterations_veracrypt_descr">输入 <xliff:g id="key_derivation_function">KDF</xliff:g> 迭代次数 (<xliff:g id="pim">PIM</xliff:g>). 选择的值越大.容器打开需要的时间越长. 输入0采用默认值. 查看细节 <xliff:g id="url">https://veracrypt.codeplex.com/wikipage?title=Personal%20Iterations%20Multiplier%20(PIM)</xliff:g> .</string>
     <string name="kdf_iterations_multiplier"><xliff:g id="key_derivation_function">KDF</xliff:g> 迭代次数 (<xliff:g id="pim">PIM</xliff:g>)</string>
     <string name="container_format_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>容器格式是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="container_format" example="VeraCrypt">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
@@ -190,7 +178,6 @@
     <string name="dont_use_content_provider_desc">有些应用程序不能使用content providers.</string>
     <string name="uri_of_the_container">容器的URI</string>
     <string name="text_has_been_copied">文本已经复制到剪贴板</string>
-    <string name="select_root_folder_tip">请打开外部存储的root文件夹,然后点击 \"Select\"</string>
     <string name="wrong_encfs_root_path">错误的 <xliff:g id="encfs">EncFs</xliff:g> root 路径</string>
     <string name="filename_encryption_algorithm">文件名加密算法</string>
     <string name="key_size">密钥长度</string>

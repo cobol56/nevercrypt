@@ -1,8 +1,6 @@
 package com.igeltech.nevercrypt.android.settings.fragments;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 
 import com.igeltech.nevercrypt.android.CryptoApplication;
@@ -10,21 +8,16 @@ import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
-import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
 import com.igeltech.nevercrypt.android.settings.ButtonPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.CategoryPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.IntPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.MultilineTextPropertyEditor;
-import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.android.settings.program.ExtFileManagerPropertyEditor;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
-import com.igeltech.nevercrypt.fs.util.PathUtil;
-import com.igeltech.nevercrypt.locations.Location;
-import com.igeltech.nevercrypt.locations.LocationsManager;
 import com.igeltech.nevercrypt.settings.Settings;
 
 import java.io.IOException;
@@ -44,7 +37,6 @@ import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.NEVER_
 import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.SHOW_PREVIEWS;
 import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.USE_INTERNAL_IMAGE_VIEWER;
 import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.WIPE_TEMP_FILES;
-import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.WORK_DIR;
 
 public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase implements MasterPasswordDialog.PasswordReceiver
 {
@@ -193,43 +185,6 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
             {
                 String[] modes = getResources().getStringArray(R.array.image_viewer_use_mode);
                 return Arrays.asList(modes);
-            }
-        }));
-        commonPropertiesIds.add(getPropertiesView().addProperty(new PathPropertyEditor(this, R.string.temp_data_path, R.string.temp_data_path_desc, getTag())
-        {
-            @Override
-            protected String loadText()
-            {
-                return _settings.getWorkDir();
-            }
-
-            @Override
-            protected void saveText(String text)
-            {
-                if (text.trim().length() > 0)
-                {
-                    try
-                    {
-                        Location loc = LocationsManager.getLocationsManager(getActivity()).
-                                getLocation(Uri.parse(text));
-                        PathUtil.makeFullPath(loc.getCurrentPath());
-                        editSettings().putString(WORK_DIR, text).commit();
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.showAndLog(getActivity(), e);
-                    }
-                }
-                else
-                    editSettings().remove(WORK_DIR).commit();
-            }
-
-            @Override
-            protected Intent getSelectPathIntent() throws IOException
-            {
-                Intent i = FileManagerActivity.getSelectPathIntent(getHost().getContext(), null, false, false, true, true, true, false);
-                i.putExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS, true);
-                return i;
             }
         }));
         commonPropertiesIds.add(getPropertiesView().addProperty(new ExtFileManagerPropertyEditor(this)));

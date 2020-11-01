@@ -5,7 +5,6 @@ import android.content.Intent;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
-import com.igeltech.nevercrypt.android.fs.DocumentTreeFS;
 import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 import com.igeltech.nevercrypt.fs.Directory;
 import com.igeltech.nevercrypt.fs.FSRecord;
@@ -199,13 +198,10 @@ class CopyFilesTask extends FileOperationTaskBase
             dstPath = null;
         if (!getParam().forceOverwrite() && dstPath != null)
             return false;
-        if (!(targetFolder instanceof DocumentTreeFS.Directory))
-        {
-            long size = srcFile.getSize();
-            long space = targetFolder.getFreeSpace();
-            if (space > 0 && size > space)
-                throw new NoFreeSpaceLeftException();
-        }
+        long size = srcFile.getSize();
+        long space = targetFolder.getFreeSpace();
+        if (space > 0 && size > space)
+            throw new NoFreeSpaceLeftException();
         return copyFile(srcFile, dstPath != null ? dstPath.getFile() : targetFolder.createFile(srcName));
     }
 

@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
-import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
 import com.igeltech.nevercrypt.android.locations.fragments.ContainerListFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.DocumentTreeLocationsListFragment;
 import com.igeltech.nevercrypt.android.locations.fragments.LocationListBaseFragment;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 
@@ -44,8 +42,6 @@ public abstract class LocationListActivityBase extends AppCompatActivity
         {
             case ContainerBasedLocation.URI_SCHEME:
                 return new ContainerListFragment();
-            case DocumentTreeLocation.URI_SCHEME:
-                return new DocumentTreeLocationsListFragment();
             default:
                 throw new RuntimeException("Unknown location type");
         }

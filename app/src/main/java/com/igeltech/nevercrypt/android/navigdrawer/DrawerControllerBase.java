@@ -107,11 +107,6 @@ public abstract class DrawerControllerBase
         return _drawerListView;
     }
 
-    public DrawerLayout getDrawerLayout()
-    {
-        return _drawerLayout;
-    }
-
     public boolean onBackPressed()
     {
         if (_drawerListView == null || !_drawerLayout.isDrawerOpen(_drawerListView))
@@ -179,8 +174,6 @@ public abstract class DrawerControllerBase
         DrawerAdapter adapter = new DrawerAdapter(list);
         if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_CONTAINERS, true))
             adapter.add(new DrawerContainersMenu(this));
-        if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DEVICE, true))
-            adapter.add(new DrawerLocalFilesMenu(this));
         if (!isSelectAction)
         {
             adapter.add(new DrawerSettingsMenuItem(this));

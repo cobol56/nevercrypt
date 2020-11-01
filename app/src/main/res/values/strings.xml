@@ -61,7 +61,6 @@
     <string name="make_a_donation">Make a donation</string>
     <string name="check_source_code">Check the source code</string>
     <string name="opening_container">Opening</string>
-    <string name="decrypt_to_temp_folder">Decrypt to the temporary folder</string>
     <string name="container_file_name_is_not_specified">The file name of the container is not specified</string>
     <string name="do_you_want_to_overwrite_existing_file">Do you want to overwrite existing file?</string>
     <string name="enter_file_name">Enter the filename</string>
@@ -109,13 +108,9 @@
     <string name="containers">Containers</string>
     <string name="close">Close</string>
     <string name="target_path">Target path</string>
-    <string name="device">Device</string>
     <string name="password">Password</string>
-    <string name="title">Title</string>
     <string name="open">Open</string>
     <string name="disable_wide_screen_layouts_desc">This option disables the preview panel in landscape mode</string>
-    <string name="temp_data_path">Temporary data path</string>
-    <string name="temp_data_path_desc">This path will be used if a container is opened in non mounted mode to store temporary files. Leave the field empty to use the default path.</string>
     <string name="max_temporary_file_size_desc">If a container is opened in non mounted mode then in order to open a file with an external tool, this file has to be decrypted to the temporary location. This option sets the maximum size of a file that can be decrypted automatically (in megabytes).</string>
     <string name="overwrite_temp_files_with_random_data_desc">If this option is enabled then a temporary file will be overwritten with random data before it is deleted.</string>
     <string name="auto_close_container">Auto-close containers</string>
@@ -157,21 +152,14 @@
     <string name="changing_password">Changing password</string>
     <string name="choose_files_to_copy_or_move">Choose files to copy or move…</string>
     <string name="manage_containers">Manage containers</string>
-    <string name="local_files">Local files</string>
-    <string name="built_in_memory_card">Built-in memory card</string>
     <string name="force_close_request">Can\'t close the container <xliff:g id="path_to_container">\"%1$s\"</xliff:g>. Do you want to force close it?</string>
     <string name="debug_log">Debug log</string>
     <string name="edit">Edit</string>
-    <string name="external_storage">External storage</string>
     <string name="content_provider" translatable="false">Content provider</string>
-    <string name="manage_local_storages">Manage local storages</string>
     <string name="container_info_summary">Free space: <xliff:g id="free_space" example="10Mb">%1$s</xliff:g>; Total space: <xliff:g id="total_space" example="100Mb">%2$s</xliff:g>.</string>
     <string name="disable">Disable</string>
     <string name="copy_here">Copy here</string>
     <string name="move_here">Move here</string>
-    <string name="storage_permission_desc">Storage access permission is required in order to access memory cards and usb storages</string>
-    <string name="ext_storage_write_permission_request">Would you like to grant external storage write access permission to NeverCrypt?</string>
-    <string name="grant">Grant</string>
     <string name="number_of_kdf_iterations_veracrypt_descr">Enter the <xliff:g id="key_derivation_function">KDF</xliff:g> iterations multiplier (<xliff:g id="pim">PIM</xliff:g>). The greater value you choose the longer it will take to open the container. Enter 0 to use the default value. Check <xliff:g id="url">https://veracrypt.codeplex.com/wikipage?title=Personal%20Iterations%20Multiplier%20(PIM)</xliff:g> for details.</string>
     <string name="kdf_iterations_multiplier"><xliff:g id="key_derivation_function">KDF</xliff:g> iterations multiplier (<xliff:g id="pim">PIM</xliff:g>)</string>
     <string name="container_format_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>Container format is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="container_format" example="VeraCrypt">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
@@ -194,7 +182,6 @@
     <string name="dont_use_content_provider_desc">Some applications can\'t work with content providers.</string>
     <string name="uri_of_the_container">URI of the container</string>
     <string name="text_has_been_copied">Text has been copied to the clipboard</string>
-    <string name="select_root_folder_tip">Please open root folder of the external storage and press \"Select\"</string>
     <string name="wrong_encfs_root_path">Wrong <xliff:g id="encfs">EncFs</xliff:g> root path</string>
     <string name="filename_encryption_algorithm">Filename encryption algorithm</string>
     <string name="key_size">Key size</string>

@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -63,10 +62,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     public static final String EXTRA_ALLOW_CREATE_NEW_FILE = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FILE";
     public static final String EXTRA_ALLOW_CREATE_NEW_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_CREATE_NEW_FOLDER";
     public static final String EXTRA_ALLOW_BROWSE_CONTAINERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_CONTAINERS";
-    public static final String EXTRA_ALLOW_BROWSE_DEVICE = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DEVICE";
-    public static final String EXTRA_ALLOW_BROWSE_DOCUMENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_BROWSE_DOCUMENT_PROVIDERS";
-    public static final String EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS = "com.igeltech.nevercrypt.android.ALLOW_SELECT_FROM_CONTENT_PROVIDERS";
-    public static final String EXTRA_ALLOW_SELECT_ROOT_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_SELECT_ROOT_FOLDER";
     protected static final String FOLDER_MIME_TYPE = "resource/folder";
     public static Subject<Boolean> TEST_INIT_OBSERVABLE;
 
@@ -92,37 +87,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
         {
             checkIfCurrentLocationIsStillOpen();
             getDrawerController().updateMenuItemViews();
-        }
-    };
-    private final BroadcastReceiver _locationChangedReceiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            if (isFinishing())
-                return;
-            try
-            {
-                Uri locUri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
-                if (locUri != null)
-                {
-                    Location changedLocation = LocationsManager.getLocationsManager(getApplicationContext()).getLocation(locUri);
-                    if (changedLocation != null)
-                    {
-                        Location loc = getRealLocation();
-                        if (loc != null && changedLocation.getId().equals(loc.getId()))
-                            checkIfCurrentLocationIsStillOpen();
-                        FileListDataFragment f = getFileListDataFragment();
-                        if (f != null && !LocationsManager.isOpen(changedLocation))
-                            f.removeLocationFromHistory(changedLocation);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.showAndLog(context, e);
-                finish();
-            }
         }
     };
     private final BroadcastReceiver _locationAddedOrRemovedReceiver = new BroadcastReceiver()
@@ -165,50 +129,50 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
         }
     };
     protected boolean _isLargeScreenLayout;
-    protected UserSettings _settings;
-
-    public static Location getStartLocation(Context context)
+    private final BroadcastReceiver _locationChangedReceiver = new BroadcastReceiver()
     {
-        return LocationsManager.getLocationsManager(context, true).getDefaultDeviceLocation();
-    }
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            if (isFinishing())
+                return;
+            try
+            {
+                Uri locUri = intent.getParcelableExtra(LocationsManager.PARAM_LOCATION_URI);
+                if (locUri != null)
+                {
+                    Location changedLocation = LocationsManager.getLocationsManager(getApplicationContext()).getLocation(locUri);
+                    if (changedLocation != null)
+                    {
+                        Location loc = getRealLocation();
+                        if (loc != null && changedLocation.getId().equals(loc.getId()))
+                            checkIfCurrentLocationIsStillOpen();
+                        FileListViewFragment f = getFileListViewFragment();
+                        if (f != null && !LocationsManager.isOpen(changedLocation))
+                        {
+                            f.rereadCurrentLocation();
+                            closeIntegratedViewer();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.showAndLog(context, e);
+                finish();
+            }
+        }
+    };
+    protected UserSettings _settings;
 
     public static Intent getOverwriteRequestIntent(Context context, boolean move, SrcDstCollection records)
     {
         Intent i = new Intent(context, FileManagerActivity.class);
         i.setAction(ACTION_ASK_OVERWRITE);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         i.putExtra(AskOverwriteDialog.ARG_MOVE, move);
         i.putExtra(AskOverwriteDialog.ARG_PATHS, records);
         return i;
-    }
-
-    public static Intent getSelectPathIntent(Context context, Uri startPath, boolean allowMultiSelect, boolean allowFileSelect, boolean allowDirSelect, boolean allowCreateNew, boolean allowBrowseDevice, boolean allowBrowseContainer)
-    {
-        Intent intent = new Intent(context, FileManagerActivity.class);
-        intent.setAction(Intent.ACTION_PICK);
-        if (startPath == null)
-            startPath = getStartLocation(context).getLocationUri();
-        intent.setData(startPath);
-        intent.putExtra(EXTRA_ALLOW_MULTIPLE, allowMultiSelect);
-        intent.putExtra(EXTRA_ALLOW_FILE_SELECT, allowFileSelect);
-        intent.putExtra(EXTRA_ALLOW_FOLDER_SELECT, allowDirSelect);
-        intent.putExtra(EXTRA_ALLOW_CREATE_NEW_FILE, allowCreateNew);
-        intent.putExtra(EXTRA_ALLOW_CREATE_NEW_FOLDER, allowCreateNew);
-        intent.putExtra(EXTRA_ALLOW_BROWSE_DEVICE, allowBrowseDevice);
-        intent.putExtra(EXTRA_ALLOW_BROWSE_CONTAINERS, allowBrowseContainer);
-        return intent;
-    }
-
-    public static void selectPath(AppCompatActivity context, Fragment f, int requestCode, boolean allowMultiSelect, boolean allowFileSelect, boolean allowDirSelect, boolean allowCreateNew, boolean allowBrowseDevice, boolean allowBrowseContainer)
-    {
-        Intent i = getSelectPathIntent(context, null, allowMultiSelect, allowFileSelect, allowDirSelect, allowCreateNew, allowBrowseDevice, allowBrowseContainer);
-        f.startActivityForResult(i, requestCode);
-    }
-
-    public static void selectPath(AppCompatActivity context, Fragment f, int requestCode, boolean allowMultiSelect, boolean allowFileSelect, boolean allowDirSelect, boolean allowCreateNew)
-    {
-        selectPath(context, f, requestCode, allowMultiSelect, allowFileSelect, allowDirSelect, allowCreateNew, true, true);
     }
 
     public static Location getRealLocation(Location loc)
@@ -235,11 +199,6 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     public boolean allowFolderSelect()
     {
         return getIntent().getBooleanExtra(EXTRA_ALLOW_FOLDER_SELECT, true);
-    }
-
-    public void goTo(Location location)
-    {
-        goTo(location, 0);
     }
 
     public void goTo(Location location, int scrollPosition)
@@ -674,10 +633,13 @@ public abstract class FileManagerActivityBase extends RxAppCompatActivity implem
     protected void checkIfCurrentLocationIsStillOpen()
     {
         Location loc = getRealLocation();
-        if (!isFinishing() && loc instanceof Openable && !LocationsManager.isOpen(loc) && (getIntent().getData() == null || !getIntent().getData().equals(loc.getLocationUri())))
+        if (!isFinishing())
         {
-            //closeIntegratedViewer();
-            goTo(getStartLocation(this));
+            if (loc instanceof Openable && !LocationsManager.isOpen(loc) && (getIntent().getData() == null || !getIntent().getData().equals(loc.getLocationUri())))
+            {
+                //closeIntegratedViewer();
+                //goTo(getStartLocation(this));
+            }
         }
     }
 

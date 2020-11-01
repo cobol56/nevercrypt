@@ -14,6 +14,7 @@ import android.provider.OpenableColumns;
 
 import androidx.annotation.NonNull;
 
+import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.fs.FileSystem;
 import com.igeltech.nevercrypt.fs.RandomAccessIO;
 import com.igeltech.nevercrypt.fs.util.PFDRandomAccessIO;
@@ -532,6 +533,7 @@ public class ContentResolverFs implements FileSystem
         @Override
         public ParcelFileDescriptor getFileDescriptor(AccessMode accessMode) throws IOException
         {
+            Logger.log(com.igeltech.nevercrypt.fs.util.Util.getStringModeFromAccessMode(accessMode));
             return _contentResolver.openFileDescriptor(_path.getUri(), com.igeltech.nevercrypt.fs.util.Util.getStringModeFromAccessMode(accessMode));
         }
 

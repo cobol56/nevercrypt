@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
 import com.igeltech.nevercrypt.android.settings.PathPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.PropertyEditor;
@@ -154,7 +153,10 @@ public class LocationShortcutWidgetConfigActivity extends SettingsBaseActivity
             @Override
             protected Intent getSelectPathIntent() throws IOException
             {
-                return FileManagerActivity.getSelectPathIntent(getContext(), null, false, true, true, false, true, true);
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                return intent;
             }
         }
     }

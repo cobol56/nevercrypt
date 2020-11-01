@@ -16,11 +16,6 @@
             style="@style/PropertyTitle" />
 
         <Button
-            android:id="@android:id/button1"
-            android:text="@string/edit"
-            style="@style/Button" />
-
-        <Button
             android:id="@android:id/button2"
             android:text="@string/select_path"
             style="@style/Button" />

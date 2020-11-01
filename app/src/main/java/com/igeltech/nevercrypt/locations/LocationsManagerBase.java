@@ -4,44 +4,30 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 
 import com.igeltech.nevercrypt.android.Logger;
-import com.igeltech.nevercrypt.android.helpers.StorageOptions;
 import com.igeltech.nevercrypt.android.locations.ContainerBasedLocation;
 import com.igeltech.nevercrypt.android.locations.ContentResolverLocation;
-import com.igeltech.nevercrypt.android.locations.DeviceRootNPLocation;
-import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
 import com.igeltech.nevercrypt.android.locations.EncFsLocation;
 import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
-import com.igeltech.nevercrypt.android.locations.ExternalStorageLocation;
-import com.igeltech.nevercrypt.android.locations.InternalSDLocation;
 import com.igeltech.nevercrypt.android.locations.LUKSLocation;
 import com.igeltech.nevercrypt.android.locations.TrueCryptLocation;
 import com.igeltech.nevercrypt.android.locations.VeraCryptLocation;
 import com.igeltech.nevercrypt.android.locations.closer.fragments.OpenableLocationCloserFragment;
-import com.igeltech.nevercrypt.android.receivers.MediaMountedReceiver;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
-import com.igeltech.nevercrypt.crypto.SimpleCrypto;
 import com.igeltech.nevercrypt.fs.Path;
-import com.igeltech.nevercrypt.fs.std.StdFs;
-import com.igeltech.nevercrypt.fs.util.StringPathUtil;
 import com.igeltech.nevercrypt.fs.util.Util;
 import com.igeltech.nevercrypt.settings.Settings;
 
 import org.json.JSONException;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.Stack;
 
 public abstract class LocationsManagerBase
@@ -49,6 +35,7 @@ public abstract class LocationsManagerBase
     public static final String PARAM_LOCATION_URIS = "com.igeltech.nevercrypt.android.LOCATION_URIS";
     public static final String PARAM_PATHS = "com.igeltech.nevercrypt.android.PATHS";
     public static final String PARAM_LOCATION_URI = "com.igeltech.nevercrypt.android.LOCATION_URI";
+    public static final String PARAM_EXPORT_FOLDER_URI = "com.igeltech.nevercrypt.android.EXPORT_FOLDER_URI";
     public static final String BROADCAST_LOCATION_CREATED = "com.igeltech.nevercrypt.BROADCAST_LOCATION_CREATED";
     public static final String BROADCAST_LOCATION_REMOVED = "com.igeltech.nevercrypt.BROADCAST_LOCATION_REMOVED";
     public static final String BROADCAST_ALL_CONTAINERS_CLOSED = "com.igeltech.nevercrypt.android.BROADCAST_ALL_CONTAINERS_CLOSED";
@@ -64,7 +51,6 @@ public abstract class LocationsManagerBase
     final List<LocationInfo> _currentLocations = new ArrayList<>();
     private final Stack<String> _openedLocationsStack = new Stack<>();
     private final Context _context;
-    private MediaMountedReceiver _mediaChangedReceiver;
 
     protected LocationsManagerBase(Context context, Settings settings)
     {
@@ -83,7 +69,6 @@ public abstract class LocationsManagerBase
         {
             _instance = new LocationsManager(context.getApplicationContext(), UserSettings.getSettings(context));
             _instance.loadStoredLocations();
-            _instance.startMountsMonitor();
         }
         return (LocationsManager) _instance;
     }
@@ -240,14 +225,6 @@ public abstract class LocationsManagerBase
         context.sendBroadcast(new Intent(BROADCAST_ALL_CONTAINERS_CLOSED));
     }
 
-    public static ArrayList<String> makeUriStrings(Iterable<? extends Location> locations)
-    {
-        ArrayList<String> list = new ArrayList<>();
-        for (Location l : locations)
-            list.add(l.getLocationUri().toString());
-        return list;
-    }
-
     public static ArrayList<Path> getPathsFromLocations(Iterable<? extends Location> locations) throws IOException
     {
         ArrayList<Path> res = new ArrayList<>();
@@ -282,25 +259,8 @@ public abstract class LocationsManagerBase
         return res;
     }
 
-    private void startMountsMonitor()
-    {
-        if (_mediaChangedReceiver != null)
-            return;
-        _mediaChangedReceiver = new MediaMountedReceiver(this);
-        _context.registerReceiver(_mediaChangedReceiver, new IntentFilter(Intent.ACTION_MEDIA_MOUNTED));
-        _context.registerReceiver(_mediaChangedReceiver, new IntentFilter(Intent.ACTION_MEDIA_UNMOUNTED));
-        _context.registerReceiver(_mediaChangedReceiver, new IntentFilter(Intent.ACTION_MEDIA_REMOVED));
-        _context.registerReceiver(_mediaChangedReceiver, new IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED));
-        _context.registerReceiver(_mediaChangedReceiver, new IntentFilter(UsbManager.ACTION_USB_DEVICE_DETACHED));
-    }
-
     public void close()
     {
-        if (_mediaChangedReceiver != null)
-        {
-            _context.unregisterReceiver(_mediaChangedReceiver);
-            _mediaChangedReceiver = null;
-        }
         closeAllLocations(true, false);
         clearLocations();
     }
@@ -328,31 +288,6 @@ public abstract class LocationsManagerBase
     public void broadcastAllContainersClosed()
     {
         broadcastAllContainersClosed(_context);
-    }
-
-    public Location getDefaultDeviceLocation()
-    {
-        Location res = null;
-        Location dba = null;
-        synchronized (_currentLocations)
-        {
-            for (LocationInfo li : _currentLocations)
-            {
-                Location loc = li.location;
-                if (loc instanceof InternalSDLocation)
-                {
-                    res = loc;
-                    break;
-                }
-                if (res == null && loc instanceof ExternalStorageLocation)
-                    res = loc;
-                else if (dba == null && loc instanceof DeviceBasedLocation)
-                    dba = loc;
-            }
-        }
-        if (res == null)
-            res = dba == null ? new DeviceBasedLocation(_settings) : dba;
-        return res.copy();
     }
 
     public void closeAllLocations(Iterable<Location> locations, boolean forceClose, boolean sendBroadcasts)
@@ -470,7 +405,6 @@ public abstract class LocationsManagerBase
     {
         synchronized (_currentLocations)
         {
-            loadStaticLocations();
             for (Uri u : getStoredLocationUris(_settings))
             {
                 try
@@ -563,59 +497,7 @@ public abstract class LocationsManagerBase
     public Location getDefaultLocationFromPath(String path) throws Exception
     {
         Uri u = Uri.parse(path);
-        if (u.getScheme() == null && !path.startsWith("/"))
-            return new DeviceBasedLocation(_settings, StdFs.getStdFs().getPath(Environment.getExternalStorageDirectory().getPath()).combine(path));
-        return u.getScheme() == null ? createDeviceLocation(u) : getLocation(u);
-    }
-
-    public ArrayList<Location> getLocationsFromPaths(Location loc, List<? extends Path> paths)
-    {
-        ArrayList<Location> res = new ArrayList<>();
-        for (Path p : paths)
-        {
-            Location l = loc.copy();
-            l.setCurrentPath(p);
-            res.add(l);
-        }
-        return res;
-    }
-
-    public void updateDeviceLocations()
-    {
-        synchronized (_currentLocations)
-        {
-            List<LocationInfo> prev = new ArrayList<>();
-            for (LocationInfo li : _currentLocations)
-                if (li.isDevice)
-                    prev.add(li);
-            List<Location> cur = loadDeviceLocations();
-            for (LocationInfo li : prev)
-            {
-                boolean remove = true;
-                for (Location loc : cur)
-                {
-                    if (loc.getId().equals(li.location.getId()))
-                        remove = false;
-                }
-                if (remove)
-                    _currentLocations.remove(li);
-            }
-            for (Location loc : cur)
-            {
-                boolean add = true;
-                for (LocationInfo li : prev)
-                {
-                    if (loc.getId().equals(li.location.getId()))
-                        add = false;
-                }
-                if (add)
-                {
-                    LocationInfo li = new LocationInfo(loc, false);
-                    li.isDevice = true;
-                    _currentLocations.add(li);
-                }
-            }
-        }
+        return getLocation(u);
     }
 
     public void saveCurrentLocationLinks()
@@ -628,16 +510,6 @@ public abstract class LocationsManagerBase
                     links.add(li.location.getLocationUri().toString());
         }
         _settings.setStoredLocations(com.igeltech.nevercrypt.android.helpers.Util.storeElementsToString(links));
-    }
-
-    public String genNewLocationId()
-    {
-        while (true)
-        {
-            String locId = SimpleCrypto.calcStringMD5(String.valueOf(new Date().getTime()) + new Random().nextLong());
-            if (findExistingLocation(locId) == null)
-                return locId;
-        }
     }
 
     public Iterable<Location> getLocationsClosingOrder()
@@ -670,12 +542,6 @@ public abstract class LocationsManagerBase
         closeAllLocations(new ArrayList<>(getLoadedLocations(false)), forceClose, sendBroadcasts);
     }
 
-    public void unmountAndCloseLocation(Location location, boolean forceClose) throws Exception
-    {
-        if (location instanceof Openable)
-            closeLocation(location, forceClose);
-    }
-
     public void closeLocation(Location loc, boolean forceClose) throws Exception
     {
         loc.closeFileSystem(forceClose);
@@ -687,19 +553,13 @@ public abstract class LocationsManagerBase
     {
         String scheme = locationUri.getScheme();
         if (scheme == null)
-            return findOrCreateDeviceLocation(locationUri);
+            return createDeviceLocation(locationUri);
         switch (locationUri.getScheme())
         {
             case ContainerBasedLocation.URI_SCHEME:
                 return createContainerLocation(locationUri);
-            case DeviceRootNPLocation.URI_SCHEME:
-                return createDeviceRootNPLocation(locationUri);
             case DeviceBasedLocation.URI_SCHEME:
                 return createDeviceLocation(locationUri);
-            case InternalSDLocation.URI_SCHEME:
-                return createBuiltInMemLocation(locationUri);
-            case ExternalStorageLocation.URI_SCHEME:
-                return createExtStorageLocation(locationUri);
             case TrueCryptLocation.URI_SCHEME:
                 return createTrueCryptLocation(locationUri);
             case VeraCryptLocation.URI_SCHEME:
@@ -709,12 +569,7 @@ public abstract class LocationsManagerBase
             case LUKSLocation.URI_SCHEME:
                 return createLUKSLocation(locationUri);
             case ContentResolver.SCHEME_CONTENT:
-                if (DocumentTreeLocation.isDocumentTreeUri(_context, locationUri))
-                    return createDocumentTreeLocation(locationUri);
-                else
-                    return createContentResolverLocation(locationUri);
-            case DocumentTreeLocation.URI_SCHEME:
-                return createDocumentTreeLocation(locationUri);
+                return createContentResolverLocation(locationUri);
             default:
                 return null;
         }
@@ -744,10 +599,6 @@ public abstract class LocationsManagerBase
                 return ContainerBasedLocation.getLocationId(this, locationUri);
             case DeviceBasedLocation.URI_SCHEME:
                 return DeviceBasedLocation.getLocationId(locationUri);
-            case InternalSDLocation.URI_SCHEME:
-                return InternalSDLocation.getLocationId(locationUri);
-            case ExternalStorageLocation.URI_SCHEME:
-                return ExternalStorageLocation.getLocationId(locationUri);
             case TrueCryptLocation.URI_SCHEME:
                 return TrueCryptLocation.getLocationId(this, locationUri);
             case VeraCryptLocation.URI_SCHEME:
@@ -757,63 +608,10 @@ public abstract class LocationsManagerBase
             case LUKSLocation.URI_SCHEME:
                 return LUKSLocation.getLocationId(this, locationUri);
             case ContentResolver.SCHEME_CONTENT:
-                if (DocumentTreeLocation.isDocumentTreeUri(_context, locationUri))
-                    return DocumentTreeLocation.getLocationId(locationUri);
-                else
-                    return ContentResolverLocation.getLocationId();
-            case DocumentTreeLocation.URI_SCHEME:
-                return DocumentTreeLocation.getLocationId(locationUri);
+                return ContentResolverLocation.getLocationId();
             default:
                 return null;
         }
-    }
-
-    private Location findOrCreateDeviceLocation(Uri locationUri) throws IOException
-    {
-        StringPathUtil path = new StringPathUtil(locationUri.getPath()), chroot = null, sdcardPath = new StringPathUtil("sdcard");
-        int maxComp = 0;
-        Location res = null;
-        for (Location loc : getLoadedLocations(true))
-        {
-            if (loc instanceof InternalSDLocation || loc instanceof ExternalStorageLocation)
-            {
-                StringPathUtil tmpChroot = new StringPathUtil(((DeviceBasedLocation) loc).getRootPath());
-                if ((loc instanceof InternalSDLocation && sdcardPath.equals(path)))
-                {
-                    res = loc;
-                    chroot = sdcardPath;
-                    break;
-                }
-                else if (tmpChroot.equals(path))
-                {
-                    res = loc;
-                    chroot = tmpChroot;
-                    break;
-                }
-                if (tmpChroot.getComponents().length > maxComp)
-                {
-                    if (loc instanceof InternalSDLocation && sdcardPath.isParentDir(path))
-                    {
-                        res = loc;
-                        maxComp = tmpChroot.getComponents().length;
-                        chroot = sdcardPath;
-                    }
-                    else if (tmpChroot.isParentDir(path))
-                    {
-                        res = loc;
-                        maxComp = tmpChroot.getComponents().length;
-                        chroot = tmpChroot;
-                    }
-                }
-            }
-        }
-        if (res != null)
-        {
-            res = res.copy();
-            res.setCurrentPath(res.getFS().getPath(path.getSubPath(chroot).toString()));
-            return res;
-        }
-        return new DeviceBasedLocation(_settings, locationUri);
     }
 
     private Location createContainerLocation(Uri locationUri) throws Exception
@@ -843,41 +641,7 @@ public abstract class LocationsManagerBase
 
     private Location createDeviceLocation(Uri locationUri) throws IOException
     {
-		/*String pathString = locationUri.getPath();
-		if(pathString == null)
-			pathString = "/";
-		PathUtil pu = new PathUtil(pathString);
-		java.io.File extStore = Environment.getExternalStorageDirectory();
-		if(
-				(extStore!=null && new PathUtil(extStore.getPath()).isParentDir(pu)) ||
-				pathString.startsWith("/sdcard/")
-		)
-			return new InternalSDLocation(_context, pathString);
-		*/
         return new DeviceBasedLocation(_settings, locationUri);
-    }
-
-    private Location createDeviceRootNPLocation(Uri locationUri) throws IOException
-    {
-        return new DeviceRootNPLocation(_context, _settings, locationUri);
-    }
-
-    private Location createBuiltInMemLocation(Uri locationUri) throws IOException
-    {
-        return new InternalSDLocation(_context, locationUri);
-    }
-
-    private Location createExtStorageLocation(Uri locationUri) throws IOException
-    {
-        return new ExternalStorageLocation(_context, locationUri);
-    }
-
-    private Location createDocumentTreeLocation(Uri uri) throws Exception
-    {
-        if (DocumentTreeLocation.URI_SCHEME.equals(uri.getScheme()))
-            return DocumentTreeLocation.fromLocationUri(_context, uri);
-        else
-            return new DocumentTreeLocation(_context, uri);
     }
 
     private Location createContentResolverLocation(Uri locationUri) throws Exception
@@ -885,58 +649,10 @@ public abstract class LocationsManagerBase
         return new ContentResolverLocation(_context, locationUri);
     }
 
-    private void loadStaticLocations()
-    {
-        for (Location l : loadDeviceLocations())
-        {
-            LocationInfo li = new LocationInfo(l, false);
-            li.isDevice = true;
-            _currentLocations.add(li);
-        }
-    }
-
-    protected ArrayList<Location> loadDeviceLocations()
-    {
-        ArrayList<Location> res = new ArrayList<>();
-        try
-        {
-            Location location = new DeviceRootNPLocation(_context);
-            location.getExternalSettings().setVisibleToUser(true);
-            res.add(location);
-            StorageOptions.reloadStorageList(_context);
-            for (StorageOptions.StorageInfo si : StorageOptions.getStoragesList(getContext()))
-            {
-                if (si.isExternal)
-                {
-                    if (new File(si.path).isDirectory())
-                    {
-                        Location extLoc = new ExternalStorageLocation(_context, si.label, si.path, null);
-                        extLoc.getFS(); //pre-create fs to use the same fs instance everywhere
-                        extLoc.getExternalSettings().setVisibleToUser(true);
-                        res.add(extLoc);
-                    }
-                }
-                else
-                {
-                    location = new InternalSDLocation(_context, si.label, si.path, null);
-                    location.getFS(); //pre-create fs to use the same fs instance everywhere
-                    location.getExternalSettings().setVisibleToUser(true);
-                    res.add(location);
-                }
-            }
-        }
-        catch (IOException e)
-        {
-            Logger.showAndLog(_context, e);
-        }
-        return res;
-    }
-
     protected static class LocationInfo
     {
         Location location;
         boolean store;
-        boolean isDevice;
 
         LocationInfo(Location location, boolean store)
         {

@@ -1,8 +1,5 @@
 package com.igeltech.nevercrypt.android.locations.fragments;
 
-import android.net.Uri;
-import android.os.Environment;
-
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialogBase;
@@ -38,8 +35,6 @@ import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.LocationFormatter;
 import com.igeltech.nevercrypt.container.VolumeLayout;
 
-import java.io.File;
-
 public abstract class CreateContainerFragmentBase extends CreateLocationFragment implements PasswordDialogBase.PasswordReceiver
 {
     public void changeUniqueIVDependentOptions()
@@ -74,21 +69,6 @@ public abstract class CreateContainerFragmentBase extends CreateLocationFragment
     @Override
     public void showCreateNewLocationProperties()
     {
-        Uri uri = _state.getParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION);
-        if (uri == null)
-        {
-            File path;
-            path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-            if (!path.exists() && !path.mkdirs())
-                path = getContext().getFilesDir();
-            if (path != null)
-                path = new File(path, "new container.eds");
-            if (path != null)
-            {
-                _state.putParcelable(CreateContainerTaskFragmentBase.ARG_LOCATION, Uri.parse(path.getPath()));
-                getActivity().invalidateOptionsMenu();
-            }
-        }
         super.showCreateNewLocationProperties();
         _propertiesView.setPropertyState(R.string.container_format, true);
     }

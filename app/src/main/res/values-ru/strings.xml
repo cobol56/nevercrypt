@@ -55,7 +55,6 @@
     <string name="err_failed_creating_container">Не удалось создать контейнер</string>
     <string name="about">О программе</string>
     <string name="opening_container">Загрузка</string>
-    <string name="decrypt_to_temp_folder">Скопировать во временную директорию</string>
     <string name="container_file_name_is_not_specified">Не задано имя файла контейнера</string>
     <string name="do_you_want_to_overwrite_existing_file">Перезаписать существующий файл?</string>
     <string name="enter_file_name">Введите имя файла</string>
@@ -103,13 +102,9 @@
     <string name="containers">Контейнеры</string>
     <string name="close">Закрыть</string>
     <string name="target_path">Целевой путь</string>
-    <string name="device">Устройство</string>
     <string name="password">Пароль</string>
-    <string name="title">Название</string>
     <string name="open">Открыть</string>
     <string name="disable_wide_screen_layouts_desc">Эта настройка отключает панели для предпросмотра в портретном режиме</string>
-    <string name="temp_data_path">Путь к директории для временных файлов</string>
-    <string name="temp_data_path_desc">Эта директория будет использоваться, если контейнер открыт без монтирования для хранения временных файлов. Оставьте пустым, чтобы использовать директорию приложения на карте памяти.</string>
     <string name="max_temporary_file_size_desc">Если контейнер открыт, но не смонтирован, тогда чтобы открыть файл из контейнера во внешней программе, этот файл сначала должен быть расшифрован во временную директорию. Этот параметр задаёт максимальный размер файла, который может быть автоматически расшифрован, при нажатии на файл (в мегабайтах).</string>
     <string name="overwrite_temp_files_with_random_data_desc">Если эта настройка включена, тогда временные файлы перед удалением будут перезаписаны случайными данными.</string>
     <string name="auto_close_container">Автоматическое закрытие контейнера</string>
@@ -151,20 +146,13 @@
     <string name="changing_password">Смена пароля</string>
     <string name="choose_files_to_copy_or_move">Выберите файлы для копирования или перемещения</string>
     <string name="manage_containers">Управление контейнерами</string>
-    <string name="local_files">Локальные файлы</string>
-    <string name="built_in_memory_card">Встроенная память</string>
     <string name="force_close_request">Не удалось закрыть контейнер %1$s. Вы хотите закрыть его принудительно?</string>
     <string name="debug_log">Отладочный журнал</string>
     <string name="edit">Изменить</string>
-    <string name="external_storage">Внешнее хранилище данных</string>
-    <string name="manage_local_storages">Управление локальными хранилищами</string>
     <string name="container_info_summary">Свободное пространство: %1$s; Общее пространство: %2$s.</string>
     <string name="disable">Отключить</string>
     <string name="copy_here">Скопировать сюда</string>
     <string name="move_here">Переместить сюда</string>
-    <string name="storage_permission_desc">Разрешение на доступ к хранилищам данных необходимо для работы с картами памяти и USB дисками.</string>
-    <string name="ext_storage_write_permission_request">Для записи на внешнее устройство требуется отдельное разрешение. Вы хотите предоставить разрешение для <xliff:g id="program_name">NeverCrypt</xliff:g>?</string>
-    <string name="grant">Предоставить доступ</string>
     <string name="number_of_kdf_iterations_veracrypt_descr">Множитель количества итераций PBKDF2 (PIM). Чем больше значение, тем дольше будет открываться контейнер. Введите 0, чтобы использовать значение по умолчанию. Подробности можно узнать, пройдя по ссылке https://veracrypt.codeplex.com/wikipage?title=Personal%20Iterations%20Multiplier%20(PIM)</string>
     <string name="kdf_iterations_multiplier">Количество итераций при генерировании ключа (PIM)</string>
     <string name="container_format_is">&lt;p&gt;Формат контейнера: &lt;b&gt;%1$s&lt;/b&gt;.&lt;/p&gt;</string>
@@ -187,7 +175,6 @@
     <string name="dont_use_content_provider_desc">Некоторые проиложения не поддерживают работу через content provider.</string>
     <string name="uri_of_the_container">URI контейнера</string>
     <string name="text_has_been_copied">Текст был скопирован в буфер обмена</string>
-    <string name="select_root_folder_tip">Откройте корневой каталог внешнего устройства хранения и нажмите \"Выбрать\"</string>
     <string name="wrong_encfs_root_path">Неправильный начальный путь EncFs</string>
     <string name="filename_encryption_algorithm">Алгоритм шифрования имён файлов</string>
     <string name="key_size">Размер ключа</string>

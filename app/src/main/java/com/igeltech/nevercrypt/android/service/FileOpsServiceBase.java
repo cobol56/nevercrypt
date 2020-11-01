@@ -50,7 +50,6 @@ public abstract class FileOpsServiceBase extends IntentService
     public static final String ACTION_DELETE = "delete";
     public static final String ACTION_WIPE = "wipe";
     public static final String ACTION_SAVE_CHANGED_FILE = "save_changed_file";
-    public static final String ACTION_PREPARE_TEMP_FILE = "prepare_temp_file";
     public static final String ACTION_CLEAR_TEMP_FOLDER = "clear_temp_folder";
     protected static final String TAG = "FileOpsService";
     protected static final String ACTION_START_TEMP_FILE = "start_temp_file";
@@ -66,6 +65,32 @@ public abstract class FileOpsServiceBase extends IntentService
     public FileOpsServiceBase()
     {
         super(TAG);
+    }
+
+    public static String getFullPathFromUri(Uri uri)
+    {
+        String actualResult;
+        String path = uri.getPath().substring(5);
+        int index = 0;
+        StringBuilder result = new StringBuilder("/storage");
+        for (int i = 0; i < path.length(); i++)
+        {
+            if (path.charAt(i) != ':')
+                result.append(path.charAt(i));
+            else
+            {
+                index = ++i;
+                result.append('/');
+                break;
+            }
+        }
+        for (int i = index; i < path.length(); i++)
+            result.append(path.charAt(i));
+        if (result.substring(9, 16).equalsIgnoreCase("primary"))
+            actualResult = result.substring(0, 8) + "/emulated/0/" + result.substring(17);
+        else
+            actualResult = result.toString();
+        return actualResult;
     }
 
     public static Location getSecTempFolderLocation(String workDir, Context context) throws IOException
@@ -287,14 +312,6 @@ public abstract class FileOpsServiceBase extends IntentService
         context.startService(i);
     }
 
-    public static void prepareTempFile(Context context, Location srcLocation, Collection<? extends Path> paths)
-    {
-        Intent i = new Intent(context, FileOpsService.class);
-        i.setAction(ACTION_PREPARE_TEMP_FILE);
-        LocationsManager.storePathsInIntent(i, srcLocation, paths);
-        context.startService(i);
-    }
-
     public static void sendFile(Context context, String mimeType, Location srcLocation, Collection<? extends Path> paths)
     {
         Intent i = new Intent(context, FileOpsService.class);
@@ -416,8 +433,6 @@ public abstract class FileOpsServiceBase extends IntentService
                 return new StartTempFileTask();
             case ACTION_SAVE_CHANGED_FILE:
                 return new SaveTempFileChangesTask();
-            case ACTION_PREPARE_TEMP_FILE:
-                return new PrepareTempFilesTask();
             case ACTION_SEND_TASK:
                 return new ActionSendTask();
             case ACTION_CLOSE_CONTAINER:

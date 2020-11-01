@@ -23,8 +23,6 @@ public class DrawerController extends DrawerControllerBase
         DrawerAdapter adapter = new DrawerAdapter(list);
         if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_CONTAINERS, true))
             adapter.add(new DrawerContainersMenu(this));
-        if (i.getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_BROWSE_DEVICE, true))
-            adapter.add(new DrawerLocalFilesMenu(this));
         if (!isSelectAction)
         {
             adapter.add(new DrawerSettingsMenuItem(this));

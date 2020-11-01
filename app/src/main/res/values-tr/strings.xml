@@ -51,7 +51,6 @@
     <string name="err_failed_creating_container">Konteyner Oluşturma Başarısız</string>
     <string name="about">Hakkında</string>
     <string name="opening_container">Konteyner Açılıyor..</string>
-    <string name="decrypt_to_temp_folder">Geçici Klasöre Şifresini Çöz</string>
     <string name="container_file_name_is_not_specified">Konteyner Adı Belirlenmemiş</string>
     <string name="do_you_want_to_overwrite_existing_file">Varolan dosyanın üzerine yazmak istiyor musunuz?</string>
     <string name="enter_file_name">Dosya Adını Girin</string>
@@ -64,7 +63,6 @@
     <string name="select_all">Tümünü Seç</string>
     <string name="apply_to_all">Tümüne Uygula</string>
     <string name="closing">Konteyner kapatılıyor..</string>
-    <string name="temp_data_path">Geçici dosyaların tutulacağı yer (uygulamanın kendi yolunu kullanmak için boş bırakın)</string>
     <string name="auto_close_container">Hiçbir veri okunmadığı veya yazılmadığı zaman konteyneri otomatik kapat.</string>
     <string name="extension_mime_override">Her bir satır için, dosya uzantısına bağlı dosya kimlik tanımlayıcısını (mime type) geçersiz kıl, örneğin \"txt text/plain\".</string>
     <string name="path_to_container">Konteynerın Kendisine Yol</string>

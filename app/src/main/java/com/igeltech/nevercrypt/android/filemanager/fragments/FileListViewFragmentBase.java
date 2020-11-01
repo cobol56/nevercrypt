@@ -47,7 +47,6 @@ import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
 import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 import com.igeltech.nevercrypt.android.helpers.ProgressDialogTaskFragmentCallbacks;
 import com.igeltech.nevercrypt.android.locations.ContentResolverLocation;
-import com.igeltech.nevercrypt.android.locations.DocumentTreeLocation;
 import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
 import com.igeltech.nevercrypt.android.providers.MainContentProvider;
 import com.igeltech.nevercrypt.android.service.FileOpsService;
@@ -55,7 +54,6 @@ import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.fs.Path;
 import com.igeltech.nevercrypt.fs.util.SrcDstCollection;
 import com.igeltech.nevercrypt.fs.util.SrcDstGroup;
-import com.igeltech.nevercrypt.fs.util.SrcDstPlain;
 import com.igeltech.nevercrypt.fs.util.SrcDstRec;
 import com.igeltech.nevercrypt.fs.util.SrcDstSingle;
 import com.igeltech.nevercrypt.locations.Location;
@@ -85,7 +83,6 @@ import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.FILE_B
 public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment implements SortDialog.SortingReceiver, FileManagerFragment, LocationOpenerBaseFragment.LocationOpenerResultReceiver, NewFileDialog.Receiver
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment";
-    public static final int REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER = AppCompatActivity.RESULT_FIRST_USER;
     public static final String ARG_SCROLL_POSITION = "com.igeltech.nevercrypt.android.SCROLL_POSITION";
     public static final String ARG_WIPE_FILES = "com.igeltech.nevercrypt.android.WIPE_FILES";
     public static Subject<Boolean> TEST_READING_OBSERVABLE;
@@ -312,24 +309,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == REQUEST_CODE_SELECT_FROM_CONTENT_PROVIDER)
-        {
-            if (resultCode == AppCompatActivity.RESULT_OK && data != null)
-            {
-                returnSelectionFromContentProvider(data);
-                if (data.getData() != null)
-                {
-                    getActivity().getContentResolver().takePersistableUriPermission(data.getData(), Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                }
-            }
-        }
-        else
-            super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
     public void onResume()
     {
         super.onResume();
@@ -418,14 +397,13 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     public void deleteFiles(Location loc, List<Path> paths, boolean wipe)
     {
+        SrcDstCollection targets = SrcDstRec.fromPathsNoDest(loc, true, paths);
         if (wipe)
         {
-            SrcDstCollection targets = SrcDstRec.fromPathsNoDest(loc, true, paths);
             FileOpsService.wipeFiles(getActivity(), targets);
         }
         else
         {
-            SrcDstCollection targets = isLocSupportsRecFolderDelete(loc) ? SrcDstPlain.fromPaths(loc, null, paths) : SrcDstRec.fromPathsNoDest(loc, true, paths);
             FileOpsService.deleteFiles(getActivity(), targets);
         }
         Toast.makeText(getActivity(), R.string.file_operation_started, Toast.LENGTH_SHORT).show();
@@ -490,11 +468,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         //if(_optionsMenu!=null)
         //    onPrepareOptionsMenu(_optionsMenu);
         getFileManagerActivity().invalidateOptionsMenu();
-    }
-
-    private boolean isLocSupportsRecFolderDelete(Location loc)
-    {
-        return loc instanceof DocumentTreeLocation;
     }
 
     @Override
@@ -835,7 +808,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                 menu.findItem(R.id.select).setVisible(isSelectAction && hasSelectedFiles && (!showSelectedFilenameEditText() || allowSelectedFileName()));
                 menu.findItem(R.id.rename).setVisible(!isSelectAction && selectedFiles.size() == 1);
                 menu.findItem(R.id.open_as_container).setVisible(!isSelectAction && selectedFiles.size() == 1 && selectedFiles.get(0) instanceof ExecutableFileRecord);
-                menu.findItem(R.id.copy_to_temp).setVisible(!isSelectAction && getLocation().isEncrypted());
                 menu.findItem(R.id.choose_for_operation).setVisible(!isSelectAction);
                 menu.findItem(R.id.delete).setVisible(!isSelectAction);
                 Location loc = getRealLocation();
@@ -935,10 +907,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                 return true;
             case R.id.properties:
                 showProperties();
-                return true;
-            case R.id.copy_to_temp:
-                copyToTemp();
-                mhi.clearSelection = true;
                 return true;
             case R.id.sort:
                 changeSortMode();
@@ -1232,13 +1200,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     private void showProperties()
     {
         getFileManagerActivity().showProperties(null, false);
-    }
-
-    private void copyToTemp()
-    {
-        ArrayList<Path> filesToCopy = getSelectedPaths();
-        if (filesToCopy.size() > 0)
-            FileOpsService.prepareTempFile(getActivity(), getRealLocation(), filesToCopy);
     }
 
     private void changeSortMode()

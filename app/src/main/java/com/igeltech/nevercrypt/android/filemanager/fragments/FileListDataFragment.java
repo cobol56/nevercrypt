@@ -65,6 +65,7 @@ import static com.igeltech.nevercrypt.settings.SettingsCommon.FB_SORT_SIZE_DESC;
 public class FileListDataFragment extends RxFragment
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListDataFragment";
+    public static final String EXTRA_ALLOW_SELECT_ROOT_FOLDER = "com.igeltech.nevercrypt.android.ALLOW_SELECT_ROOT_FOLDER";
     private static final String STATE_NAVIG_HISTORY = "com.igeltech.nevercrypt.android.PATH_HISTORY";
     private static final int REQUEST_CODE_OPEN_LOCATION = 1;
     public static Subject<Boolean> TEST_READING_OBSERVABLE;
@@ -81,7 +82,6 @@ public class FileListDataFragment extends RxFragment
     private final Subject<BrowserRecord> _recordLoadedSubject = PublishSubject.create();
     private LocationsManager _locationsManager;
     private Location _location;
-    private DirectorySettings _directorySettings;
     private NavigableSet<BrowserRecord> _fileList;
     private Disposable _readLocationObserver;
 
@@ -130,7 +130,6 @@ public class FileListDataFragment extends RxFragment
     {
         super.onCreate(state);
         setRetainInstance(true);
-        _location = getFallbackLocation();
         _locationsManager = LocationsManager.getLocationsManager(getActivity());
         _fileList = new TreeSet<>(initSorter());
         loadLocation(state, true);
@@ -304,7 +303,7 @@ public class FileListDataFragment extends RxFragment
             return;
         Context context = activity.getApplicationContext();
         boolean showRootFolder = activity.getIntent().
-                getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_SELECT_ROOT_FOLDER, activity.isSelectAction() && activity.allowFolderSelect());
+                getBooleanExtra(EXTRA_ALLOW_SELECT_ROOT_FOLDER, false);
         LoadLocationInfo startInfo = new LoadLocationInfo();
         startInfo.stage = LoadLocationInfo.Stage.StartedLoading;
         startInfo.location = location;
@@ -337,7 +336,6 @@ public class FileListDataFragment extends RxFragment
                 }).
                 observeOn(AndroidSchedulers.mainThread()).
                 doOnSuccess(loadLocationInfo -> {
-                    _directorySettings = loadLocationInfo.folderSettings;
                     Logger.debug(TAG + ": _locationLoading.onNext loading");
                     _locationLoading.onNext(loadLocationInfo);
                 }).
@@ -445,11 +443,6 @@ public class FileListDataFragment extends RxFragment
         }
     }
 
-    public DirectorySettings getDirectorySettings()
-    {
-        return _directorySettings;
-    }
-
     private synchronized void cancelReadDirTask()
     {
         if (_readLocationObserver != null)
@@ -481,8 +474,6 @@ public class FileListDataFragment extends RxFragment
         {
             Logger.showAndLog(getActivity(), e);
         }
-        if (loc == null)
-            loc = getFallbackLocation();
         if (autoOpen && !LocationsManager.isOpen(loc))
         {
             Intent i = new Intent(getActivity(), OpenLocationsActivity.class);
@@ -520,7 +511,6 @@ public class FileListDataFragment extends RxFragment
             }
             _fileList.clear();
         }
-        _directorySettings = null;
         _location = null;
     }
 
@@ -536,11 +526,6 @@ public class FileListDataFragment extends RxFragment
     private Location initLocationFromUri(Uri locationUri) throws Exception
     {
         return locationUri != null ? _locationsManager.getLocation(locationUri) : null;
-    }
-
-    private Location getFallbackLocation()
-    {
-        return FileManagerActivity.getStartLocation(getActivity());
     }
 
     private Comparator<BrowserRecord> initSorter()

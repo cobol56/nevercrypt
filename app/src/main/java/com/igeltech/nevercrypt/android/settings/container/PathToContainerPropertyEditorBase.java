@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragment;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateLocationFragment;
@@ -21,9 +20,9 @@ public abstract class PathToContainerPropertyEditorBase extends PathPropertyEdit
     }
 
     @Override
-    protected void onTextChanged(final String newValue)
+    protected void onPathSelected(Intent result)
     {
-        super.onTextChanged(newValue);
+        super.onPathSelected(result);
         getHostFragment().getActivity().invalidateOptionsMenu();
     }
 
@@ -35,10 +34,26 @@ public abstract class PathToContainerPropertyEditorBase extends PathPropertyEdit
     @Override
     protected Intent getSelectPathIntent() throws IOException
     {
+        Intent i;
         boolean addExisting = getHostFragment().getState().getBoolean(CreateLocationFragment.ARG_ADD_EXISTING_LOCATION);
         boolean isEncFs = getHostFragment().isEncFsFormat();
-        Intent i = FileManagerActivity.getSelectPathIntent(getHost().getContext(), null, false, true, isEncFs || addExisting, !addExisting, true, true);
-        i.putExtra(FileManagerActivity.EXTRA_ALLOW_SELECT_FROM_CONTENT_PROVIDERS, true);
+        if (isEncFs)
+        {
+            i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        }
+        else
+        {
+            if (addExisting)
+            {
+                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            }
+            else
+            {
+                i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            }
+            i.setType("*/*");
+        }
+        i.addCategory(Intent.CATEGORY_OPENABLE);
         return i;
     }
 

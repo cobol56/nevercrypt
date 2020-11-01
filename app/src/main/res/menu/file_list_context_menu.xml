@@ -41,9 +41,4 @@
         android:icon="@drawable/ic_menu_share"
         android:title="@string/send"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/copy_to_temp"
-        android:icon="@drawable/ic_menu_decrypt_to_temp"
-        android:title="@string/decrypt_to_temp_folder"
-        app:showAsAction="ifRoom" />
 </menu>

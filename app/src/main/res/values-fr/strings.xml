@@ -51,7 +51,6 @@
     <string name="err_failed_creating_container">Échec de la création du container</string>
     <string name="about">A propos</string>
     <string name="opening_container">Ouverture</string>
-    <string name="decrypt_to_temp_folder">Décrypter vers le dossier temporaire</string>
     <string name="container_file_name_is_not_specified">Le nom de fichier du container n\'est pas spécifié</string>
     <string name="do_you_want_to_overwrite_existing_file">Voulez-vous écraser le fichier existant?</string>
     <string name="enter_file_name">Entrez un nom de fichier</string>
@@ -99,13 +98,9 @@
     <string name="containers">Containers</string>
     <string name="close">Fermer</string>
     <string name="target_path">Chemin de destination</string>
-    <string name="device">Appareil</string>
     <string name="password">Mot de passe</string>
-    <string name="title">Titre</string>
     <string name="open">Ouvrir</string>
     <string name="disable_wide_screen_layouts_desc">Cette option désactive la prévisualisation des panels sur les appareils avec un écran large.</string>
-    <string name="temp_data_path">Chemin des données temporaires</string>
-    <string name="temp_data_path_desc">Ce chemin sera utilisé si un container est ouvert dans un mode "non monté" pour stocker les fichiers de manière temporaire. Laisser vide pour chemin par défaut.</string>
     <string name="max_temporary_file_size_desc">Si un container est ouvert en mode "non-monté", pour pouvoir ouvrir un fichier avec une application externe, ce fichier devra être décrypté vers un emplacement temporaire. Cette option détermine la taille maximum du fichier qui sera décrypté automatiquement (en megabytes).</string>
     <string name="overwrite_temp_files_with_random_data_desc">Si cette option est activée, alors un fichier temporaire sera remplacé par des données aléatoires avant qu\'il soit effacé.</string>
     <string name="auto_close_container">Fermeture automatique container</string>
