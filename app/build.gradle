@@ -9,8 +9,8 @@ android {
         applicationId 'com.igeltech.nevercrypt'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 237
-        versionName "2.0.0.237"
+        versionCode 1
+        versionName "1.0"
 
         ndk {
             // Specifies the ABI configurations of your native
@@ -77,8 +77,8 @@ dependencies {
     implementation 'androidx.documentfile:documentfile:1.0.1'
 
     implementation 'com.drewnoakes:metadata-extractor:2.15.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
