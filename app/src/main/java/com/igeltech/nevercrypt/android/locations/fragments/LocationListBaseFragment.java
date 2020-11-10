@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
+import androidx.navigation.Navigation;
 
+import com.google.android.material.button.MaterialButton;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
 import com.igeltech.nevercrypt.android.locations.activities.CreateLocationActivity;
 import com.igeltech.nevercrypt.android.locations.activities.LocationSettingsActivity;
 import com.igeltech.nevercrypt.android.locations.closer.fragments.LocationCloserBaseFragment;
 import com.igeltech.nevercrypt.android.locations.dialogs.RemoveLocationConfirmationDialog;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.ContainerOpenerFragment;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
+import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
@@ -72,31 +78,6 @@ public abstract class LocationListBaseFragment extends ListFragment
         ArrayList<Location> selectedLocations = getSelectedLocations();
         if (!selectedLocations.isEmpty())
             LocationsManager.storeLocationsInBundle(outState, selectedLocations);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater)
-    {
-        super.onCreateOptionsMenu(menu, menuInflater);
-        menuInflater.inflate(R.menu.location_list_menu, menu);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu)
-    {
-        super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.add).setVisible(getDefaultLocationType() != null);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem)
-    {
-        MenuHandlerInfo mhi = new MenuHandlerInfo();
-        mhi.menuItemId = menuItem.getItemId();
-        boolean res = handleMenu(mhi);
-        if (res && mhi.clearSelection)
-            clearSelectedFlag();
-        return res || super.onOptionsItemSelected(menuItem);
     }
 
     @Override
@@ -189,10 +170,21 @@ public abstract class LocationListBaseFragment extends ListFragment
 
     protected void onLocationClicked(LocationInfo li)
     {
-        if (li.isSelected)
-            unselectLocation(li);
+        if (li.location instanceof CryptoLocation && ((CryptoLocation) li.location).isOpen())
+        {
+            Navigation.findNavController(getView()).navigate(LocationManagerFragmentDirections.navigateToFileManager(Opener.getArgs(li.location), 0));
+        }
         else
-            selectLocation(li);
+        {
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            String openerTag = LocationOpenerBaseFragment.getOpenerTag(li.location);
+            if (fm.findFragmentByTag(openerTag) == null)
+            {
+                LocationOpenerBaseFragment opener = new Opener();
+                opener.setArguments(Opener.getArgs(li.location));
+                fm.beginTransaction().add(opener, openerTag).commit();
+            }
+        }
     }
 
     protected String getDefaultLocationType()
@@ -207,7 +199,7 @@ public abstract class LocationListBaseFragment extends ListFragment
         LocationsManager.storePathsInBundle(args, loc, null);
         LocationCloserBaseFragment closer = LocationCloserBaseFragment.getDefaultCloserForLocation(loc);
         closer.setArguments(args);
-        getFragmentManager().beginTransaction().add(closer, LocationCloserBaseFragment.getCloserTag(loc)).commit();
+        getParentFragmentManager().beginTransaction().add(closer, LocationCloserBaseFragment.getCloserTag(loc)).commit();
     }
 
     protected int getContextMenuId()
@@ -266,7 +258,7 @@ public abstract class LocationListBaseFragment extends ListFragment
 
     private void removeSelectedLocation()
     {
-        RemoveLocationConfirmationDialog.showDialog(getFragmentManager(), getSelectedLocationInfo().location);
+        RemoveLocationConfirmationDialog.showDialog(getParentFragmentManager(), getSelectedLocationInfo().location);
     }
 
     private void closeSelectedLocation()
@@ -428,6 +420,27 @@ public abstract class LocationListBaseFragment extends ListFragment
         startActivity(i);
     }
 
+    public static class Opener extends ContainerOpenerFragment
+    {
+        protected static Bundle getArgs(Location location)
+        {
+            Bundle b = new Bundle();
+            LocationsManager.storePathsInBundle(b, location, null);
+            return b;
+        }
+
+        @Override
+        public void onLocationOpened(Location location)
+        {
+            if (location.isFileSystemOpen())
+            {
+                Bundle args = getArguments();
+                //TODO
+                Navigation.findNavController(getActivity(), R.id.nav_host_locationmanager).navigate(LocationManagerFragmentDirections.navigateToFileManager(Opener.getArgs(location), args.getInt(FileListViewFragment.ARG_SCROLL_POSITION, 0)));
+            }
+        }
+    }
+
     protected static class MenuHandlerInfo
     {
         int menuItemId;
@@ -478,11 +491,17 @@ public abstract class LocationListBaseFragment extends ListFragment
             v.setTag(item);
             if (item == null)
                 return v;
-            AppCompatTextView tv = v.findViewById(android.R.id.text1);
+            AppCompatTextView tv = v.findViewById(android.R.id.title);
             tv.setText(item.location.getTitle());
             AppCompatImageView iv = v.findViewById(android.R.id.icon);
             if (iv != null)
                 iv.setImageDrawable(item.getIcon());
+            //
+            MaterialButton bt = v.findViewById(android.R.id.closeButton);
+            bt.setVisibility(((CryptoLocation) item.location).isOpenOrMounted() ? View.VISIBLE : View.INVISIBLE);
+            bt.setOnClickListener(view -> {
+                closeLocation(item.location);
+            });
             return v;
         }
     }

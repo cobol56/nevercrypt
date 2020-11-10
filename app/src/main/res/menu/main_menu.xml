@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@menu/main_menu"
+    android:layout_width="match_parent"
+    android:layout_height="30dp">
+
+    <item
+        android:id="@+id/main_menu_settings"
+        android:icon="@drawable/ic_menu_settings"
+        android:title="@string/settings" />
+
+    <item
+        android:id="@+id/main_menu_stop_and_exit"
+        android:title="@string/stop_service_and_exit" />
+
+    <item
+        android:id="@+id/main_menu_about"
+        android:title="@string/about" />
+</menu>

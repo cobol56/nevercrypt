@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="add_container">Add existing container</string>
+    <string name="add_container">Add container</string>
     <string name="app_name" translatable="false"><xliff:g id="program_name">NeverCrypt</xliff:g></string>
     <string name="ok">OK</string>
     <string name="select">Select</string>
@@ -68,7 +68,6 @@
     <string name="wiping_files">Wiping files</string>
     <string name="creating_container">Creating container</string>
     <string name="err_failed_saving_changes">Failed to save changes. Try saving the file again or copy the file manually. See the program log file for details.</string>
-    <string name="help">Help</string>
     <string name="select_file">Select file</string>
     <string name="select_all">Select all</string>
     <string name="apply_to_all">Apply to all</string>
@@ -105,7 +104,6 @@
     <string name="rotate_right">Rotate right</string>
     <string name="encryption_algorithm">Encryption algorithm</string>
     <string name="hash_algorithm">Hash algorithm</string>
-    <string name="containers">Containers</string>
     <string name="close">Close</string>
     <string name="target_path">Target path</string>
     <string name="password">Password</string>
@@ -144,14 +142,10 @@
     <string name="invalid_master_password">Invalid master password</string>
     <string name="enter_master_password">Enter master password</string>
     <string name="master_password">Master password</string>
-    <string name="location_type">location type</string>
-    <string name="drawer_open">Drawer open</string>
-    <string name="drawer_close">Drawer close</string>
     <string name="add_new">Add new</string>
     <string name="create_new_container_or_add_existing_container">Would you like to create a new container or to add an existing container?</string>
     <string name="changing_password">Changing password</string>
     <string name="choose_files_to_copy_or_move">Choose files to copy or move…</string>
-    <string name="manage_containers">Manage containers</string>
     <string name="force_close_request">Can\'t close the container <xliff:g id="path_to_container">\"%1$s\"</xliff:g>. Do you want to force close it?</string>
     <string name="debug_log">Debug log</string>
     <string name="edit">Edit</string>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_filemanager"
+    app:startDestination="@id/fileManagerFragment">
+
+    <fragment
+        android:id="@+id/fileManagerFragment"
+        android:name="com.igeltech.nevercrypt.android.filemanager.fragments.FileManagerFragment"
+        android:label="File Manager"
+        tools:layout="@layout/fragment_filemanager">
+
+        <argument
+            android:name="location"
+            app:argType="android.os.Bundle" />
+        <argument
+            android:name="scrollPosition"
+            app:argType="integer" />
+    </fragment>
+</navigation>

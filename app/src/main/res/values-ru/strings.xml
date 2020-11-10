@@ -62,7 +62,6 @@
     <string name="wiping_files">Удаление файлов</string>
     <string name="creating_container">Создание контейнера</string>
     <string name="err_failed_saving_changes">Не удалось сохранить изменения в файле. Вы можете попробовать сохранить файл ещё раз или скопировать файл вручную. Информацию об ошибке можно посмотреть в журнале программы.</string>
-    <string name="help">Справка</string>
     <string name="select_file">Выбрать файл</string>
     <string name="select_all">Выбрать всё</string>
     <string name="apply_to_all">Применить ко всем</string>
@@ -99,7 +98,6 @@
     <string name="rotate_right">Повернуть вправо</string>
     <string name="encryption_algorithm">Алгоритм шифрования</string>
     <string name="hash_algorithm">Алгоритм хэширования</string>
-    <string name="containers">Контейнеры</string>
     <string name="close">Закрыть</string>
     <string name="target_path">Целевой путь</string>
     <string name="password">Пароль</string>
@@ -138,14 +136,10 @@
     <string name="invalid_master_password">Неправильный мастер-пароль</string>
     <string name="enter_master_password">Введите мастер-пароль</string>
     <string name="master_password">Мастер-пароль</string>
-    <string name="location_type">тип</string>
-    <string name="drawer_open">Открыть выдвижное меню</string>
-    <string name="drawer_close">Закрыть выдвижное меню</string>
     <string name="add_new">Добавить </string>
     <string name="create_new_container_or_add_existing_container">Вы хотите создать новый контейнер или добавить существующий?</string>
     <string name="changing_password">Смена пароля</string>
     <string name="choose_files_to_copy_or_move">Выберите файлы для копирования или перемещения</string>
-    <string name="manage_containers">Управление контейнерами</string>
     <string name="force_close_request">Не удалось закрыть контейнер %1$s. Вы хотите закрыть его принудительно?</string>
     <string name="debug_log">Отладочный журнал</string>
     <string name="edit">Изменить</string>

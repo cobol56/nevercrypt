@@ -37,7 +37,7 @@ public class RemoveLocationConfirmationDialog extends ConfirmationDialog
     {
         if (_loc == null)
             return;
-        LocationListBaseFragment f = (LocationListBaseFragment) getFragmentManager().findFragmentByTag(LocationListBaseFragment.TAG);
+        LocationListBaseFragment f = (LocationListBaseFragment) getParentFragmentManager().findFragmentByTag(LocationListBaseFragment.TAG);
         if (f == null)
             return;
         f.removeLocation(_loc);

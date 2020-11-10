@@ -121,7 +121,7 @@ class FileRecord extends FsBrowserRecord
     @Override
     protected Drawable getDefaultIcon()
     {
-        return getFileIcon(_host);
+        return getFileIcon(_host.getContext());
     }
 
     protected void updateFileInfoString()

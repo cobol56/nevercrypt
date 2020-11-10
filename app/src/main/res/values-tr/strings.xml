@@ -58,7 +58,6 @@
     <string name="wiping_files">Dosyalar Temizleniyor..</string>
     <string name="creating_container">Konteyner Oluşturuluyor..</string>
     <string name="err_failed_saving_changes">Değişiklikler kaydedilemedi. Tekrar kaydetmeyi deneyin veya dosyayı manuel olarak kopyalayın. Detaylar için log dosyasına bakın.</string>
-    <string name="help">Yardım</string>
     <string name="select_file">Dosya Seç</string>
     <string name="select_all">Tümünü Seç</string>
     <string name="apply_to_all">Tümüne Uygula</string>

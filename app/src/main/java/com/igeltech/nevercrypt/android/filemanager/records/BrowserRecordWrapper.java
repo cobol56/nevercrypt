@@ -3,7 +3,7 @@ package com.igeltech.nevercrypt.android.filemanager.records;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileManagerFragment;
 import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 import com.igeltech.nevercrypt.fs.Path;
 import com.igeltech.nevercrypt.locations.Location;
@@ -14,7 +14,7 @@ import java.util.Date;
 public class BrowserRecordWrapper implements BrowserRecord
 {
     private final BrowserRecord _base;
-    private FileManagerActivity _host;
+    private FileManagerFragment _host;
 
     protected BrowserRecordWrapper(BrowserRecord base)
     {
@@ -64,10 +64,10 @@ public class BrowserRecordWrapper implements BrowserRecord
     }
 
     @Override
-    public void setHostActivity(FileManagerActivity host)
+    public void setHostFragment(FileManagerFragment host)
     {
         _host = host;
-        _base.setHostActivity(host);
+        _base.setHostFragment(host);
     }
 
     @Override
@@ -159,7 +159,7 @@ public class BrowserRecordWrapper implements BrowserRecord
         return _base;
     }
 
-    public FileManagerActivity getHost()
+    public FileManagerFragment getHost()
     {
         return _host;
     }

@@ -41,7 +41,7 @@ public abstract class ExecutableFileRecordBase extends FileRecord
     {
         if (!isFile())
             return false;
-        String mime = FileOpsService.getMimeTypeFromExtension(_host, new StringPathUtil(getName()).getFileExtension());
+        String mime = FileOpsService.getMimeTypeFromExtension(_host.getContext(), new StringPathUtil(getName()).getFileExtension());
         if (mime.startsWith("image/"))
             openImageFile(_loc, this, false);
         else
@@ -54,7 +54,7 @@ public abstract class ExecutableFileRecordBase extends FileRecord
     {
         if (!isFile())
             return false;
-        String mime = FileOpsService.getMimeTypeFromExtension(_host, new StringPathUtil(getName()).getFileExtension());
+        String mime = FileOpsService.getMimeTypeFromExtension(_host.getContext(), new StringPathUtil(getName()).getFileExtension());
         if (mime.startsWith("image/"))
         {
             openImageFile(_loc, this, true);
@@ -67,7 +67,7 @@ public abstract class ExecutableFileRecordBase extends FileRecord
     protected void extractFileAndStartViewer(Location location, BrowserRecord rec) throws UserException, IOException
     {
         if (rec.getSize() > 1024 * 1024 * _settings.getMaxTempFileSize())
-            throw new UserException(_host, R.string.err_temp_file_is_too_big);
+            throw new UserException(_host.getContext(), R.string.err_temp_file_is_too_big);
         Location loc = location.copy();
         loc.setCurrentPath(rec.getPath());
         TempFilesMonitor.getMonitor(_context).startFile(loc);
@@ -77,7 +77,7 @@ public abstract class ExecutableFileRecordBase extends FileRecord
     {
         Uri devUri = location.getDeviceAccessibleUri(rec.getPath());
         if (devUri != null)
-            FileOpsService.startFileViewer(_host, devUri, FileOpsService.getMimeTypeFromExtension(_context, new StringPathUtil(rec.getName()).getFileExtension()));
+            FileOpsService.startFileViewer(_host.getContext(), devUri, FileOpsService.getMimeTypeFromExtension(_context, new StringPathUtil(rec.getName()).getFileExtension()));
         else
             extractFileAndStartViewer(location, rec);
     }

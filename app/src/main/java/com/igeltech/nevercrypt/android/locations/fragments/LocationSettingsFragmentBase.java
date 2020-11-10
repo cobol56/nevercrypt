@@ -346,7 +346,7 @@ public abstract class LocationSettingsFragmentBase extends PropertiesFragmentBas
             }
             catch (Throwable e)
             {
-                Logger.showAndLog(_context, e);
+                Logger.showAndLog(_host, e);
             }
         }
     }

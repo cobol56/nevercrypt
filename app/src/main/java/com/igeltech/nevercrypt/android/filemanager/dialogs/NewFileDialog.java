@@ -40,7 +40,7 @@ public class NewFileDialog extends DialogFragment
         input.setHint(getString(ft == CreateNewFile.FILE_TYPE_FOLDER ? R.string.enter_new_folder_name : R.string.enter_new_file_name));
         alert.setView(input);
         alert.setPositiveButton(getString(android.R.string.ok), (dialog, whichButton) -> {
-            Receiver r = (Receiver) getFragmentManager().findFragmentByTag(getArguments().getString(ARG_RECEIVER_TAG));
+            Receiver r = (Receiver) getParentFragmentManager().findFragmentByTag(getArguments().getString(ARG_RECEIVER_TAG));
             if (r != null)
                 r.makeNewFile(input.getText().toString(), getArguments().getInt(ARG_TYPE));
             dialog.dismiss();

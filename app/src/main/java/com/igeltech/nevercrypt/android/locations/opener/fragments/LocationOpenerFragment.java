@@ -36,7 +36,7 @@ public class LocationOpenerFragment extends LocationOpenerFragmentCommon impleme
             LocationsManager.storePathsInBundle(b, baseLocation, null);
             b.putString(PARAM_RECEIVER_FRAGMENT_TAG, getTag());
             f.setArguments(b);
-            getFragmentManager().beginTransaction().add(f, getOpenerTag(baseLocation)).commit();
+            getActivity().getSupportFragmentManager().beginTransaction().add(f, getOpenerTag(baseLocation)).commit();
         }
         else
             super.openLocation();

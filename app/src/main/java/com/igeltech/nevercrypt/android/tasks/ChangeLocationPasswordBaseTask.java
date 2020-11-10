@@ -38,7 +38,7 @@ public abstract class ChangeLocationPasswordBaseTask extends TaskFragment
     @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        final LocationSettingsFragment f = (LocationSettingsFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        final LocationSettingsFragment f = (LocationSettingsFragment) getParentFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         if (f == null)
             return null;
         return new ProgressDialogTaskFragmentCallbacks(activity, R.string.changing_password)
@@ -54,7 +54,7 @@ public abstract class ChangeLocationPasswordBaseTask extends TaskFragment
                 }
                 catch (Throwable e)
                 {
-                    Logger.showAndLog(_context, result.getError());
+                    Logger.showAndLog(_host, result.getError());
                 }
             }
         };

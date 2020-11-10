@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
@@ -28,7 +29,6 @@ import androidx.fragment.app.FragmentManager;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.FileListViewAdapter;
-import com.igeltech.nevercrypt.android.filemanager.FileManagerFragment;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.filemanager.dialogs.DeleteConfirmationDialog;
 import com.igeltech.nevercrypt.android.filemanager.dialogs.NewFileDialog;
@@ -80,7 +80,7 @@ import io.reactivex.subjects.Subject;
 
 import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.FILE_BROWSER_SORT_MODE;
 
-public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment implements SortDialog.SortingReceiver, FileManagerFragment, LocationOpenerBaseFragment.LocationOpenerResultReceiver, NewFileDialog.Receiver
+public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment implements SortDialog.SortingReceiver, LocationOpenerBaseFragment.LocationOpenerResultReceiver, NewFileDialog.Receiver
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment";
     public static final String ARG_SCROLL_POSITION = "com.igeltech.nevercrypt.android.SCROLL_POSITION";
@@ -154,10 +154,10 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
-        Logger.debug(TAG + " onActivityCreated");
-        super.onActivityCreated(savedInstanceState);
+        Logger.debug(TAG + " onViewCreated");
+        super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
         _locationsManager = LocationsManager.getLocationsManager(getActivity());
         initListView();
@@ -165,11 +165,12 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             _scrollPosition = savedInstanceState.getInt(ARG_SCROLL_POSITION, 0);
     }
 
+    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         Logger.debug(TAG + " onCreateView");
-        View view = inflater.inflate(R.layout.file_list_view_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_file_list_view, container, false);
         _selectedFileEditText = view.findViewById(R.id.selected_file_edit_text);
         _listView = view.findViewById(android.R.id.list);
         if (showSelectedFilenameEditText())
@@ -289,7 +290,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         menu.findItem(R.id.progressbar).setVisible(isReading);
         menu.findItem(R.id.copy).setVisible(!isReading && !isSelectAction && (isSendAction || hasInClipboard));
         menu.findItem(R.id.move).setVisible(!isReading && !isSelectAction && hasInClipboard);
-        menu.findItem(R.id.new_file).setVisible(!isReading && !isSendAction && allowCreateNewFile() && (!isSelectAction || getFileManagerActivity().allowFileSelect()));
+        menu.findItem(R.id.new_file).setVisible(!isReading && !isSendAction && allowCreateNewFile() && (!isSelectAction || getFileManagerFragment().allowFileSelect()));
         menu.findItem(R.id.new_dir).setVisible(!isReading && allowCreateNewFolder());
         menu.findItem(R.id.select_all).setVisible((!isSelectAction || !isSingleSelectionMode()) && !getSelectableFiles().isEmpty());
     }
@@ -368,7 +369,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             Path curPath = loc.getFS().getPath(path);
             Location srcLoc = loc.copy();
             srcLoc.setCurrentPath(curPath);
-            getFragmentManager().
+            getParentFragmentManager().
                     beginTransaction().
                     add(RenameFileTask.newInstance(srcLoc, newName), RenameFileTask.TAG).
                     commit();
@@ -464,22 +465,13 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     public void updateOptionsMenu()
     {
-        //getFileManagerActivity().updateOptionsMenu();
-        //if(_optionsMenu!=null)
-        //    onPrepareOptionsMenu(_optionsMenu);
-        getFileManagerActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
-    @Override
-    public boolean onBackPressed()
-    {
-        return goToPrevLocation();
-    }
-
-    private boolean goToPrevLocation()
+    public boolean goToPrevLocation()
     {
         Stack<FileListDataFragment.HistoryItem> hs = getFileListDataFragment().getNavigHistory();
-        while (!hs.isEmpty())
+        if (hs.size() > 1)
         {
             FileListDataFragment.HistoryItem hi = hs.pop();
             Uri uri = hi.locationUri;
@@ -615,10 +607,10 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     {
         if (file != null)
         {
-            FileManagerActivity activity = getFileManagerActivity();
-            if (activity != null)
+            FileManagerFragment fragment = getFileManagerFragment();
+            if (fragment != null)
             {
-                file.setHostActivity(activity);
+                file.setHostFragment(fragment);
                 try
                 {
                     Logger.debug(TAG + ": Opening file " + file.getPathDesc());
@@ -626,7 +618,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                 }
                 catch (Exception e)
                 {
-                    Logger.showAndLog(activity, e);
+                    Logger.showAndLog(getContext(), e);
                 }
             }
         }
@@ -662,7 +654,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             startSelectionMode();
         else
         {
-            getFileManagerActivity().showProperties(null, true);
+            getFileManagerFragment().showProperties(null, true);
             updateOptionsMenu();
         }
     }
@@ -670,7 +662,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     @Override
     public void onTargetLocationOpened(Bundle openerArgs, Location location)
     {
-        FileManagerActivity.openFileManager((FileManagerActivity) getActivity(), location, 0);
+        getFileManagerFragment().goTo(location, 0);
     }
 
     @Override
@@ -686,7 +678,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     public @NonNull
     ListView getListView()
     {
-        return _listView == null ? new ListView(getActivity()) : _listView;
+        return _listView == null ? new ListView(getContext()) : _listView;
     }
 
     protected void initListView()
@@ -722,7 +714,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     {
         try
         {
-            if (getFileManagerActivity().isWideScreenLayout())
+            if (getFileManagerFragment().isWideScreenLayout())
                 file.openInplace();
             else
                 file.open();
@@ -736,7 +728,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     @NonNull
     protected FileListDataFragment getFileListDataFragment()
     {
-        return (FileListDataFragment) getFragmentManager().findFragmentByTag(FileListDataFragment.TAG);
+        return (FileListDataFragment) getParentFragmentManager().findFragmentByTag(FileListDataFragment.TAG);
     }
 
     protected ArrayList<BrowserRecord> getSelectedFiles()
@@ -925,7 +917,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     protected void showNewFileDialog(boolean isDir)
     {
-        NewFileDialog.showDialog(getFragmentManager(), isDir ? CreateNewFile.FILE_TYPE_FOLDER : CreateNewFile.FILE_TYPE_FILE, getTag());
+        NewFileDialog.showDialog(getParentFragmentManager(), isDir ? CreateNewFile.FILE_TYPE_FOLDER : CreateNewFile.FILE_TYPE_FILE, getTag());
     }
 
     //full version compat
@@ -933,29 +925,29 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     {
     }
 
-    protected FileManagerActivity getFileManagerActivity()
+    protected FileManagerFragment getFileManagerFragment()
     {
-        return (FileManagerActivity) getActivity();
+        return (FileManagerFragment) getParentFragment();
     }
 
     protected Location getLocation()
     {
-        return getFileManagerActivity().getLocation();
+        return getFileManagerFragment().getLocation();
     }
 
     protected Location getRealLocation()
     {
-        return getFileManagerActivity().getRealLocation();
+        return getFileManagerFragment().getRealLocation();
     }
 
     protected boolean isSelectAction()
     {
-        return getFileManagerActivity().isSelectAction();
+        return getFileManagerFragment().isSelectAction();
     }
 
     protected boolean isSingleSelectionMode()
     {
-        return getFileManagerActivity().isSingleSelectionMode();
+        return getFileManagerFragment().isSingleSelectionMode();
     }
 
     protected boolean allowCreateNewFile()
@@ -995,7 +987,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newUri(cr, recs.size() + " files are in clipboard", MainContentProvider.getCurrentSelectionUri()));
         getActivity().invalidateOptionsMenu();*/
-        getFragmentManager().
+        getParentFragmentManager().
                 beginTransaction().
                 add(CopyToClipboardTask.newInstance(getRealLocation(), getSelectedPaths()), CopyToClipboardTask.TAG).
                 commit();
@@ -1031,7 +1023,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         Bundle b = new Bundle();
         LocationsManager.storePathsInBundle(b, getRealLocation(), getSelectedPaths());
         b.putBoolean(ARG_WIPE_FILES, wipe);
-        DeleteConfirmationDialog.showDialog(getFragmentManager(), b);
+        DeleteConfirmationDialog.showDialog(getParentFragmentManager(), b);
     }
 
     protected void onSelectionChanged()
@@ -1057,7 +1049,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         if (_actionMode != null)
             _actionMode.invalidate();
         updateOptionsMenu();
-        getFileManagerActivity().showProperties(null, true);
+        getFileManagerFragment().showProperties(null, true);
     }
 
     protected void returnSelectionFromContentProvider(Intent data)
@@ -1082,10 +1074,10 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                                 FileListViewAdapter adapter = getAdapter();
                                 if (adapter != null)
                                     adapter.add(rec);
-                                FileManagerActivity act = getFileManagerActivity();
+                                FileManagerActivity act = (FileManagerActivity) getActivity();
                                 if (act != null)
                                 {
-                                    Location loc = act.getRealLocation().copy();
+                                    Location loc = getRealLocation().copy();
                                     loc.setCurrentPath(rec.getPath());
                                     Intent i = new Intent();
                                     LocationsManager.storePathsInIntent(i, loc, Collections.singletonList(rec.getPath()));
@@ -1130,12 +1122,12 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     {
         BrowserRecord br = getSelectedFiles().get(0);
         String name = br.getName();
-        RenameFileDialog.showDialog(getFragmentManager(), br.getPath().getPathString(), name);
+        RenameFileDialog.showDialog(getParentFragmentManager(), br.getPath().getPathString(), name);
     }
 
     protected void sendFiles()
     {
-        getFragmentManager().
+        getParentFragmentManager().
                 beginTransaction().
                 add(PrepareToSendTask.newInstance(getRealLocation(), getSelectedPaths()), PrepareToSendTask.TAG).
                 commit();
@@ -1199,13 +1191,13 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     private void showProperties()
     {
-        getFileManagerActivity().showProperties(null, false);
+        getFileManagerFragment().showProperties(null, false);
     }
 
     private void changeSortMode()
     {
         int mode = UserSettings.getSettings(getActivity()).getFilesSortMode();
-        SortDialog.showDialog(getFragmentManager(), mode, getTag());
+        SortDialog.showDialog(getParentFragmentManager(), mode, getTag());
     }
 
     private void openFileAsContainer()
@@ -1216,7 +1208,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             return;
         loc = loc.copy();
         loc.setCurrentPath(br.getPath());
-        getFragmentManager().
+        getParentFragmentManager().
                 beginTransaction().
                 add(OpenAsContainerTask.newInstance(loc, false), OpenAsContainerTask.TAG).
                 commit();
@@ -1251,7 +1243,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     private void openLocation(Location locToOpen)
     {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getParentFragmentManager();
         String openerTag = LocationOpenerBaseFragment.getOpenerTag(locToOpen);
         if (fm.findFragmentByTag(openerTag) == null)
         {

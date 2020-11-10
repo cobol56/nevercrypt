@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_main" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/about_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:gravity="center_horizontal"
+            android:inputType="none"
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:inputType="none"
+            android:text="@string/donation_notice" />
+
+        <Button
+            android:id="@+id/donation_button"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:text="@string/make_a_donation" />
+
+        <Button
+            android:id="@+id/homepage_button"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:text="@string/homepage" />
+
+        <Button
+            android:id="@+id/check_source_code_button"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:text="@string/check_source_code" />
+
+        <Button
+            android:id="@+id/get_program_log"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:text="@string/get_program_log" />
+    </LinearLayout>
+</ScrollView>

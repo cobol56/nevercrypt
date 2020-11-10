@@ -3,7 +3,7 @@ package com.igeltech.nevercrypt.android.filemanager.records;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileManagerFragment;
 import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
 import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 import com.igeltech.nevercrypt.fs.Path;
@@ -27,7 +27,7 @@ public interface BrowserRecord extends CachedPathInfo
 
     void setSelected(boolean val);
 
-    void setHostActivity(FileManagerActivity host);
+    void setHostFragment(FileManagerFragment host);
 
     int getViewType();
 

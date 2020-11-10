@@ -55,7 +55,7 @@ public class RenameFileDialog extends DialogFragment
 
     private void renameFile(String newName)
     {
-        FileListViewFragment frag = (FileListViewFragment) getFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+        FileListViewFragment frag = (FileListViewFragment) getParentFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
         if (frag != null)
         {
             String prevName = getArguments().getString(ARG_CURRENT_PATH);

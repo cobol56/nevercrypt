@@ -2,8 +2,8 @@ package com.igeltech.nevercrypt.android.locations.fragments;
 
 import com.igeltech.nevercrypt.android.fragments.TaskFragment;
 import com.igeltech.nevercrypt.android.locations.EncFsLocationBase;
+import com.igeltech.nevercrypt.android.locations.opener.fragments.ContainerOpenerFragment;
 import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerBaseFragment;
-import com.igeltech.nevercrypt.android.locations.opener.fragments.LocationOpenerFragment;
 import com.igeltech.nevercrypt.android.tasks.ChangeEncFsPasswordTask;
 
 public class EncFsSettingsFragment extends LocationSettingsFragment
@@ -23,6 +23,6 @@ public class EncFsSettingsFragment extends LocationSettingsFragment
     @Override
     protected LocationOpenerBaseFragment getLocationOpener()
     {
-        return new LocationOpenerFragment();
+        return new ContainerOpenerFragment();
     }
 }

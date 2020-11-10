@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.filemanager.FileManagerFragment;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment.Result;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-public class FilePropertiesFragment extends Fragment implements FileManagerFragment
+public class FilePropertiesFragment extends Fragment
 {
     public static final String TAG = "FilePropertiesFragment";
 
@@ -109,12 +108,6 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
     }
 
     @Override
-    public boolean onBackPressed()
-    {
-        return false;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.file_properties_fragments, container, false);
@@ -181,7 +174,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
 
     private void cancelCalcTask()
     {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getParentFragmentManager();
         if (fm == null)
             return;
         TaskFragment tf = (TaskFragment) fm.findFragmentByTag(CalcPropertiesTaskFragment.TAG);
@@ -192,7 +185,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
     private void startCalcTask()
     {
         cancelCalcTask();
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getParentFragmentManager();
         if (fm != null)
             fm.beginTransaction().add(CalcPropertiesTaskFragment.newInstance(getArguments()), CalcPropertiesTaskFragment.TAG).commit();
     }
@@ -215,7 +208,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
         {
             try
             {
-                FileListDataFragment df = (FileListDataFragment) getFragmentManager().findFragmentByTag(FileListDataFragment.TAG);
+                FileListDataFragment df = (FileListDataFragment) getParentFragmentManager().findFragmentByTag(FileListDataFragment.TAG);
                 if (df != null && df.isAdded())
                     _paths = new ArrayList<>(df.getSelectedPaths());
                 else
@@ -232,7 +225,7 @@ public class FilePropertiesFragment extends Fragment implements FileManagerFragm
         @Override
         protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
         {
-            FragmentManager fm = getFragmentManager();
+            FragmentManager fm = getParentFragmentManager();
             if (fm == null)
                 return null;
             FilePropertiesFragment f = (FilePropertiesFragment) fm.findFragmentByTag(FilePropertiesFragment.TAG);

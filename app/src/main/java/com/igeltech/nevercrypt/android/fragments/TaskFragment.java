@@ -213,7 +213,7 @@ public abstract class TaskFragment extends Fragment
 
     protected void detachTask()
     {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getParentFragmentManager();
         if (fm != null)
         {
             fm.beginTransaction().remove(TaskFragment.this).commitAllowingStateLoss();

@@ -49,7 +49,7 @@ public class OverwriteContainerDialog extends DialogFragment
 
     protected void doOverwrite()
     {
-        CreateLocationFragment f = (CreateLocationFragment) getFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
+        CreateLocationFragment f = (CreateLocationFragment) getParentFragmentManager().findFragmentByTag(SettingsBaseActivity.SETTINGS_FRAGMENT_TAG);
         if (f != null)
         {
             f.setOverwrite(true);

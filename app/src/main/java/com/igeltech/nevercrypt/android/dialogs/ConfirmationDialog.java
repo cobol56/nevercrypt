@@ -52,7 +52,7 @@ public abstract class ConfirmationDialog extends AppCompatDialogFragment
         String tag = args == null ? null : args.getString(ARG_RECEIVER_TAG);
         if (tag != null)
         {
-            Fragment f = getFragmentManager().findFragmentByTag(tag);
+            Fragment f = getParentFragmentManager().findFragmentByTag(tag);
             if (f instanceof Receiver)
                 return (Receiver) f;
         }

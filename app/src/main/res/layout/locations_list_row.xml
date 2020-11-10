@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal"
-	android:background="@android:drawable/list_selector_background"
-	style="@style/LocationListRow"
-	tools:ignore="RtlSymmetry,UseCompoundDrawables" >
-		<ImageView
-			android:id="@android:id/icon"
-			style="@style/LocationListIcon"
-			android:contentDescription="@string/location_type"/>
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@android:id/text1"
-			style="@style/LocationListText"/>
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/list_selector_background"
+    android:descendantFocusability="blocksDescendants"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    tools:ignore="RtlSymmetry,UseCompoundDrawables">
+
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:layout_toRightOf="@android:id/icon"
+        android:textSize="16sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@android:id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"
+        android:text="@string/close"
+        app:icon="@drawable/ic_menu_protect" />
+</RelativeLayout>

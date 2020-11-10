@@ -39,7 +39,7 @@ public class FolderRecord extends FsBrowserRecord
     {
         if (_host == null)
             return null;
-        LayoutInflater inflater = (LayoutInflater) _host.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = _host.getLayoutInflater();
         View v = inflater.inflate(R.layout.fs_browser_folder_row, parent, false);
         ((ViewGroup) v).setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         updateView(v, position);
@@ -70,6 +70,6 @@ public class FolderRecord extends FsBrowserRecord
     @Override
     protected Drawable getDefaultIcon()
     {
-        return getFolderIcon(_host);
+        return getFolderIcon(_host.getContext());
     }
 }

@@ -1,4 +1,4 @@
-package com.igeltech.nevercrypt.android.dialogs;
+package com.igeltech.nevercrypt.android.fragments;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.Fragment;
 
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
@@ -31,16 +31,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-
-public abstract class AboutDialogBase extends DialogFragment
+public class AboutFragment extends Fragment
 {
-    public static void showDialog(FragmentManager fm)
-    {
-        DialogFragment newFragment = new AboutDialog();
-        newFragment.show(fm, "AboutDialog");
-    }
-
     public static String getVersionName(Context context)
     {
         try
@@ -57,11 +49,16 @@ public abstract class AboutDialogBase extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.about_dialog, container);
+        return inflater.inflate(R.layout.fragment_about, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
         String verName = getVersionName(getActivity());
         String aboutMessage = String.format("%s v%s\n%s", getResources().getString(R.string.app_name), verName, getResources().getString(R.string.about_message));
-        ((AppCompatTextView) v.findViewById(R.id.about_text_view)).setText(aboutMessage);
-        v.findViewById(R.id.homepage_button).setOnClickListener(v12 -> {
+        ((AppCompatTextView) view.findViewById(R.id.about_text_view)).setText(aboutMessage);
+        view.findViewById(R.id.homepage_button).setOnClickListener(view1 -> {
             try
             {
                 openWebPage(GlobalConfig.HOMEPAGE_URL);
@@ -71,7 +68,7 @@ public abstract class AboutDialogBase extends DialogFragment
                 Logger.showAndLog(getActivity(), e);
             }
         });
-        v.findViewById(R.id.get_program_log).setOnClickListener(view -> {
+        view.findViewById(R.id.get_program_log).setOnClickListener(view1 -> {
             try
             {
                 saveDebugLog();
@@ -81,8 +78,9 @@ public abstract class AboutDialogBase extends DialogFragment
                 Logger.showAndLog(getActivity(), e);
             }
         });
-        v.findViewById(R.id.close_button).setOnClickListener(v1 -> getDialog().cancel());
-        return v;
+        view.findViewById(R.id.donation_button).setOnClickListener(view1 -> openWebPage(GlobalConfig.DONATIONS_URL));
+        view.findViewById(R.id.check_source_code_button).setOnClickListener(view1 -> openWebPage(GlobalConfig.SOURCE_CODE_URL));
+        super.onViewCreated(view, savedInstanceState);
     }
 
     protected void openWebPage(String url)
@@ -95,31 +93,6 @@ public abstract class AboutDialogBase extends DialogFragment
         {
             Logger.showAndLog(getActivity(), e);
         }
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        setWidthHeight();
-    }
-
-    protected void setWidthHeight()
-    {
-        Window w = getDialog().getWindow();
-        if (w != null)
-            w.setLayout(calcWidth(), calcHeight());
-    }
-
-    protected int calcWidth()
-    {
-        return getResources().getDimensionPixelSize(R.dimen.about_dialog_width);
-    }
-
-    protected int calcHeight()
-    {
-        return WRAP_CONTENT;
-        //return getResources().getDimensionPixelSize(R.dimen.about_dialog_heigh);
     }
 
     private void saveDebugLog() throws IOException, ApplicationException
@@ -152,4 +125,5 @@ public abstract class AboutDialogBase extends DialogFragment
         startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ctx.startActivity(startIntent);
     }
+
 }

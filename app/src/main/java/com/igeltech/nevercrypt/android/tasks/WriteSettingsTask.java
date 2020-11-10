@@ -64,7 +64,7 @@ public class WriteSettingsTask extends TaskFragment
                 }
                 catch (Throwable e)
                 {
-                    Logger.showAndLog(_context, result.getError());
+                    Logger.showAndLog(_host, result.getError());
                 }
             }
         };

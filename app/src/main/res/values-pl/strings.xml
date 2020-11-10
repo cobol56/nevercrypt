@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="add_container">Dodaj istniejący kontener</string>
+    <string name="add_container">Dodaj kontener</string>
     <string name="ok">OK</string>
     <string name="select">Wybierz</string>
     <string name="enter_new_folder_name">Podaj nową nazwę katalogu</string>
@@ -61,7 +61,6 @@
     <string name="wiping_files">Nadpisuję pliki</string>
     <string name="creating_container">Tworzenie kontenera</string>
     <string name="err_failed_saving_changes">Niepowodzenie zapisu zmian. Spróbuj zapisać plik ponownie lub skopiuj plik ręcznie. Zobacz detale w logach programu.</string>
-    <string name="help">Pomoc</string>
     <string name="select_file">Wybierz plik</string>
     <string name="select_all">Wybór wszystkiego</string>
     <string name="apply_to_all">Zastosuj do wszystkiego</string>
@@ -98,7 +97,6 @@
     <string name="rotate_right">Obrót w prawo</string>
     <string name="encryption_algorithm">Algorytm szyfrowania</string>
     <string name="hash_algorithm">Algorytm mieszania</string>
-    <string name="containers">Kontenery</string>
     <string name="close">Zamknij</string>
     <string name="target_path">Ścieżka docelowa</string>
     <string name="password">Hasło</string>
@@ -136,14 +134,10 @@
     <string name="invalid_master_password">Złe hasło główne</string>
     <string name="enter_master_password">Wprowadź hasło główne</string>
     <string name="master_password">Hasło główne</string>
-    <string name="location_type">typ likalizacji</string>
-    <string name="drawer_open">Otwórz szufladę</string>
-    <string name="drawer_close">Zamknij szufladę</string>
     <string name="add_new">Dodaj nowy</string>
     <string name="create_new_container_or_add_existing_container">Czy chcesz utworzyć nowy kontener, czy dodać już isniejący?</string>
     <string name="changing_password">Zmiana hasła</string>
     <string name="choose_files_to_copy_or_move">Wybierz pliki do skopiowania lub przeniesienia…</string>
-    <string name="manage_containers">Zarządzanie kontenerami</string>
     <string name="force_close_request">Nie mogę zamknąć \"%s\". Czy chcesz wymusić zamknięcie?</string>
     <string name="debug_log">Dziennik debugowania</string>
     <string name="edit">Edycja</string>

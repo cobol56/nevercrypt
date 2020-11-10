@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_locationmanager"
+    app:startDestination="@id/locationManagerFragment">
+
+    <fragment
+        android:id="@+id/locationManagerFragment"
+        android:name="com.igeltech.nevercrypt.android.locations.fragments.LocationManagerFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_locationmanager">
+
+        <action
+            android:id="@+id/navigate_to_add_container"
+            app:destination="@id/addContainerFragment" />
+        <action
+            android:id="@+id/navigate_to_file_manager"
+            app:destination="@id/fileManagerActivity" />
+        <action
+            android:id="@+id/action_LocationListFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_locationListFragment_to_createLocationActivity"
+            app:destination="@id/createLocationActivity" />
+        <action
+            android:id="@+id/action_locationManagerFragment_to_programSettingsActivity"
+            app:destination="@id/programSettingsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/addContainerFragment"
+        android:name="com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment"
+        android:label="@string/add_new">
+
+        <action
+            android:id="@+id/action_addContainerFragment_to_locationManagerFragment"
+            app:destination="@id/locationManagerFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/createLocationActivity"
+        android:name="com.igeltech.nevercrypt.android.locations.activities.CreateLocationActivity"
+        android:label="Create or add a container" />
+    <activity
+        android:id="@+id/fileManagerActivity"
+        android:name="com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity"
+        android:label="File Manager">
+
+        <argument
+            android:name="location"
+            app:argType="android.os.Bundle" />
+        <argument
+            android:name="scrollPosition"
+            app:argType="integer" />
+    </activity>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.igeltech.nevercrypt.android.fragments.AboutFragment"
+        android:label="About this App">
+
+        <action
+            android:id="@+id/action_aboutDialog_to_LocationListFragment"
+            app:destination="@id/locationManagerFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/programSettingsActivity"
+        android:name="com.igeltech.nevercrypt.android.settings.activities.ProgramSettingsActivity"
+        android:label="ProgramSettingsActivity" />
+</navigation>

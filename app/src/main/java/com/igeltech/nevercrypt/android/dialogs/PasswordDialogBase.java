@@ -215,7 +215,7 @@ public abstract class PasswordDialogBase extends RxDialogFragment
     {
         Bundle args = getArguments();
         String recTag = args != null ? args.getString(ARG_RECEIVER_FRAGMENT_TAG) : null;
-        return recTag != null ? (PasswordReceiver) getFragmentManager().findFragmentByTag(recTag) : null;
+        return recTag != null ? (PasswordReceiver) getParentFragmentManager().findFragmentByTag(recTag) : null;
     }
 
     protected boolean checkInput()

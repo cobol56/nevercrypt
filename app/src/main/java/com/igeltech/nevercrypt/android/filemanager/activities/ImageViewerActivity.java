@@ -85,7 +85,7 @@ public class ImageViewerActivity extends AppCompatActivity implements PreviewFra
                 }
                 catch (Throwable e)
                 {
-                    Logger.showAndLog(_context, result.getError());
+                    Logger.showAndLog(_host, result.getError());
                 }
                 if (getPreviewFragment() == null)
                     showFragment(getIntent().getStringExtra(INTENT_PARAM_CURRENT_PATH));

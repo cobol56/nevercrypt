@@ -1,24 +1,24 @@
 package com.igeltech.nevercrypt.android.helpers;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
 import com.igeltech.nevercrypt.android.fragments.TaskFragment.Result;
 import com.igeltech.nevercrypt.android.fragments.TaskFragment.TaskCallbacks;
 
 public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
 {
-    protected final FragmentActivity _context;
+    protected final Activity _host;
     private final int _dialogTextResId;
     private DialogFragment _dialog;
 
-    public ProgressDialogTaskFragmentCallbacks(FragmentActivity context, int dialogTextResId)
+    public ProgressDialogTaskFragmentCallbacks(Activity host, int dialogTextResId)
     {
-        _context = context;
+        _host = host;
         _dialogTextResId = dialogTextResId;
     }
 
@@ -32,7 +32,7 @@ public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
     {
         _dialog = initDialog(args);
         if (_dialog != null)
-            _dialog.show(_context.getFragmentManager(), Dialog.TAG);
+            _dialog.show(_host.getFragmentManager(), Dialog.TAG);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ProgressDialogTaskFragmentCallbacks implements TaskCallbacks
 
     protected DialogFragment initDialog(Bundle args)
     {
-        return Dialog.newInstance(_context.getText(_dialogTextResId).toString());
+        return Dialog.newInstance(_host.getText(_dialogTextResId).toString());
     }
 
     public static class Dialog extends DialogFragment

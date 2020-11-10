@@ -85,11 +85,6 @@ public class FileListDataFragment extends RxFragment
     private NavigableSet<BrowserRecord> _fileList;
     private Disposable _readLocationObserver;
 
-    public static FileListDataFragment newInstance()
-    {
-        return new FileListDataFragment();
-    }
-
     public static <T extends CachedPathInfo> Comparator<T> getComparator(Settings settings)
     {
         switch (settings.getFilesSortMode())
@@ -144,7 +139,7 @@ public class FileListDataFragment extends RxFragment
         {
             if (_fileList != null)
                 for (BrowserRecord br : _fileList)
-                    br.setHostActivity((FileManagerActivity) getActivity());
+                    br.setHostFragment((FileManagerFragment) getParentFragment());
         }
     }
 
@@ -176,7 +171,7 @@ public class FileListDataFragment extends RxFragment
         {
             if (_fileList != null)
                 for (BrowserRecord br : _fileList)
-                    br.setHostActivity(null);
+                    br.setHostFragment(null);
         }
     }
 
@@ -397,8 +392,8 @@ public class FileListDataFragment extends RxFragment
 
     private void addRecordToList(BrowserRecord rec)
     {
-        FileManagerActivity fm = (FileManagerActivity) getActivity();
-        rec.setHostActivity(fm);
+        FileManagerFragment fm = (FileManagerFragment) getParentFragment();
+        rec.setHostFragment(fm);
         synchronized (_filesListSync)
         {
             if (_fileList != null)

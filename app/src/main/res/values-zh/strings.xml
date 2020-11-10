@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="add_container">添加现有容器</string>
+    <string name="add_container">添加容器</string>
     <string name="app_name" translatable="false"><xliff:g id="program_name">NeverCrypt</xliff:g></string>
     <string name="ok">确认</string>
     <string name="select">选取</string>
@@ -64,7 +64,6 @@
     <string name="wiping_files">擦除文件</string>
     <string name="creating_container">创建容器</string>
     <string name="err_failed_saving_changes">保存更改失败.尝试再次保存或手动复制文件.详细信息请查看程序日志文件.</string>
-    <string name="help">帮助</string>
     <string name="select_file">选取文件</string>
     <string name="select_all">选取全部</string>
     <string name="apply_to_all">应用到全部</string>
@@ -101,7 +100,6 @@
     <string name="rotate_right">向右旋转</string>
     <string name="encryption_algorithm">加密算法</string>
     <string name="hash_algorithm">Hash算法</string>
-    <string name="containers">容器</string>
     <string name="close">关闭</string>
     <string name="target_path">目标路径</string>
     <string name="password">密码</string>
@@ -140,14 +138,10 @@
     <string name="invalid_master_password">管理密码无效</string>
     <string name="enter_master_password">输入管理密码</string>
     <string name="master_password">管理密码</string>
-    <string name="location_type">位置类型</string>
-    <string name="drawer_open">打开抽屉</string>
-    <string name="drawer_close">关闭抽屉</string>
     <string name="add_new">添加新的</string>
     <string name="create_new_container_or_add_existing_container">你要创建一个新的容器或添加现有容器吗？</string>
     <string name="changing_password">正在更改密码</string>
     <string name="choose_files_to_copy_or_move">选取文件复制或移动…</string>
-    <string name="manage_containers">容器管理</string>
     <string name="force_close_request">不能关闭 <xliff:g id="path_to_container">\"%1$s\"</xliff:g>容器. 你要强行关闭吗?</string>
     <string name="debug_log">调试日志</string>
     <string name="edit">编辑</string>

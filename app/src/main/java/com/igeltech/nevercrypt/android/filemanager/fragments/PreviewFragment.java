@@ -15,7 +15,6 @@ import android.widget.ViewSwitcher;
 
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.filemanager.FileManagerFragment;
 import com.igeltech.nevercrypt.android.filemanager.tasks.LoadPathInfoObservable;
 import com.igeltech.nevercrypt.android.filemanager.tasks.LoadedImage;
 import com.igeltech.nevercrypt.android.helpers.CachedPathInfo;
@@ -45,7 +44,7 @@ import io.reactivex.subjects.Subject;
 import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.IMAGE_VIEWER_AUTO_ZOOM_ENABLED;
 import static com.igeltech.nevercrypt.android.settings.UserSettingsCommon.IMAGE_VIEWER_FULL_SCREEN_ENABLED;
 
-public class PreviewFragment extends RxFragment implements FileManagerFragment
+public class PreviewFragment extends RxFragment
 {
     public static final String TAG = "PreviewFragment";
     public static final String STATE_CURRENT_PATH = "com.igeltech.nevercrypt.android.CURRENT_PATH";
@@ -171,15 +170,9 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
     }
 
     @Override
-    public boolean onBackPressed()
-    {
-        return false;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.preview_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_preview, container, false);
         _mainImageView = view.findViewById(R.id.imageView);
         _mainImageView.setAutoZoom(UserSettings.getSettings(getActivity()).isImageViewerAutoZoomEnabled());
         _mainImageView.setNavigListener(new NavigListener()
@@ -221,6 +214,9 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
         });
         if (UserSettings.getSettings(getActivity()).isImageViewerFullScreenModeEnabled())
             _mainImageView.setFullscreenMode(true);
+        view.getViewTreeObserver().addOnWindowFocusChangeListener(hasFocus -> {
+            updateImageViewFullScreen();
+        });
         return view;
     }
 
@@ -379,7 +375,7 @@ public class PreviewFragment extends RxFragment implements FileManagerFragment
 
     private Host getPreviewFragmentHost()
     {
-        return (Host) getActivity();
+        return (Host) getParentFragment();
     }
 
     private void showLoading()

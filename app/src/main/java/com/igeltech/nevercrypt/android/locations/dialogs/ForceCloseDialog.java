@@ -38,7 +38,7 @@ public class ForceCloseDialog extends ConfirmationDialog
             closerArgs = new Bundle();
         closerArgs.putBoolean(LocationCloserBaseFragment.ARG_FORCE_CLOSE, true);
         LocationCloserBaseFragment closer = (LocationCloserBaseFragment) Fragment.instantiate(getActivity(), getArguments().getString(ARG_CLOSER_CLASS_NAME), closerArgs);
-        getFragmentManager().beginTransaction().add(closer, getArguments().getString(LocationCloserBaseFragment.PARAM_RECEIVER_FRAGMENT_TAG)).commit();
+        getParentFragmentManager().beginTransaction().add(closer, getArguments().getString(LocationCloserBaseFragment.PARAM_RECEIVER_FRAGMENT_TAG)).commit();
     }
 
     @Override

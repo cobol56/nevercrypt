@@ -2,7 +2,7 @@ package com.igeltech.nevercrypt.android.settings.container;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.veracrypt.FormatInfo;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ContainerFormatHintPropertyEditor extends ChoiceDialogPropertyEditor
 {
-    public ContainerFormatHintPropertyEditor(ContainerSettingsFragmentBase containerSettingsFragment)
+    public ContainerFormatHintPropertyEditor(LocationSettingsFragment containerSettingsFragment)
     {
         super(containerSettingsFragment, R.string.container_format, R.string.container_format_desc, containerSettingsFragment.getTag());
     }

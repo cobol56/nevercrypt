@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileManagerFragment;
 import com.igeltech.nevercrypt.android.helpers.CachedPathInfoBase;
 import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 import com.igeltech.nevercrypt.fs.Path;
@@ -25,7 +26,7 @@ import java.io.IOException;
 public abstract class FsBrowserRecord extends CachedPathInfoBase implements BrowserRecord
 {
     protected final Context _context;
-    protected FileManagerActivity _host;
+    protected FileManagerFragment _host;
     private boolean _isSelected;
 
     public FsBrowserRecord(Context context)
@@ -33,9 +34,9 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
         _context = context;
     }
 
-    public static void updateRowView(FileManagerActivity host, Object item)
+    public static void updateRowView(FileManagerFragment host, Object item)
     {
-        updateRowView((FileListViewFragment) host.getSupportFragmentManager().findFragmentByTag(FileListViewFragment.TAG), item);
+        updateRowView((FileListViewFragment) host.getChildFragmentManager().findFragmentByTag(FileListViewFragment.TAG), item);
     }
 
     public static void updateRowView(FileListViewFragment host, Object item)
@@ -100,7 +101,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     {
         if (_host == null)
             return null;
-        LayoutInflater inflater = (LayoutInflater) _host.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = _host.getLayoutInflater();
         View v = inflater.inflate(R.layout.fs_browser_row, parent, false);
         ((ViewGroup) v).setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         updateView(v, position);
@@ -204,12 +205,6 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     }
 
     @Override
-    public void setHostActivity(FileManagerActivity host)
-    {
-        _host = host;
-    }
-
-    @Override
     public boolean needLoadExtendedInfo()
     {
         return false;
@@ -225,7 +220,13 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 
     protected FileListViewFragment getHostFragment()
     {
-        return _host == null ? null : (FileListViewFragment) _host.getSupportFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+        return _host == null ? null : (FileListViewFragment) _host.getChildFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+    }
+
+    @Override
+    public void setHostFragment(FileManagerFragment host)
+    {
+        _host = host;
     }
 
     public static class RowViewInfo

@@ -3,7 +3,7 @@ package com.igeltech.nevercrypt.android.service;
 import android.content.Intent;
 
 import com.igeltech.nevercrypt.android.R;
-import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileManagerFragment;
 import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
 import com.igeltech.nevercrypt.fs.Directory;
 import com.igeltech.nevercrypt.fs.FSRecord;
@@ -59,7 +59,7 @@ class MoveFilesTask extends CopyFilesTask
     @Override
     protected Intent getOverwriteRequestIntent(SrcDstCollection filesToOverwrite) throws IOException, JSONException
     {
-        return FileManagerActivity.getOverwriteRequestIntent(_context, true, filesToOverwrite);
+        return FileManagerFragment.getOverwriteRequestIntent(_context, true, filesToOverwrite);
     }
 
     @Override

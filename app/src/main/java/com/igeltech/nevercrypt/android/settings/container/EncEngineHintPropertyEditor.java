@@ -2,7 +2,7 @@ package com.igeltech.nevercrypt.android.settings.container;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragment;
-import com.igeltech.nevercrypt.android.locations.fragments.ContainerSettingsFragmentBase;
+import com.igeltech.nevercrypt.android.locations.fragments.LocationSettingsFragment;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.container.ContainerFormatInfo;
 import com.igeltech.nevercrypt.container.VolumeLayoutBase;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EncEngineHintPropertyEditor extends ChoiceDialogPropertyEditor
 {
-    public EncEngineHintPropertyEditor(ContainerSettingsFragmentBase containerSettingsFragment)
+    public EncEngineHintPropertyEditor(LocationSettingsFragment containerSettingsFragment)
     {
         super(containerSettingsFragment, R.string.encryption_algorithm, R.string.encryption_alg_desc, containerSettingsFragment.getTag());
     }

@@ -110,7 +110,7 @@ public class CopyToClipboardTask extends TaskFragment
                 try
                 {
                     result.getResult();
-                    FileListViewFragment f = (FileListViewFragment) getFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+                    FileListViewFragment f = (FileListViewFragment) getParentFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
                     if (f != null)
                     {
                         Logger.debug("CopyToClipboard task onCompleted: updating options menu");

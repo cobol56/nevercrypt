@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.filemanager.fragments.FileManagerFragment;
 import com.igeltech.nevercrypt.android.locations.tasks.AddExistingContainerTaskFragment;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
@@ -36,6 +36,7 @@ public class CheckStartPathTask extends AddExistingContainerTaskFragment
     @Override
     protected TaskCallbacks getTaskCallbacks(FragmentActivity activity)
     {
-        return ((FileManagerActivity) activity).getCheckStartPathCallbacks();
+        FileManagerFragment f = (FileManagerFragment) activity.getSupportFragmentManager().findFragmentByTag(FileManagerFragment.TAG);
+        return f.getCheckStartPathCallbacks();
     }
 }

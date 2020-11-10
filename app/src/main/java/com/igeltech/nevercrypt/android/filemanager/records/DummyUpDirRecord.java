@@ -64,6 +64,6 @@ public class DummyUpDirRecord extends FolderRecord
     @Override
     protected Drawable getDefaultIcon()
     {
-        return getIcon(_host);
+        return getIcon(_host.getContext());
     }
 }

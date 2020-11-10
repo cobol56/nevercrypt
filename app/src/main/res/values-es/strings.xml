@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="add_container">Añadir contenedor existente</string>
+    <string name="add_container">Añadir contenedor</string>
     <string name="ok">OK</string>
     <string name="select">Seleccionar</string>
     <string name="enter_new_folder_name">Introduzca el nombre de la nueva carpeta</string>
@@ -62,7 +62,6 @@
     <string name="wiping_files">Limpiando ficheros</string>
     <string name="creating_container">Creando contenedor</string>
     <string name="err_failed_saving_changes">No se han podido guardar los cambios. Intente guardar el fichero nuevamente o cópielo manualmente. Consulte el registro de la aplicación para más detalles.</string>
-    <string name="help">Ayuda</string>
     <string name="select_file">Seleccionar fichero</string>
     <string name="select_all">Seleccionar todo</string>
     <string name="apply_to_all">Aplicar a todo</string>
@@ -99,7 +98,6 @@
     <string name="rotate_right">Rotar a la derecha</string>
     <string name="encryption_algorithm">Algoritmo de encriptado</string>
     <string name="hash_algorithm">Algoritmo de hash</string>
-    <string name="containers">Contenedores</string>
     <string name="close">Cerrar</string>
     <string name="target_path">Ruta destino</string>
     <string name="password">Contraseña</string>
@@ -138,14 +136,10 @@
     <string name="invalid_master_password">Contraseña maestra inválida</string>
     <string name="enter_master_password">Introduzca la contraseña maestra</string>
     <string name="master_password">Contraseña maestra</string>
-    <string name="location_type">Tipo de localización</string>
-    <string name="drawer_open">Abrir cajón</string>
-    <string name="drawer_close">Cerrar cajón</string>
     <string name="add_new">Añadir nuevo</string>
     <string name="create_new_container_or_add_existing_container">¿Desea crear un nuevo contenedor o añadir uno existente?</string>
     <string name="changing_password">Cambiando contraseña</string>
     <string name="choose_files_to_copy_or_move">Seleccione los ficheros para copiar o mover…</string>
-    <string name="manage_containers">Gestionar contenedores</string>
     <string name="force_close_request">No ha sido posible cerrar el contenedor \"%1$s\". ¿Desea forzar el cierre del contenedor?</string>
     <string name="debug_log">Registro de depuración</string>
     <string name="edit">Editar</string>

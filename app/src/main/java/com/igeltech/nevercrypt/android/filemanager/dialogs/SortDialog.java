@@ -68,7 +68,7 @@ public class SortDialog extends DialogFragment
         String rft = getArguments().getString(ARG_RECEIVER_FRAGMENT_TAG);
         if (rft != null)
         {
-            SortingReceiver sr = (SortingReceiver) getFragmentManager().findFragmentByTag(rft);
+            SortingReceiver sr = (SortingReceiver) getParentFragmentManager().findFragmentByTag(rft);
             if (sr != null)
                 sr.applySort(sortMode);
         }
