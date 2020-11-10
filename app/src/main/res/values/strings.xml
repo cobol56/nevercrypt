@@ -8,7 +8,7 @@
     <string name="new_file">New file</string>
     <string name="new_dir">New folder</string>
     <string name="remove_from_list">Remove from the list</string>
-    <string name="processing_file"><xliff:g id="filename" example="/sdcard/data.txt">%1$s</xliff:g> (<xliff:g id="number of files processed">%2$d</xliff:g> of <xliff:g id="total_number_of_files">%3$d</xliff:g>)</string>
+    <string name="processing_file"><xliff:g example="/sdcard/data.txt" id="filename">%1$s</xliff:g> (<xliff:g id="number of files processed">%2$d</xliff:g> of <xliff:g id="total_number_of_files">%3$d</xliff:g>)</string>
     <string name="copying_files">Copying files</string>
     <string name="copy_failed">Copy failed</string>
     <string name="move_failed">Move failed</string>
@@ -19,7 +19,6 @@
     <string name="enter_new_file_name">Enter new file name</string>
     <string name="settings">Settings</string>
     <string name="bad_container_file_or_wrong_password">Wrong password or unsupported container format</string>
-    <string name="main_settings">Main settings</string>
     <string name="app_shortcut"><xliff:g id="program_name">NeverCrypt</xliff:g> shortcut</string>
     <string name="enter_widget_title">Enter widget title</string>
     <string name="select_path">Select path</string>
@@ -27,12 +26,12 @@
     <string name="container_size_desc">Enter the size of the container in megabytes</string>
     <string name="container_password">Container password</string>
     <string name="create_new_container">Create new container</string>
-    <string name="cancel_task_confirmation">Are you sure you want to cancel current task?</string>
+    <string name="cancel_task_confirmation">Are you sure you want to cancel the current task?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="skip">Skip</string>
     <string name="overwrite">Overwrite</string>
-    <string name="file_already_exists">File <xliff:g id="filename" example="example.txt">%1$s</xliff:g> already exists at <xliff:g id="directory" example="/sdcard">%2$s</xliff:g>.</string>
+    <string name="file_already_exists">File <xliff:g example="example.txt" id="filename">%1$s</xliff:g> already exists at <xliff:g example="/sdcard" id="directory">%2$s</xliff:g>.</string>
     <string name="size">Size</string>
     <string name="number_of_files">Number of files</string>
     <string name="properties">Properties</string>
@@ -60,7 +59,7 @@
     <string name="donation_notice">This software is open source. It is a fork of EDS by Sovworks. <b>Please support</b> the development of by making a donation.</string>
     <string name="make_a_donation">Make a donation</string>
     <string name="check_source_code">Check the source code</string>
-    <string name="opening_container">Opening</string>
+    <string name="opening_container">Opening container</string>
     <string name="container_file_name_is_not_specified">The file name of the container is not specified</string>
     <string name="do_you_want_to_overwrite_existing_file">Do you want to overwrite existing file?</string>
     <string name="enter_file_name">Enter the filename</string>
@@ -150,15 +149,15 @@
     <string name="debug_log">Debug log</string>
     <string name="edit">Edit</string>
     <string name="content_provider" translatable="false">Content provider</string>
-    <string name="container_info_summary">Free space: <xliff:g id="free_space" example="10Mb">%1$s</xliff:g>; Total space: <xliff:g id="total_space" example="100Mb">%2$s</xliff:g>.</string>
+    <string name="container_info_summary">Free space: <xliff:g example="10Mb" id="free_space">%1$s</xliff:g>; Total space: <xliff:g example="100Mb" id="total_space">%2$s</xliff:g>.</string>
     <string name="disable">Disable</string>
     <string name="copy_here">Copy here</string>
     <string name="move_here">Move here</string>
     <string name="number_of_kdf_iterations_veracrypt_descr">Enter the <xliff:g id="key_derivation_function">KDF</xliff:g> iterations multiplier (<xliff:g id="pim">PIM</xliff:g>). The greater value you choose the longer it will take to open the container. Enter 0 to use the default value. Check <xliff:g id="url">https://veracrypt.codeplex.com/wikipage?title=Personal%20Iterations%20Multiplier%20(PIM)</xliff:g> for details.</string>
     <string name="kdf_iterations_multiplier"><xliff:g id="key_derivation_function">KDF</xliff:g> iterations multiplier (<xliff:g id="pim">PIM</xliff:g>)</string>
-    <string name="container_format_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>Container format is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="container_format" example="VeraCrypt">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
-    <string name="encryption_alg_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>Encryption algorithm is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="encryption_algorithm_name" example="AES">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
-    <string name="kdf_base_hash_func_is"><xliff:g id="key_derivation_function">KDF</xliff:g> base hash function is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="hash_algorithm_name" example="SHA-256">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.</string>
+    <string name="container_format_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>Container format is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g example="VeraCrypt" id="container_format">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
+    <string name="encryption_alg_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>Encryption algorithm is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g example="AES" id="encryption_algorithm_name">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
+    <string name="kdf_base_hash_func_is"><xliff:g id="key_derivation_function">KDF</xliff:g> base hash function is <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g example="SHA-256" id="hash_algorithm_name">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.</string>
     <string name="hidden">hidden</string>
     <string name="overwrite_and_delete">Overwrite and delete</string>
     <string name="list_is_empty">The list is empty</string>

@@ -5,9 +5,9 @@
     <string name="select">Seç</string>
     <string name="new_file">Yeni Dosya</string>
     <string name="new_dir">Yeni Klasör</string>
-    <string formatted="false" name="processing_file">%1$s (%2$d of %3$d).</string>
+    <string name="processing_file" formatted="false">%1$s (%2$d of %3$d).</string>
     <string name="copying_files">Dosyalar Kopyalanıyor</string>
-    <string formatted="false" name="copy_failed">Kopyalama Başarısız</string>
+    <string name="copy_failed" formatted="false">Kopyalama Başarısız</string>
     <string name="move_failed">Taşıma Başarısız</string>
     <string name="delete">Sil</string>
     <string name="deleting_files">Dosyalar Siliniyor</string>
@@ -16,7 +16,6 @@
     <string name="enter_new_file_name">Yeni Dosya İsmi Gir</string>
     <string name="settings">Ayarlar</string>
     <string name="bad_container_file_or_wrong_password">Konteyner Dosyası Değil veya Hatalı Şifre</string>
-    <string name="main_settings">Temel Ayarlar</string>
     <string name="app_shortcut"><xliff:g id="program_name">NeverCrypt</xliff:g> Kısayolu</string>
     <string name="enter_widget_title">Widget Başlığı Gir</string>
     <string name="select_path">Yol Seç</string>

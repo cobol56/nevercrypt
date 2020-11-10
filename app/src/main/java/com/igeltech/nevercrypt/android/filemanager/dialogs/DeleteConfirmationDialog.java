@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
@@ -49,8 +49,8 @@ public class DeleteConfirmationDialog extends AppCompatDialogFragment
         LayoutInflater inflater = (LayoutInflater) builder.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (inflater == null)
             throw new RuntimeException("Inflater is null");
-        View v = inflater.inflate(R.layout.delete_confirmation_dialog, null);
-        AppCompatTextView tv = v.findViewById(android.R.id.text1);
+        View v = inflater.inflate(R.layout.dialog_delete_confirmation, null);
+        MaterialTextView tv = v.findViewById(android.R.id.text1);
         tv.setText(getString(R.string.do_you_really_want_to_delete_selected_files, "..."));
         builder.setView(v);
         builder

@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 
@@ -18,7 +18,7 @@ import java.io.IOException;
 public abstract class PathPropertyEditor extends PropertyEditorBase
 {
     private static final int SELECT_PATH_REQ_CODE = 1;
-    protected AppCompatTextView _selectedValueTextView;
+    protected MaterialTextView _selectedValueTextView;
 
     public PathPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId, String hostFragmentTag)
     {

@@ -2,6 +2,7 @@ package com.igeltech.nevercrypt.android.locations.opener.fragments;
 
 import android.os.Bundle;
 
+import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialogBase;
 import com.igeltech.nevercrypt.android.errors.WrongPasswordOrBadContainerException;
@@ -35,6 +36,7 @@ public class LocationOpenerFragmentCommon extends LocationOpenerBaseFragment imp
     protected Bundle getAskPasswordArgs()
     {
         Bundle args = new Bundle();
+        args.putString(PasswordDialogBase.ARG_LABEL, getResources().getString(R.string.opening_container));
         args.putString(PasswordDialogBase.ARG_RECEIVER_FRAGMENT_TAG, getTag());
         Openable loc = getTargetLocation();
         LocationsManager.storePathsInBundle(args, loc, null);

@@ -5,14 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.AppCompatTextView;
-
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 
 public class StaticPropertyEditor extends PropertyEditorBase
 {
-    protected AppCompatTextView _descTextView;
+    protected MaterialTextView _descTextView;
 
     public StaticPropertyEditor(PropertyEditor.Host host, int titleResId)
     {

@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.settings.dialogs.TextEditDialog;
@@ -15,7 +15,7 @@ import com.igeltech.nevercrypt.android.settings.dialogs.TextEditDialog;
 public abstract class TextPropertyEditor extends PropertyEditorBase implements TextEditDialog.TextResultReceiver
 {
     private final String _hostFragmentTag;
-    protected AppCompatTextView _selectedValueTextView;
+    protected MaterialTextView _selectedValueTextView;
 
     public TextPropertyEditor(PropertyEditor.Host host, int titleResId, int descResId, String hostFragmentTag)
     {

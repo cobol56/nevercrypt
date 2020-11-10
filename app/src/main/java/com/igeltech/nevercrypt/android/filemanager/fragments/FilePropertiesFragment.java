@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
@@ -33,7 +33,7 @@ public class FilePropertiesFragment extends Fragment
     public static final String TAG = "FilePropertiesFragment";
 
     public static final String ARG_CURRENT_PATH = "current_path";
-    private AppCompatTextView _sizeTextView, _numberOfFilesTextView, _fullPathTextView, _modDateTextView;
+    private MaterialTextView _sizeTextView, _numberOfFilesTextView, _fullPathTextView, _modDateTextView;
     private FilesInfo _lastInfo;
     private final TaskFragment.TaskCallbacks _calcPropertiesCallbacks = new TaskCallbacks()
     {

@@ -2,13 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <com.igeltech.nevercrypt.android.settings.views.PropertiesView
-              android:id="@+id/list"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_margin="5dp"
-              android:gravity="center"
-              android:divider="?android:listDivider"
-              android:showDividers="middle"
-              android:orientation="vertical"/>
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:divider="?android:listDivider"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:showDividers="middle" />
 </ScrollView>

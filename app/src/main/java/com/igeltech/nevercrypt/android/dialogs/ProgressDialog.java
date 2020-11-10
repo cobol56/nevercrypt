@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.R;
 
 public class ProgressDialog extends AppCompatDialogFragment
@@ -18,7 +18,7 @@ public class ProgressDialog extends AppCompatDialogFragment
     public static final String TAG = "ProgressDialog";
     public static final String ARG_TITLE = "com.igeltech.nevercrypt.android.TITLE";
     private DialogInterface.OnCancelListener _cancelListener;
-    private AppCompatTextView _statusTextView, _titleTextView;
+    private MaterialTextView _statusTextView, _titleTextView;
     private ProgressBar _progressBar;
 
     public static ProgressDialog showDialog(FragmentManager fm, String title)
@@ -57,7 +57,7 @@ public class ProgressDialog extends AppCompatDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.progress_dialog, container);
+        View v = inflater.inflate(R.layout.dialog_progress, container);
         _titleTextView = v.findViewById(android.R.id.text1);
         _statusTextView = v.findViewById(android.R.id.text2);
         _progressBar = v.findViewById(android.R.id.progress);

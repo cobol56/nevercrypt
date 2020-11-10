@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/settings"
-        android:title="@string/settings"
-        android:icon="@drawable/ic_menu_settings" />
+        android:icon="@drawable/ic_menu_settings"
+        android:title="@string/settings" />
     <item
         android:id="@+id/close"
-        android:title="@string/close"
-        android:icon="@drawable/ic_menu_protect" />
+        android:icon="@drawable/ic_menu_protect"
+        android:title="@string/close" />
     <item
         android:id="@+id/remove"
-        android:title="@string/remove_from_list"
-        android:icon="@drawable/ic_menu_remove" />
+        android:icon="@drawable/ic_menu_remove"
+        android:title="@string/remove_from_list" />
 </menu>

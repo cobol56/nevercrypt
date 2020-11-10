@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:minWidth="300dp"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/askOverwriteDialogText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:inputType="none"
+        android:textSize="20sp" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/applyToAllCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/askOverwriteDialogText"
+        android:text="@string/apply_to_all" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/askOverwriteDialogSkipButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/applyToAllCheckBox"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/askOverwriteDialogOverwriteButton"
+        android:text="@string/skip" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/askOverwriteDialogOverwriteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/applyToAllCheckBox"
+        android:layout_alignParentEnd="true"
+        android:text="@string/overwrite" />
+</RelativeLayout>

@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
-
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.settings.dialogs.ChoiceDialog;
 
@@ -16,9 +15,9 @@ public abstract class ChoiceDialogPropertyEditor extends PropertyEditorBase
 {
     private final String _hostFragmentTag;
     protected int _selectedEntry = -1;
-    protected AppCompatTextView _selectedItems;
+    protected MaterialTextView _selectedItems;
     private List<String> _entries;
-    private AppCompatButton _selectButton;
+    private MaterialButton _selectButton;
 
     public ChoiceDialogPropertyEditor(Host host, int titleResId, int descResId, String hostFragmentTag)
     {

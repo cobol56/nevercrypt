@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.settings.activities.OpeningOptionsActivity;
 import com.igeltech.nevercrypt.crypto.SecureBuffer;
@@ -32,8 +31,8 @@ public abstract class PasswordDialogBase extends RxDialogFragment
     public static final String ARG_HAS_PASSWORD = "com.igeltech.nevercrypt.android.HAS_PASSWORD";
     public static final String ARG_RECEIVER_FRAGMENT_TAG = "com.igeltech.nevercrypt.android.RECEIVER_FRAGMENT_TAG";
     protected static final int REQUEST_OPTIONS = 1;
-    protected AppCompatTextView _labelTextView;
-    protected AppCompatEditText _passwordEditText, _repeatPasswordEditText;
+    protected MaterialTextView _labelTextView;
+    protected TextInputEditText _passwordEditText, _repeatPasswordEditText;
     protected Openable _location;
     protected Bundle _options;
     protected SecureBuffer _passwordResult, _repeatPasswordSB;
@@ -51,7 +50,7 @@ public abstract class PasswordDialogBase extends RxDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.password_dialog, container);
+        View v = inflater.inflate(R.layout.dialog_password, container);
         _labelTextView = v.findViewById(R.id.label);
         if (_labelTextView != null)
         {
@@ -82,7 +81,7 @@ public abstract class PasswordDialogBase extends RxDialogFragment
             _passwordResult = null;
         if (_repeatPasswordEditText != null)
         {
-            TextInputLayout _layout = v.findViewById(R.id.repeat_password_til);
+            TextInputLayout _layout = v.findViewById(R.id.repeat_password_layout);
             if (hasPassword() && isPasswordVerificationRequired())
             {
                 _repeatPasswordEditText.setVisibility(View.VISIBLE);
@@ -116,10 +115,10 @@ public abstract class PasswordDialogBase extends RxDialogFragment
             else
                 passwordLayout.setVisibility(hasPassword() ? View.VISIBLE : View.GONE);
         }
-        AppCompatButton b = v.findViewById(android.R.id.button1);
+        MaterialButton b = v.findViewById(android.R.id.button1);
         if (b != null)
             b.setOnClickListener(view -> confirm());
-        AppCompatImageButton ib = v.findViewById(R.id.settings);
+        MaterialButton ib = v.findViewById(R.id.settings);
         if (ib != null)
         {
             if (_location == null)

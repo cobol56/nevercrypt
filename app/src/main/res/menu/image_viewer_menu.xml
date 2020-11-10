@@ -4,54 +4,54 @@
     <group android:id="@+id/zoomMenuGroup">
         <item
             android:id="@+id/zoomInMenuItem"
-            android:title="@string/zoom_in"
             android:icon="@drawable/ic_menu_zoom_in"
-            app:showAsAction="ifRoom"
-            android:orderInCategory="20" />
+            android:orderInCategory="20"
+            android:title="@string/zoom_in"
+            app:showAsAction="ifRoom" />
         <item
             android:id="@+id/zoomOutMenuItem"
-            android:title="@string/zoom_out"
             android:icon="@drawable/ic_menu_zoom_out"
-            app:showAsAction="ifRoom"
-            android:orderInCategory="21" />
+            android:orderInCategory="21"
+            android:title="@string/zoom_out"
+            app:showAsAction="ifRoom" />
     </group>
     <group android:id="@+id/navMenuGroup">
         <item
             android:id="@+id/prevMenuItem"
-            app:showAsAction="ifRoom"
-            android:title="@string/previous_image"
             android:icon="@drawable/ic_menu_previous"
-            android:orderInCategory="22" />
+            android:orderInCategory="22"
+            android:title="@string/previous_image"
+            app:showAsAction="ifRoom" />
         <item
             android:id="@+id/nextMenuItem"
-            app:showAsAction="ifRoom"
-            android:title="@string/next_image"
             android:icon="@drawable/ic_menu_next"
-            android:orderInCategory="23" />
+            android:orderInCategory="23"
+            android:title="@string/next_image"
+            app:showAsAction="ifRoom" />
     </group>
     <group android:id="@+id/rotateMenuGroup">
         <item
             android:id="@+id/rotateLeftMenuItem"
-            android:title="@string/rotate_left"
             android:icon="@drawable/ic_menu_rotate_left"
-            app:showAsAction="ifRoom"
-            android:orderInCategory="24" />
+            android:orderInCategory="24"
+            android:title="@string/rotate_left"
+            app:showAsAction="ifRoom" />
         <item
             android:id="@+id/rotateRightMenuItem"
-            android:title="@string/rotate_right"
             android:icon="@drawable/ic_menu_rotate_right"
-            app:showAsAction="ifRoom"
-            android:orderInCategory="25" />
+            android:orderInCategory="25"
+            android:title="@string/rotate_right"
+            app:showAsAction="ifRoom" />
     </group>
     <item
         android:id="@+id/toggleAutoZoom"
-        android:title="@string/toggle_auto_zoom"
-        android:orderInCategory="26" />
+        android:orderInCategory="26"
+        android:title="@string/toggle_auto_zoom" />
     <item
         android:id="@+id/fullScreenModeMenuItem"
-        android:title="@string/enable_full_screen_mode"
         android:checkable="true"
-        app:showAsAction="ifRoom"
         android:icon="@drawable/ic_menu_fullscreen"
-        android:orderInCategory="26" />
+        android:orderInCategory="26"
+        android:title="@string/enable_full_screen_mode"
+        app:showAsAction="ifRoom" />
 </menu>

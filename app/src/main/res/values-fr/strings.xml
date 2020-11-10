@@ -5,9 +5,9 @@
     <string name="select">Sélectionner</string>
     <string name="new_file">Nouveau fichier</string>
     <string name="new_dir">Nouveau dossier</string>
-    <string formatted="false" name="processing_file">%1$s (%2$d de %3$d).</string>
+    <string name="processing_file" formatted="false">%1$s (%2$d de %3$d).</string>
     <string name="copying_files">Copie des fichiers</string>
-    <string formatted="false" name="copy_failed">Échec de la copie</string>
+    <string name="copy_failed" formatted="false">Échec de la copie</string>
     <string name="move_failed">Échec du déplacement</string>
     <string name="delete">Effacer</string>
     <string name="deleting_files">Effacement des fichiers</string>
@@ -16,7 +16,6 @@
     <string name="enter_new_file_name">Entrez un nouveau nom de fichier</string>
     <string name="settings">Réglages</string>
     <string name="bad_container_file_or_wrong_password">Mauvais fichier container ou mauvais mot de passe</string>
-    <string name="main_settings">Réglages généraux</string>
     <string name="app_shortcut">Raccourci <xliff:g id="program_name">NeverCrypt</xliff:g></string>
     <string name="enter_widget_title">Entrez le titre du widget</string>
     <string name="select_path">Choix du chemin</string>

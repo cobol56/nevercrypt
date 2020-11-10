@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.providers.MainContentProvider;
@@ -57,7 +57,7 @@ public class AboutFragment extends Fragment
     {
         String verName = getVersionName(getActivity());
         String aboutMessage = String.format("%s v%s\n%s", getResources().getString(R.string.app_name), verName, getResources().getString(R.string.about_message));
-        ((AppCompatTextView) view.findViewById(R.id.about_text_view)).setText(aboutMessage);
+        ((MaterialTextView) view.findViewById(R.id.about_text_view)).setText(aboutMessage);
         view.findViewById(R.id.homepage_button).setOnClickListener(view1 -> {
             try
             {

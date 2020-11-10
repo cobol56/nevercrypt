@@ -9,27 +9,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title_edit"
+            style="@style/PropertyTitle"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            style="@style/PropertyTitle" />
+            android:layout_weight="1" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@android:id/button1"
-            android:text="@string/edit"
-            style="@style/Button" />
+            style="@style/Button"
+            android:text="@string/edit" />
     </LinearLayout>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/desc"
         style="@style/PropertyDesc"
         android:layout_below="@id/title_layout" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@android:id/text1"
+        style="@style/PropertyDesc"
         android:layout_below="@id/desc"
         android:layout_marginTop="4dp"
-        android:textStyle="bold"
-        style="@style/PropertyDesc" />
+        android:textStyle="bold" />
 </RelativeLayout>

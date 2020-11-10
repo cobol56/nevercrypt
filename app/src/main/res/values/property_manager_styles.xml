@@ -1,5 +1,4 @@
 <resources>
-
     <style name="PropertyRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -13,7 +12,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">4dp</item>
         <item name="android:layout_marginBottom">3dp</item>
-        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -29,24 +28,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">4dp</item>
-        <item name="android:textSize">@dimen/main_text</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:inputType">text</item>
         <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="PropertyCategory" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:text">Title</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="PropertyCategoryIcon">
-        <item name="android:layout_width">50dp</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_margin">2dp</item>
-        <item name="android:scaleType">center</item>
     </style>
 </resources>

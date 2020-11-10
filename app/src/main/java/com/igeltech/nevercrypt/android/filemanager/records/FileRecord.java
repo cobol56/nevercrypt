@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.helpers.ExtendedFileInfoLoader;
@@ -76,7 +76,7 @@ class FileRecord extends FsBrowserRecord
     public void updateView(View view, final int position)
     {
         super.updateView(view, position);
-        AppCompatTextView tv = view.findViewById(android.R.id.text2);
+        MaterialTextView tv = view.findViewById(android.R.id.text2);
         if (_infoString != null)
         {
             tv.setVisibility(View.VISIBLE);

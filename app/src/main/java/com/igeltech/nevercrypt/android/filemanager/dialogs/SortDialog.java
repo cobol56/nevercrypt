@@ -41,7 +41,7 @@ public class SortDialog extends DialogFragment
     @Override
     public AppCompatDialog onCreateDialog(Bundle savedInstanceState)
     {
-        View v = getActivity().getLayoutInflater().inflate(R.layout.sort_dialog, null);
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_sort, null);
         final ListView listView = v.findViewById(android.R.id.list);
         final RadioGroup sortDirection = v.findViewById(R.id.sort_group);
         listView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_single_choice, getActivity().getResources().getStringArray(getArguments().getInt(ARG_SORT_LABELS_RES_ID, R.array.sort_mode))));

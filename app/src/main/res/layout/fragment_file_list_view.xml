@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-    <TextView
-    	android:layout_height="wrap_content"
-    	android:layout_width="match_parent"
-    	android:layout_marginLeft="4dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/current_path_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-    	android:id="@+id/current_path_text" />
+        android:layout_marginLeft="4dp" />
+
     <ListView
-    	android:id="@android:id/list"
-    	android:layout_width="match_parent"
-    	android:layout_height="0dp"
-    	android:layout_weight="1" />
-    <TextView
-        style="@style/EmptyListText"
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:inputType="none"
         android:text="@string/list_is_empty"
-        android:visibility="gone"/>
-	<EditText
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/selected_file_edit_text"
-       	android:text=""
-       	android:hint="@string/enter_file_name"
-        android:visibility="gone"
-        style="@style/SelectedFileEditText"/>
+        style="@style/SelectedFileEditText"
+        android:hint="@string/enter_file_name"
+        android:text=""
+        android:visibility="gone" />
 </LinearLayout>

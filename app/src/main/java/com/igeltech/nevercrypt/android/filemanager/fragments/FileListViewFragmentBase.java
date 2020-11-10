@@ -16,16 +16,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.FileListViewAdapter;
@@ -93,8 +93,8 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             TEST_READING_OBSERVABLE = BehaviorSubject.createDefault(false);
     }
 
-    protected EditText _selectedFileEditText;
-    protected AppCompatTextView _currentPathTextView;
+    protected TextInputEditText _selectedFileEditText;
+    protected MaterialTextView _currentPathTextView;
     protected LocationsManager _locationsManager;
     protected ActionMode _actionMode;
     protected boolean _isReadingLocation, _changingSelectedFileText, _cleanSelectionOnModeFinish;

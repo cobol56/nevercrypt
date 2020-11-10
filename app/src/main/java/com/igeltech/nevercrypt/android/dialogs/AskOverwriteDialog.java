@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.service.FileOpsService;
@@ -43,7 +43,7 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
     private Iterator<SrcDst> _pathsIter;
     private int _numProc;
     private boolean _applyToAll;
-    private AppCompatTextView _textView;
+    private MaterialTextView _textView;
     private SrcDst _next;
     private Disposable _observer;
 
@@ -65,7 +65,7 @@ public class AskOverwriteDialog extends RxAppCompatDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.ask_overwrite_dialog, container);
+        View v = inflater.inflate(R.layout.dialog_ask_overwrite, container);
         _textView = v.findViewById(R.id.askOverwriteDialogText);
         v.findViewById(R.id.askOverwriteDialogSkipButton).setOnClickListener(arg0 -> skipRecord());
         v.findViewById(R.id.askOverwriteDialogOverwriteButton).setOnClickListener(arg0 -> overwriteRecord());

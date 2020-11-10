@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RadioButton;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 
+import com.google.android.material.radiobutton.MaterialRadioButton;
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
@@ -130,7 +130,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
             else
                 cb.setVisibility(View.INVISIBLE);
         }
-        RadioButton rb = view.findViewById(R.id.radio);
+        MaterialRadioButton rb = view.findViewById(R.id.radio);
         if (rb != null)
         {
             if (allowSelect() && _host.isSelectAction() && _host.isSingleSelectionMode())
@@ -148,7 +148,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
             else
                 rb.setVisibility(View.INVISIBLE);
         }
-        AppCompatTextView tv = view.findViewById(android.R.id.text1);
+        MaterialTextView tv = view.findViewById(android.R.id.text1);
         tv.setText(getName());
         AppCompatImageView iv = view.findViewById(android.R.id.icon);
         iv.setImageDrawable(getDefaultIcon());

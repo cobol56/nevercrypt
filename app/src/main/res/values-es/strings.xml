@@ -18,7 +18,6 @@
     <string name="enter_new_file_name">Introduzca el nuevo nombre del fichero</string>
     <string name="settings">Ajustes</string>
     <string name="bad_container_file_or_wrong_password">Fichero de contenedor erróneo o contraseña incorrecta</string>
-    <string name="main_settings">Ajustes principales</string>
     <string name="app_shortcut">Atajo <xliff:g id="program_name">NeverCrypt</xliff:g></string>
     <string name="enter_widget_title">Introduzca el título del widget</string>
     <string name="select_path">Seleccionar ruta</string>

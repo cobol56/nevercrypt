@@ -10,7 +10,6 @@ import com.igeltech.nevercrypt.android.dialogs.MasterPasswordDialog;
 import com.igeltech.nevercrypt.android.dialogs.PasswordDialog;
 import com.igeltech.nevercrypt.android.fragments.PropertiesFragmentBase;
 import com.igeltech.nevercrypt.android.settings.ButtonPropertyEditor;
-import com.igeltech.nevercrypt.android.settings.CategoryPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.ChoiceDialogPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.IntPropertyEditor;
 import com.igeltech.nevercrypt.android.settings.MultilineTextPropertyEditor;
@@ -85,23 +84,9 @@ public abstract class ProgramSettingsFragmentBase extends PropertiesFragmentBase
     @Override
     protected void createProperties()
     {
-        getPropertiesView().setInstantSave(true);
-        createCategories();
-        _propertiesView.setPropertiesState(false);
-        _propertiesView.setPropertyState(R.string.main_settings, true);
-    }
-
-    protected void createCategories()
-    {
         final List<Integer> commonPropertiesList = new ArrayList<>();
-        getPropertiesView().addProperty(new CategoryPropertyEditor(this, R.string.main_settings, 0)
-        {
-            @Override
-            public void load()
-            {
-                enableProperties(commonPropertiesList, isExpanded());
-            }
-        });
+        getPropertiesView().setInstantSave(true);
+        enableProperties(commonPropertiesList, true);
         createCommonProperties(commonPropertiesList);
     }
 

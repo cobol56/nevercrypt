@@ -18,12 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
@@ -491,7 +491,7 @@ public abstract class LocationListBaseFragment extends ListFragment
             v.setTag(item);
             if (item == null)
                 return v;
-            AppCompatTextView tv = v.findViewById(android.R.id.title);
+            MaterialTextView tv = v.findViewById(android.R.id.title);
             tv.setText(item.location.getTitle());
             AppCompatImageView iv = v.findViewById(android.R.id.icon);
             if (iv != null)

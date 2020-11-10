@@ -3,46 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/progressbar"
-        android:title="@string/loading"
-        app:showAsAction="always"
         android:actionLayout="@layout/fm_progress_bar"
-        android:orderInCategory="5" />
+        android:orderInCategory="5"
+        android:title="@string/loading"
+        app:showAsAction="always" />
     <item
         android:id="@+id/copy"
-        android:title="@string/copy_here"
         android:icon="@drawable/ic_menu_paste"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="10" />
+        android:orderInCategory="10"
+        android:title="@string/copy_here"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/move"
-        android:title="@string/move_here"
         android:icon="@drawable/ic_menu_cut"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="11" />
+        android:orderInCategory="11"
+        android:title="@string/move_here"
+        app:showAsAction="ifRoom" />
     <group android:id="@+id/new_file_group">
         <item
             android:id="@+id/new_file"
-            android:title="@string/new_file"
             android:icon="@drawable/ic_menu_new_file"
-            app:showAsAction="ifRoom"
-            android:orderInCategory="12" />
+            android:orderInCategory="12"
+            android:title="@string/new_file"
+            app:showAsAction="ifRoom" />
         <item
             android:id="@+id/new_dir"
-            android:title="@string/new_dir"
             android:icon="@drawable/ic_menu_new_folder"
-            app:showAsAction="ifRoom"
-            android:orderInCategory="13" />
+            android:orderInCategory="13"
+            android:title="@string/new_dir"
+            app:showAsAction="ifRoom" />
     </group>
     <item
         android:id="@+id/select_all"
-        android:title="@string/select_all"
         android:icon="@drawable/ic_menu_select_all"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="14" />
+        android:orderInCategory="14"
+        android:title="@string/select_all"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/sort"
-        android:title="@string/sort"
         android:icon="@drawable/ic_menu_sort"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="15" />
+        android:orderInCategory="15"
+        android:title="@string/sort"
+        app:showAsAction="ifRoom" />
 </menu>

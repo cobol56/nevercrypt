@@ -8,7 +8,7 @@
     <string name="new_file">新建文件</string>
     <string name="new_dir">新建文件夹</string>
     <string name="remove_from_list">从列表中移除</string>
-    <string name="processing_file"><xliff:g id="filename" example="/sdcard/data.txt">%1$s</xliff:g> (<xliff:g id="number of files processed">%2$d</xliff:g> of <xliff:g id="total_number_of_files">%3$d</xliff:g>)</string>
+    <string name="processing_file"><xliff:g example="/sdcard/data.txt" id="filename">%1$s</xliff:g> (<xliff:g id="number of files processed">%2$d</xliff:g> of <xliff:g id="total_number_of_files">%3$d</xliff:g>)</string>
     <string name="copying_files">正在复制文件</string>
     <string name="copy_failed">复制失败</string>
     <string name="move_failed">移动失败</string>
@@ -19,7 +19,6 @@
     <string name="enter_new_file_name">输入新文件名</string>
     <string name="settings">设置</string>
     <string name="bad_container_file_or_wrong_password">密码错误或容器格式不支持</string>
-    <string name="main_settings">主要设置</string>
     <string name="app_shortcut"><xliff:g id="program_name">NeverCrypt</xliff:g> shortcut</string>
     <string name="enter_widget_title">输入插件标题</string>
     <string name="select_path">选取路径</string>
@@ -32,7 +31,7 @@
     <string name="no">不</string>
     <string name="skip">跳过</string>
     <string name="overwrite">覆盖</string>
-    <string name="file_already_exists">文件 <xliff:g id="filename" example="example.txt">%1$s</xliff:g> 已存在于<xliff:g id="directory" example="/sdcard">%2$s</xliff:g>.</string>
+    <string name="file_already_exists">文件 <xliff:g example="example.txt" id="filename">%1$s</xliff:g> 已存在于<xliff:g example="/sdcard" id="directory">%2$s</xliff:g>.</string>
     <string name="size">大小</string>
     <string name="number_of_files">文件数量</string>
     <string name="properties">属性</string>
@@ -146,15 +145,15 @@
     <string name="debug_log">调试日志</string>
     <string name="edit">编辑</string>
     <string name="content_provider" translatable="false">Content provider</string>
-    <string name="container_info_summary">可用空间: <xliff:g id="free_space" example="10Mb">%1$s</xliff:g>; 总空间: <xliff:g id="total_space" example="100Mb">%2$s</xliff:g>.</string>
+    <string name="container_info_summary">可用空间: <xliff:g example="10Mb" id="free_space">%1$s</xliff:g>; 总空间: <xliff:g example="100Mb" id="total_space">%2$s</xliff:g>.</string>
     <string name="disable">禁用</string>
     <string name="copy_here">复制到这里</string>
     <string name="move_here">移动到这里</string>
     <string name="number_of_kdf_iterations_veracrypt_descr">输入 <xliff:g id="key_derivation_function">KDF</xliff:g> 迭代次数 (<xliff:g id="pim">PIM</xliff:g>). 选择的值越大.容器打开需要的时间越长. 输入0采用默认值. 查看细节 <xliff:g id="url">https://veracrypt.codeplex.com/wikipage?title=Personal%20Iterations%20Multiplier%20(PIM)</xliff:g> .</string>
     <string name="kdf_iterations_multiplier"><xliff:g id="key_derivation_function">KDF</xliff:g> 迭代次数 (<xliff:g id="pim">PIM</xliff:g>)</string>
-    <string name="container_format_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>容器格式是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="container_format" example="VeraCrypt">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
-    <string name="encryption_alg_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>加密算法是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="encryption_algorithm_name" example="AES">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
-    <string name="kdf_base_hash_func_is"><xliff:g id="key_derivation_function">KDF</xliff:g> hash 基本函数是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g id="hash_algorithm_name" example="SHA-256">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.</string>
+    <string name="container_format_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>容器格式是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g example="VeraCrypt" id="container_format">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
+    <string name="encryption_alg_is"><xliff:g id="formatting">&lt;p&gt;</xliff:g>加密算法是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g example="AES" id="encryption_algorithm_name">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.<xliff:g id="formatting">&lt;/p&gt;</xliff:g></string>
+    <string name="kdf_base_hash_func_is"><xliff:g id="key_derivation_function">KDF</xliff:g> hash 基本函数是 <xliff:g id="formatting">&lt;b&gt;</xliff:g><xliff:g example="SHA-256" id="hash_algorithm_name">%1$s</xliff:g><xliff:g id="formatting">&lt;/b&gt;</xliff:g>.</string>
     <string name="hidden">隐藏</string>
     <string name="overwrite_and_delete">覆盖和删除</string>
     <string name="list_is_empty">列表是空的</string>

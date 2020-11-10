@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  style="@style/FileListRow">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/FileListRow">
+
     <ImageView
         android:id="@android:id/icon"
-        android:src="@drawable/ic_file"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
         style="@style/FileIcon"
-        tools:ignore="ContentDescription"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_file"
+        tools:ignore="ContentDescription" />
+
     <ImageView
         android:id="@android:id/icon1"
-        android:layout_alignBottom="@android:id/icon"
-        android:layout_toRightOf="@android:id/icon"
-        android:layout_toEndOf="@android:id/icon"
         style="@style/MiniIcon"
-        tools:ignore="ContentDescription"/>
-    <CheckBox
-		android:id="@android:id/checkbox"
-        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@android:id/icon"
+        android:layout_toEndOf="@android:id/icon"
+        android:layout_toRightOf="@android:id/icon"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@android:id/checkbox"
+        style="@style/RowButton.Check"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        style="@style/RowButton.Check" />
-    <RadioButton
-		android:id="@+id/radio"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/radio"
+        style="@style/RowButton.Radio"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        style="@style/RowButton.Radio" />
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@android:id/icon1"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@android:id/icon1"
-        android:layout_centerVertical="true">
-            <TextView
-                android:id="@android:id/text1"
-                android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-                style="@style/FileName" />
-            <TextView
-                android:id="@android:id/text2"
-                android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-                style="@style/FileDesc"/>
+        android:layout_toRightOf="@android:id/icon1"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@android:id/text1"
+            style="@style/FileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@android:id/text2"
+            style="@style/FileDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </RelativeLayout>

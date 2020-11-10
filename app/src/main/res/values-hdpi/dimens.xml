@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="password_dialog_width">300dp</dimen>
-    <dimen name="password_label_text">14sp</dimen>
-</resources>

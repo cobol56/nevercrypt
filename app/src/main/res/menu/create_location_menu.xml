@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/confirm"
+        android:icon="@drawable/ic_menu_done"
         android:title="@string/ok"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_menu_done" />
+        app:showAsAction="always" />
 </menu>

@@ -3,8 +3,7 @@ package com.igeltech.nevercrypt.android.settings.container;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.widget.AppCompatTextView;
-
+import com.google.android.material.textview.MaterialTextView;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.locations.fragments.CreateContainerFragmentBase;
 import com.igeltech.nevercrypt.android.locations.tasks.CreateContainerTaskFragmentBase;
@@ -12,7 +11,7 @@ import com.igeltech.nevercrypt.android.settings.SwitchPropertyEditor;
 
 public abstract class FillFreeSpacePropertyEditorBase extends SwitchPropertyEditor
 {
-    protected AppCompatTextView _titleTextView;
+    protected MaterialTextView _titleTextView;
 
     public FillFreeSpacePropertyEditorBase(CreateContainerFragmentBase createContainerFragment)
     {
