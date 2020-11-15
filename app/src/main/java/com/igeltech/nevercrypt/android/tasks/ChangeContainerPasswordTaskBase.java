@@ -17,7 +17,6 @@ import java.io.IOException;
 public abstract class ChangeContainerPasswordTaskBase extends ChangeLocationPasswordTask
 {
     public static final String TAG = "com.igeltech.nevercrypt.android.tasks.ChangeContainerPasswordTask";
-    //public static final String ARG_FIN_ACTIVITY = "fin_activity";
 
     @Override
     protected void changeLocationPassword() throws IOException, ApplicationException

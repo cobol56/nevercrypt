@@ -18,10 +18,6 @@ public class ExternalProgramFailedException extends ApplicationException
         _exitCode = exitCode;
         _output = output;
     }
-    //	public String getCommand()
-    //	{
-    //		return _command;
-    //	}
 
     private static String getMsg(int exitCode, String output, String... command)
     {

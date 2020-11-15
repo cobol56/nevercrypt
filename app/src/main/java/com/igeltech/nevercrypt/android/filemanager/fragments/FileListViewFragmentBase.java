@@ -132,25 +132,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             sdr.setIsDirLast(false);//move);
             cols.add(sdr);
         }
-        /*Cursor cur = cr.query(uri, null, null, null, null);
-        if(cur!=null)
-        {
-            try
-            {
-                int ci = cur.getColumnIndex(MainContentProvider.COLUMN_LOCATION);
-                while (cur.moveToNext())
-                {
-                    Location srcLoc = lm.getTargetLocation(Uri.parse(cur.getString(ci)));
-                    SrcDstRec sdr = new SrcDstRec(srcLoc, dstLocation);
-                    sdr.setIsDirLast(isDirLast);
-                    cols.add(sdr);
-                }
-            }
-            finally
-            {
-                cur.close();
-            }
-        }*/
     }
 
     @Override
@@ -312,6 +293,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     @Override
     public void onResume()
     {
+        Logger.debug(TAG + " onResume");
         super.onResume();
         if (haveSelectedFiles())
         {
@@ -326,6 +308,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     @Override
     public void onPause()
     {
+        Logger.debug(TAG + " onPause");
         super.onPause();
         ExtendedFileInfoLoader.getInstance().pauseViewUpdate();
         _cleanSelectionOnModeFinish = false;
@@ -336,6 +319,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     @Override
     public void onDestroyView()
     {
+        Logger.debug(TAG + " onDestroyView");
         _selectedFileEditText = null;
         _currentPathTextView = null;
         super.onDestroyView();
@@ -344,6 +328,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     @Override
     public void onDestroy()
     {
+        Logger.debug(TAG + " onDestroy");
         _locationsManager = null;
         super.onDestroy();
     }
@@ -975,18 +960,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     protected void chooseFilesForOperation()
     {
-        /*ContentResolver cr = getActivity().getContentResolver();
-        cr.delete(MainContentProvider.getCurrentSelectionUri(), null, null);
-        ArrayList<Path> recs = getSelectedPaths();
-        ContentValues cv = new ContentValues();
-        for(Path path: recs)
-        {
-            initContentValuesFromPath(cv, path);
-            cr.update(MainContentProvider.getCurrentSelectionUri(), cv, null, null);
-        }
-        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        clipboard.setPrimaryClip(ClipData.newUri(cr, recs.size() + " files are in clipboard", MainContentProvider.getCurrentSelectionUri()));
-        getActivity().invalidateOptionsMenu();*/
         getParentFragmentManager().
                 beginTransaction().
                 add(CopyToClipboardTask.newInstance(getRealLocation(), getSelectedPaths()), CopyToClipboardTask.TAG).
@@ -996,26 +969,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     protected boolean allowSelectedFileName()
     {
         return true;
-        //The following check doesn't work with locations in which a path can point only to an existing file.
-        //So if the filename is not valid, we'll return a error from "createObservable new file" task.
-        /*try
-        {
-            String filename = _selectedFileEditText.getText().toString();
-            if(filename.length() == 0)
-                return false;
-            Location loc = getFileManagerActivity().getTargetLocation();
-            if (loc != null)
-            {
-                //check if the filename is valid
-                loc.getCurrentPath().combine(filename);
-                return true;
-            }
-        }
-        catch (IOException ignored)
-        {
-
-        }
-        return false;*/
     }
 
     protected void confirmDelete(boolean wipe)

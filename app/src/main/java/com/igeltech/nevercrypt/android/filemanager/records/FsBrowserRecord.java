@@ -12,6 +12,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.filemanager.fragments.FileListViewFragment;
@@ -99,7 +100,7 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     @Override
     public View createView(int position, ViewGroup parent)
     {
-        if (_host == null)
+        if (_host == null || !_host.isAdded())
             return null;
         LayoutInflater inflater = _host.getLayoutInflater();
         View v = inflater.inflate(R.layout.fs_browser_row, parent, false);
@@ -172,7 +173,10 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
     @Override
     public void updateView()
     {
-        updateRowView(_host, this);
+        if (_host.isAdded())
+            updateRowView(_host, this);
+        else
+            Logger.debug("FsBrowserRecord updateView - host not attached");
     }
 
     @Override
@@ -220,7 +224,9 @@ public abstract class FsBrowserRecord extends CachedPathInfoBase implements Brow
 
     protected FileListViewFragment getHostFragment()
     {
-        return _host == null ? null : (FileListViewFragment) _host.getChildFragmentManager().findFragmentByTag(FileListViewFragment.TAG);
+        if (_host != null && !_host.isAdded())
+            Logger.debug("FsBrowserRecord getHostFragment - host not attached");
+        return _host != null && _host.isAdded() ? (FileListViewFragment) _host.getChildFragmentManager().findFragmentByTag(FileListViewFragment.TAG) : null;
     }
 
     @Override

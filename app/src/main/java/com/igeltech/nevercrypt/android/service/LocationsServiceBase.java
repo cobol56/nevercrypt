@@ -21,6 +21,7 @@ import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivit
 import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 import com.igeltech.nevercrypt.android.helpers.TempFilesMonitor;
 import com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity;
+import com.igeltech.nevercrypt.android.locations.activities.LocationManagerActivity;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.fs.util.Util;
 import com.igeltech.nevercrypt.locations.CryptoLocation;
@@ -159,7 +160,7 @@ public class LocationsServiceBase extends Service
 
     private Notification getServiceRunningNotification()
     {
-        Intent i = new Intent(this, FileManagerActivity.class);
+        Intent i = new Intent(this, LocationManagerActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CompatHelper.getServiceRunningNotificationsChannelId(this)).setContentTitle(getString(R.string.app_service_is_running)).setSmallIcon(R.drawable.ic_notification_new).setContentText("").setContentIntent(PendingIntent.getActivity(this, 0, i, 0)).setOngoing(true).addAction(R.drawable.ic_action_cancel, getString(R.string.close_all_containers), PendingIntent.getActivity(this, 0, new Intent(this, CloseLocationsActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));
         Notification n = builder.build();

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
+import com.igeltech.nevercrypt.android.filemanager.tasks.CheckStartPathTask;
 import com.igeltech.nevercrypt.android.helpers.AppInitHelper;
 import com.igeltech.nevercrypt.android.helpers.CompatHelper;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
@@ -26,6 +28,7 @@ import java.util.concurrent.CancellationException;
 public class LocationManagerActivity extends RxAppCompatActivity
 {
     public static final String TAG = "LocationManagerActivity";
+    protected static final String FOLDER_MIME_TYPE = "resource/folder";
 
     private final BroadcastReceiver _closeAllReceiver = new BroadcastReceiver()
     {
@@ -50,6 +53,7 @@ public class LocationManagerActivity extends RxAppCompatActivity
         // Security
         if (UserSettings.getSettings(this).isFlagSecureEnabled())
             CompatHelper.setWindowFlagSecure(this);
+        Logger.debug("lm start activity: " + getIntent());
         // Register broadcasts
         registerReceiver(_closeAllReceiver, new IntentFilter(LocationsManager.BROADCAST_CLOSE_ALL));
         // Check master password, if any
@@ -61,6 +65,8 @@ public class LocationManagerActivity extends RxAppCompatActivity
                     if (!(err instanceof CancellationException))
                         Logger.showAndLog(getApplicationContext(), err);
                 });
+        // Check if we have an Uri in the params and navigate to the cotainer if open
+        actionView(savedInstanceState);
     }
 
     @Override
@@ -96,5 +102,32 @@ public class LocationManagerActivity extends RxAppCompatActivity
     {
         super.onStop();
         Logger.debug("LocationListActivity has stopped");
+    }
+
+    private void actionView(Bundle savedState)
+    {
+        String action = getIntent().getAction();
+        if (action == null)
+            action = "";
+        Logger.log("LocationManagerActivity action is " + action);
+        if (action == Intent.ACTION_VIEW)
+        {
+            if (savedState == null)
+            {
+                Uri dataUri = getIntent().getData();
+                if (dataUri != null)
+                {
+                    String mime = getIntent().getType();
+                    if (!FOLDER_MIME_TYPE.equalsIgnoreCase(mime))
+                    {
+                        getSupportFragmentManager().
+                                beginTransaction().
+                                add(CheckStartPathTask.newInstance(dataUri, false), CheckStartPathTask.TAG).
+                                commit();
+                        setIntent(new Intent());
+                    }
+                }
+            }
+        }
     }
 }

@@ -7,18 +7,6 @@ import android.util.AttributeSet;
 public class GestureImageViewWithFullScreenMode extends GestureImageView// implements android.view.View.OnSystemUiVisibilityChangeListener
 {
     private final Runnable _navHider = () -> setNavVisibility(false);
-
-    /* @Override
-     public void onSystemUiVisibilityChange(int visibility)
-     {
-         // Detect when we go out of low-profile mode, to also go out
-         // of full screen.  We only do this when the low profile mode
-         // is changing from its last state, and turning off.
-         int diff = _lastSystemUiVis ^ visibility;
-         _lastSystemUiVis = visibility;
-         if ((diff&SYSTEM_UI_FLAG_LOW_PROFILE) != 0 && (visibility&SYSTEM_UI_FLAG_LOW_PROFILE) == 0)
-             setNavVisibility(true);
-     }*/
     private boolean _isFullScreenMode;
 
     public GestureImageViewWithFullScreenMode(Context context, AttributeSet attr)

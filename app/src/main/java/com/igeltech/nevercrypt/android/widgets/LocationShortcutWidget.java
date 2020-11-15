@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
+import com.igeltech.nevercrypt.android.locations.activities.LocationManagerActivity;
 import com.igeltech.nevercrypt.android.settings.UserSettings;
 import com.igeltech.nevercrypt.locations.Location;
 import com.igeltech.nevercrypt.locations.LocationsManager;
@@ -24,11 +26,8 @@ public class LocationShortcutWidget extends AppWidgetProvider
     {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
         views.setTextViewText(R.id.widgetTitleTextView, prefs.widgetTitle);
-        //TypedValue typedValue = new TypedValue();
-        //context.getTheme().resolveAttribute(isContainerOpen ? R.attr.widgetUnlockedIcon : R.attr.widgetLockedIcon, typedValue, true);
-        //views.setImageViewResource(R.id.widgetLockImageButton, typedValue.resourceId);
         views.setImageViewResource(R.id.widgetLockImageButton, isContainerOpen ? R.drawable.widget_unlocked : R.drawable.widget_locked);
-        Intent intent = new Intent(context, FileManagerActivity.class);
+        Intent intent = new Intent(context, LocationManagerActivity.class);
         intent.setData(Uri.parse(prefs.locationUriString));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widgetLockImageButton, pendingIntent);
@@ -40,18 +39,6 @@ public class LocationShortcutWidget extends AppWidgetProvider
     {
         setWidgetsState(context, appWidgetManager, appWidgetIds, null);
     }
-	
-	/*@Override
-	public void onEnabled (Context context)	
-	{
-		context.startService(new Intent(context, OperationsService.class));		
-	}
-	
-	@Override
-	public void onDisabled (Context context)
-	{
-		context.stopService(new Intent(context, OperationsService.class));
-	}*/
 
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent)

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.igeltech.nevercrypt.android.R;
 import com.igeltech.nevercrypt.android.filemanager.activities.FileManagerActivity;
 import com.igeltech.nevercrypt.android.locations.activities.CloseLocationsActivity;
+import com.igeltech.nevercrypt.android.locations.activities.LocationManagerActivity;
 import com.igeltech.nevercrypt.locations.CryptoLocation;
 import com.igeltech.nevercrypt.locations.LocationsManager;
 
@@ -21,9 +22,6 @@ public class CloseAllContainersWidget extends AppWidgetProvider
     public static void setWidgetLayout(Context context, AppWidgetManager appWidgetManager, int widgetId, boolean haveOpenContainers)
     {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.close_all_containers_widget);
-        //TypedValue typedValue = new TypedValue();
-        //context.getTheme().resolveAttribute(haveOpenContainers ? R.attr.widgetUnlockedAllIcon : R.attr.widgetLockedAllIcon, typedValue, true);
-        //views.setImageViewResource(R.id.widgetLockImageButton, typedValue.resourceId);
         views.setImageViewResource(R.id.containersClosedImageButton, haveOpenContainers ? R.drawable.widget_unlocked_all : R.drawable.widget_locked_all);
         Intent i;
         if (haveOpenContainers)
@@ -33,7 +31,7 @@ public class CloseAllContainersWidget extends AppWidgetProvider
         }
         else
         {
-            i = new Intent(context, FileManagerActivity.class);
+            i = new Intent(context, LocationManagerActivity.class);
             i.setAction(Intent.ACTION_MAIN);
         }
         PendingIntent pendingIntent = PendingIntent.getActivity(context, widgetId, i, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.igeltech.nevercrypt.android.Logger;
 import com.igeltech.nevercrypt.android.R;
 
 import java.io.IOException;
@@ -37,7 +38,9 @@ public class FolderRecord extends FsBrowserRecord
     @Override
     public View createView(int position, ViewGroup parent)
     {
-        if (_host == null)
+        if (!_host.isAdded())
+            Logger.debug("FolderRecord createView - host not attached");
+        if (_host == null || !_host.isAdded())
             return null;
         LayoutInflater inflater = _host.getLayoutInflater();
         View v = inflater.inflate(R.layout.fs_browser_folder_row, parent, false);

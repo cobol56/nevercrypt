@@ -42,10 +42,6 @@ public abstract class LocationsManagerBase
     public static final String BROADCAST_CLOSE_ALL = "com.igeltech.nevercrypt.CLOSE_ALL";
     public static final String BROADCAST_LOCATION_CHANGED = "com.igeltech.nevercrypt.android.BROADCAST_LOCATION_CHANGED";
 
-    /*public static synchronized LocationsManager getLocationsManager()
-    {
-        return getLocationsManager(null, false);
-    }*/
     private static LocationsManagerBase _instance;
     protected final Settings _settings;
     final List<LocationInfo> _currentLocations = new ArrayList<>();

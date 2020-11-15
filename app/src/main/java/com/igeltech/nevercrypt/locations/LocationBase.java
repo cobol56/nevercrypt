@@ -154,21 +154,6 @@ public abstract class LocationBase implements Location, Cloneable
         return res;
     }
 
-	/*@Override
-	public boolean equals(Object obj)
-	{
-		try
-		{
-			return (obj instanceof LocationBase) &&
-					getId().equals(((LocationBase) obj).getId()) &&
-					getCurrentPath().equals(((LocationBase) obj).getCurrentPath());
-		}
-		catch (Exception e)
-		{
-			return false;
-		}
-	}*/
-
     @Override
     public void closeFileSystem(boolean force) throws IOException
     {

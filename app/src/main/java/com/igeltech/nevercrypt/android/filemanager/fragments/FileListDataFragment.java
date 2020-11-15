@@ -123,6 +123,7 @@ public class FileListDataFragment extends RxFragment
     @Override
     public void onCreate(Bundle state)
     {
+        Logger.debug(TAG + " onCreate");
         super.onCreate(state);
         setRetainInstance(true);
         _locationsManager = LocationsManager.getLocationsManager(getActivity());
@@ -133,6 +134,7 @@ public class FileListDataFragment extends RxFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
+        Logger.debug(TAG + " onActivityCreated");
         super.onActivityCreated(savedInstanceState);
         //TODO remove dependency
         synchronized (_filesListSync)
@@ -146,6 +148,7 @@ public class FileListDataFragment extends RxFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        Logger.debug(TAG + " onActivityResult");
         if (requestCode == REQUEST_CODE_OPEN_LOCATION)
         {
             if (resultCode != AppCompatActivity.RESULT_OK)
@@ -165,6 +168,7 @@ public class FileListDataFragment extends RxFragment
     @Override
     public void onDetach()
     {
+        Logger.debug(TAG + " onDetach");
         super.onDetach();
         //TODO remove dependency
         synchronized (_filesListSync)
@@ -178,6 +182,7 @@ public class FileListDataFragment extends RxFragment
     @Override
     public void onDestroy()
     {
+        Logger.debug(TAG + " onDestroy");
         cancelReadDirTask();
         _navigHistory.clear();
         synchronized (_filesListSync)

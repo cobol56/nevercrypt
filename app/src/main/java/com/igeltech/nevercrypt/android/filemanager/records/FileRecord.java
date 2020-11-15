@@ -87,7 +87,6 @@ class FileRecord extends FsBrowserRecord
         AppCompatImageView iv = view.findViewById(android.R.id.icon);
         if (_mainIcon != null)
         {
-            //iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
             iv.setImageDrawable(_mainIcon);
             if (_animateIcon)
             {
@@ -95,13 +94,6 @@ class FileRecord extends FsBrowserRecord
                 _animateIcon = false;
             }
         }
-        //DisplayMetrics dm = _mainActivity.getResources().getDisplayMetrics();
-        //_iconWidth = iv.getMeasuredWidth();
-        //if(_iconWidth == 0)
-        //    _iconWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Preferences.FB_PREVIEW_WIDTH, dm);
-        //_iconHeight = iv.getMeasuredHeight();
-        //if(_iconHeight == 0)
-        //    _iconHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, Preferences.FB_PREVIEW_HEIGHT, dm);
     }
 
     @Override
@@ -254,27 +246,7 @@ class FileRecord extends FsBrowserRecord
                     FileRecord.updateRowView(rvi);
                 }
             }
-            //if(mainIcon instanceof BitmapDrawable)
-            //{
-            //   Bitmap b = ((BitmapDrawable) mainIcon).getBitmap();
-            //    if(b!=null)
-            //        b.recycle();
-            //}
             mainIcon = null;
         }
     }
-
-    /*
-    private Bitmap drawableToBitmap(Drawable d)
-    {
-        if (d instanceof BitmapDrawable)
-            return ((BitmapDrawable)d).getBitmap();
-
-        Bitmap bitmap = Bitmap.createBitmap(d.getIntrinsicWidth(), d.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        d.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        d.draw(canvas);
-        return bitmap;
-    }
-    */
 }

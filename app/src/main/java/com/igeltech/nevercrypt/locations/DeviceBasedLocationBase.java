@@ -18,20 +18,6 @@ import java.io.IOException;
 public abstract class DeviceBasedLocationBase implements Location, Cloneable
 {
     public static final String URI_SCHEME = "file";
-    /*@Override
-    public boolean equals(Object obj)
-    {
-        try
-        {
-            return (obj instanceof DeviceBasedLocation) &&
-                    getId().equals(((DeviceBasedLocation) obj).getId()) &&
-                    getCurrentPath().equals(((DeviceBasedLocation) obj).getCurrentPath());
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }*/
     protected final Settings _settings;
     private final SharedData _sharedData;
     protected String _currentPathString;

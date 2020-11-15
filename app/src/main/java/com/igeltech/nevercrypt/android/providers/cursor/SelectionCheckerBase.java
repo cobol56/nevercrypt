@@ -28,9 +28,6 @@ class SelectionCheckerBase implements Predicate<CachedPathInfo>
                 if (selectionArgs == null || i >= selectionArgs.length)
                     break;
                 Predicate<CachedPathInfo> f = getFilter(filtName, selectionArgs[i++]);
-                //if (f == null)
-                //    throw new IllegalArgumentException("Unsupported search filter: " + filtName);
-                //else
                 if (f != null)
                     _filters.add(f);
             }
