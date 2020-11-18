@@ -22,7 +22,7 @@ public class DummyUpDirRecord extends FolderRecord
     {
         if (_icon == null && context != null)
         {
-            _icon = context.getResources().getDrawable(R.drawable.ic_folder_up, context.getTheme());
+            _icon = context.getDrawable(R.drawable.ic_folder_up);
         }
         return _icon;
     }

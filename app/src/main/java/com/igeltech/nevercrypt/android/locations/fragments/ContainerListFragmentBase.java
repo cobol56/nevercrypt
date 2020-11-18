@@ -29,7 +29,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     {
         if (_openedContainerIcon == null)
         {
-            _openedContainerIcon = getResources().getDrawable(R.drawable.ic_lock_open);
+            _openedContainerIcon = getContext().getDrawable(R.drawable.ic_lock_open);
         }
         return _openedContainerIcon;
     }
@@ -38,7 +38,7 @@ public class ContainerListFragmentBase extends LocationListBaseFragment
     {
         if (_closedContainerIcon == null)
         {
-            _closedContainerIcon = getResources().getDrawable(R.drawable.ic_lock);
+            _closedContainerIcon = getContext().getDrawable(R.drawable.ic_lock);
         }
         return _closedContainerIcon;
     }

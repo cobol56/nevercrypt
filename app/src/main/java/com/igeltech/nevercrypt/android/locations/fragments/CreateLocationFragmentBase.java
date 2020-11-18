@@ -68,7 +68,7 @@ public abstract class CreateLocationFragmentBase extends PropertiesFragmentBase 
         mi.setTitle(_state.getBoolean(ARG_ADD_EXISTING_LOCATION) ? R.string.add_container : R.string.create_new_container);
         boolean enabled = checkParams();
         mi.setEnabled(enabled);
-        StateListDrawable sld = (StateListDrawable) getActivity().getResources().getDrawable(R.drawable.ic_menu_done);
+        StateListDrawable sld = (StateListDrawable) getActivity().getDrawable(R.drawable.ic_menu_done);
         if (sld != null)
         {
             sld.setState(enabled ? new int[]{android.R.attr.state_enabled} : new int[0]);

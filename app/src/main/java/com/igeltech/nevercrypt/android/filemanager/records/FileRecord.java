@@ -54,7 +54,7 @@ class FileRecord extends FsBrowserRecord
     {
         if (_fileIcon == null && context != null)
         {
-            _fileIcon = context.getResources().getDrawable(R.drawable.ic_file, context.getTheme());
+            _fileIcon = context.getDrawable(R.drawable.ic_file);
         }
         return _fileIcon;
     }

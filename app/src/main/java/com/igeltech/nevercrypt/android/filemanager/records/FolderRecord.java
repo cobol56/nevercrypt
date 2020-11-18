@@ -24,7 +24,7 @@ public class FolderRecord extends FsBrowserRecord
     {
         if (_folderIcon == null && context != null)
         {
-            _folderIcon = context.getResources().getDrawable(R.drawable.ic_folder, context.getTheme());
+            _folderIcon = context.getDrawable(R.drawable.ic_folder);
         }
         return _folderIcon;
     }
