@@ -12,7 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#673ab7</item>
         <!-- Custom styles -->
-        <item name="android:actionModeBackground">@color/cardview_light_background</item>
+        <item name="android:actionModeBackground">?android:colorAccent</item>
     </style>
 
     <style name="Button">
