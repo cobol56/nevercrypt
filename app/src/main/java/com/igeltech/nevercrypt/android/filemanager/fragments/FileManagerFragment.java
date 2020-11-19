@@ -60,11 +60,6 @@ public class FileManagerFragment extends RxFragment implements PreviewFragment.H
         return i;
     }
 
-    public static Location getRealLocation(Location loc)
-    {
-        return loc;
-    }
-
     public boolean isSingleSelectionMode()
     {
         return !getActivity().getIntent().getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_MULTIPLE, false);
@@ -129,11 +124,6 @@ public class FileManagerFragment extends RxFragment implements PreviewFragment.H
     public Location getLocation()
     {
         return _currentLocation;
-    }
-
-    public Location getRealLocation()
-    {
-        return getRealLocation(getLocation());
     }
 
     public boolean hasSelectedFiles()

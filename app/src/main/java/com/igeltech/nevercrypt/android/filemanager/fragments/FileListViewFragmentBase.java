@@ -267,10 +267,12 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         boolean isSendAction = isSendAction();
         boolean hasInClipboard = hasSelectionInClipboard();
         boolean isSelectAction = isSelectAction();
+        boolean isReadOnly = getLocation().isReadOnly();
         Logger.debug(String.format("onPrepareOptionsMenu: isReading=%b isSendAction=%b hasInClipboard=%b isSelectAction=%b", isReading, isSendAction, hasInClipboard, isSelectAction));
         menu.findItem(R.id.progressbar).setVisible(isReading);
         menu.findItem(R.id.copy).setVisible(!isReading && !isSelectAction && (isSendAction || hasInClipboard));
         menu.findItem(R.id.move).setVisible(!isReading && !isSelectAction && hasInClipboard);
+        menu.setGroupVisible(R.id.new_file_group, !isReadOnly);
         menu.findItem(R.id.new_file).setVisible(!isReading && !isSendAction && allowCreateNewFile() && (!isSelectAction || getFileManagerFragment().allowFileSelect()));
         menu.findItem(R.id.new_dir).setVisible(!isReading && allowCreateNewFolder());
         menu.findItem(R.id.select_all).setVisible((!isSelectAction || !isSingleSelectionMode()) && !getSelectableFiles().isEmpty());
@@ -350,7 +352,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     {
         try
         {
-            final Location loc = getRealLocation();
+            final Location loc = getLocation();
             Path curPath = loc.getFS().getPath(path);
             Location srcLoc = loc.copy();
             srcLoc.setCurrentPath(curPath);
@@ -787,7 +789,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                 menu.findItem(R.id.open_as_container).setVisible(!isSelectAction && selectedFiles.size() == 1 && selectedFiles.get(0) instanceof ExecutableFileRecord);
                 menu.findItem(R.id.choose_for_operation).setVisible(!isSelectAction);
                 menu.findItem(R.id.delete).setVisible(!isSelectAction);
-                Location loc = getRealLocation();
+                Location loc = getLocation();
                 menu.findItem(R.id.wipe).setVisible(!isSelectAction && loc != null && !loc.isEncrypted() && !loc.isReadOnly());
                 menu.findItem(R.id.properties).setVisible(!selectedFiles.isEmpty());
                 menu.findItem(R.id.send).setVisible(!isSelectAction);
@@ -920,11 +922,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         return getFileManagerFragment().getLocation();
     }
 
-    protected Location getRealLocation()
-    {
-        return getFileManagerFragment().getRealLocation();
-    }
-
     protected boolean isSelectAction()
     {
         return getFileManagerFragment().isSelectAction();
@@ -945,13 +942,6 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
         return getActivity().getIntent().getBooleanExtra(FileManagerActivity.EXTRA_ALLOW_CREATE_NEW_FOLDER, true);
     }
 
-    /*
-    private void initContentValuesFromPath(ContentValues values, Path path)
-    {
-        values.put(MainContentProvider.COLUMN_LOCATION, getRealLocation().getLocationUri().toString());
-        values.put(MainContentProvider.COLUMN_PATH, path.getPathString());
-    }*/
-
     protected boolean isSendAction()
     {
         String action = getActivity().getIntent().getAction();
@@ -962,7 +952,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     {
         getParentFragmentManager().
                 beginTransaction().
-                add(CopyToClipboardTask.newInstance(getRealLocation(), getSelectedPaths()), CopyToClipboardTask.TAG).
+                add(CopyToClipboardTask.newInstance(getLocation(), getSelectedPaths()), CopyToClipboardTask.TAG).
                 commit();
     }
 
@@ -974,7 +964,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     protected void confirmDelete(boolean wipe)
     {
         Bundle b = new Bundle();
-        LocationsManager.storePathsInBundle(b, getRealLocation(), getSelectedPaths());
+        LocationsManager.storePathsInBundle(b, getLocation(), getSelectedPaths());
         b.putBoolean(ARG_WIPE_FILES, wipe);
         DeleteConfirmationDialog.showDialog(getParentFragmentManager(), b);
     }
@@ -1030,7 +1020,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
                                 FileManagerActivity act = (FileManagerActivity) getActivity();
                                 if (act != null)
                                 {
-                                    Location loc = getRealLocation().copy();
+                                    Location loc = getLocation().copy();
                                     loc.setCurrentPath(rec.getPath());
                                     Intent i = new Intent();
                                     LocationsManager.storePathsInIntent(i, loc, Collections.singletonList(rec.getPath()));
@@ -1055,7 +1045,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     protected Intent getSelectResult(List<Path> paths)
     {
-        Location loc = getRealLocation();
+        Location loc = getLocation();
         Intent intent = new Intent();
         if (!isSingleSelectionMode())
             intent.setData(loc.getLocationUri());
@@ -1082,7 +1072,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     {
         getParentFragmentManager().
                 beginTransaction().
-                add(PrepareToSendTask.newInstance(getRealLocation(), getSelectedPaths()), PrepareToSendTask.TAG).
+                add(PrepareToSendTask.newInstance(getLocation(), getSelectedPaths()), PrepareToSendTask.TAG).
                 commit();
     }
 
@@ -1116,7 +1106,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
             {
                 try
                 {
-                    SrcDstCollection recs = getSrcDstsFromClip(_locationsManager, clip, getRealLocation(), move);
+                    SrcDstCollection recs = getSrcDstsFromClip(_locationsManager, clip, getLocation(), move);
                     if (recs != null)
                     {
                         if (move)
@@ -1139,7 +1129,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     private SrcDstCollection getSrcDsts(Location srcLocation, boolean isDirLast, Collection<? extends Path> paths) throws IOException
     {
-        return SrcDstRec.fromPaths(srcLocation, getRealLocation(), isDirLast, paths);
+        return SrcDstRec.fromPaths(srcLocation, getLocation(), isDirLast, paths);
     }
 
     private void showProperties()
@@ -1156,7 +1146,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
     private void openFileAsContainer()
     {
         BrowserRecord br = getSelectedFiles().get(0);
-        Location loc = getRealLocation();
+        Location loc = getLocation();
         if (loc == null)
             return;
         loc = loc.copy();
@@ -1191,7 +1181,7 @@ public abstract class FileListViewFragmentBase extends RxAppCompatDialogFragment
 
     private boolean showSelectedFilenameEditText()
     {
-        return isSelectAction() && isSingleSelectionMode() && !getRealLocation().isReadOnly() && (allowCreateNewFile() || allowCreateNewFolder());
+        return isSelectAction() && isSingleSelectionMode() && !getLocation().isReadOnly() && (allowCreateNewFile() || allowCreateNewFolder());
     }
 
     private void openLocation(Location locToOpen)
