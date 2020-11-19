@@ -53,10 +53,11 @@
     <string name="err_container_size_is_too_small">Specified container size is too small</string>
     <string name="err_failed_processing_settings_file">Failed processing the settings file</string>
     <string name="err_failed_creating_container">Failed creating container</string>
-    <string name="about_message" translatable="false"><xliff:g id="copyright">\u00A9</xliff:g> 2012–2020, <xliff:g id="dev_name">vware</xliff:g></string>
+    <string name="about_message" translatable="false"><xliff:g id="copyright">\u00A9</xliff:g> 2012–2020</string>
     <string name="about">About</string>
     <string name="homepage">Open homepage</string>
-    <string name="donation_notice">This software is open source. It is a fork of EDS by Sovworks. <b>Please support</b> the development of by making a donation.</string>
+    <string name="about_notice">Work on this project is supported by IGEL Tech GmbH - https://www.igel-tech.com. If you have any professional inquiries, we would be happy to hear from you! However, the project is and always will be free (as in beer) and open source. If you would like to support the development by buying us a coffee, it would be greatly appreciated!</string>
+    <string name="fork_notice">This software is a fork of EDS Lite by Sovworks. See https://github.com/sovworks/edslite</string>
     <string name="make_a_donation">Make a donation</string>
     <string name="check_source_code">Check the source code</string>
     <string name="opening_container">Opening container</string>

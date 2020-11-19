@@ -1,19 +1,20 @@
 # NeverCrypt
 
-NeverCrypt is a virtual disk encryption software for Android which allows you to store your files in an encrypted container. It is a fork of EDS Lite, the open source edition of EDS. Visit [EDS web site](https://sovworks.com/eds/) to learn about EDS features and capabilities.
+NeverCrypt is a virtual disk encryption software for Android which allows you to store your files in an encrypted container. It is a fork of EDS Lite, the open source edition of EDS. Visit the [EDS web site](https://sovworks.com/eds/) to learn about EDS features and capabilities.
 
-You can download and install the latest version from [Google Play](https://play.google.com/store/apps/details?id=com.igeltech.nevercryptlite).
+NeverCrypt is trying to be a bit different, in that it tries to focus on opening containers and providing access to them. So, its integrated file manager will only open contents of encrypted containers, and not try to be a general file manager.
+It aiming to be a more modern alternative, by modern UI components and Android features. It requires at least Android 5.0 Lollipop, because it is using the Android Storage Access Framework, and requires absolutely no additional permissions - not even direct access to the file system.
 
-Please support the development of the open source version of NeverCrypt by making a donation: [![Donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.vware.at/donate) .
+## Support
+
+Work on this project is supported by [IGEL Tech GmbH](https://www.igel-tech.com). If you have any professional inquiries, we would be happy to hear from you! However, the project is and always will be free (as in beer) and open source.
+If you would like to support the development by buying us a coffee, it would be greatly appreciated: [![Donation](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.vware.at/donate)
 
 ## Building
 
-Download and extract [NDK v13b](https://developer.android.com/ndk/downloads/older_releases.html). Clone the project to a local folder. In the root folder of the project create the `local.properties` file and add the following line: `ndk.dir=/path/to/ndk-bundle`. Replace `/path/to/ndk-bundle` with the actual path. Import the project to Android Studio. Select `Build->Build APK`.
+Clone the project to a local folder.
+Import the project to Android Studio. Select `Build->Build APK`.
 
 ## License
 
 GPLv2+
-
-
-
-

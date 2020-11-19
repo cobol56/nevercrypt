@@ -33,9 +33,19 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             android:gravity="center_horizontal"
             android:inputType="none"
-            android:text="@string/donation_notice" />
+            android:text="@string/about_notice" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:autoLink="web"
+            android:gravity="center_horizontal"
+            android:inputType="none"
+            android:text="@string/fork_notice" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/donation_button"
