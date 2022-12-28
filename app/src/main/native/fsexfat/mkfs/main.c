@@ -33,6 +33,7 @@
 #include <exfat.h>
 #include <unistd.h>
 #include <inttypes.h>
+#include <string.h>
 
 const struct fs_object* objects[] =
 {

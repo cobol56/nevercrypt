@@ -5,6 +5,7 @@
 
 #include "com_igeltech_nevercrypt_crypto_modes_CBC.h"
 #include <stdlib.h>
+#include <string.h>
 #include <android/log.h>
 #include "cbc.h"
 

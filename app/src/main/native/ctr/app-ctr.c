@@ -5,6 +5,7 @@
 
 #include "com_igeltech_nevercrypt_crypto_modes_CTR.h"
 #include <stdlib.h>
+#include <string.h>
 #include <android/log.h>
 #include "ctr.h"
 

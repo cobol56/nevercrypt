@@ -1,4 +1,5 @@
 #include <inttypes.h>
+#include <string.h>
 #include <asm/errno.h>
 #include <android/log.h>
 #include <exfat.h>

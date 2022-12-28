@@ -1,6 +1,7 @@
 #include "com_igeltech_nevercrypt_crypto_hash_RIPEMD160.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 
 #pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
